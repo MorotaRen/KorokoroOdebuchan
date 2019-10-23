@@ -1,0 +1,3 @@
+fbx		:FBX書き出ししたもの
+ModelData	:モデルの作業用データ。バックアップにどうぞ
+bmf		:BaseCross用に書き出ししたもの
