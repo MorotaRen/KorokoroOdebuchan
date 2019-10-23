@@ -19,6 +19,9 @@ namespace basecross {
 		//デストラクタ
 		~GameSystems() {};
 
+
 	public:
+		//コントローラーが接続されていたらマウスカーソルを削除する
+		void ControllerCheck_Cursor();
 	};
 }
