@@ -13,5 +13,7 @@
 #include "Character.h"
 #include "Player.h"
 
+#include "TitleScene.h"
+#include "GameSystems.h"
 
 
