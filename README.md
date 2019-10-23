@@ -1,0 +1,2 @@
+# KorokoroOdebuchan
+BaseCrossで開発する、コロコロおデブの共有リポジトリ
