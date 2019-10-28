@@ -1,10 +1,5 @@
 #pragma once
 /// ----------------------------------------<summary>
-/// ゲームで使うことが多いものをまとめたもの
-/// (シングルトン)
-/// 管理者：諸田
-/// </summary>----------------------------------------
-/// ----------------------------------------<summary>
 /// ゲーム全体で呼び出せる関数用ヘッダー
 /// 注：シングルトン
 /// 管理者：諸田
@@ -12,7 +7,6 @@
 
 #pragma once
 #include "stdafx.h"
-#include "GameSystems.h"
 
 namespace basecross {
 	class  GameSystems final {
@@ -24,7 +18,7 @@ namespace basecross {
 		//デストラクタ
 		~GameSystems() {};
 		//コントローラー情報
-		CONTROLER_STATE m_Pad;
+		CONTROLER_STATE m_pad;
 	public:
 		//ここから下に置かないと呼び出せないぞ
 

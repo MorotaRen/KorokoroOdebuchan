@@ -2,12 +2,13 @@
 /// ゲーム全体で呼び出せる関数用ソース
 /// 管理者：諸田
 /// </summary>----------------------------------------
-
+#include "stdafx.h"
 #include "Project.h"
+
 namespace basecross {
 
 	void GameSystems::ControllerCheck_Cursor() {
-		if (m_Pad.bConnected) {
+		if (m_pad.bConnected) {
 			::ShowCursor(false);
 		}
 	}
@@ -16,6 +17,6 @@ namespace basecross {
 		//アプリケーションからゲームコントローラーの状態をとってくる
 		auto& app = App::GetApp();
 		auto device = app->GetInputDevice();
-		m_Pad = device.GetControlerVec()[0];
+		m_pad = device.GetControlerVec()[0];
 	}
 }

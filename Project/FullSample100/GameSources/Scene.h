@@ -1,7 +1,7 @@
-/*!
-@file Scene.h
-@brief シーン
-*/
+/// ----------------------------------------<summary>
+/// scene管理
+/// 管理者：諸田
+/// </summary>----------------------------------------
 #pragma once
 
 #include "stdafx.h"
@@ -12,6 +12,12 @@ namespace basecross{
 	///	ゲームシーン
 	//--------------------------------------------------------------------------------------
 	class Scene : public SceneBase{
+	private:
+		weak_ptr<XAudio2Manager> m_audioManager = App::GetApp()->GetXAudio2Manager();
+		weak_ptr<SoundItem> m_numMusic;
+		wstring dataDir;
+
+
 	public:
 		//--------------------------------------------------------------------------------------
 		/*!
@@ -39,6 +45,18 @@ namespace basecross{
 		*/
 		//--------------------------------------------------------------------------------------
 		virtual void OnEvent(const shared_ptr<Event>& event) override;
+
+		void LoadImageResources();
+
+		void LoadStaticModelResources();
+
+		void LoadBoneModelResources();
+
+		void LoadSoundResources();
+
+		shared_ptr<SoundItem> MusicOnceStart(wstring key,float volume);
+
+		shared_ptr<SoundItem> MusicRoopStart(wstring key,float volume);
 	};
 
 }

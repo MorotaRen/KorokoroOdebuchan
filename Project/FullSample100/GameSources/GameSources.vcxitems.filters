@@ -33,9 +33,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h">
       <Filter>Scene\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
-      <Filter>Scene\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h">
       <Filter>System\Headers</Filter>
     </ClInclude>
@@ -55,6 +52,9 @@
       <Filter>Scene\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
+      <Filter>System\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
       <Filter>System\Headers</Filter>
     </ClInclude>
   </ItemGroup>
