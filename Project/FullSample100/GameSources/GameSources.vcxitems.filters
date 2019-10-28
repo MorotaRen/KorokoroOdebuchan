@@ -57,9 +57,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
       <Filter>System\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="D:\KorokoroOdebuchan\Project\FullSample100\GameSources\TestStage.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
