@@ -83,5 +83,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp">
       <Filter>Scene\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameSystems.cpp">
+      <Filter>System\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
