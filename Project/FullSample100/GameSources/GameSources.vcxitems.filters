@@ -57,6 +57,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
       <Filter>System\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataLoad_CSV.h">
+      <Filter>System\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -86,5 +90,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameSystems.cpp">
       <Filter>System\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
   </ItemGroup>
 </Project>
