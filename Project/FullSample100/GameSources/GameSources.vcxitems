@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -22,11 +22,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
-<<<<<<< HEAD
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h" />
-=======
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
->>>>>>> 4d16f5fdc693915c50691ae63b0ac6830c450f50
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp" />
@@ -36,11 +33,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp" />
-=======
     <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
->>>>>>> 4d16f5fdc693915c50691ae63b0ac6830c450f50
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
   </ItemGroup>
 </Project>
