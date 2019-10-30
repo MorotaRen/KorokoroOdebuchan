@@ -31,12 +31,6 @@ namespace basecross{
 	Scene::~Scene() {
 	}
 
-	void Scene::OnEvent(const shared_ptr<Event>& event) {
-		if (event->m_MsgStr == L"ToGameStage") {
-			//最初のアクティブステージの設定
-			ResetActiveStage<GameStage>();
-		}
-	}
 
 	/// ----------------------------------------------------------------------------<summary>
 	/// 画像の読み込み
