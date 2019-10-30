@@ -61,6 +61,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataLoad_CSV.h">
       <Filter>System\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="D:\KorokroOdebuchan\Project\FullSample100\GameSources\TestBlock.h">
+      <Filter>characters\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -91,8 +94,8 @@
       <Filter>System\Sources</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
-    <ClCompile Include="D:\KorokoroOdebuchan\Project\FullSample100\GameSources\TestStage.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestBlock.cpp">
+      <Filter>characters\Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
