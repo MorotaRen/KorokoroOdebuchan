@@ -3,7 +3,7 @@
 
 namespace basecross {
 	//\‘¢‚Æ”jŠü
-	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale) :
+	TestBlock::TestBlock(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale) :
 		GameObject(ptrStage),
 		m_pos(pos),
 		m_scale(scale)
@@ -11,12 +11,12 @@ namespace basecross {
 	}
 
 	//‰Šú‰»
-	void Player::OnCreate() {
+	void TestBlock::OnCreate() {
 
 	}
 
 	//XV
-	void Player::OnUpdate() {
+	void TestBlock::OnUpdate() {
 
 	}
 }

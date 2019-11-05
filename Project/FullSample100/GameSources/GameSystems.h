@@ -26,5 +26,7 @@ namespace basecross {
 		void ControllerCheck_Cursor();
 		//コントローラー情報更新
 		void UpdatePadData();
+		//ツールの
+		
 	};
 }
