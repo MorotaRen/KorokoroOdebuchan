@@ -47,10 +47,13 @@ namespace basecross{
 		virtual void OnEvent(const shared_ptr<Event>& event) override;
 
 		void LoadImageResources();
+		void LoadImageResources(wstring FileName,wstring KeyName);
 
 		void LoadStaticModelResources();
+		void LoadStaticModelResources(wstring FileName,wstring KeyName);
 
 		void LoadBoneModelResources();
+		void LoadBoneModelResources(wstring FileName,wstring KeyName);
 
 		void LoadSoundResources();
 

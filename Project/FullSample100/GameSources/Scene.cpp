@@ -32,7 +32,7 @@ namespace basecross{
 	}
 
 	/// ----------------------------------------------------------------------------<summary>
-	/// 画像の読み込み
+	/// 画像の読み込み(引数なし)
 	/// </summary>----------------------------------------------------------------------------
 	void Scene::LoadImageResources() {
 		//ディレクトリ取得
@@ -52,9 +52,19 @@ namespace basecross{
 			App::GetApp()->RegisterTexture(texture.m_texKey,strTexture);
 		}
 	}
+	/// ----------------------------------------------------------------------------<summary>
+	/// 画像の読み込み(引数あり)
+	/// </summary>----------------------------------------------------------------------------
+	void Scene::LoadImageResources(wstring FileName, wstring KeyName) {
+		//ディレクトリ取得
+		App::GetApp()->GetDataDirectory(dataDir);
+
+		wstring strTexture = dataDir + L"Image\\" + FileName;
+		App::GetApp()->RegisterTexture(KeyName,strTexture);
+	}
 
 	/// ----------------------------------------------------------------------------<summary>
-	/// スタティックモデルの読み込み
+	/// スタティックモデルの読み込み(引数なし)
 	/// </summary>----------------------------------------------------------------------------
 	void Scene::LoadStaticModelResources(){
 		App::GetApp()->GetDataDirectory(dataDir);
@@ -72,9 +82,18 @@ namespace basecross{
 			App::GetApp()->RegisterResource(model.m_modelKey,staticModel);
 		}
 	}
+	/// ----------------------------------------------------------------------------<summary>
+	/// スタティックモデルの読み込み(引数あり)
+	/// </summary>----------------------------------------------------------------------------
+	void Scene::LoadStaticModelResources(wstring FileName, wstring KeyName){
+		App::GetApp()->GetDataDirectory(dataDir);
+		wstring srtmodel = dataDir + L"Model\\";
+		auto staticModel = MeshResource::CreateStaticModelMesh(dataDir,FileName);
+		App::GetApp()->RegisterResource(KeyName,staticModel);
+	}
 
 	/// ----------------------------------------------------------------------------<summary>
-	/// ボーンモデルの読み込み
+	/// ボーンモデルの読み込み(引数なし)
 	/// </summary>----------------------------------------------------------------------------
 	void Scene::LoadBoneModelResources() {
 		App::GetApp()->GetDataDirectory(dataDir);
@@ -91,6 +110,15 @@ namespace basecross{
 			auto BoneModel = MeshResource::CreateBoneModelMesh(dataDir, model.m_modelName);
 			App::GetApp()->RegisterResource(model.m_modelKey, BoneModel);
 		}
+	}
+	/// ----------------------------------------------------------------------------<summary>
+	/// ボーンモデルの読み込み(引数あり)
+	/// </summary>----------------------------------------------------------------------------
+	void Scene::LoadBoneModelResources(wstring FileName, wstring KeyName) {
+		App::GetApp()->GetDataDirectory(dataDir);
+		wstring srtmodel = dataDir + L"Model\\";
+		auto BoneModel = MeshResource::CreateBoneModelMesh(dataDir, FileName);
+		App::GetApp()->RegisterResource(KeyName, BoneModel);
 	}
 
 	/// ----------------------------------------------------------------------------<summary>
@@ -144,7 +172,7 @@ namespace basecross{
 		audiomanager->Stop(m_numMusic.lock());
 
 		//if (event->m_MsgStr == L"ステージ移行コマンド") {
-		//	ResetActiveStage<GameStage>();
+		//	ResetActiveStage<移動したいステージクラス>();
 		//	m_numMusic = MusicRoopStart(L"音のキー",ボリューム);
 		//}
 	}
