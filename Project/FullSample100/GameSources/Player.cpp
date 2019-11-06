@@ -25,6 +25,12 @@ namespace basecross{
 	void Player::OnCreate() {
 		auto ptrTrans = GetComponent<Transform>();
 
+		auto drawcomp = AddComponent<PNTBoneModelDraw>();
+		drawcomp->SetMeshResource(L"TestModel");
+		int animrow = GameSystems::GetInstans().LoadAnimationData(L"TestModel");
+		auto AnimData = GameSystems::GetInstans().GetAnimationData();
+		drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
+
 		ptrTrans->SetScale(m_scale);
 		ptrTrans->SetRotation(m_rot);
 		ptrTrans->SetPosition(m_pos);
