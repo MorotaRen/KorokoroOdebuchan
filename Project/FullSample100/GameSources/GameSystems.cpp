@@ -8,8 +8,7 @@
 namespace basecross {
 
 	/// ----------------------------------------<summary>
-	/// ゲーム全体で呼び出せる関数用ソース
-	/// 管理者：諸田
+	/// コントローラーが接続された場合カーソルを消す
 	/// </summary>----------------------------------------
 	void GameSystems::ControllerCheck_Cursor() {
 		if (m_pad.bConnected) {
@@ -17,13 +16,18 @@ namespace basecross {
 		}
 	}
 
+	/// ----------------------------------------<summary>
+	/// コントローラーの状態の更新
+	/// </summary>----------------------------------------
 	void GameSystems::UpdatePadData() {
-		//アプリケーションからゲームコントローラーの状態をとってくる
 		auto& app = App::GetApp();
 		auto device = app->GetInputDevice();
 		m_pad = device.GetControlerVec()[0];
 	}
 
+	///	----------------------------------------<summary>
+	/// モデル情報があるCSVの読み込み
+	/// </summary>----------------------------------------
 	void GameSystems::LoadModelCSV() {
 		wstring DataDir,FileDir;
 		App::GetApp()->GetDataDirectory(DataDir) ;
@@ -49,6 +53,9 @@ namespace basecross {
 		}
 	}
 
+	/// ----------------------------------------<summary>
+	/// モデルのファイル名とキーネームの登録
+	/// </summary>----------------------------------------
 	void GameSystems::CreateModelData(vector<wstring> data) {
 		//0ボーンか
 		if (data[0] == L"True") {
@@ -68,7 +75,9 @@ namespace basecross {
 		CreateAnimationData(data);
 	}
 
-	//アニメーション保存データを作成
+	/// ----------------------------------------<summary>
+	/// アニメーションデータの作成
+	/// </summary>----------------------------------------
 	void GameSystems::CreateAnimationData(vector<wstring> data) {
 
 		for (int i = 2;i < data.size(); i++) {
@@ -82,6 +91,11 @@ namespace basecross {
 		}
 	}
 
+	/// ----------------------------------------<summary>
+	/// 作成したアニメーションデータの読み込み
+	/// </summary>----------------------------------------
+	/// <param name="keyname">取得したいキーネーム</param>
+	/// <returns>キーネームの</returns>
 	int GameSystems::LoadAnimationData(wstring keyname) {
 		for (int i = 0; i < m_animationData.size();i++) {
 			if (m_animationData.at(i).at(0) == keyname) {
@@ -92,6 +106,9 @@ namespace basecross {
 		return -99;
 	}
 
+	/// ----------------------------------------<summary>
+	/// アニメーションデータのゲッター
+	/// </summary>----------------------------------------
 	vector<vector<wstring>> GameSystems::GetAnimationData() {
 		return m_animationData;
 	}

@@ -27,8 +27,8 @@ namespace basecross {
 		vector<vector<wstring>> m_animationData;
 		//アニメーションデータの行
 		int m_animationDataRow = 0;
+
 	public:
-		//ここから下に置かないと呼び出せないぞ
 
 		//関数呼ぶときにここから
 		static GameSystems& GetInstans() {
@@ -47,7 +47,7 @@ namespace basecross {
 		void CreateAnimationData(vector<wstring> data);
 		//アニメーションデータの読み込み
 		int LoadAnimationData(wstring keyname);
-		//
+		//アニメーションデータのゲッター
 		vector<vector<wstring>> GetAnimationData();
 
 	};
