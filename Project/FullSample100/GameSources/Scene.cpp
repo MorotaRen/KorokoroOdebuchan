@@ -147,6 +147,9 @@ namespace basecross{
 		//	ResetActiveStage<GameStage>();
 		//	m_numMusic = MusicRoopStart(L"音のキー",ボリューム);
 		//}
+		//if (event->m_MsgStr == L"ToGameStage") {
+		//	ResetActiveStage<TestStage>();
+		//}
 	}
 }
 //end basecross
