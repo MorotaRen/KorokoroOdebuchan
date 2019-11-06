@@ -25,9 +25,13 @@ namespace basecross {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
+			AddGameObject<Player>(Vec3(0,0,0),Vec3(0,0,0));
 		}
 		catch (...) {
 			throw;
 		}
+	}
+	void TitleScene::OnUpdate() {
+
 	}
 }

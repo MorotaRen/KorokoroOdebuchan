@@ -130,6 +130,7 @@ namespace ModelManager {
 
                         if (j == (colCount-1))
                         {
+                            sr.Write("END");
                             sr.Write("\n");
                         }
 
