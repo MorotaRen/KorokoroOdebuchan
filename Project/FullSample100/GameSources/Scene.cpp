@@ -44,7 +44,8 @@ namespace basecross{
 		};
 		InitializedParam textures[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"testImage.png",L"TestImage"}
+			{L"testImage.png",L"TestImage"},
+			{L"wall.jpg",L"TestWall"}
 		};
 
 		for (auto texture : textures) {
@@ -147,9 +148,9 @@ namespace basecross{
 		//	ResetActiveStage<GameStage>();
 		//	m_numMusic = MusicRoopStart(L"音のキー",ボリューム);
 		//}
-		//if (event->m_MsgStr == L"ToGameStage") {
-		//	ResetActiveStage<TestStage>();
-		//}
+		if (event->m_MsgStr == L"ToGameStage") {
+			ResetActiveStage<TestStage>();
+		}
 	}
 }
 //end basecross

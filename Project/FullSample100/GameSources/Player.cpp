@@ -130,10 +130,10 @@ namespace basecross{
 		float totalAngle = frontAngle;
 		if (m_inputX != 0.0f) {
 			if (m_inputX < 0.0f) {
-				totalAngle = frontAngle - 0.3f;
+				m_rot.y -=0.3f;
 			}
 			else {
-				totalAngle = frontAngle + 0.3f;
+				m_rot.y += 0.3f;
 			}
 		}
 
@@ -144,6 +144,10 @@ namespace basecross{
 		//Y軸は変化させない
 		angle.y = 0;
 
+		/*ptrTransform->SetRotation(m_rot);
+		m_pos.z += m_rollingSpeed;
+		ptrTransform->SetPosition(m_pos);*/
+
 		auto ptrPs = GetComponent<RigidbodySphere>();
 		auto velo = ptrPs->GetLinearVelocity();
 		//xとzの速度を修正
@@ -151,6 +155,15 @@ namespace basecross{
 		velo.z = angle.z * m_rollingSpeed;
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
+	}
+
+	//後更新
+	void Player::OnUpdate2() {
+		//RigidbodySphereからTransformへのパラメータの設定
+		auto ptrPs = GetComponent<RigidbodySphere>();
+		auto ptrTrans = GetComponent<Transform>();
+		//位置情報はそのまま設定
+		ptrTrans->SetPosition(ptrPs->GetPosition());
 	}
 }
 //end basecross

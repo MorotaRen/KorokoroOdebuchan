@@ -57,11 +57,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
       <Filter>System\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataLoad_CSV.h">
       <Filter>System\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h">
+      <Filter>characters\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h">
+      <Filter>Scene\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
+      <Filter>characters\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -91,8 +98,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameSystems.cpp">
       <Filter>System\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestBlock.cpp">
+      <Filter>characters\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp">
+      <Filter>Scene\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp">
       <Filter>characters\Sources</Filter>
     </ClCompile>
   </ItemGroup>
