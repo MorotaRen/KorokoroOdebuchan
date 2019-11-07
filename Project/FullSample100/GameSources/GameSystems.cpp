@@ -112,7 +112,4 @@ namespace basecross {
 	vector<vector<wstring>> GameSystems::GetAnimationData() {
 		return m_animationData;
 	}
-
-
-
 }

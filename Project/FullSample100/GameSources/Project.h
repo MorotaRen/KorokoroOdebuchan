@@ -18,6 +18,7 @@
 #include "TestStage.h"
 #include "Character.h"
 #include "Player.h"
+#include "Items.h"
 
 #include "TitleScene.h"
 #include "TestBlock.h"
