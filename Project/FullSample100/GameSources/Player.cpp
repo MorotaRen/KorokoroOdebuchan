@@ -8,11 +8,10 @@
 
 namespace basecross{
 	//構造と破棄
-	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale, const Vec3 rot) :
+	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale) :
 		GameObject(ptrStage),
 		m_pos(pos),
 		m_scale(scale),
-		m_rot(rot),
 		m_runningSpeed(3.0f),
 		m_rollingSpeed(3.0f),
 		m_state(PlayerState::Running),
@@ -25,14 +24,14 @@ namespace basecross{
 	void Player::OnCreate() {
 		auto ptrTrans = GetComponent<Transform>();
 
-		auto drawcomp = AddComponent<PNTBoneModelDraw>();
-		drawcomp->SetMeshResource(L"TestModel");
-		int animrow = GameSystems::GetInstans().LoadAnimationData(L"TestModel");
-		auto AnimData = GameSystems::GetInstans().GetAnimationData();
-		drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
+		//auto drawcomp = AddComponent<PNTBoneModelDraw>();
+		//drawcomp->SetMeshResource(L"TestModel");
+		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"TestModel");
+		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
+		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
 
 		ptrTrans->SetScale(m_scale);
-		ptrTrans->SetRotation(m_rot);
+		ptrTrans->SetRotation(0,0,0);
 		ptrTrans->SetPosition(m_pos);
 
 		//WorldMatrixをもとにRigidbodySphereのパラメータを作成
@@ -60,8 +59,11 @@ namespace basecross{
 
 	//更新
 	void Player::OnUpdate() {
-		InputController();
-		PlayerMove();
+		/*InputController();
+		PlayerMove();*/
+		auto pos = GetComponent<Transform>()->GetPosition();
+		pos.z += 1;
+		GetComponent<Transform>()->SetPosition(pos);
 	}
 
 	//入力された時
@@ -150,9 +152,6 @@ namespace basecross{
 		//Y軸は変化させない
 		angle.y = 0;
 
-		/*ptrTransform->SetRotation(m_rot);
-		m_pos.z += m_rollingSpeed;
-		ptrTransform->SetPosition(m_pos);*/
 
 		auto ptrPs = GetComponent<RigidbodySphere>();
 		auto velo = ptrPs->GetLinearVelocity();
@@ -161,6 +160,7 @@ namespace basecross{
 		velo.z = angle.z * m_rollingSpeed;
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
+
 	}
 
 	//後更新
@@ -170,6 +170,39 @@ namespace basecross{
 		auto ptrTrans = GetComponent<Transform>();
 		//位置情報はそのまま設定
 		ptrTrans->SetPosition(ptrPs->GetPosition());
+	}
+
+	//文字列の表示
+	void Player::DrawStrings() {
+
+		//文字列表示
+		wstring strMess(L"\n");
+		//オブジェクト数
+		auto ObjCount = GetStage()->GetGameObjectVec().size();
+		wstring  strObjCount(L"OBJ_COUNT: ");
+		strObjCount += Util::SizeTToWStr(ObjCount);
+		auto bodyCount = GetStage()->GetBasePhysics().GetNumBodies();
+		strObjCount += L", BODY_COUNT: ";
+		strObjCount += Util::SizeTToWStr(bodyCount);
+		strObjCount += L"\n";
+		auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
+		wstring strFps(L"FPS: ");
+		strFps += Util::UintToWStr(fps);
+		strFps += L"\nElapsedTime: ";
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		strFps += Util::FloatToWStr(ElapsedTime);
+		strFps += L"\n";
+
+		auto pos = GetComponent<Transform>()->GetPosition();
+		wstring strPos(L"Position:\t");
+		strPos += L"X=" + Util::FloatToWStr(pos.x, 6, Util::FloatModify::Fixed) + L",\t";
+		strPos += L"Y=" + Util::FloatToWStr(pos.y, 6, Util::FloatModify::Fixed) + L",\t";
+		strPos += L"Z=" + Util::FloatToWStr(pos.z, 6, Util::FloatModify::Fixed) + L"\n";
+
+		wstring str = strMess + strObjCount + strFps + strPos;
+		//文字列をつける
+		auto ptrString = GetComponent<StringSprite>();
+		ptrString->SetText(str);
 	}
 }
 //end basecross
