@@ -22,12 +22,10 @@ namespace basecross{
 		int animrow = GameSystems::GetInstans().LoadAnimationData(L"TestModel");
 		auto AnimData = GameSystems::GetInstans().GetAnimationData();
 		drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
-
 	}
 
 	//XV
 	void Player::OnUpdate() {
-
 	}
 }
 //end basecross

@@ -22,6 +22,7 @@ const wchar_t* pWndTitle = L"BaseCrossFullSample";
 //--------------------------------------------------------------------------------------
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
+	//D3DXQUATERNIONç\ë¢
 	WNDCLASSEX wcex;
 	ZeroMemory(&wcex, sizeof(wcex));
 
