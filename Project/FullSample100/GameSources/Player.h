@@ -42,7 +42,7 @@ namespace basecross {
 
 	public:
 		//構造と破棄
-		Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale, const Vec3 rot);
+		Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale);
 		~Player() {};
 
 		//初期化
@@ -51,6 +51,8 @@ namespace basecross {
 		virtual void OnUpdate() override;
 		//後更新
 		virtual void OnUpdate2() override;
+		//文字列の表示
+		void DrawStrings();
 	};
 }
 
