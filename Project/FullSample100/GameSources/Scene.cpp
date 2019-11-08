@@ -76,7 +76,7 @@ namespace basecross{
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{}
+			{L"Player.bmf",L"Player"}
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";
