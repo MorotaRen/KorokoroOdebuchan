@@ -105,14 +105,5 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TestBlock.cpp">
       <Filter>characters\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Items.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp">
-      <Filter>Scene\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp">
-      <Filter>characters\Sources</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
