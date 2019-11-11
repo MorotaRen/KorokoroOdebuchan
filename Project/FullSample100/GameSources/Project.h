@@ -22,5 +22,6 @@
 
 #include "TitleScene.h"
 #include "TestBlock.h"
+#include "MyCamera.h"
 
 

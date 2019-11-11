@@ -15,7 +15,7 @@ namespace basecross {
 
 	public:
 		//\‘¢‚Æ”jŠü
-		TestBlock(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale);
+		TestBlock(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale, const Vec3 rot);
 		~TestBlock() {};
 
 		//‰Šú‰»

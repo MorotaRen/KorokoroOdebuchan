@@ -6,12 +6,12 @@
 #include "stdafx.h"
 #include "Project.h"
 
-namespace basecross{
+namespace basecross {
 
 	//--------------------------------------------------------------------------------------
 	///	ゲームシーン
 	//--------------------------------------------------------------------------------------
-	void Scene::OnCreate(){
+	void Scene::OnCreate() {
 		try {
 			//クリアする色を設定
 			Col4 Col;
@@ -19,7 +19,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestScene");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
 
 			LoadImageResources();
 			GameSystems::GetInstans().LoadModelCSV();
@@ -45,12 +45,13 @@ namespace basecross{
 		};
 		InitializedParam textures[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"testImage.png",L"TestImage"}
+			{L"testImage.png",L"TestImage"},
+			{L"wall.jpg",L"TestWall"}
 		};
 
 		for (auto texture : textures) {
 			wstring strTexture = dataDir + L"Images\\" + texture.m_texName;
-			App::GetApp()->RegisterTexture(texture.m_texKey,strTexture);
+			App::GetApp()->RegisterTexture(texture.m_texKey, strTexture);
 		}
 	}
 	/// ----------------------------------------------------------------------------<summary>
@@ -61,13 +62,13 @@ namespace basecross{
 		App::GetApp()->GetDataDirectory(dataDir);
 
 		wstring strTexture = dataDir + L"Images\\" + FileName;
-		App::GetApp()->RegisterTexture(KeyName,strTexture);
+		App::GetApp()->RegisterTexture(KeyName, strTexture);
 	}
 
 	/// ----------------------------------------------------------------------------<summary>
 	/// スタティックモデルの読み込み(引数なし)
 	/// </summary>----------------------------------------------------------------------------
-	void Scene::LoadStaticModelResources(){
+	void Scene::LoadStaticModelResources() {
 		App::GetApp()->GetDataDirectory(dataDir);
 		struct InitializedParam {
 			wstring m_modelName;
@@ -79,18 +80,18 @@ namespace basecross{
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";
-			auto staticModel = MeshResource::CreateStaticModelMesh(dataDir,model.m_modelName);
-			App::GetApp()->RegisterResource(model.m_modelKey,staticModel);
+			auto staticModel = MeshResource::CreateStaticModelMesh(dataDir, model.m_modelName);
+			App::GetApp()->RegisterResource(model.m_modelKey, staticModel);
 		}
 	}
 	/// ----------------------------------------------------------------------------<summary>
 	/// スタティックモデルの読み込み(引数あり)
 	/// </summary>----------------------------------------------------------------------------
-	void Scene::LoadStaticModelResources(wstring FileName, wstring KeyName){
+	void Scene::LoadStaticModelResources(wstring FileName, wstring KeyName) {
 		App::GetApp()->GetDataDirectory(dataDir);
 		wstring srtmodel = dataDir + L"Models\\";
-		auto staticModel = MeshResource::CreateStaticModelMesh(dataDir,FileName);
-		App::GetApp()->RegisterResource(KeyName,staticModel);
+		auto staticModel = MeshResource::CreateStaticModelMesh(dataDir, FileName);
+		App::GetApp()->RegisterResource(KeyName, staticModel);
 	}
 
 	/// ----------------------------------------------------------------------------<summary>
@@ -149,9 +150,9 @@ namespace basecross{
 	/// <param name="key">音のキー</param>
 	/// <param name="volume">ボリューム</param>
 	/// -------------------------------------------------------------------------------------
-	shared_ptr<SoundItem> Scene::MusicOnceStart(wstring key, float volume){
+	shared_ptr<SoundItem> Scene::MusicOnceStart(wstring key, float volume) {
 		auto audiomanager = m_audioManager.lock();
-		return audiomanager->Start(key,XAUDIO2_NO_LOOP_REGION,volume);
+		return audiomanager->Start(key, XAUDIO2_NO_LOOP_REGION, volume);
 	}
 
 	/// ----------------------------------------------------------------------------<summary>
@@ -160,9 +161,9 @@ namespace basecross{
 	/// <param name="key">音のキー</param>
 	/// <param name="volume">ボリューム</param>
 	/// -------------------------------------------------------------------------------------
-	shared_ptr<SoundItem> Scene::MusicRoopStart(wstring key,float volume) {
+	shared_ptr<SoundItem> Scene::MusicRoopStart(wstring key, float volume) {
 		auto audiomanager = m_audioManager.lock();
-		return audiomanager->Start(key,XAUDIO2_LOOP_INFINITE,volume);
+		return audiomanager->Start(key, XAUDIO2_LOOP_INFINITE, volume);
 	}
 
 	/// ----------------------------------------------------------------------------<summary>
@@ -176,8 +177,14 @@ namespace basecross{
 		//	ResetActiveStage<移動したいステージクラス>();
 		//	m_numMusic = MusicRoopStart(L"音のキー",ボリューム);
 		//}
-		if (event->m_MsgStr == L"ToTitleScene") {
-			ResetActiveStage<TitleScene>();
+
+		if (event->m_MsgStr == L"ToTestStage") {
+			ResetActiveStage<TestStage>();
+
+			if (event->m_MsgStr == L"TitleScene") {
+				ResetActiveStage<TitleScene>();
+
+			}
 		}
 		else if(event->m_MsgStr == L"ToTestScene") {
 			ResetActiveStage<TestStage>();
