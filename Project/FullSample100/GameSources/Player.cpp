@@ -16,14 +16,16 @@ namespace basecross{
 		m_rollingSpeed(3.0f),
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
-		m_inputY(0.0f)
+		m_inputY(0.0f),
+		m_accelerate(5.0f),
+		m_isInput(false)
 	{
 	}
 
 	//初期化
 	void Player::OnCreate() {
 		auto ptrTrans = GetComponent<Transform>();
-
+		AddTag(L"Player");
 		//auto drawcomp = AddComponent<PNTBoneModelDraw>();
 		//drawcomp->SetMeshResource(L"TestModel");
 		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"TestModel");
@@ -48,22 +50,25 @@ namespace basecross{
 		//描画するメッシュを設定
 		ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
 
+		//文字列をつける
+		auto ptrString = AddComponent<StringSprite>();
+		ptrString->SetText(L"");
+		ptrString->SetTextRect(Rect2D<float>(16.0f, 16.0f, 640.0f, 480.0f));
+
 		//カメラを得る
 		auto ptrCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());
 		if (ptrCamera) {
 			//MyCameraに注目するオブジェクト（プレイヤー）の設定
 			ptrCamera->SetTargetObject(GetThis<GameObject>());
-			ptrCamera->SetTargetToAt(Vec3(0, 0.25f, 0));
+			ptrCamera->SetTargetToAt(Vec3(0, 5.0f, 0));
 		}
 	}
 
 	//更新
 	void Player::OnUpdate() {
-		/*InputController();
-		PlayerMove();*/
-		auto pos = GetComponent<Transform>()->GetPosition();
-		pos.z += 1;
-		GetComponent<Transform>()->SetPosition(pos);
+		InputController();
+		PlayerMove();
+
 	}
 
 	//入力された時
@@ -123,45 +128,48 @@ namespace basecross{
 
 	//プレイヤーの移動
 	void Player::PlayerMove() {
+		auto elapsedTime = App::GetApp()->GetElapsedTime();
 		Vec3 angle(0, 0, 0);
 		auto ptrTransform = GetComponent<Transform>();
 		auto ptrCamera = OnGetDrawCamera();
 		m_pos = ptrTransform->GetPosition();
 		m_rot = ptrTransform->GetRotation();
-		m_rollingSpeed += 0.1f;
-		//進行方向の向き
-		auto front = ptrTransform->GetPosition() - ptrCamera->GetEye();
-		front.y = 0;
-		front.normalize();
-		//進行方向の向きからの角度を算出
-		float frontAngle = atan2(front.z, front.x);
-		float totalAngle = frontAngle;
-		if (m_inputX != 0.0f) {
-			if (m_inputX < 0.0f) {
-				m_rot.y -=0.3f;
-			}
-			else {
-				m_rot.y += 0.3f;
-			}
-		}
 
-		//角度からベクトルを作成
-		angle = Vec3(cos(totalAngle), 0, sin(totalAngle));
-		//正規化する
-		angle.normalize();
-		//Y軸は変化させない
-		angle.y = 0;
+		//加速
+		m_rollingSpeed += m_accelerate * elapsedTime;
+
+
+		//進行方向の向き
+		m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
+		m_front.y = 0;
+
+		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+		
+		if (KeyState.m_bPushKeyTbl['A']) { //左
+			m_front.x -= 3.0f * elapsedTime;
+			m_inputX = -1;
+		}
+		
+		if (KeyState.m_bPushKeyTbl['D']) { //右
+			m_front.x += 3.0f*elapsedTime;
+			m_inputX = 1;
+		}
+		m_front.normalize();
 
 
 		auto ptrPs = GetComponent<RigidbodySphere>();
 		auto velo = ptrPs->GetLinearVelocity();
+
 		//xとzの速度を修正
-		velo.x = angle.x * m_rollingSpeed;
-		velo.z = angle.z * m_rollingSpeed;
+		velo.x = m_front.x * m_rollingSpeed;
+		velo.z = m_front.z * m_rollingSpeed;
+
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
 
+
 	}
+
 
 	//後更新
 	void Player::OnUpdate2() {
@@ -170,6 +178,9 @@ namespace basecross{
 		auto ptrTrans = GetComponent<Transform>();
 		//位置情報はそのまま設定
 		ptrTrans->SetPosition(ptrPs->GetPosition());
+
+		DrawStrings();
+
 	}
 
 	//文字列の表示
@@ -199,7 +210,37 @@ namespace basecross{
 		strPos += L"Y=" + Util::FloatToWStr(pos.y, 6, Util::FloatModify::Fixed) + L",\t";
 		strPos += L"Z=" + Util::FloatToWStr(pos.z, 6, Util::FloatModify::Fixed) + L"\n";
 
-		wstring str = strMess + strObjCount + strFps + strPos;
+		auto rot = GetComponent<Transform>()->GetRotation();
+		wstring strRot(L"Rotation:\t");
+		strRot += L"X=" + Util::FloatToWStr(rot.x, 6, Util::FloatModify::Fixed) + L",\t";
+		strRot += L"Y=" + Util::FloatToWStr(rot.y, 6, Util::FloatModify::Fixed) + L",\t";
+		strRot += L"Z=" + Util::FloatToWStr(rot.z, 6, Util::FloatModify::Fixed) + L"\n";
+
+		wstring strFront(L"FrontVec:\t");
+		strFront += L"X=" + Util::FloatToWStr(m_front.x, 6, Util::FloatModify::Fixed) + L",\t";
+		strFront += L"Y=" + Util::FloatToWStr(m_front.y, 6, Util::FloatModify::Fixed) + L",\t";
+		strFront += L"Z=" + Util::FloatToWStr(m_front.z, 6, Util::FloatModify::Fixed) + L"\n";
+
+		auto ptrPs = GetComponent<RigidbodySphere>();
+		auto velo = ptrPs->GetLinearVelocity();
+		wstring strVelo(L"Velocity:\t");
+		strVelo += L"X=" + Util::FloatToWStr(velo.x, 6, Util::FloatModify::Fixed) + L",\t";
+		strVelo += L"Y=" + Util::FloatToWStr(velo.y, 6, Util::FloatModify::Fixed) + L",\t";
+		strVelo += L"Z=" + Util::FloatToWStr(velo.z, 6, Util::FloatModify::Fixed) + L"\n";
+
+		auto ptrCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());
+		auto cameraPos = ptrCamera->GetEye();
+		wstring strCamera(L"Camera:\t");
+		strCamera += L"X=" + Util::FloatToWStr(cameraPos.x, 6, Util::FloatModify::Fixed) + L",\t";
+		strCamera += L"Y=" + Util::FloatToWStr(cameraPos.y, 6, Util::FloatModify::Fixed) + L",\t";
+		strCamera += L"Z=" + Util::FloatToWStr(cameraPos.z, 6, Util::FloatModify::Fixed) + L"\n";
+
+		wstring strInput(L"Input:\t");
+		strInput += L"X=" + Util::FloatToWStr(m_inputX, 6, Util::FloatModify::Fixed) + L",\t";
+		strInput += L"Y=" + Util::FloatToWStr(cameraPos.y, 6, Util::FloatModify::Fixed) + L",\t";
+		strInput += L"Z=" + Util::FloatToWStr(cameraPos.z, 6, Util::FloatModify::Fixed) + L"\n";
+
+		wstring str = strMess + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strInput;
 		//文字列をつける
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
