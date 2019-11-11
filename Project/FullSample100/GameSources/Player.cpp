@@ -59,8 +59,8 @@ namespace basecross{
 
 	//çXêV
 	void Player::OnUpdate() {
-		/*InputController();
-		PlayerMove();*/
+		InputController();
+		PlayerMove();
 		auto pos = GetComponent<Transform>()->GetPosition();
 		pos.z += 1;
 		GetComponent<Transform>()->SetPosition(pos);

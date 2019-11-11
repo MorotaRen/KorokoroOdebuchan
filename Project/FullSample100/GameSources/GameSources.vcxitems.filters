@@ -70,7 +70,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h">
       <Filter>Scene\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)Objects.h">
       <Filter>characters\Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -105,5 +105,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TestBlock.cpp">
       <Filter>characters\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Items.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
   </ItemGroup>
 </Project>

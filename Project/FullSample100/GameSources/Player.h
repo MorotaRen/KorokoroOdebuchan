@@ -53,6 +53,27 @@ namespace basecross {
 		virtual void OnUpdate2() override;
 		//文字列の表示
 		void DrawStrings();
+
+		/// ----------------------------------------<summary>
+		/// 回転時スピードのセッター
+		/// </summary>----------------------------------------
+		void SetRollingSpeed(float Value) {
+			m_rollingSpeed = Value;
+		}
+		/// ----------------------------------------<summary>
+		/// 回転時スピードを変える(加算)
+		/// </summary>----------------------------------------
+		/// <param name="Value">加える値</param>
+		void ChangeRollingSpped(float Value) {
+			m_rollingSpeed += Value;
+		}
+		/// ----------------------------------------<summary>
+		/// 回転時スピードのゲッター
+		/// </summary>----------------------------------------
+		float GetRollingSpped() {
+			return m_rollingSpeed;
+		}
+
 	};
 }
 
