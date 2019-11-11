@@ -28,7 +28,6 @@ namespace basecross {
 		//アニメーションデータの行
 		int m_animationDataRow = 0;
 		//プレイヤー格納ポインタ
-		shared_ptr<Player>* m_player;
 	public:
 
 		//関数呼ぶときにここから
