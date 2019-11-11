@@ -3,7 +3,6 @@
 
 namespace basecross {
 
-	
 	class TestStage : public Stage {
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();

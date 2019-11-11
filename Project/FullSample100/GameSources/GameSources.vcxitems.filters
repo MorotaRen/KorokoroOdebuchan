@@ -19,14 +19,23 @@
     <Filter Include="System\Sources">
       <UniqueIdentifier>{156e109e-b3c5-4eec-b2db-7473a1e74e74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="characters">
+    <Filter Include="Objects">
+      <UniqueIdentifier>{cdfbdd41-393f-46bc-81dc-745ba76a1009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters">
       <UniqueIdentifier>{d01ee5e3-d1ea-47dc-95fd-21c3283f6d3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="characters\Headers">
+    <Filter Include="Characters\Headers">
       <UniqueIdentifier>{4b0a624a-610d-4bc6-b311-2b02a781cdf9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="characters\Sources">
+    <Filter Include="Characters\Sources">
       <UniqueIdentifier>{96692d2a-8790-41a9-bfac-6c5662d4ad61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Headers">
+      <UniqueIdentifier>{6332f18a-122b-4fd4-9b55-8fd30da28f5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Sources">
+      <UniqueIdentifier>{774a9d27-ee72-4603-8f82-79a916263ca9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -43,10 +52,10 @@
       <Filter>System\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h">
-      <Filter>characters\Headers</Filter>
+      <Filter>Characters\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
-      <Filter>characters\Headers</Filter>
+      <Filter>Characters\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h">
       <Filter>Scene\Headers</Filter>
@@ -60,26 +69,31 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataLoad_CSV.h">
       <Filter>System\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Items.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h">
       <Filter>characters\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h">
       <Filter>Scene\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
-      <Filter>characters\Headers</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ColorCone.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Objects.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Items.h">
+      <Filter>Objects\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
-      <Filter>characters\Sources</Filter>
+      <Filter>Characters\Sources</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
-      <Filter>characters\Sources</Filter>
+      <Filter>Characters\Sources</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
       <Filter>System\Sources</Filter>
@@ -102,17 +116,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameSystems.cpp">
       <Filter>System\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestBlock.cpp">
-      <Filter>characters\Sources</Filter>
+      <Filter>Objects\Sources</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Items.cpp">
-      <Filter>System\Sources</Filter>
+      <Filter>Objects\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp">
-      <Filter>Scene\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp">
-      <Filter>characters\Sources</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ColorCone.cpp">
+      <Filter>Objects\Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

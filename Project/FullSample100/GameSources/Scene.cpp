@@ -186,6 +186,9 @@ namespace basecross {
 
 			}
 		}
+		else if(event->m_MsgStr == L"ToTestScene") {
+			ResetActiveStage<TestStage>();
+		}
 	}
 }
 //end basecross

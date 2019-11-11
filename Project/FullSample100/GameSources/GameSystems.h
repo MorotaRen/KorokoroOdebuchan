@@ -27,7 +27,7 @@ namespace basecross {
 		vector<vector<wstring>> m_animationData;
 		//アニメーションデータの行
 		int m_animationDataRow = 0;
-
+		//プレイヤー格納ポインタ
 	public:
 
 		//関数呼ぶときにここから

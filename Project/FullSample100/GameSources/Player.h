@@ -57,10 +57,32 @@ namespace basecross {
 		//文字列の表示
 		void DrawStrings();
 
+
 		float GetPlayerSpeed() { return m_rollingSpeed; }
 
 		void SetPlayerFrontVec(Vec3 f) { m_front = f; }
 		Vec3 GetPlayerFrontVec() { return m_front; }
+
+		/// ----------------------------------------<summary>
+		/// 回転時スピードのセッター
+		/// </summary>----------------------------------------
+		void SetRollingSpeed(float Value) {
+			m_rollingSpeed = Value;
+		}
+		/// ----------------------------------------<summary>
+		/// 回転時スピードを変える(加算)
+		/// </summary>----------------------------------------
+		/// <param name="Value">加える値</param>
+		void ChangeRollingSpped(float Value) {
+			m_rollingSpeed += Value;
+		}
+		/// ----------------------------------------<summary>
+		/// 回転時スピードのゲッター
+		/// </summary>----------------------------------------
+		float GetRollingSpped() {
+			return m_rollingSpeed;
+		}
+
 	};
 }
 

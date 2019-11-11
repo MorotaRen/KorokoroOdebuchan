@@ -68,7 +68,6 @@ namespace basecross{
 	void Player::OnUpdate() {
 		InputController();
 		PlayerMove();
-
 	}
 
 	//“ü—Í‚³‚ê‚½Žž

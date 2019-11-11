@@ -15,7 +15,7 @@ namespace basecross {
 	}
 
 	void ItemsEffect::Healing_HP(unsigned int value) {
-		
+
 	}
 
 	void ItemsEffect::Healing_Gauge(unsigned int value) {
