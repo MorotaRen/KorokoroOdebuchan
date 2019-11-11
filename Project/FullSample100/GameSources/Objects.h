@@ -1,6 +1,5 @@
 #pragma once
 #include "stdafx.h"
-#include "Project.h"
 /// ----------------------------------------<summary>
 /// オブジェクト系列の元
 /// 管理者：諸田
@@ -10,7 +9,7 @@ namespace basecross {
 	class Objects : public GameObject
 	{
 	public:
-		Objects(const shared_ptr<Stage>& ptrStage);
+		Objects(const shared_ptr<Stage>& ptrStage,Vec3 pos,Vec3 scale,Vec3 rotation);
 		~Objects();
 		//接触時のスピード低下
 		void HittingToSpeedDown();
@@ -21,7 +20,7 @@ namespace basecross {
 	/// ----------------------------------------<summary>
 	/// コンストラクタ
 	/// </summary>----------------------------------------
-	Objects::Objects(const shared_ptr<Stage>& ptrStage) :GameObject(ptrStage)
+	Objects::Objects(const shared_ptr<Stage>& ptrStage, Vec3 pos, Vec3 scale, Vec3 rotation) :GameObject(ptrStage)
 	{
 	}
 	/// ----------------------------------------<summary>
