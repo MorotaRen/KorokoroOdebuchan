@@ -19,7 +19,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTitleScene");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestScene");
 
 			LoadImageResources();
 			GameSystems::GetInstans().LoadModelCSV();
@@ -176,8 +176,11 @@ namespace basecross{
 		//	ResetActiveStage<移動したいステージクラス>();
 		//	m_numMusic = MusicRoopStart(L"音のキー",ボリューム);
 		//}
-		if (event->m_MsgStr == L"TitleScene") {
+		if (event->m_MsgStr == L"ToTitleScene") {
 			ResetActiveStage<TitleScene>();
+		}
+		else if(event->m_MsgStr == L"ToTestScene") {
+			ResetActiveStage<TestStage>();
 		}
 	}
 }
