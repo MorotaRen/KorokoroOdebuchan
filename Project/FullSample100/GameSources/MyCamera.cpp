@@ -169,7 +169,7 @@ namespace basecross {
 
 
 	void MyCamera::OnUpdate() {
-		auto ptrPlayer = App::GetApp()->GetScene<TestStage>()->GetSharedGameObject<Player>(L"Player");
+		//auto ptrPlayer = App::GetApp()->GetScene<TestStage>()->GetSharedGameObject<Player>(L"Player");
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		auto keyData = App::GetApp()->GetInputDevice().GetKeyState();
 		//前回のターンからの時間
@@ -214,7 +214,7 @@ namespace basecross {
 		//	m_RadY = m_CameraUnderRot;
 		//}
 
-		float playerSpeed = 9.0f;
+		float playerSpeed = m_ptrPlayer.lock()->GetPlayerSpeed();
 
 		armVec.y = sin(m_RadY);
 		//ここでY軸回転を作成
@@ -222,10 +222,10 @@ namespace basecross {
 			//回転スピードを反映
 			if (fThumbLX != 0) {
 				if (IsLRBaseMode()) {
-					m_RadXZ += -fThumbLX * elapsedTime * 0.3f;
+					m_RadXZ += -fThumbLX * elapsedTime * (110.0f - playerSpeed)*0.005f;
 				}
 				else {
-					m_RadXZ += fThumbLX * elapsedTime * 0.3f;
+					m_RadXZ += fThumbLX * elapsedTime * (110.0f - playerSpeed)*0.005f;
 				}
 			}
 			else if (keyData.m_bPushKeyTbl['A']) {

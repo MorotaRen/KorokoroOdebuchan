@@ -9,7 +9,7 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	class MyCamera : public Camera {
 		weak_ptr<GameObject> m_TargetObject;	//目標となるオブジェクト
-		//weak_ptr<Player> m_playerObject;	
+		weak_ptr<Player> m_ptrPlayer;	
 		
 		float m_ToTargetLerp;	//目標を追いかける際の補間値
 		bsm::Vec3 m_TargetToAt;	//目標から視点を調整する位置ベクトル
@@ -85,6 +85,10 @@ namespace basecross {
 		virtual void SetAt(const bsm::Vec3& At)override;
 		//カメラの視点を設定する
 		virtual void SetAt(float x, float y, float z)override;
+
+		//プレイヤーを取得する
+		void SetPlayer(weak_ptr<Player> p) { m_ptrPlayer = p; }
+
 		//更新
 		virtual void OnUpdate()override;
 	};

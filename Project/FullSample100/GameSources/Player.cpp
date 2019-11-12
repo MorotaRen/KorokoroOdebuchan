@@ -13,11 +13,11 @@ namespace basecross{
 		m_pos(pos),
 		m_scale(scale),
 		m_runningSpeed(3.0f),
-		m_rollingSpeed(3.0f),
+		m_rollingSpeed(0.0f),
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
-		m_accelerate(5.0f),
+		m_accelerate(10.0f),
 		m_isInput(false)
 	{
 	}
@@ -60,7 +60,7 @@ namespace basecross{
 		if (ptrCamera) {
 			//MyCameraに注目するオブジェクト（プレイヤー）の設定
 			ptrCamera->SetTargetObject(GetThis<GameObject>());
-			ptrCamera->SetTargetToAt(Vec3(0, 5.0f, 0));
+			ptrCamera->SetTargetToAt(Vec3(0, 3, 1));
 		}
 	}
 
@@ -166,7 +166,11 @@ namespace basecross{
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
 
+		SetPlayerSpeed(m_rollingSpeed);
 
+		if (m_speed > 100.0f) {
+			m_speed = 100.0f;
+		}
 	}
 
 
@@ -234,12 +238,10 @@ namespace basecross{
 		strCamera += L"Y=" + Util::FloatToWStr(cameraPos.y, 6, Util::FloatModify::Fixed) + L",\t";
 		strCamera += L"Z=" + Util::FloatToWStr(cameraPos.z, 6, Util::FloatModify::Fixed) + L"\n";
 
-		wstring strInput(L"Input:\t");
-		strInput += L"X=" + Util::FloatToWStr(m_inputX, 6, Util::FloatModify::Fixed) + L",\t";
-		strInput += L"Y=" + Util::FloatToWStr(cameraPos.y, 6, Util::FloatModify::Fixed) + L",\t";
-		strInput += L"Z=" + Util::FloatToWStr(cameraPos.z, 6, Util::FloatModify::Fixed) + L"\n";
+		wstring strSpeed(L"PlayerSpeed:\t");
+		strSpeed += L"Speed=" + Util::FloatToWStr(m_speed, 6, Util::FloatModify::Fixed) + L",\n";
 
-		wstring str = strMess + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strInput;
+		wstring str = strMess + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed;
 		//文字列をつける
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);

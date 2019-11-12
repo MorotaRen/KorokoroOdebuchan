@@ -36,6 +36,7 @@ namespace basecross {
 		float m_inputX; //“ü—Í‚³‚ê‚½x•ûŒü‚Ì¬•ª
 		float m_inputY; //“ü—Í‚³‚ê‚½y•ûŒü‚Ì¬•ª
 		float m_calory; //ƒJƒƒŠ[
+		float m_speed;
 		bool m_isInput;
 
 		//“ü—Í‚³‚ê‚½
@@ -57,8 +58,8 @@ namespace basecross {
 		//•¶š—ñ‚Ì•\¦
 		void DrawStrings();
 
-
-		float GetPlayerSpeed() { return m_rollingSpeed; }
+		void SetPlayerSpeed(float s) { m_speed = s; }
+		float GetPlayerSpeed() { return m_speed; }
 
 		void SetPlayerFrontVec(Vec3 f) { m_front = f; }
 		Vec3 GetPlayerFrontVec() { return m_front; }
