@@ -22,6 +22,7 @@ namespace basecross {
 			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
 
 			LoadImageResources();
+			LoadStaticModelResources();
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -65,7 +66,7 @@ namespace basecross {
 		App::GetApp()->RegisterTexture(KeyName, strTexture);
 	}
 
-	/// ----------------------------------------------------------------------------<summary>
+	/// ---------------------------------------------------------------------------<summary>
 	/// スタティックモデルの読み込み(引数なし)
 	/// </summary>----------------------------------------------------------------------------
 	void Scene::LoadStaticModelResources() {
@@ -76,11 +77,11 @@ namespace basecross {
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"Player.bmf",L"Player"}
+			{L"OBJ_courseSample.bmf",L"SampleCourse"}
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";
-			auto staticModel = MeshResource::CreateStaticModelMesh(dataDir, model.m_modelName);
+			auto staticModel = MeshResource::CreateStaticModelMesh(srtmodel, model.m_modelName);
 			App::GetApp()->RegisterResource(model.m_modelKey, staticModel);
 		}
 	}

@@ -46,7 +46,12 @@ namespace basecross {
 			PtrCamera->SetPlayer(m_ptrPlayer);
 			
 
-			
+			auto stageobject = AddGameObject<TestBlock>(Vec3(0, 0, 0), Vec3(20, 1, 500), Vec3(0, 90, 0));
+			SetSharedGameObject(L"StageObject", stageobject);
+			auto player = AddGameObject<Player>(Vec3(250, 100, 0), Vec3(1, 1, 1));
+			SetSharedGameObject(L"Player",player);
+			GameSystems::GetInstans().LoadStageCSV();
+
 		}
 		catch (...) {
 			throw;

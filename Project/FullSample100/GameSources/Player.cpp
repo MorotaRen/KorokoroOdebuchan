@@ -40,6 +40,9 @@ namespace basecross{
 		PsSphereParam param(ptrTrans->GetWorldMatrix(), 1.0f, false, PsMotionType::MotionTypeActive);
 		//Rigidbodyをつける
 		auto  ptrRigid = AddComponent<RigidbodySphere>(param);
+		ptrRigid->SetAutoGravity(false);
+		ptrRigid->SetDrawActive(true);
+
 
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
@@ -49,6 +52,10 @@ namespace basecross{
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		//描画するメッシュを設定
 		ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
+
+		//当たり判定
+		auto ptrColl = AddComponent<CollisionSphere>();
+		ptrColl->SetAfterCollision(AfterCollision::None);
 
 		//文字列をつける
 		auto ptrString = AddComponent<StringSprite>();
@@ -143,12 +150,12 @@ namespace basecross{
 		m_front.y = 0;
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-		
+
 		if (KeyState.m_bPushKeyTbl['A']) { //左
 			m_front.x -= 3.0f * elapsedTime;
 			m_inputX = -1;
 		}
-		
+
 		if (KeyState.m_bPushKeyTbl['D']) { //右
 			m_front.x += 3.0f*elapsedTime;
 			m_inputX = 1;
@@ -246,6 +253,18 @@ namespace basecross{
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 	}
+
+	/// ----------------------------------------<summary>
+	/// 回転時スピードのセッター
+	/// </summary>----------------------------------------
+	void Player::HittingDecision_Rect() {
+		auto stageObject = GetStage()->GetSharedGameObject<TestStage>(L"StageObject");
+		Vec3 hitPoint;
+		RECT rect;
+		bool isHit = false;
+
+	}
+
 }
 //end basecross
 
