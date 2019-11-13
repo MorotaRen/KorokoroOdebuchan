@@ -20,6 +20,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Items.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataLoad_CSV.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Objects.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Project.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />

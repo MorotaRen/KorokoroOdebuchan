@@ -25,6 +25,74 @@ namespace basecross {
 		m_pad = device.GetControlerVec()[0];
 	}
 
+
+	/// ----------------------------------------<summary>
+	///	CSVに保存されたCSVデータを読み込みます
+	/// </summary>----------------------------------------
+	void GameSystems::LoadStageCSV() {
+		unsigned int LoopNum = 0;
+		wstring DataDir,FileDir;
+		App::GetApp()->GetDataDirectory(DataDir);
+		FileDir = DataDir + L"CSV\\Collider.csv";
+		m_stageCSV.SetFileName(FileDir);
+		m_stageCSV.ReadCsv();
+		//全体配列取得
+		auto& LineVec = m_stageCSV.GetCsvVec();
+		//行に分ける
+		for (size_t i = 0; i < LineVec.size(); i++) {
+			vector<wstring> Tokens;
+			//トークン（カラム）単位で文字列を抽出(L','をデリミタとして区分け)
+			Util::WStrToTokenVector(Tokens, LineVec[i], L',');
+			//実際にスキャン開始
+			for (size_t j = 0; j < 1; j++) {
+				switch (Tokens[0] == L"")
+				{
+				case false:
+					//0はタグ
+					if (LoopNum == 0) {
+						m_objectdata.Tag = Tokens[0];
+						LoopNum++;
+						break;
+					}
+					//1はPos
+					else if(LoopNum == 1){
+						m_objectdata.Pos.x = stof(Tokens[0]);
+						m_objectdata.Pos.y = stof(Tokens[1]);
+						m_objectdata.Pos.z = stof(Tokens[2]);
+						LoopNum++;
+						break;
+					}
+					//2はRot
+					else if (LoopNum == 2) {
+						m_objectdata.Rotate.x = stof(Tokens[0]);
+						m_objectdata.Rotate.y = stof(Tokens[1]);
+						m_objectdata.Rotate.z = stof(Tokens[2]);
+						m_objectdata.Rotate.w = stof(Tokens[3]);
+						LoopNum++;
+						break;
+					}
+					//3はSca
+					else if (LoopNum == 3) {
+						m_objectdata.Scale.x = stof(Tokens[0]);
+						m_objectdata.Scale.y = stof(Tokens[1]);
+						m_objectdata.Scale.z = stof(Tokens[2]);
+						LoopNum++;
+						break;
+					}
+					//終わり
+					else if(LoopNum == 4)
+					{
+						m_objectdatas.push_back(m_objectdata);
+						LoopNum = 0;
+						break;
+					}
+				default:
+					break;
+				}
+			}
+		}
+	}
+
 	///	----------------------------------------<summary>
 	/// モデル情報があるCSVの読み込み
 	/// </summary>----------------------------------------
@@ -112,4 +180,6 @@ namespace basecross {
 	vector<vector<wstring>> GameSystems::GetAnimationData() {
 		return m_animationData;
 	}
+
+
 }

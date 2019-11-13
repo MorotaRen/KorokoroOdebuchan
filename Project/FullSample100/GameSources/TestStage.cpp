@@ -4,7 +4,7 @@
 namespace basecross {
 
 	void TestStage::CreateViewLight() {
-		const Vec3 eye(0.0f, 10.0f, -5.0f);
+		const Vec3 eye(0.0f, 10.0f, -5000.0f);
 		const Vec3 at(0.0f, 0.0f, 0.0f);
 		auto PtrView = CreateView<SingleView>();
 		//ビューのカメラの設定
@@ -25,10 +25,12 @@ namespace basecross {
 			//ビューとライトの作成
 			CreateViewLight();
 
-
-			AddGameObject<TestBlock>(Vec3(0, 0, 0), Vec3(20, 1, 500), Vec3(10, 0, 0));
-			auto player = AddGameObject<Player>(Vec3(0, 1, 0), Vec3(1, 1, 1));
+			auto stageobject = AddGameObject<TestBlock>(Vec3(0, 0, 0), Vec3(20, 1, 500), Vec3(0, 90, 0));
+			SetSharedGameObject(L"StageObject", stageobject);
+			auto player = AddGameObject<Player>(Vec3(250, 100, 0), Vec3(1, 1, 1));
 			SetSharedGameObject(L"Player",player);
+			GameSystems::GetInstans().LoadStageCSV();
+
 		}
 		catch (...) {
 			throw;

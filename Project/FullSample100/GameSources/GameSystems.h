@@ -9,6 +9,13 @@
 #include "stdafx.h"
 
 namespace basecross {
+	struct ObjectData
+	{
+		wstring Tag;
+		Vec3	Pos;
+		Quat	Rotate;
+		Vec3	Scale;
+	};
 	class  GameSystems final {
 	private:
 		//コンストラクタ
@@ -20,7 +27,11 @@ namespace basecross {
 		//コントローラー情報
 		CONTROLER_STATE m_pad;
 		//CSVファイル
-		CsvFile m_modelCSV;
+		CsvFile m_modelCSV,m_stageCSV;
+		//オブジェクトデータ
+		ObjectData m_objectdata;
+		//オブジェクトデータ配列
+		vector<ObjectData> m_objectdatas;
 		//読み込んだモデルのデータ
 		vector<wstring> m_modelData;
 		//アニメーション保存用
@@ -39,6 +50,8 @@ namespace basecross {
 		void ControllerCheck_Cursor();
 		//コントローラー情報更新
 		void UpdatePadData();
+		//ステージのCSV読み込み
+		void LoadStageCSV();
 		//モデルのCSVを読み込み
 		void LoadModelCSV();
 		//CSVから作成したデータからモデルの追加

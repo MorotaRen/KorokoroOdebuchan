@@ -75,16 +75,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h">
       <Filter>Scene\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ColorCone.h">
-      <Filter>Objects\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Objects.h">
-      <Filter>Objects\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h">
       <Filter>Objects\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Items.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Objects.h">
       <Filter>Objects\Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -123,8 +121,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Items.cpp">
       <Filter>Objects\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ColorCone.cpp">
-      <Filter>Objects\Sources</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
   </ItemGroup>
 </Project>

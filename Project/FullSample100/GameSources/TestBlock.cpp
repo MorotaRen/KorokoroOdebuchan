@@ -19,18 +19,19 @@ namespace basecross {
 		ptrTrans->SetRotation(m_rot);
 		ptrTrans->SetPosition(m_pos);
 
-		//影をつける
-		auto ptrShadow = AddComponent<Shadowmap>();
-		ptrShadow->SetMeshResource(L"DEFAULT_CUBE");
+		auto drawcomp = AddComponent<PNTStaticModelDraw>();
+		drawcomp->SetMeshResource(L"SampleCourse");
+		drawcomp->SetOwnShadowActive(true);
+		auto ptrColl = AddComponent < CollisionObb > ();
+		ptrColl->SetAfterCollision(AfterCollision::None);
+		ptrColl->SetDrawActive(true);
 
-		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
-		ptrDraw->SetFogEnabled(true);
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetTextureResource(L"TestWall");
-		ptrDraw->SetOwnShadowActive(true);
+
 		//物理計算ボックス
 		PsBoxParam param(ptrTrans->GetWorldMatrix(), 0.0f, true, PsMotionType::MotionTypeFixed);
 		auto PsPtr = AddComponent<RigidbodyBox>(param);
+		PsPtr->SetDrawActive(true);
+
 	}
 
 	//更新

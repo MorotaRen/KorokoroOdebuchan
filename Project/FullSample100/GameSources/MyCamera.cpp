@@ -169,7 +169,6 @@ namespace basecross {
 
 
 	void MyCamera::OnUpdate() {
-		auto ptrPlayer = App::GetApp()->GetScene<TestStage>()->GetSharedGameObject<Player>(L"Player");
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		auto keyData = App::GetApp()->GetInputDevice().GetKeyState();
 		//‘O‰ñ‚Ìƒ^[ƒ“‚©‚ç‚ÌŠÔ
