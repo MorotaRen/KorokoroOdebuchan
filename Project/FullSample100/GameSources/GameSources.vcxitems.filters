@@ -1,131 +1,133 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{bdf173db-a343-4218-b8b0-66ac16f0b63b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Headers">
-      <UniqueIdentifier>{42c6b9c4-9322-41d8-bf1e-2edf43f657b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Sources">
-      <UniqueIdentifier>{b7b15ca8-8472-4930-a73a-0054a2d2c538}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System">
-      <UniqueIdentifier>{2b0e6dac-367a-4ced-aa8c-eaca9e984698}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Headers">
-      <UniqueIdentifier>{87848ed3-7830-4421-8e8c-8a4c59cb2e54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Sources">
-      <UniqueIdentifier>{156e109e-b3c5-4eec-b2db-7473a1e74e74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects">
-      <UniqueIdentifier>{cdfbdd41-393f-46bc-81dc-745ba76a1009}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Characters">
-      <UniqueIdentifier>{d01ee5e3-d1ea-47dc-95fd-21c3283f6d3d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Characters\Headers">
-      <UniqueIdentifier>{4b0a624a-610d-4bc6-b311-2b02a781cdf9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Characters\Sources">
-      <UniqueIdentifier>{96692d2a-8790-41a9-bfac-6c5662d4ad61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Headers">
-      <UniqueIdentifier>{6332f18a-122b-4fd4-9b55-8fd30da28f5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Sources">
-      <UniqueIdentifier>{774a9d27-ee72-4603-8f82-79a916263ca9}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h">
-      <Filter>Scene\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Project.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Player.h">
-      <Filter>Characters\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
-      <Filter>Characters\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h">
-      <Filter>Scene\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataLoad_CSV.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h">
-      <Filter>characters\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h">
-      <Filter>Scene\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h">
-      <Filter>Objects\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Items.h">
-      <Filter>Objects\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Objects.h">
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h">
-      <Filter>Objects\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Items.h">
-      <Filter>Objects\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
-      <Filter>Characters\Sources</Filter>
+      <Filter>Characters\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp">
+      <Filter>Characters\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
-      <Filter>Characters\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp">
-      <Filter>System\Sources</Filter>
+      <Filter>Characters\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp">
-      <Filter>System\Sources</Filter>
+      <Filter>Projects\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
-      <Filter>System</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp">
+      <Filter>Projects\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp">
-      <Filter>Scene\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp">
-      <Filter>Scene\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameSystems.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestBlock.cpp">
-      <Filter>Objects\Sources</Filter>
+      <Filter>Objects\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Items.cpp">
-      <Filter>Objects\Sources</Filter>
+      <Filter>Objects\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameSystems.cpp">
+      <Filter>Systems\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp">
+      <Filter>Scenes\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
+      <Filter>Characters\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
+      <Filter>Characters\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Player.h">
+      <Filter>Characters\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Project.h">
+      <Filter>Projects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h">
+      <Filter>Projects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h">
+      <Filter>Projects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Items.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Objects.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
+      <Filter>Systems\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h">
+      <Filter>Scenes\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
+      <Filter>Scenes\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h">
+      <Filter>Scenes\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h">
+      <Filter>Scenes\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{1c43183b-139d-487e-b95d-b12dbcb6ff89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters">
+      <UniqueIdentifier>{8d0c38db-8c92-4922-b45f-41d8a93bdcf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Projects">
+      <UniqueIdentifier>{208405f9-a344-4e38-b90c-da991ff0ec0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{fcf191dc-b1c1-4b44-8ee4-a79bdf4dfc1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{92e72f6e-ac5e-44e4-9e4c-4855259858b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters\Header">
+      <UniqueIdentifier>{41009d13-8571-4824-9325-606b6adb6330}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters\Source">
+      <UniqueIdentifier>{9f6535fc-baa9-4447-aa56-839490f37c3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Projects\Header">
+      <UniqueIdentifier>{0ca03b01-65e7-43c1-8a0c-62af4688650a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Projects\Source">
+      <UniqueIdentifier>{6fe0b304-a27f-4c57-b570-99ec9cd29e74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Header">
+      <UniqueIdentifier>{65b32abe-6277-4eca-b91a-96dbeeea39a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Source">
+      <UniqueIdentifier>{f255cbfb-ffb7-4345-bfd2-d6cc97c22cd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Header">
+      <UniqueIdentifier>{f3c5c213-df67-4267-b40e-6d48a26d3de3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Source">
+      <UniqueIdentifier>{fefc44e8-3bc2-4500-ad6d-b7f56550c3fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\Header">
+      <UniqueIdentifier>{f94b8c9f-6539-4c10-9f5f-364be9b86545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\Source">
+      <UniqueIdentifier>{091ef21d-ea0d-4746-8fa9-5965702dab60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
