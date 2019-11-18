@@ -94,6 +94,19 @@ namespace basecross {
 	}
 
 	///	----------------------------------------<summary>
+	/// ステージを作成する
+	/// </summary>----------------------------------------
+	void GameSystems::CreateStage(Stage &stage) {
+		for each (ObjectData objdata in m_objectdatas)
+		{
+			//
+			if (objdata.Tag == L"") {
+
+			}
+		}
+	}
+
+	///	----------------------------------------<summary>
 	/// モデル情報があるCSVの読み込み
 	/// </summary>----------------------------------------
 	void GameSystems::LoadModelCSV() {

@@ -52,6 +52,8 @@ namespace basecross {
 		void UpdatePadData();
 		//ステージのCSV読み込み
 		void LoadStageCSV();
+		//ステージ作成
+		void CreateStage(Stage &stage);
 		//モデルのCSVを読み込み
 		void LoadModelCSV();
 		//CSVから作成したデータからモデルの追加

@@ -13,7 +13,7 @@
 #include "Scene.h"
 
 #include "GameSystems.h"
-
+#include "ColliderObject.h"
 #include "GameStage.h"
 #include "TestStage.h"
 #include "Character.h"

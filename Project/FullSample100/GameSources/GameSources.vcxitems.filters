@@ -38,6 +38,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
@@ -67,9 +70,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h">
       <Filter>Objects\Header</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
-      <Filter>Systems\Header</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h">
       <Filter>Scenes\Header</Filter>
     </ClInclude>
@@ -81,6 +81,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h">
       <Filter>Scenes\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
+      <Filter>Systems\Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
