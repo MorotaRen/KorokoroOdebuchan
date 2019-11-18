@@ -47,7 +47,8 @@ namespace basecross {
 		InitializedParam textures[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
 			{L"testImage.png",L"TestImage"},
-			{L"wall.jpg",L"TestWall"}
+			{L"wall.jpg",L"TestWall"},
+			{L"Floor.png",L"TestFloor"}
 		};
 
 		for (auto texture : textures) {

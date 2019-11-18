@@ -22,7 +22,10 @@ namespace basecross {
 		m_RotSpeed(1.0f),
 		m_ZoomSpeed(0.1f),
 		m_LRBaseMode(true),
-		m_UDBaseMode(true)
+		m_UDBaseMode(true),
+		m_boundRotL(false),
+		m_boundRotR(false),
+		m_boundTime(0.3f)
 	{}
 
 	MyCamera::MyCamera(float ArmLen) :
@@ -39,7 +42,10 @@ namespace basecross {
 		m_RotSpeed(1.0f),
 		m_ZoomSpeed(0.1f),
 		m_LRBaseMode(true),
-		m_UDBaseMode(true)
+		m_UDBaseMode(true),
+		m_boundRotL(false),
+		m_boundRotR(false),
+		m_boundTime(0.3f)
 	{
 		m_ArmLen = ArmLen;
 		auto eye = GetEye();
@@ -222,10 +228,10 @@ namespace basecross {
 			//‰ñ“]ƒXƒs[ƒh‚ğ”½‰f
 			if (fThumbLX != 0) {
 				if (IsLRBaseMode()) {
-					m_RadXZ += -fThumbLX * elapsedTime * (110.0f - playerSpeed)*0.005f;
+					m_RadXZ += fThumbLX * elapsedTime * (110.0f - playerSpeed)*0.005f;
 				}
 				else {
-					m_RadXZ += fThumbLX * elapsedTime * (110.0f - playerSpeed)*0.005f;
+					m_RadXZ += -fThumbLX * elapsedTime * (110.0f - playerSpeed)*0.005f;
 				}
 			}
 			else if (keyData.m_bPushKeyTbl['A']) {
@@ -245,6 +251,34 @@ namespace basecross {
 				}
 
 			}
+
+			
+			if (m_ptrPlayer.lock()->GetBoundFlagL()) {
+				m_boundRotL = true;
+				m_ptrPlayer.lock()->SetBoundFlagL(false);
+			}
+			else if (m_ptrPlayer.lock()->GetBoundFlagR()) {
+				m_boundRotR = true;
+				m_ptrPlayer.lock()->SetBoundFlagR(false);
+			}
+
+			if (m_boundRotL) {
+				m_boundTime -= elapsedTime;
+				m_RadXZ += -1.0f * elapsedTime;
+				if (m_boundTime < 0.0f) {
+					m_boundTime = 0.3f;
+					m_boundRotL = false;
+				}
+			}
+			else if (m_boundRotR) {
+				m_boundTime -= elapsedTime;
+				m_RadXZ += 1.0f * elapsedTime;
+				if (m_boundTime < 0.0f) {
+					m_boundTime = 0.3f;
+					m_boundRotR = false;
+				}
+			}
+
 			if (abs(m_RadXZ) >= XM_2PI) {
 				//1T‰ñ‚Á‚½‚ç0‰ñ“]‚É‚·‚é
 				m_RadXZ = 0;
