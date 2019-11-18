@@ -1130,8 +1130,8 @@ namespace basecross{
 		*/
 		//--------------------------------------------------------------------------------------
 		bool IsRotIdentity() const{
-			if (m_Rot[0] == bsm::Vec3(1.0f, 0.0f, 0.0f) 
-				&& m_Rot[1] == bsm::Vec3(0.0f, 1.0f, 0.0f) 
+			if (m_Rot[0] == bsm::Vec3(1.0f, 0.0f, 0.0f)
+				&& m_Rot[1] == bsm::Vec3(0.0f, 1.0f, 0.0f)
 				&& m_Rot[2] == bsm::Vec3(0.0f, 0.0f, 1.0f)){
 				return true;
 			}
@@ -2627,10 +2627,10 @@ namespace basecross{
 			if(fabsf(m.y) > obb.m_Size.y + ady) return false;
 			float adz = fabsf(d.z);
 			if(fabsf(m.z) > obb.m_Size.z + adz) return false;
-			adx += EPSILON; 
-			ady += EPSILON; 
+			adx += EPSILON;
+			ady += EPSILON;
 			adz += EPSILON;
-        
+
 			if(fabsf(m.y * d.z - m.z * d.y) > obb.m_Size.y * adz + obb.m_Size.z * ady ) return false;
 			if(fabsf(m.z * d.x - m.x * d.z) > obb.m_Size.x * adz + obb.m_Size.z * adx ) return false;
 			if(fabsf(m.x * d.y - m.y * d.x) > obb.m_Size.x * ady + obb.m_Size.y * adx ) return false;
