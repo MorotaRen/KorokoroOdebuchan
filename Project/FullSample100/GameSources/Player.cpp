@@ -18,7 +18,9 @@ namespace basecross{
 		m_inputX(0.0f),
 		m_inputY(0.0f),
 		m_accelerate(10.0f),
-		m_isInput(false)
+		m_boundFlagL(false),
+		m_boundFlagR(false),
+		m_boundInputReceptionTime(0.5f)
 	{
 	}
 
@@ -37,9 +39,14 @@ namespace basecross{
 		ptrTrans->SetPosition(m_pos);
 
 		//WorldMatrixをもとにRigidbodySphereのパラメータを作成
-		PsSphereParam param(ptrTrans->GetWorldMatrix(), 1.0f, false, PsMotionType::MotionTypeActive);
+		PsSphereParam param(ptrTrans->GetWorldMatrix(), 10.0f, false, PsMotionType::MotionTypeActive);
 		//Rigidbodyをつける
 		auto  ptrRigid = AddComponent<RigidbodySphere>(param);
+		//コリジョンをつける
+		auto ptrColl = AddComponent<CollisionSphere>();
+		ptrColl->SetAfterCollision(AfterCollision::Auto);
+
+		auto ptrGra = AddComponent<Gravity>();
 
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
@@ -127,6 +134,7 @@ namespace basecross{
 
 	//プレイヤーの移動
 	void Player::PlayerMove() {
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		auto elapsedTime = App::GetApp()->GetElapsedTime();
 		Vec3 angle(0, 0, 0);
 		auto ptrTransform = GetComponent<Transform>();
@@ -140,19 +148,7 @@ namespace basecross{
 
 		//進行方向の向き
 		m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
-		m_front.y = 0;
-
-		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-		
-		if (KeyState.m_bPushKeyTbl['A']) { //左
-			m_front.x -= 3.0f * elapsedTime;
-			m_inputX = -1;
-		}
-		
-		if (KeyState.m_bPushKeyTbl['D']) { //右
-			m_front.x += 3.0f*elapsedTime;
-			m_inputX = 1;
-		}
+		//m_front.y = 0;
 		m_front.normalize();
 
 
@@ -163,13 +159,50 @@ namespace basecross{
 		velo.x = m_front.x * m_rollingSpeed;
 		velo.z = m_front.z * m_rollingSpeed;
 
+		
+
+		auto ptrColl = GetComponent<CollisionSphere>();
+		//物理オブジェクトを持つ配列の取得
+		vector<shared_ptr<Rigidbody>> PsComptVec;
+		GetStage()->GetUsedDynamicCompoentVec<Rigidbody>(PsComptVec);
+		for (auto& v : PsComptVec) {
+			auto ptrG = dynamic_pointer_cast<TestWall>(v->GetGameObject());
+			if (ptrG) {
+				//壁を取得
+				auto ptrRegBox = dynamic_pointer_cast<RigidbodyBox>(v);
+				if (ptrRegBox) {
+					Vec3 ret;
+					//壁との衝突
+					if (HitTest::SPHERE_OBB(ptrColl->GetSphere(), ptrRegBox->GetOBB(), ret)) {
+						m_rollingSpeed -= 1.5f;
+						m_boundInputReceptionTime -= elapsedTime;
+
+						if (m_boundInputReceptionTime > 0.0f) {
+							if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
+								m_boundFlagL = true;
+							}
+							else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+							{
+								m_boundFlagR = true;
+							}
+						}
+					}
+					else {
+						m_boundInputReceptionTime = 0.5f;
+					}
+				}
+			}
+		}
+
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
 
 		SetPlayerSpeed(m_rollingSpeed);
 
+		//最高速度
 		if (m_speed > 100.0f) {
 			m_speed = 100.0f;
+			m_rollingSpeed = 100.0f;
 		}
 	}
 

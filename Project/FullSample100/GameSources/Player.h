@@ -30,6 +30,7 @@ namespace basecross {
 		Vec3 m_scale; //大きさ
 		Vec3 m_rot; //回転
 		Vec3 m_front; //前方向のベクトル
+		Vec3 m_ret;
 		float m_accelerate; //加速度
 		float m_runningSpeed; //ランニングモードの速度
 		float m_rollingSpeed; //ローリングモードの速度
@@ -37,7 +38,9 @@ namespace basecross {
 		float m_inputY; //入力されたy方向の成分
 		float m_calory; //カロリー
 		float m_speed;
-		bool m_isInput;
+		bool m_boundFlagL;
+		bool m_boundFlagR;
+		float m_boundInputReceptionTime;
 
 		//入力された時
 		void InputController();
@@ -57,6 +60,12 @@ namespace basecross {
 		virtual void OnUpdate2() override;
 		//文字列の表示
 		void DrawStrings();
+
+		void SetBoundFlagL(bool f) { m_boundFlagL = f; }
+		bool GetBoundFlagL() { return m_boundFlagL; }
+		
+		void SetBoundFlagR(bool f) { m_boundFlagR = f; }
+		bool GetBoundFlagR() { return m_boundFlagR; }
 
 		void SetPlayerSpeed(float s) { m_speed = s; }
 		float GetPlayerSpeed() { return m_speed; }

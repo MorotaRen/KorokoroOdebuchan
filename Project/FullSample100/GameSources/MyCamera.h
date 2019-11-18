@@ -10,7 +10,10 @@ namespace basecross {
 	class MyCamera : public Camera {
 		weak_ptr<GameObject> m_TargetObject;	//目標となるオブジェクト
 		weak_ptr<Player> m_ptrPlayer;	
-		
+
+		bool m_boundRotL;
+		bool m_boundRotR;
+		float m_boundTime;
 		float m_ToTargetLerp;	//目標を追いかける際の補間値
 		bsm::Vec3 m_TargetToAt;	//目標から視点を調整する位置ベクトル
 		float m_RadY;
