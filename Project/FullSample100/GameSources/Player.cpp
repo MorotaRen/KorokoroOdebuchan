@@ -59,10 +59,6 @@ namespace basecross{
 		//描画するメッシュを設定
 		ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
 
-		//当たり判定
-		auto ptrColl = AddComponent<CollisionSphere>();
-		ptrColl->SetAfterCollision(AfterCollision::None);
-
 		//文字列をつける
 		auto ptrString = AddComponent<StringSprite>();
 		ptrString->SetText(L"");
@@ -154,9 +150,7 @@ namespace basecross{
 
 		//進行方向の向き
 		m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
-<<<<<<< HEAD
 		//m_front.y = 0;
-=======
 		m_front.y = 0;
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -170,7 +164,6 @@ namespace basecross{
 			m_front.x += 3.0f*elapsedTime;
 			m_inputX = 1;
 		}
->>>>>>> fb01585729c84aec7df9e29ac9a61a49f8723e7e
 		m_front.normalize();
 
 

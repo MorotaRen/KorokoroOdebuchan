@@ -96,11 +96,23 @@ namespace basecross {
 	///	----------------------------------------<summary>
 	/// ステージを作成する
 	/// </summary>----------------------------------------
-	void GameSystems::CreateStage(Stage &stage) {
+	weak_ptr<Player> GameSystems::CreateStage() {
+		auto Stage = App::GetApp()->GetScene<Scene>()->GetActiveStage();
 		for each (ObjectData objdata in m_objectdatas)
 		{
-			//
-			if (objdata.Tag == L"") {
+			//プレイヤー開始地点
+			if (objdata.Tag == L"PlayerStartPos") {
+				auto player = Stage->AddGameObject<Player>(objdata.Pos,objdata.Rotate.toRotVec());
+				Stage->SetSharedGameObject(L"Player",player);
+				return player;
+			//オブジェクトの判定
+			}else if (objdata.Tag == L"ObjectCollider") {
+
+			//ステージ
+			}else if (objdata.Tag == L"Stage") {
+
+			//ステージオブジェクト
+			}else if (objdata.Tag == L"StageObject") {
 
 			}
 		}

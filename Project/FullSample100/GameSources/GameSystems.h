@@ -9,6 +9,8 @@
 #include "stdafx.h"
 
 namespace basecross {
+	class Player;
+
 	struct ObjectData
 	{
 		wstring Tag;
@@ -53,7 +55,7 @@ namespace basecross {
 		//ステージのCSV読み込み
 		void LoadStageCSV();
 		//ステージ作成
-		void CreateStage(Stage &stage);
+		weak_ptr<Player> CreateStage();
 		//モデルのCSVを読み込み
 		void LoadModelCSV();
 		//CSVから作成したデータからモデルの追加

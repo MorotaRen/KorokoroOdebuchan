@@ -35,26 +35,32 @@ namespace basecross {
 			const Vec3 at(0.0f, 0.0f, 0.0f);
 			auto PtrView = CreateView<SingleView>();
 			//ÉrÉÖÅ[ÇÃÉJÉÅÉâÇÃê›íË
-			auto PtrCamera = ObjectFactory::Create<MyCamera>();
-			PtrView->SetCamera(PtrCamera);
-			PtrCamera->SetEye(eye);
-			PtrCamera->SetAt(at);
+			m_camera = ObjectFactory::Create<MyCamera>();
+			PtrView->SetCamera(m_camera);
+			m_camera->SetEye(eye);
+			m_camera->SetAt(at);
 
 			AddGameObject<TestBlock>(Vec3(0, 0, 0), Vec3(20, 1, 1200), Vec3(10, 0, 0));
-			m_ptrPlayer = AddGameObject<Player>(Vec3(0, 12, -15), Vec3(1, 1, 1));
+			//m_ptrPlayer = AddGameObject<Player>(Vec3(0, 12, -15), Vec3(1, 1, 1));
 
-			PtrCamera->SetPlayer(m_ptrPlayer);
-			
+
 
 			auto stageobject = AddGameObject<TestBlock>(Vec3(0, 0, 0), Vec3(20, 1, 500), Vec3(0, 90, 0));
 			SetSharedGameObject(L"StageObject", stageobject);
-			auto player = AddGameObject<Player>(Vec3(250, 100, 0), Vec3(1, 1, 1));
-			SetSharedGameObject(L"Player",player);
-			GameSystems::GetInstans().LoadStageCSV();
-
+			//auto player = AddGameObject<Player>(Vec3(250, 100, 0), Vec3(1, 1, 1));
+			//SetSharedGameObject(L"Player",player);
 		}
 		catch (...) {
 			throw;
+		}
+	}
+
+	void TestStage::OnUpdate() {
+		if (!m_IsCreateObject) {
+			GameSystems::GetInstans().LoadStageCSV();
+			m_ptrPlayer = GameSystems::GetInstans().CreateStage();
+			m_camera->SetPlayer(m_ptrPlayer);
+			m_IsCreateObject = true;
 		}
 	}
 
