@@ -55,7 +55,7 @@ namespace basecross {
 						break;
 					}
 					//1はPos
-					else if(LoopNum == 1){
+					else if (LoopNum == 1) {
 						m_objectdata.Pos.x = stof(Tokens[0]);
 						m_objectdata.Pos.y = stof(Tokens[1]);
 						m_objectdata.Pos.z = stof(Tokens[2]);
@@ -79,9 +79,16 @@ namespace basecross {
 						LoopNum++;
 						break;
 					}
-					//終わり
-					else if(LoopNum == 4)
-					{
+					//*があったら以下子供
+					else if (Tokens[0].find(L"*") != std::string::npos && LoopNum == 4) {
+						//グループナンバー加算して登録
+						m_objectdata.GroupNum++;
+						m_objectdatas.push_back(m_objectdata);
+						LoopNum = 0;
+						break;
+					}
+					//-の時はそのまま継続登録
+					else if (Tokens[0].find(L"-") != std::string::npos && LoopNum == 4) {
 						m_objectdatas.push_back(m_objectdata);
 						LoopNum = 0;
 						break;
@@ -102,17 +109,22 @@ namespace basecross {
 		{
 			//プレイヤー開始地点
 			if (objdata.Tag == L"PlayerStartPos") {
-				auto player = Stage->AddGameObject<Player>(objdata.Pos,objdata.Rotate.toRotVec());
-				Stage->SetSharedGameObject(L"Player",player);
-				return player;
+				auto PlayerObj = Stage->AddGameObject<Player>(objdata.Pos,Vec3(0.1f,0.1f,0.1f));
+				Stage->SetSharedGameObject(L"Player", PlayerObj);
+				return PlayerObj;
 			//オブジェクトの判定
 			}else if (objdata.Tag == L"ObjectCollider") {
-
+				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				ColliderObj->AddTag(L"Collider");
+				ColliderObj->SetUpdateActive(false);
 			//ステージ
 			}else if (objdata.Tag == L"Stage") {
 
 			//ステージオブジェクト
 			}else if (objdata.Tag == L"StageObject") {
+
+			//チェックポイント
+			}else if (objdata.Tag == L"CheckPoint") {
 
 			}
 		}

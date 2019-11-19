@@ -13,6 +13,7 @@ namespace basecross {
 
 	struct ObjectData
 	{
+		unsigned int GroupNum;
 		wstring Tag;
 		Vec3	Pos;
 		Quat	Rotate;

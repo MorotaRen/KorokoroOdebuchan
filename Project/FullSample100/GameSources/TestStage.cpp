@@ -40,13 +40,13 @@ namespace basecross {
 			m_camera->SetEye(eye);
 			m_camera->SetAt(at);
 
-			AddGameObject<TestBlock>(Vec3(0, 0, 0), Vec3(20, 1, 1200), Vec3(10, 0, 0));
+			//AddGameObject<TestBlock>(Vec3(0, 0, 0), Vec3(20, 1, 1200), Vec3(10, 0, 0));
 			//m_ptrPlayer = AddGameObject<Player>(Vec3(0, 12, -15), Vec3(1, 1, 1));
 
 
 
-			auto stageobject = AddGameObject<TestBlock>(Vec3(0, 0, 0), Vec3(20, 1, 500), Vec3(0, 90, 0));
-			SetSharedGameObject(L"StageObject", stageobject);
+			//auto stageobject = AddGameObject<TestBlock>(Vec3(0, 0, 0), Vec3(20, 1, 500), Vec3(0, 90, 0));
+			//SetSharedGameObject(L"StageObject", stageobject);
 			//auto player = AddGameObject<Player>(Vec3(250, 100, 0), Vec3(1, 1, 1));
 			//SetSharedGameObject(L"Player",player);
 		}

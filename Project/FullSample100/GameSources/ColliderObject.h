@@ -9,15 +9,17 @@
 namespace basecross {
 	class ColliderObjects : public GameObject
 	{
-	public:
-		ColliderObjects(const shared_ptr<Stage>& ptrStage, Vec3 pos, Vec3 scale, Vec3 rotation);
-		~ColliderObjects();
 	private:
-		virtual void OnCreate()override;
 		Vec3 m_pos;//ˆÊ’u
 		Vec3 m_scale;//‘å‚«‚³
-		Vec3 m_rot;//‰ñ“]
+		Quat m_quat;//‰ñ“]
 
+
+	public:
+		ColliderObjects(const shared_ptr<Stage>& ptrStage, Vec3 pos, Vec3 scale, Quat quat);
+		~ColliderObjects();
+		virtual void OnCreate()override;
+		virtual void OnUpdate()override;
 	};
 
 
