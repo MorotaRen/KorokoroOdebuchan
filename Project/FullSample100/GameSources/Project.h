@@ -14,6 +14,7 @@
 
 #include "GameSystems.h"
 #include "ColliderObject.h"
+#include "CheckPoint.h"
 #include "GameStage.h"
 #include "TestStage.h"
 #include "Character.h"

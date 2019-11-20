@@ -10,6 +10,7 @@
 
 namespace basecross {
 	class Player;
+	class ColliderObjects;
 
 	struct ObjectData
 	{
@@ -41,7 +42,8 @@ namespace basecross {
 		vector<vector<wstring>> m_animationData;
 		//アニメーションデータの行
 		int m_animationDataRow = 0;
-		//プレイヤー格納ポインタ
+		//ステージのエリアごとの判定達
+		vector<vector<shared_ptr<ColliderObjects>>> m_colobjs;
 	public:
 
 		//関数呼ぶときにここから
@@ -67,6 +69,7 @@ namespace basecross {
 		int LoadAnimationData(wstring keyname);
 		//アニメーションデータのゲッター
 		vector<vector<wstring>> GetAnimationData();
-
+		//送られてきたナンバーの判定をActiveにして前のやつをFalseに
+		void ActiveNextCollision(unsigned int nextnum);
 	};
 }
