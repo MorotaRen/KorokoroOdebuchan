@@ -116,9 +116,11 @@ namespace basecross {
 			//オブジェクトの判定
 			}else if (objdata.Tag == L"ObjectCollider") {
 				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				//無視用のタグ設定
 				ColliderObj->AddTag(L"Collider");
+				//初期状態では更新を切っておく
 				ColliderObj->SetUpdateActive(false);
-
+				//エリア分け
 				m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
 			//ステージ壁
 			}else if (objdata.Tag == L"Stage_Wall") {

@@ -269,7 +269,7 @@ namespace basecross{
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 
-		//DrawStrings();
+		DrawStrings();
 
 	}
 
