@@ -94,6 +94,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CheckPoint.h">
       <Filter>Objects\Header</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">

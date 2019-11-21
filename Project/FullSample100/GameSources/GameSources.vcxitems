@@ -27,6 +27,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
