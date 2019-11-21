@@ -174,7 +174,7 @@ namespace basecross{
 
 		//x‚Æz‚Ì‘¬“x‚ğC³
 		velo.x = m_front.x * m_rollingSpeed;
-		//velo.z = m_front.z * m_rollingSpeed;
+		velo.z = m_front.z * m_rollingSpeed;
 
 
 

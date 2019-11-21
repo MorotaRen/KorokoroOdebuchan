@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
-      <Filter>Characters\Source</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp">
       <Filter>Characters\Source</Filter>
     </ClCompile>
@@ -44,11 +41,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CheckPoint.cpp">
       <Filter>Objects\Source</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
-      <Filter>Characters\Header</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
       <Filter>Characters\Header</Filter>
     </ClInclude>

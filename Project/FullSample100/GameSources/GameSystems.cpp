@@ -99,7 +99,6 @@ namespace basecross {
 			}
 		}
 	}
-
 	///	----------------------------------------<summary>
 	/// ステージを作成する
 	/// </summary>----------------------------------------
@@ -121,9 +120,11 @@ namespace basecross {
 				ColliderObj->SetUpdateActive(false);
 
 				m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
-			//ステージ
-			}else if (objdata.Tag == L"Stage") {
-
+			//ステージ壁
+			}else if (objdata.Tag == L"Stage_Wall") {
+				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate,true);
+			}else if (objdata.Tag == L"Stage_Ground") {
+				Stage->AddGameObject<StageObject>(objdata.Pos,objdata.Scale,objdata.Rotate,false);
 			//ステージオブジェクト
 			}else if (objdata.Tag == L"StageObject") {
 

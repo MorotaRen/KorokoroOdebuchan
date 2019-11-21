@@ -18,9 +18,9 @@ namespace basecross {
 		TransComp->SetPosition(m_pos);
 		TransComp->SetScale(m_scale);
 		TransComp->SetQuaternion(m_quat);
-		auto CollderComp = AddComponent<CollisionObb>();
-		CollderComp->SetDrawActive(true);
-		CollderComp->AddExcludeCollisionTag(L"Collider");
+		auto ColliderComp = AddComponent<CollisionObb>();
+		ColliderComp->SetDrawActive(true);
+		ColliderComp->AddExcludeCollisionTag(L"Collider");
 	}
 	void CheckPoint::OnCollisionEnter(shared_ptr<GameObject>& Other) {
 		if (dynamic_pointer_cast<Player>(Other)) {
