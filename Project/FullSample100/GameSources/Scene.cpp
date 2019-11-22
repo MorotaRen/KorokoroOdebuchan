@@ -85,7 +85,7 @@ namespace basecross {
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"OBJ_courseSample.bmf",L"SampleCourse"}
+			{L"SecondCharacterAnimation.0004.bmf",L"Player_Model"}
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";

@@ -59,7 +59,8 @@ namespace basecross{
 		//描画コンポーネントの設定
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		//描画するメッシュを設定
-		ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
+		//ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
+		ptrDraw->SetMeshResource(L"Player_Model");
 
 		//文字列をつける
 		auto ptrString = AddComponent<StringSprite>();

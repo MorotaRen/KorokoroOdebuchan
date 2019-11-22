@@ -32,7 +32,8 @@ namespace basecross {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
-			CreateBackground();
+			//CreateBackground();
+			auto player = AddGameObject<Player>(Vec3(250, 100, 0), Vec3(1, 1, 1));
 		}
 		catch (...) {
 			throw;
