@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include"Project.h"
+
 /// ----------------------------------------<summary>
 /// アイテム系は全部ここ
 /// 管理者：諸田

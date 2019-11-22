@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include"Project.h"
+#include "Project.h"
 
 namespace basecross {
 	class TestBlock : public GameObject
@@ -24,7 +24,7 @@ namespace basecross {
 		virtual void OnUpdate() override;
 	};
 
-	
+
 	//テスト用の壁
 	class TestWall : public GameObject
 	{

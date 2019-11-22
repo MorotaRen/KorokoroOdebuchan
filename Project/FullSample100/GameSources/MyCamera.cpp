@@ -252,7 +252,7 @@ namespace basecross {
 
 			}
 
-			
+
 			if (m_ptrPlayer.lock()->GetBoundFlagL()) {
 				m_boundRotL = true;
 				m_ptrPlayer.lock()->SetBoundFlagL(false);

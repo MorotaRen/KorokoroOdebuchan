@@ -35,6 +35,7 @@ namespace basecross {
 		//OBB衝突判定を付ける
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetFixed(true);
+		ptrColl->SetDrawActive(true);
 
 		//壁を生成
 		GetStage()->AddGameObject<TestWall>(Vec3(m_pos.x + m_scale.x / 2, m_pos.y, m_pos.z), Vec3(2, 10, m_scale.z), m_rot);
@@ -43,9 +44,6 @@ namespace basecross {
 		auto drawcomp = AddComponent<PNTStaticModelDraw>();
 		drawcomp->SetMeshResource(L"SampleCourse");
 		drawcomp->SetOwnShadowActive(true);
-		auto ptrColl = AddComponent < CollisionObb > ();
-		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);
 
 
 		//物理計算ボックス

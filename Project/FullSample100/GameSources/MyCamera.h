@@ -9,7 +9,7 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	class MyCamera : public Camera {
 		weak_ptr<GameObject> m_TargetObject;	//目標となるオブジェクト
-		weak_ptr<Player> m_ptrPlayer;	
+		weak_ptr<Player> m_ptrPlayer;
 
 		bool m_boundRotL;
 		bool m_boundRotR;

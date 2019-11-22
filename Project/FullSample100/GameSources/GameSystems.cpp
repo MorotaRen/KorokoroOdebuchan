@@ -55,7 +55,7 @@ namespace basecross {
 						break;
 					}
 					//1はPos
-					else if(LoopNum == 1){
+					else if (LoopNum == 1) {
 						m_objectdata.Pos.x = stof(Tokens[0]);
 						m_objectdata.Pos.y = stof(Tokens[1]);
 						m_objectdata.Pos.z = stof(Tokens[2]);
@@ -79,9 +79,16 @@ namespace basecross {
 						LoopNum++;
 						break;
 					}
-					//終わり
-					else if(LoopNum == 4)
-					{
+					//*があったら以下子供
+					else if (Tokens[0].find(L"*") != std::string::npos && LoopNum == 4) {
+						//グループナンバー加算して登録
+						m_objectdata.GroupNum++;
+						m_objectdatas.push_back(m_objectdata);
+						LoopNum = 0;
+						break;
+					}
+					//-の時はそのまま継続登録
+					else if (Tokens[0].find(L"-") != std::string::npos && LoopNum == 4) {
 						m_objectdatas.push_back(m_objectdata);
 						LoopNum = 0;
 						break;
@@ -89,6 +96,64 @@ namespace basecross {
 				default:
 					break;
 				}
+			}
+		}
+	}
+	///	----------------------------------------<summary>
+	/// ステージを作成する
+	/// </summary>----------------------------------------
+	weak_ptr<Player> GameSystems::CreateStage() {
+		auto Stage = App::GetApp()->GetScene<Scene>()->GetActiveStage();
+		unsigned int  LoopNum = 0;
+		m_colobjs.push_back(vector<shared_ptr<ColliderObjects>>());
+		for each (ObjectData objdata in m_objectdatas)
+		{
+			//プレイヤー開始地点
+			if (objdata.Tag == L"PlayerStartPos") {
+				auto PlayerObj = Stage->AddGameObject<Player>(objdata.Pos,Vec3(0.1f,0.1f,0.1f));
+				Stage->SetSharedGameObject(L"Player", PlayerObj);
+				return PlayerObj;
+			//オブジェクトの判定
+			}else if (objdata.Tag == L"ObjectCollider") {
+				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				ColliderObj->AddTag(L"Collider");
+				ColliderObj->SetUpdateActive(false);
+
+				m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
+			//ステージ壁
+			}else if (objdata.Tag == L"Stage_Wall") {
+				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate,true);
+			}else if (objdata.Tag == L"Stage_Ground") {
+				Stage->AddGameObject<StageObject>(objdata.Pos,objdata.Scale,objdata.Rotate,false);
+			//ステージオブジェクト
+			}else if (objdata.Tag == L"StageObject") {
+
+			//チェックポイント
+			}else if (objdata.Tag == L"CheckPoint") {
+				auto CheckObj = Stage->AddGameObject<CheckPoint>(objdata.Pos, objdata.Scale, objdata.Rotate);
+				CheckObj->SetNextPointNum(objdata.GroupNum);
+
+			//なんでもなかったら
+			}else {
+				m_colobjs.push_back(vector<shared_ptr<ColliderObjects>>());
+			}
+		}
+	}
+
+	///	----------------------------------------<summary>
+	/// 送られてきた番号のColliderObjct達を起動する
+	/// </summary>---------------------------------------
+	/// <param name="nextnum">起動する番号</param>
+	void GameSystems::ActiveNextCollision(unsigned int nextnum) {
+		for each (auto obj in m_colobjs[nextnum])
+		{
+			obj->SetUpdateActive(true);
+		}
+		//前の数字が存在する(-1とかじゃないなら)
+		if ((nextnum - 1) < 0) {
+			for each (auto backobj in m_colobjs[nextnum-1])
+			{
+				backobj->SetUpdateActive(false);
 			}
 		}
 	}

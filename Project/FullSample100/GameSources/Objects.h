@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include "Project.h"
+
 /// ----------------------------------------<summary>
 /// オブジェクト系列の元
 /// 管理者：諸田

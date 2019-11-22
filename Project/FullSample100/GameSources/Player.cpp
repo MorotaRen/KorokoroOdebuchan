@@ -26,6 +26,8 @@ namespace basecross{
 
 	//初期化
 	void Player::OnCreate() {
+
+
 		auto ptrTrans = GetComponent<Transform>();
 		AddTag(L"Player");
 		//auto drawcomp = AddComponent<PNTBoneModelDraw>();
@@ -58,10 +60,6 @@ namespace basecross{
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		//描画するメッシュを設定
 		ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
-
-		//当たり判定
-		auto ptrColl = AddComponent<CollisionSphere>();
-		ptrColl->SetAfterCollision(AfterCollision::None);
 
 		//文字列をつける
 		auto ptrString = AddComponent<StringSprite>();
@@ -154,9 +152,7 @@ namespace basecross{
 
 		//進行方向の向き
 		m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
-<<<<<<< HEAD
 		//m_front.y = 0;
-=======
 		m_front.y = 0;
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -170,7 +166,6 @@ namespace basecross{
 			m_front.x += 3.0f*elapsedTime;
 			m_inputX = 1;
 		}
->>>>>>> fb01585729c84aec7df9e29ac9a61a49f8723e7e
 		m_front.normalize();
 
 
@@ -181,7 +176,7 @@ namespace basecross{
 		velo.x = m_front.x * m_rollingSpeed;
 		velo.z = m_front.z * m_rollingSpeed;
 
-		
+
 
 		auto ptrColl = GetComponent<CollisionSphere>();
 		//物理オブジェクトを持つ配列の取得
@@ -237,7 +232,44 @@ namespace basecross{
 		//位置情報はそのまま設定
 		ptrTrans->SetPosition(ptrPs->GetPosition());
 
-		DrawStrings();
+		GetStage()->SetCollisionPerformanceActive(true);
+		GetStage()->SetUpdatePerformanceActive(true);
+		GetStage()->SetDrawPerformanceActive(true);
+
+
+
+
+		auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
+		wstring strFps(L"FPS: ");
+		strFps += Util::UintToWStr(fps);
+		strFps += L"\n";
+
+		wstring updatePerStr(L"UpdatePerformance:\t");
+		updatePerStr += Util::FloatToWStr(GetStage()->GetUpdatePerformanceTime());
+		updatePerStr += L"\tmillisecond\n";
+
+		wstring drawPerStr(L"DrawPerformance:\t");
+		drawPerStr += Util::FloatToWStr(GetStage()->GetDrawPerformanceTime());
+		drawPerStr += L"\tmillisecond\n";
+
+		wstring collPerStr(L"CollisionPerform:\t");
+		collPerStr += Util::FloatToWStr(GetStage()->GetCollisionPerformanceTime(), 5);
+		collPerStr += L"\tmillisecond\n";
+
+		wstring collMiscStr(L"ColMiscPerform:\t");
+		collMiscStr += Util::FloatToWStr(GetStage()->GetCollisionManager()->GetMiscPerformanceTime(), 5);
+		collMiscStr += L"\tmillisecond\n";
+
+		wstring collTernCountStr(L"CollisionCountOfTern:\t");
+		collTernCountStr += Util::UintToWStr(GetStage()->GetCollisionManager()->GetCollisionCountOfTern());
+		collTernCountStr += L"\n";
+		wstring str = strFps + updatePerStr + drawPerStr + collPerStr + collMiscStr
+			+ collTernCountStr;
+
+		auto ptrString = GetComponent<StringSprite>();
+		ptrString->SetText(str);
+
+		//DrawStrings();
 
 	}
 

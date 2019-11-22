@@ -9,8 +9,12 @@
 #include "stdafx.h"
 
 namespace basecross {
+	class Player;
+	class ColliderObjects;
+
 	struct ObjectData
 	{
+		unsigned int GroupNum;
 		wstring Tag;
 		Vec3	Pos;
 		Quat	Rotate;
@@ -38,7 +42,8 @@ namespace basecross {
 		vector<vector<wstring>> m_animationData;
 		//アニメーションデータの行
 		int m_animationDataRow = 0;
-		//プレイヤー格納ポインタ
+		//ステージのエリアごとの判定達
+		vector<vector<shared_ptr<ColliderObjects>>> m_colobjs;
 	public:
 
 		//関数呼ぶときにここから
@@ -52,6 +57,8 @@ namespace basecross {
 		void UpdatePadData();
 		//ステージのCSV読み込み
 		void LoadStageCSV();
+		//ステージ作成
+		weak_ptr<Player> CreateStage();
 		//モデルのCSVを読み込み
 		void LoadModelCSV();
 		//CSVから作成したデータからモデルの追加
@@ -62,6 +69,7 @@ namespace basecross {
 		int LoadAnimationData(wstring keyname);
 		//アニメーションデータのゲッター
 		vector<vector<wstring>> GetAnimationData();
-
+		//送られてきたナンバーの判定をActiveにして前のやつをFalseに
+		void ActiveNextCollision(unsigned int nextnum);
 	};
 }

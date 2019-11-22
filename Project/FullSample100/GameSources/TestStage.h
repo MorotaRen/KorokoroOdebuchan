@@ -3,17 +3,21 @@
 
 namespace basecross {
 	class Player;
+	class MyCamera;
 
 	class TestStage : public Stage {
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
 		weak_ptr<Player> m_ptrPlayer;
+		shared_ptr<MyCamera> m_camera;
+		bool m_IsCreateObject;
 	public:
 		//\’z‚Æ”jŠü
 		TestStage() :Stage() {}
 		virtual ~TestStage() {}
 		//‰Šú‰»
 		virtual void OnCreate()override;
+		virtual void OnUpdate()override;
 	};
 
 
