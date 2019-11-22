@@ -44,6 +44,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp">
       <Filter>Objects\Source</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
@@ -93,6 +96,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h">
       <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

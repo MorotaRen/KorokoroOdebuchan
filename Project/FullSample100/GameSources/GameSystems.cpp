@@ -25,6 +25,12 @@ namespace basecross {
 		m_pad = device.GetControlerVec()[0];
 	}
 
+	/// ----------------------------------------<summary>
+	/// コントローラーの状態の更新
+	/// </summary>----------------------------------------
+	CONTROLER_STATE GameSystems::GetPad() {
+		return m_pad;
+	}
 
 	/// ----------------------------------------<summary>
 	///	CSVに保存されたCSVデータを読み込みます

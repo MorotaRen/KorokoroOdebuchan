@@ -19,10 +19,17 @@ namespace basecross {
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
+			//MessageBox(0, L"テストステージに飛びます、リリース時はちゃんとタイトルへ飛ばすように", L"注意", 0);
+			//PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
 
+
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTitleScene");
+
+			//イメージリソースの読み込み
 			LoadImageResources();
+			//スタティックモデルの読み込み
 			LoadStaticModelResources();
+			//CSVからモデルデータの読み込み
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -46,9 +53,9 @@ namespace basecross {
 		};
 		InitializedParam textures[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"testImage.png",L"TestImage"},
 			{L"wall.jpg",L"TestWall"},
-			{L"Floor.png",L"TestFloor"}
+			{L"Floor.png",L"TestFloor"},
+			{L"TestImage.png",L"Title"}
 		};
 
 		for (auto texture : textures) {
@@ -182,14 +189,10 @@ namespace basecross {
 
 		if (event->m_MsgStr == L"ToTestStage") {
 			ResetActiveStage<TestStage>();
-
-			if (event->m_MsgStr == L"TitleScene") {
-				ResetActiveStage<TitleScene>();
-
-			}
-		}
-		else if(event->m_MsgStr == L"ToTestScene") {
-			ResetActiveStage<TestStage>();
+		}else if (event->m_MsgStr == L"ToTitleScene") {
+			ResetActiveStage<TitleScene>();
+		}else if(event->m_MsgStr == L"ToGameScene") {
+			ResetActiveStage<GameStage>();
 		}
 	}
 }

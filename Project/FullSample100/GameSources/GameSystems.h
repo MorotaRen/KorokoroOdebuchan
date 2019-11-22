@@ -55,6 +55,8 @@ namespace basecross {
 		void ControllerCheck_Cursor();
 		//コントローラー情報更新
 		void UpdatePadData();
+		//コントローラーの状態を返す
+		CONTROLER_STATE GetPad();
 		//ステージのCSV読み込み
 		void LoadStageCSV();
 		//ステージ作成

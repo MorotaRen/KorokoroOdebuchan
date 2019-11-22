@@ -21,17 +21,29 @@ namespace basecross {
 		//デフォルトのライティングを指定
 		PtrMultiLight->SetDefaultLighting();
 	}
+	void TitleScene::CreateBackground() {
+		//ゲーム画面サイズ
+		Vec2 gamesize = Vec2((float)App::GetApp()->GetGameWidth(),(float)App::GetApp()->GetGameHeight());
+		auto sprite = AddGameObject<Sprite>(L"TestWall",Vec2(gamesize));
+		sprite->SetPos(gamesize / 2.0f);
+		sprite->SetDrawLayer(-1);
+	}
 	void TitleScene::OnCreate() {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
-			AddGameObject<Player>(Vec3(0,0,0),Vec3(0,0,0));
+			CreateBackground();
 		}
 		catch (...) {
 			throw;
 		}
 	}
 	void TitleScene::OnUpdate() {
-
+		auto pad = GameSystems::GetInstans().GetPad();
+		auto ptrScene = App::GetApp()->GetScene<Scene>();
+		//Padの何かしらでもボタンが押されたらStage移動
+		if (pad.wPressedButtons) {
+			PostEvent(0.0f, GetThis<ObjectInterface>(), ptrScene, L"ToGameScene");
+		}
 	}
 }
