@@ -11,6 +11,9 @@ namespace basecross {
 		weak_ptr<Player> m_ptrPlayer;
 		shared_ptr<MyCamera> m_camera;
 		bool m_IsCreateObject;
+		// UI‚Ìì¬
+		void CreateUI();
+
 	public:
 		//\’z‚Æ”jŠü
 		TestStage() :Stage() {}

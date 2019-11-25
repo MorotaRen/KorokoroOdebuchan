@@ -35,18 +35,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp">
-      <Filter>Objects\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CheckPoint.cpp">
-      <Filter>Objects\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp">
-      <Filter>Objects\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp">
-      <Filter>Objects\Source</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CheckPoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CheckPoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Timer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
@@ -85,21 +81,17 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h">
       <Filter>Scenes\Header</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h">
-      <Filter>Objects\Header</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
       <Filter>Systems\Header</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CheckPoint.h">
-      <Filter>Objects\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h">
-      <Filter>Objects\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CheckPoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CheckPoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">

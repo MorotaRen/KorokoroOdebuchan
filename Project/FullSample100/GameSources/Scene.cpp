@@ -19,17 +19,10 @@ namespace basecross {
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			//MessageBox(0, L"テストステージに飛びます、リリース時はちゃんとタイトルへ飛ばすように", L"注意", 0);
-			//PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
 
-
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTitleScene");
-
-			//イメージリソースの読み込み
 			LoadImageResources();
-			//スタティックモデルの読み込み
 			LoadStaticModelResources();
-			//CSVからモデルデータの読み込み
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -53,9 +46,10 @@ namespace basecross {
 		};
 		InitializedParam textures[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
+			{L"testImage.png",L"TestImage"},
 			{L"wall.jpg",L"TestWall"},
 			{L"Floor.png",L"TestFloor"},
-			{L"TestImage.png",L"Title"}
+			{L"UI_Number.png",L"Number"}
 		};
 
 		for (auto texture : textures) {
@@ -85,7 +79,7 @@ namespace basecross {
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"SecondCharacterAnimation.0004.bmf",L"Player_Model"}
+			{L"OBJ_courseSample.bmf",L"SampleCourse"}
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";
@@ -189,10 +183,14 @@ namespace basecross {
 
 		if (event->m_MsgStr == L"ToTestStage") {
 			ResetActiveStage<TestStage>();
-		}else if (event->m_MsgStr == L"ToTitleScene") {
-			ResetActiveStage<TitleScene>();
-		}else if(event->m_MsgStr == L"ToGameScene") {
-			ResetActiveStage<GameStage>();
+
+			if (event->m_MsgStr == L"TitleScene") {
+				ResetActiveStage<TitleScene>();
+
+			}
+		}
+		else if(event->m_MsgStr == L"ToTestScene") {
+			ResetActiveStage<TestStage>();
 		}
 	}
 }

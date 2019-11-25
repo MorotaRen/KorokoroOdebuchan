@@ -59,8 +59,7 @@ namespace basecross{
 		//描画コンポーネントの設定
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		//描画するメッシュを設定
-		//ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
-		ptrDraw->SetMeshResource(L"Player_Model");
+		ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
 
 		//文字列をつける
 		auto ptrString = AddComponent<StringSprite>();
@@ -154,7 +153,6 @@ namespace basecross{
 		//進行方向の向き
 		m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
 		//m_front.y = 0;
-		m_front.y = 0;
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
@@ -174,6 +172,7 @@ namespace basecross{
 		auto velo = ptrPs->GetLinearVelocity();
 
 		//xとzの速度を修正
+		//velo.y = -0.5f;
 		velo.x = m_front.x * m_rollingSpeed;
 		velo.z = m_front.z * m_rollingSpeed;
 
@@ -240,7 +239,7 @@ namespace basecross{
 
 
 
-		auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
+		/*auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
 		wstring strFps(L"FPS: ");
 		strFps += Util::UintToWStr(fps);
 		strFps += L"\n";
@@ -269,7 +268,7 @@ namespace basecross{
 
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
-
+*/
 		DrawStrings();
 
 	}
