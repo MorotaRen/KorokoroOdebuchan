@@ -16,9 +16,9 @@ namespace basecross {
 		m_RadXZ(0),
 		m_CameraUpDownSpeed(0.5f),
 		m_CameraUnderRot(0.1f),
-		m_ArmLen(5.0f),
+		m_ArmLen(0.01f),
 		m_MaxArm(30.0f),
-		m_MinArm(1.0f),
+		m_MinArm(0.01f),
 		m_RotSpeed(1.0f),
 		m_ZoomSpeed(0.1f),
 		m_LRBaseMode(true),
@@ -195,6 +195,25 @@ namespace basecross {
 			wButtons = cntlVec[0].wButtons;
 		}
 
+		//キーボードの取得(キーボード優先)
+		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+		if (KeyState.m_bPushKeyTbl['W']) {
+			//前
+			fThumbLY = 1.0f;
+		}
+		else if (KeyState.m_bPushKeyTbl['A']) {
+			//左
+			fThumbLX = -1.0f;
+		}
+		else if (KeyState.m_bPushKeyTbl['S']) {
+			//後ろ
+			fThumbLY = -1.0f;
+		}
+		else if (KeyState.m_bPushKeyTbl['D']) {
+			//右
+			fThumbLX = 1.0f;
+		}
+
 		//上下角度の変更
 		//if (fThumbLY >= 0.1f || keyData.m_bPushKeyTbl[VK_UP]) {
 		//	if (IsUDBaseMode()) {
@@ -212,17 +231,18 @@ namespace basecross {
 		//		m_RadY += m_CameraUpDownSpeed * elapsedTime;
 		//	}
 		//}
-		//if (m_RadY > XM_PI * 4 / 9.0f) {
-		//	m_RadY = XM_PI * 4 / 9.0f;
-		//}
-		//else if (m_RadY <= m_CameraUnderRot) {
-		//	//カメラが限界下に下がったらそれ以上下がらない
-		//	m_RadY = m_CameraUnderRot;
-		//}
+		if (m_RadY > XM_PI * 4 / 9.0f) {
+			m_RadY = XM_PI * 4 / 9.0f;
+		}
+		else if (m_RadY <= m_CameraUnderRot) {
+			//カメラが限界下に下がったらそれ以上下がらない
+			m_RadY = m_CameraUnderRot;
+		}
+		//armVec.y = sin(m_RadY);
+		armVec.y = 0.0f;
 
 		float playerSpeed = m_ptrPlayer.lock()->GetPlayerSpeed();
 
-		armVec.y = sin(m_RadY);
 		//ここでY軸回転を作成
 		if (fThumbLX != 0 || keyData.m_bPushKeyTbl['A'] || keyData.m_bPushKeyTbl['D']) {
 			//回転スピードを反映
@@ -249,9 +269,9 @@ namespace basecross {
 				else {
 					m_RadXZ += fThumbLX * elapsedTime * (10.0f - playerSpeed);
 				}
-
 			}
 
+			//ハジキの処理
 
 			if (m_ptrPlayer.lock()->GetBoundFlagL()) {
 				m_boundRotL = true;
@@ -329,10 +349,14 @@ namespace basecross {
 				m_ArmLen = m_MinArm;
 			}
 		}
+
+		m_ArmLen = 0.01f;
 		////目指したい場所にアームの値と腕ベクトルでEyeを調整
 		Vec3 toEye = newAt + armVec * m_ArmLen;
 		newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
 
+		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition(); 
+		//newAt.y = 1.0f;
 		SetAt(newAt);
 		SetEye(newEye);
 		UpdateArmLengh();

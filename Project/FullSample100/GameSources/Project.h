@@ -15,6 +15,8 @@
 #include "GameSystems.h"
 #include "Stage.h"
 #include "ColliderObject.h"
+#include "Sprite.h"
+#include "Timer.h"
 
 #include "CheckPoint.h"
 #include "GameStage.h"
