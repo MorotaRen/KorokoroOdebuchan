@@ -239,7 +239,7 @@ namespace basecross{
 
 
 
-		auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
+		/*auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
 		wstring strFps(L"FPS: ");
 		strFps += Util::UintToWStr(fps);
 		strFps += L"\n";
@@ -268,8 +268,8 @@ namespace basecross{
 
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
-
-		//DrawStrings();
+*/
+		DrawStrings();
 
 	}
 
