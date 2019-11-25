@@ -35,15 +35,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp">
-      <Filter>Objects\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CheckPoint.cpp">
-      <Filter>Objects\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp">
-      <Filter>Objects\Source</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
@@ -82,18 +74,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h">
       <Filter>Scenes\Header</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h">
-      <Filter>Objects\Header</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
       <Filter>Systems\Header</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CheckPoint.h">
-      <Filter>Objects\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h">
-      <Filter>Objects\Header</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataLoad_CSV.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">

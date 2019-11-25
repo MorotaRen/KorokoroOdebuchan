@@ -31,8 +31,8 @@ namespace basecross {
 			//デフォルトのライティングを指定
 			PtrMultiLight->SetDefaultLighting();
 
-			const Vec3 eye(0.0f, 10.0f, -5.0f);
-			const Vec3 at(0.0f, 0.0f, 0.0f);
+			const Vec3 eye(0.0f, 0.0f, -2.0f);
+			const Vec3 at(0.0f, 0.01f, 0.0f);
 			auto PtrView = CreateView<SingleView>();
 			//ビューのカメラの設定
 			m_camera = ObjectFactory::Create<MyCamera>();
