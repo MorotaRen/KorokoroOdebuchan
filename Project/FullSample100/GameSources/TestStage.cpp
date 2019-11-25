@@ -22,9 +22,9 @@ namespace basecross {
 	void TestStage::CreateUI()
 	{
 		//タイマー
-		AddGameObject<Timer>(L"TestNumber",
-			Vec2(640.0f, 128.0f),
-			Vec2(0.0f, 0.0f));
+		AddGameObject<Timer>(4, L"Number", true,
+			Vec2(320.0f, 64.0f),
+			Vec3(450.0f, 300.0f, 0.0f));
 	}
 
 	void TestStage::OnCreate() {
