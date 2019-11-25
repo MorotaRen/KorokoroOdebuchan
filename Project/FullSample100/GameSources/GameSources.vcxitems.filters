@@ -41,7 +41,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CheckPoint.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Timer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -90,7 +89,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CheckPoint.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
   </ItemGroup>
   <ItemGroup>

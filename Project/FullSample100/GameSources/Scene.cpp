@@ -22,7 +22,6 @@ namespace basecross {
 			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
 
 			LoadImageResources();
-			LoadStaticModelResources();
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -46,7 +45,6 @@ namespace basecross {
 		};
 		InitializedParam textures[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"testImage.png",L"TestImage"},
 			{L"wall.jpg",L"TestWall"},
 			{L"Floor.png",L"TestFloor"},
 			{L"UI_Number.png",L"Number"}
@@ -79,7 +77,7 @@ namespace basecross {
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"OBJ_courseSample.bmf",L"SampleCourse"}
+			{}
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";

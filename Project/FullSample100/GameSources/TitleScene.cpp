@@ -24,9 +24,6 @@ namespace basecross {
 	void TitleScene::CreateBackground() {
 		//ゲーム画面サイズ
 		Vec2 gamesize = Vec2((float)App::GetApp()->GetGameWidth(),(float)App::GetApp()->GetGameHeight());
-		auto sprite = AddGameObject<Sprite>(L"TestWall",Vec2(gamesize));
-		sprite->SetPos(gamesize / 2.0f);
-		sprite->SetDrawLayer(-1);
 	}
 	void TitleScene::OnCreate() {
 		try {
