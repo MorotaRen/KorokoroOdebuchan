@@ -19,7 +19,13 @@ namespace basecross {
 		PtrMultiLight->SetDefaultLighting();
 	}
 
-
+	void TestStage::CreateUI()
+	{
+		//タイマー
+		AddGameObject<Timer>(L"TestNumber",
+			Vec2(640.0f, 128.0f),
+			Vec2(0.0f, 0.0f));
+	}
 
 	void TestStage::OnCreate() {
 		try {
@@ -49,6 +55,10 @@ namespace basecross {
 			//SetSharedGameObject(L"StageObject", stageobject);
 			//auto player = AddGameObject<Player>(Vec3(250, 100, 0), Vec3(1, 1, 1));
 			//SetSharedGameObject(L"Player",player);
+
+			// UIの作成
+			CreateUI();
+
 		}
 		catch (...) {
 			throw;
