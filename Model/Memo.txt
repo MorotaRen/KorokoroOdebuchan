@@ -1,3 +1,6 @@
 fbx		:FBX書き出ししたもの
+名前形式テンプレ
+FBX_"モデルの名前".fbx
+
 ModelData	:モデルの作業用データ。バックアップにどうぞ
 bmf		:BaseCross用に書き出ししたもの

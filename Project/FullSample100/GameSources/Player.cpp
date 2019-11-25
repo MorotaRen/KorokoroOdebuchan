@@ -153,7 +153,6 @@ namespace basecross{
 		//is•ûŒü‚ÌŒü‚«
 		m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
 		//m_front.y = 0;
-		m_front.y = 0;
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
@@ -173,6 +172,7 @@ namespace basecross{
 		auto velo = ptrPs->GetLinearVelocity();
 
 		//x‚Æz‚Ì‘¬“x‚ğC³
+		//velo.y = -0.5f;
 		velo.x = m_front.x * m_rollingSpeed;
 		velo.z = m_front.z * m_rollingSpeed;
 
