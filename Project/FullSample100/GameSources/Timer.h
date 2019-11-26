@@ -7,6 +7,9 @@
 #include "stdafx.h"
 
 namespace basecross {
+	//--------------------------------------------------------------------------------------
+	//	ŽžŠÔŒv‘ª
+	//--------------------------------------------------------------------------------------
 	class Timer :public GameObject {
 		bool m_Trace;
 		Vec2 m_StartScale;
@@ -24,6 +27,21 @@ namespace basecross {
 		virtual ~Timer() {}
 		virtual void OnCreate() override;
 		virtual void OnUpdate()override;
+	};
+
+	//--------------------------------------------------------------------------------------
+	//	time‚Ì‰æ‘œ•\Ž¦
+	//--------------------------------------------------------------------------------------
+	class TextTime :public Sprite {
+	public:
+		TextTime(const shared_ptr<Stage>&stagePtr,
+			const wstring& textureKey,
+			const Vec2& startScale,
+			const Vec2& startPos);
+
+		virtual ~TextTime() {}
+		virtual void OnCreate() override;
+
 	};
 }
 

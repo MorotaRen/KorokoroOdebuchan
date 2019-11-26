@@ -49,7 +49,8 @@ namespace basecross {
 			{L"testImage.png",L"TestImage"},
 			{L"wall.jpg",L"TestWall"},
 			{L"Floor.png",L"TestFloor"},
-			{L"UI_Number_2.png",L"Number"}
+			{L"UI_Number_4.png",L"Number"},
+			{L"UI_Time.png",L"Time"}
 		};
 
 		for (auto texture : textures) {

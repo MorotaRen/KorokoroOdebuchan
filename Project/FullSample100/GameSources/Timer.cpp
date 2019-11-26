@@ -8,6 +8,9 @@
 
 
 namespace basecross {
+	//--------------------------------------------------------------------------------------
+	//	時間計測
+	//--------------------------------------------------------------------------------------
 	Timer::Timer(const shared_ptr<Stage>& StagePtr, UINT NumberOfDigits,
 		const wstring& TextureKey, bool Trace,
 		const Vec2& StartScale, const Vec3& StartPos,bool resultFlg):
@@ -63,9 +66,9 @@ namespace basecross {
 		PtrDraw->SetTextureResource(m_TextureKey);
 
 		//文字列をつける
-		auto ptrString = AddComponent<StringSprite>();
-		ptrString->SetText(L"");
-		ptrString->SetTextRect(Rect2D<float>(1000.0f, 16.0f, 1200.0f, 480.0f));
+		//auto ptrString = AddComponent<StringSprite>();
+		//ptrString->SetText(L"");
+		//ptrString->SetTextRect(Rect2D<float>(1000.0f, 16.0f, 1200.0f, 480.0f));
 
 	}
 
@@ -142,14 +145,29 @@ namespace basecross {
 		auto PtrDraw = GetComponent<PTSpriteDraw>();
 		PtrDraw->UpdateVertices(NewVertices);
 
-		wstringstream ss;
-		ss << L"Timer : " << m_Timer << std::endl;
-		ss << L"桁数 : " << m_NumberOfDigits << std::endl;
+		//wstringstream ss;
+		//ss << L"Timer : " << m_Timer << std::endl;
+		//ss << L"桁数 : " << m_NumberOfDigits << std::endl;
 
-		//文字列コンポーネントの取得
-		auto ptrString = GetComponent<StringSprite>();
-		ptrString->SetText(ss.str());
+		////文字列コンポーネントの取得
+		//auto ptrString = GetComponent<StringSprite>();
+		//ptrString->SetText(ss.str());
 	}
+
+	//--------------------------------------------------------------------------------------
+	//	timeの画像表示
+	//--------------------------------------------------------------------------------------
+	TextTime::TextTime(const shared_ptr<Stage>&stagePtr,
+		const wstring& textureKey,
+		const Vec2& startScale,
+		const Vec2& startPos) :
+		Sprite(stagePtr, textureKey, startScale, startPos)
+	{}
+
+	void TextTime::OnCreate() {
+		Sprite::OnCreate();
+	}
+
 }
 
 //end basecross
