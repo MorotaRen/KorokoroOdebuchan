@@ -10,40 +10,40 @@
 namespace basecross {
 	Timer::Timer(const shared_ptr<Stage>& StagePtr, UINT NumberOfDigits,
 		const wstring& TextureKey, bool Trace,
-		const Vec2& StartScale, const Vec3& StartPos):
+		const Vec2& StartScale, const Vec3& StartPos,bool resultFlg):
 		GameObject(StagePtr),
 		m_NumberOfDigits(NumberOfDigits),
 		m_TextureKey(TextureKey),
 		m_Trace(Trace),
 		m_StartScale(StartScale),
 		m_StartPos(StartPos),
-		m_Totaltime(0.0f)
+		m_Timer(0.0f)
 	{}
 
 	void Timer::OnCreate() {
-		float xPiecesize = 1.0f / (float)m_NumberOfDigits;
-		float helfSize = 0.5f;
+		float XPiecesize = 1.0f / (float)m_NumberOfDigits;
+		float HelfSize = 0.5f;
 
 		//インデックス配列
 		vector<uint16_t> indices;
 		for (UINT i = 0; i < m_NumberOfDigits; i++) {
-			float vertex0 = -helfSize + xPiecesize * (float)i;
-			float vertex1 = vertex0 + xPiecesize;
+			float Vertex0 = -HelfSize + XPiecesize * (float)i;
+			float Vertex1 = Vertex0 + XPiecesize;
 			//0
 			m_BackupVertices.push_back(
-				VertexPositionTexture(Vec3(vertex0, helfSize, 0), Vec2(0.0f, 0.0f))
+				VertexPositionTexture(Vec3(Vertex0, HelfSize, 0), Vec2(0.0f, 0.0f))
 			);
 			//1
 			m_BackupVertices.push_back(
-				VertexPositionTexture(Vec3(vertex1, helfSize, 0), Vec2(0.1f, 0.0f))
+				VertexPositionTexture(Vec3(Vertex1, HelfSize, 0), Vec2(0.1f, 0.0f))
 			);
 			//2
 			m_BackupVertices.push_back(
-				VertexPositionTexture(Vec3(vertex0, -helfSize, 0), Vec2(0.0f, 1.0f))
+				VertexPositionTexture(Vec3(Vertex0, -HelfSize, 0), Vec2(0.0f, 1.0f))
 			);
 			//3
 			m_BackupVertices.push_back(
-				VertexPositionTexture(Vec3(vertex1, -helfSize, 0), Vec2(0.1f, 1.0f))
+				VertexPositionTexture(Vec3(Vertex1, -HelfSize, 0), Vec2(0.1f, 1.0f))
 			);
 			indices.push_back(i * 4 + 0);
 			indices.push_back(i * 4 + 1);
@@ -54,14 +54,13 @@ namespace basecross {
 		}
 
 		SetAlphaActive(m_Trace);
-		auto ptrTrans = GetComponent<Transform>();
-		ptrTrans->SetScale(m_StartScale.x, m_StartScale.y, 1.0f);
-		ptrTrans->SetRotation(0, 0, 0);
-		ptrTrans->SetPosition(m_StartPos.x, m_StartPos.y, 0.0f);
+		auto PtrTransform = GetComponent<Transform>();
+		PtrTransform->SetScale(m_StartScale.x, m_StartScale.y, 1.0f);
+		PtrTransform->SetRotation(0, 0, 0);
+		PtrTransform->SetPosition(m_StartPos.x, m_StartPos.y, 0.0f);
 		//頂点とインデックスを指定してスプライト作成
-		auto ptrDraw = AddComponent<PTSpriteDraw>(m_BackupVertices, indices);
-		ptrDraw->SetTextureResource(m_TextureKey);
-		GetStage()->SetSharedGameObject(L"Sprite", GetThis<Timer>());
+		auto PtrDraw = AddComponent<PTSpriteDraw>(m_BackupVertices, indices);
+		PtrDraw->SetTextureResource(m_TextureKey);
 
 		//文字列をつける
 		auto ptrString = AddComponent<StringSprite>();
@@ -71,57 +70,81 @@ namespace basecross {
 	}
 
 	void Timer::OnUpdate() {
-		float ElapsedTime = App::GetApp()->GetElapsedTime();
-		m_Totaltime += ElapsedTime;
+		m_Timer += App::GetApp()->GetElapsedTime();
 
-		vector<VertexPositionTexture> newVertices;
-		UINT num;
-		int verNum = 0;
+		vector<VertexPositionTexture> NewVertices;
+		UINT Num;
+		int VerNum = 0;
 		for (UINT i = m_NumberOfDigits; i > 0; i--) {
-			UINT base = (UINT)pow(10, i);
-			num = ((UINT)m_Totaltime) % base;
-			num = num / (base / 10);
-			Vec2 uv0 = m_BackupVertices[verNum].textureCoordinate;
-			uv0.x = (float)num / 10.0f;
+			Vec2 UV0;
+			if (i < 3) {
+				int num = int((m_Timer - (int(m_Timer) / 1)) * 100);
+				UINT Base = (UINT)pow(10, i);
+				Num = ((UINT)num) % Base;
+				Num = Num / (Base / 10);
+				UV0 = m_BackupVertices[VerNum].textureCoordinate;
+				UV0.x = (float)Num / 11.0f;
+			}
+			else if (i > 3 && i < 6) {
+				int num = int(m_Timer) % 60 * 1000;
+				UINT Base = (UINT)pow(10, i);
+				Num = ((UINT)num) % Base;
+				Num = Num / (Base / 10);
+				UV0 = m_BackupVertices[VerNum].textureCoordinate;
+				UV0.x = (float)Num / 11.0f;
+			}
+			else if (i > 6) {
+				int num = int(m_Timer) / 60 * 1000000;
+				UINT Base = (UINT)pow(10, i);
+				Num = ((UINT)num) % Base;
+				Num = Num / (Base / 10);
+				UV0 = m_BackupVertices[VerNum].textureCoordinate;
+				UV0.x = (float)Num / 11.0f;
+			}
+			else {
+				UV0 = m_BackupVertices[VerNum].textureCoordinate;
+				UV0.x = 10.0f / 11.0f;
+			}
 			auto v = VertexPositionTexture(
-				m_BackupVertices[verNum].position,
-				uv0
+				m_BackupVertices[VerNum].position,
+				UV0
 			);
-			newVertices.push_back(v);
+			NewVertices.push_back(v);
 
-			Vec2 uv1 = m_BackupVertices[verNum + 1].textureCoordinate;
-			uv1.x = uv0.x + 0.1f;
+			Vec2 UV1 = m_BackupVertices[VerNum + 1].textureCoordinate;
+			UV1.x = UV0.x + 0.1f;
 			v = VertexPositionTexture(
-				m_BackupVertices[verNum + 1].position,
-				uv1
+				m_BackupVertices[VerNum + 1].position,
+				UV1
 			);
-			newVertices.push_back(v);
+			NewVertices.push_back(v);
 
-			Vec2 uv2 = m_BackupVertices[verNum + 2].textureCoordinate;
-			uv2.x = uv0.x;
-
-			v = VertexPositionTexture(
-				m_BackupVertices[verNum + 2].position,
-				uv2
-			);
-			newVertices.push_back(v);
-
-			Vec2 uv3 = m_BackupVertices[verNum + 3].textureCoordinate;
-			uv3.x = uv0.x + 0.1f;
+			Vec2 UV2 = m_BackupVertices[VerNum + 2].textureCoordinate;
+			UV2.x = UV0.x;
 
 			v = VertexPositionTexture(
-				m_BackupVertices[verNum + 3].position,
-				uv3
+				m_BackupVertices[VerNum + 2].position,
+				UV2
 			);
-			newVertices.push_back(v);
+			NewVertices.push_back(v);
 
-			verNum += 4;
+			Vec2 UV3 = m_BackupVertices[VerNum + 3].textureCoordinate;
+			UV3.x = UV0.x + 0.1f;
+
+			v = VertexPositionTexture(
+				m_BackupVertices[VerNum + 3].position,
+				UV3
+			);
+			NewVertices.push_back(v);
+
+			VerNum += 4;
 		}
-		auto ptrDraw = GetComponent<PTSpriteDraw>();
-		ptrDraw->UpdateVertices(newVertices);
+		auto PtrDraw = GetComponent<PTSpriteDraw>();
+		PtrDraw->UpdateVertices(NewVertices);
 
 		wstringstream ss;
-		ss << L"Timer : " << m_Totaltime << std::endl;
+		ss << L"Timer : " << m_Timer << std::endl;
+		ss << L"桁数 : " << m_NumberOfDigits << std::endl;
 
 		//文字列コンポーネントの取得
 		auto ptrString = GetComponent<StringSprite>();

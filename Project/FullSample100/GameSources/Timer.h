@@ -12,7 +12,7 @@ namespace basecross {
 		Vec2 m_StartScale;
 		Vec3 m_StartPos;
 		wstring m_TextureKey;
-		float m_Totaltime;
+		float m_Timer;
 		//桁数
 		UINT m_NumberOfDigits;
 		//バックアップ頂点データ
@@ -20,7 +20,7 @@ namespace basecross {
 	public:
 		Timer(const shared_ptr<Stage>& StagePtr, UINT NumberOfDigits,
 			const wstring& TextureKey, bool Trace,
-			const Vec2& StartScale, const Vec3& StartPos);
+			const Vec2& StartScale, const Vec3& StartPos,bool resultFlg=false);
 		virtual ~Timer() {}
 		virtual void OnCreate() override;
 		virtual void OnUpdate()override;
