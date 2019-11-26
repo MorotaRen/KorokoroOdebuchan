@@ -21,7 +21,7 @@ namespace basecross {
 	{}
 
 	void Timer::OnCreate() {
-		float XPiecesize = 1.0f / (float)m_NumberOfDigits;
+		float XPiecesize = 2.0f / (float)m_NumberOfDigits;
 		float HelfSize = 0.5f;
 
 		//インデックス配列
