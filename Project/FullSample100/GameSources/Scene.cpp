@@ -47,7 +47,8 @@ namespace basecross {
 			//{L"ファイル名",L"呼び出し時のキー"}
 			{L"wall.jpg",L"TestWall"},
 			{L"Floor.png",L"TestFloor"},
-			{L"UI_Number.png",L"Number"}
+			{L"UI_Number_4.png",L"Number"},
+			{L"UI_Time.png",L"Time"}
 		};
 
 		for (auto texture : textures) {
