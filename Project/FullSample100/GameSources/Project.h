@@ -25,7 +25,6 @@
 
 
 //-------------オブジェクト------------//
-#include "CheckPoint.h"
 #include "Player.h"
 #include "Items.h"
 #include "Sprite.h"

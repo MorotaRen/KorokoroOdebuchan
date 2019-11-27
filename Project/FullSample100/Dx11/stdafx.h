@@ -26,7 +26,7 @@
 #include <wchar.h>
 #include <mmsystem.h>
 #include <atlbase.h>
-#include <commctrl.h> // for InitCommonControls() 
+#include <commctrl.h> // for InitCommonControls()
 #include <shellapi.h> // for ExtractIcon()
 #include <new.h>      // for placement new
 #include <shlobj.h>
