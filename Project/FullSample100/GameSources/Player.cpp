@@ -110,21 +110,16 @@ namespace basecross{
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		auto elapsedTime = App::GetApp()->GetElapsedTime();
 		Vec3 angle(0, 0, 0);
+
 		auto ptrTransform = GetComponent<Transform>();
-		auto ptrCamera = OnGetDrawCamera();
 		m_pos = ptrTransform->GetPosition();
 		m_rot = ptrTransform->GetRotation();
 
-		//加速
-		m_rollingSpeed += m_accelerate * elapsedTime;
-
-
+		auto ptrCamera = OnGetDrawCamera();
 		//進行方向の向き
 		m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
-		//m_front.y = 0;
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-
 		if (KeyState.m_bPushKeyTbl['A']) { //左
 			m_front.x -= 3.0f * elapsedTime;
 			m_inputX = -1;
@@ -138,13 +133,8 @@ namespace basecross{
 
 
 		auto ptrPs = GetComponent<RigidbodySphere>();
-		auto velo = ptrPs->GetLinearVelocity();
-
-		//xとzの速度を修正
-		//velo.y = -0.5f;
-		velo.x = m_front.x * m_rollingSpeed;
-		velo.z = m_front.z * m_rollingSpeed;
-
+		//加速
+		m_rollingSpeed += m_accelerate * elapsedTime;
 
 
 		auto ptrColl = GetComponent<CollisionSphere>();
@@ -180,16 +170,22 @@ namespace basecross{
 			}
 		}
 
+
+		auto velo = ptrPs->GetLinearVelocity();
+		//xとzの速度を修正
+		velo.x = m_front.x * m_rollingSpeed;
+		velo.z = m_front.z * m_rollingSpeed;
+
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
 
-		SetPlayerSpeed(m_rollingSpeed);
+		//SetPlayerSpeed(m_rollingSpeed);
 
-		//最高速度
-		if (m_speed > 100.0f) {
-			m_speed = 100.0f;
-			m_rollingSpeed = 100.0f;
-		}
+		////最高速度
+		//if (m_speed > 100.0f) {
+		//	m_speed = 100.0f;
+		//	m_rollingSpeed = 100.0f;
+		//}
 	}
 
 	//後更新
@@ -207,36 +203,36 @@ namespace basecross{
 
 
 
-		/*auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
-		wstring strFps(L"FPS: ");
-		strFps += Util::UintToWStr(fps);
-		strFps += L"\n";
+		//auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
+		//wstring strFps(L"FPS: ");
+		//strFps += Util::UintToWStr(fps);
+		//strFps += L"\n";
 
-		wstring updatePerStr(L"UpdatePerformance:\t");
-		updatePerStr += Util::FloatToWStr(GetStage()->GetUpdatePerformanceTime());
-		updatePerStr += L"\tmillisecond\n";
+		//wstring updatePerStr(L"UpdatePerformance:\t");
+		//updatePerStr += Util::FloatToWStr(GetStage()->GetUpdatePerformanceTime());
+		//updatePerStr += L"\tmillisecond\n";
 
-		wstring drawPerStr(L"DrawPerformance:\t");
-		drawPerStr += Util::FloatToWStr(GetStage()->GetDrawPerformanceTime());
-		drawPerStr += L"\tmillisecond\n";
+		//wstring drawPerStr(L"DrawPerformance:\t");
+		//drawPerStr += Util::FloatToWStr(GetStage()->GetDrawPerformanceTime());
+		//drawPerStr += L"\tmillisecond\n";
 
-		wstring collPerStr(L"CollisionPerform:\t");
-		collPerStr += Util::FloatToWStr(GetStage()->GetCollisionPerformanceTime(), 5);
-		collPerStr += L"\tmillisecond\n";
+		//wstring collPerStr(L"CollisionPerform:\t");
+		//collPerStr += Util::FloatToWStr(GetStage()->GetCollisionPerformanceTime(), 5);
+		//collPerStr += L"\tmillisecond\n";
 
-		wstring collMiscStr(L"ColMiscPerform:\t");
-		collMiscStr += Util::FloatToWStr(GetStage()->GetCollisionManager()->GetMiscPerformanceTime(), 5);
-		collMiscStr += L"\tmillisecond\n";
+		//wstring collMiscStr(L"ColMiscPerform:\t");
+		//collMiscStr += Util::FloatToWStr(GetStage()->GetCollisionManager()->GetMiscPerformanceTime(), 5);
+		//collMiscStr += L"\tmillisecond\n";
 
-		wstring collTernCountStr(L"CollisionCountOfTern:\t");
-		collTernCountStr += Util::UintToWStr(GetStage()->GetCollisionManager()->GetCollisionCountOfTern());
-		collTernCountStr += L"\n";
-		wstring str = strFps + updatePerStr + drawPerStr + collPerStr + collMiscStr
-			+ collTernCountStr;
+		//wstring collTernCountStr(L"CollisionCountOfTern:\t");
+		//collTernCountStr += Util::UintToWStr(GetStage()->GetCollisionManager()->GetCollisionCountOfTern());
+		//collTernCountStr += L"\n";
+		//wstring str = strFps + updatePerStr + drawPerStr + collPerStr + collMiscStr
+		//	+ collTernCountStr;
 
-		auto ptrString = GetComponent<StringSprite>();
-		ptrString->SetText(str);
-		*/
+		//auto ptrString = GetComponent<StringSprite>();
+		//ptrString->SetText(str);
+
 		DrawStrings();
 	}
 

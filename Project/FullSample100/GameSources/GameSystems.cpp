@@ -115,6 +115,7 @@ namespace basecross {
 		{
 			//プレイヤー開始地点
 			if (objdata.Tag == L"PlayerStartPos") {
+				Stage->AddGameObject<TestBlock>(objdata.Pos,objdata.Scale,objdata.Rotate.toRotVec());
 				auto PlayerObj = Stage->AddGameObject<Player>(objdata.Pos,Vec3(0.1f,0.1f,0.1f));
 				Stage->SetSharedGameObject(L"Player", PlayerObj);
 				PlayerObj->AddTag(L"Player");
