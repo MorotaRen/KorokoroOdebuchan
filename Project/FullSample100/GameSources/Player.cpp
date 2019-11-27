@@ -26,40 +26,9 @@ namespace basecross{
 
 	//初期化
 	void Player::OnCreate() {
+		//初期設定
+		SetInitialStatsSetting();
 
-
-		auto ptrTrans = GetComponent<Transform>();
-		AddTag(L"Player");
-		//auto drawcomp = AddComponent<PNTBoneModelDraw>();
-		//drawcomp->SetMeshResource(L"TestModel");
-		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"TestModel");
-		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
-		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
-
-		ptrTrans->SetScale(m_scale);
-		ptrTrans->SetRotation(0,0,0);
-		ptrTrans->SetPosition(m_pos);
-
-		//WorldMatrixをもとにRigidbodySphereのパラメータを作成
-		PsSphereParam param(ptrTrans->GetWorldMatrix(), 10.0f, false, PsMotionType::MotionTypeActive);
-		//Rigidbodyをつける
-		auto  ptrRigid = AddComponent<RigidbodySphere>(param);
-		//コリジョンをつける
-		auto ptrColl = AddComponent<CollisionSphere>();
-		ptrColl->SetAfterCollision(AfterCollision::Auto);
-
-		auto ptrGra = AddComponent<Gravity>();
-		ptrRigid->SetAutoGravity(false);
-		ptrRigid->SetDrawActive(true);
-
-		//影をつける（シャドウマップを描画する）
-		auto ptrShadow = AddComponent<Shadowmap>();
-		//影の形（メッシュ）を設定
-		ptrShadow->SetMeshResource(L"DEFAULT_SPHERE");
-		//描画コンポーネントの設定
-		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
-		//描画するメッシュを設定
-		ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
 
 		//文字列をつける
 		auto ptrString = AddComponent<StringSprite>();
@@ -223,7 +192,6 @@ namespace basecross{
 		}
 	}
 
-
 	//後更新
 	void Player::OnUpdate2() {
 		//RigidbodySphereからTransformへのパラメータの設定
@@ -268,9 +236,8 @@ namespace basecross{
 
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
-*/
+		*/
 		DrawStrings();
-
 	}
 
 	//文字列の表示
@@ -342,6 +309,47 @@ namespace basecross{
 		Vec3 hitPoint;
 		RECT rect;
 		bool isHit = false;
+
+	}
+
+	//初期ステータス設定
+	void Player::SetInitialStatsSetting() {
+		auto ptrTrans = GetComponent<Transform>();
+		ptrTrans->SetScale(m_scale);
+		ptrTrans->SetRotation(0, 0, 0);
+		m_pos.y += 10.0f;
+		ptrTrans->SetPosition(m_pos);
+
+		//WorldMatrixをもとにRigidbodySphereのパラメータを作成
+		PsSphereParam param(ptrTrans->GetWorldMatrix(), 1.0f, false, PsMotionType::MotionTypeActive);
+		auto  ptrRigid = AddComponent<RigidbodySphere>(param);
+
+		//自動重力を切る
+		//ptrRigid->SetAutoGravity(false);
+
+		//Rigidの可視化
+		ptrRigid->SetDrawActive(true);
+
+		//プレイヤーモデルの設定
+		//auto drawcomp = AddComponent<PNTBoneModelDraw>();
+		//drawcomp->SetMeshResource(L"TestModel");
+		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"TestModel");
+		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
+		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
+
+		//コリジョンをつける
+		auto ptrColl = AddComponent<CollisionSphere>();
+		ptrColl->SetAfterCollision(AfterCollision::Auto);
+		//重力追加
+		auto ptrGra = AddComponent<Gravity>();
+		//影をつける（シャドウマップを描画する）
+		auto ptrShadow = AddComponent<Shadowmap>();
+		//影の形（メッシュ）を設定
+		ptrShadow->SetMeshResource(L"DEFAULT_SPHERE");
+		//描画コンポーネントの設定
+		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
+		//描画するメッシュを設定
+		ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
 
 	}
 

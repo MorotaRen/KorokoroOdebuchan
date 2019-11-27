@@ -110,7 +110,6 @@ namespace basecross {
 	/// </summary>----------------------------------------
 	weak_ptr<Player> GameSystems::CreateStage() {
 		auto Stage = App::GetApp()->GetScene<Scene>()->GetActiveStage();
-		unsigned int  LoopNum = 0;
 		m_colobjs.push_back(vector<shared_ptr<ColliderObjects>>());
 		for each (ObjectData objdata in m_objectdatas)
 		{
@@ -118,16 +117,17 @@ namespace basecross {
 			if (objdata.Tag == L"PlayerStartPos") {
 				auto PlayerObj = Stage->AddGameObject<Player>(objdata.Pos,Vec3(0.1f,0.1f,0.1f));
 				Stage->SetSharedGameObject(L"Player", PlayerObj);
+				PlayerObj->AddTag(L"Player");
 				return PlayerObj;
 			//オブジェクトの判定
 			}else if (objdata.Tag == L"ObjectCollider") {
-				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
-				//無視用のタグ設定
-				ColliderObj->AddTag(L"Collider");
-				//初期状態では更新を切っておく(デバック専用)
-				//ColliderObj->SetUpdateActive(false);
-				//エリア分け
-				m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
+				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				////無視用のタグ設定
+				//ColliderObj->AddTag(L"Collider");
+				////初期状態では更新を切っておく(デバック専用)
+				////ColliderObj->SetUpdateActive(false);
+				////エリア分け
+				//m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
 			//ステージ壁
 			}else if (objdata.Tag == L"Stage_Wall") {
 				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate,true);

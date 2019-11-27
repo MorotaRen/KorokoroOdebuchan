@@ -355,7 +355,7 @@ namespace basecross {
 		Vec3 toEye = newAt + armVec * m_ArmLen;
 		newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
 
-		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition(); 
+		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition();
 		//newAt.y = 1.0f;
 		SetAt(newAt);
 		SetEye(newEye);

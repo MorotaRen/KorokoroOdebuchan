@@ -25,7 +25,9 @@ namespace basecross {
 		TransComp->SetPosition(m_pos);
 		TransComp->SetScale(m_scale);
 		TransComp->SetQuaternion(m_quat);
+
 		auto ColliderComp = AddComponent<CollisionObb>();
+
 		//判定表示
 		ColliderComp->SetDrawActive(true);
 		//固定衝突オブジェクト化
