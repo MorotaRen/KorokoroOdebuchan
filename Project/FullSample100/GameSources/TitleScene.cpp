@@ -24,11 +24,15 @@ namespace basecross {
 
 	}
 
+	void TitleScene::CreateBackground() {
+		//ゲーム画面サイズ
+		Vec2 gamesize = Vec2((float)App::GetApp()->GetGameWidth(),(float)App::GetApp()->GetGameHeight());
+	}
+
 	void TitleScene::OnCreate() {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
-
 
 			//難易度のスプライトを作成
 			m_Spvec[0] = AddGameObject<Sprite>(L"Title", Vec2(1000.0f, 1000.0f),Vec2(0,0));
@@ -43,12 +47,19 @@ namespace basecross {
 
 			//UIの作成
 			CreateUI();
+			//CreateBackground();
+			//auto player = AddGameObject<Player>(Vec3(250, 100, 0), Vec3(1, 1, 1));
 		}
 		catch (...) {
 			throw;
 		}
 	}
 	void TitleScene::OnUpdate() {
-
+		auto pad = GameSystems::GetInstans().GetPad();
+		auto ptrScene = App::GetApp()->GetScene<Scene>();
+		//Padの何かしらでもボタンが押されたらStage移動
+		if (pad.wPressedButtons) {
+			PostEvent(0.0f, GetThis<ObjectInterface>(), ptrScene, L"ToGameScene");
+		}
 	}
 }

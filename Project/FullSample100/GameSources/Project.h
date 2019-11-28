@@ -11,20 +11,23 @@
 
 
 #include "Scene.h"
-
+//----------------前提-----------------//
 #include "GameSystems.h"
 #include "Stage.h"
 #include "ColliderObject.h"
 #include "Sprite.h"
 #include "Timer.h"
 
-#include "TitleScene.h"
-#include "CheckPoint.h"
+//---------------ステージ--------------//
 #include "GameStage.h"
 #include "TestStage.h"
+#include "TitleScene.h"
+
+
+//-------------オブジェクト------------//
 #include "Player.h"
 #include "Items.h"
-
+#include "Sprite.h"
 #include "TestBlock.h"
 #include "MyCamera.h"
 

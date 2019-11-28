@@ -32,19 +32,10 @@ namespace basecross {
 		//物理計算ボックス
 		PsBoxParam param(ptrTrans->GetWorldMatrix(), 0.0f, true, PsMotionType::MotionTypeFixed);
 		auto PsPtr = AddComponent<RigidbodyBox>(param);
+		PsPtr->SetAutoGravity(true);
 		//OBB衝突判定を付ける
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetFixed(true);
 		ptrColl->SetDrawActive(true);
-
-		//壁を生成
-		GetStage()->AddGameObject<TestWall>(Vec3(m_pos.x + m_scale.x / 2, m_pos.y, m_pos.z), Vec3(2, 10, m_scale.z), m_rot);
-		GetStage()->AddGameObject<TestWall>(Vec3(m_pos.x - m_scale.x / 2, m_pos.y, m_pos.z), Vec3(2, 10, m_scale.z), m_rot);
-
-		//auto drawcomp = AddComponent<PNTStaticModelDraw>();
-		//drawcomp->SetMeshResource(L"SampleCourse");
-		//drawcomp->SetOwnShadowActive(true);
-
 
 		////物理計算ボックス
 		//PsBoxParam param(ptrTrans->GetWorldMatrix(), 0.0f, true, PsMotionType::MotionTypeFixed);

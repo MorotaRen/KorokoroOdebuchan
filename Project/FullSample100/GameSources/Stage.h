@@ -10,8 +10,13 @@ namespace basecross {
 
 	class StageObject : public GameObject {
 	private:
-		Vec3 m_pos, m_scale;
+		//位置
+		Vec3 m_pos,
+		//大きさ
+			m_scale;
+		//回転
 		Quat m_quat;
+		//ステージの壁かどうか
 		bool m_iswall;
 	public:
 		StageObject(const shared_ptr<Stage>& ptrstage,Vec3 pos,Vec3 scale,Quat quat,bool iswall);
