@@ -25,6 +25,12 @@ namespace basecross {
 		m_pad = device.GetControlerVec()[0];
 	}
 
+	/// ----------------------------------------<summary>
+	/// コントローラーの状態の更新
+	/// </summary>----------------------------------------
+	CONTROLER_STATE GameSystems::GetPad() {
+		return m_pad;
+	}
 
 	/// ----------------------------------------<summary>
 	///	CSVに保存されたCSVデータを読み込みます
@@ -116,9 +122,11 @@ namespace basecross {
 			//オブジェクトの判定
 			}else if (objdata.Tag == L"ObjectCollider") {
 				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				//無視用のタグ設定
 				ColliderObj->AddTag(L"Collider");
-				ColliderObj->SetUpdateActive(false);
-
+				//初期状態では更新を切っておく(デバック専用)
+				//ColliderObj->SetUpdateActive(false);
+				//エリア分け
 				m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
 			//ステージ壁
 			}else if (objdata.Tag == L"Stage_Wall") {
@@ -128,11 +136,10 @@ namespace basecross {
 			//ステージオブジェクト
 			}else if (objdata.Tag == L"StageObject") {
 
-			//チェックポイント
-			}else if (objdata.Tag == L"CheckPoint") {
-				auto CheckObj = Stage->AddGameObject<CheckPoint>(objdata.Pos, objdata.Scale, objdata.Rotate);
-				CheckObj->SetNextPointNum(objdata.GroupNum);
-
+			//床
+			}else if(objdata.Tag == L"GroundCollider"){
+				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				ColliderObj->AddTag(L"Collider");
 			//なんでもなかったら
 			}else {
 				m_colobjs.push_back(vector<shared_ptr<ColliderObjects>>());

@@ -38,11 +38,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CheckPoint.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)CheckPoint.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Timer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Timer.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
@@ -87,11 +94,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CheckPoint.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)CheckPoint.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">

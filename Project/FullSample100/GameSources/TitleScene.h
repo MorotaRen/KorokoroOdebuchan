@@ -11,7 +11,8 @@ namespace basecross{
 	private:
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
-
+		//”wŒi‚Ìì¬
+		void CreateBackground();
 	public:
 		//\’z
 		TitleScene() :Stage() {}

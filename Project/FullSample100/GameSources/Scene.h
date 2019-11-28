@@ -60,7 +60,7 @@ namespace basecross{
 		void LoadStaticModelResources(wstring FileName,wstring KeyName);
 
 		/// ----------------------------------------------------------------------------<summary>
-		/// ボーンクモデルの読み込み
+		/// ボーンモデルの読み込み
 		/// </summary>----------------------------------------------------------------------------
 		void LoadBoneModelResources();
 		void LoadBoneModelResources(wstring FileName,wstring KeyName);
