@@ -175,7 +175,6 @@ namespace basecross {
 
 
 	void MyCamera::OnUpdate() {
-		//auto ptrPlayer = App::GetApp()->GetScene<TestStage>()->GetSharedGameObject<Player>(L"Player");
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		auto keyData = App::GetApp()->GetInputDevice().GetKeyState();
 		//前回のターンからの時間
@@ -271,6 +270,9 @@ namespace basecross {
 				}
 			}
 
+			auto front = m_ptrPlayer.lock()->GetPlayerFrontVec();
+			m_RadXZ = atan2(front.z, front.x);
+
 			//ハジキの処理
 
 			if (m_ptrPlayer.lock()->GetBoundFlagL()) {
@@ -353,10 +355,11 @@ namespace basecross {
 		m_ArmLen = 0.01f;
 		////目指したい場所にアームの値と腕ベクトルでEyeを調整
 		Vec3 toEye = newAt + armVec * m_ArmLen;
+		toEye.y = 1.2f;
 		newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
 
 		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition(); 
-		//newAt.y = 1.0f;
+		newAt.y = 0.8f;
 		SetAt(newAt);
 		SetEye(newEye);
 		UpdateArmLengh();

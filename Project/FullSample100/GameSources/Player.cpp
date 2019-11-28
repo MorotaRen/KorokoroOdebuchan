@@ -73,6 +73,7 @@ namespace basecross{
 			ptrCamera->SetTargetObject(GetThis<GameObject>());
 			ptrCamera->SetTargetToAt(Vec3(0, 3, 1));
 		}
+		m_front = ptrCamera->GetEye() - ptrTrans->GetPosition();
 	}
 
 	//更新
@@ -108,18 +109,18 @@ namespace basecross{
 
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-		if (KeyState.m_bPushKeyTbl['W']) { //前
-			m_inputY = 1.0f;
-		}
-		else if (KeyState.m_bPushKeyTbl['A']) { //左
-			m_inputX = -1.0f;
-		}
-		else if (KeyState.m_bPushKeyTbl['S']) { //後
-			m_inputY = -1.0f;
-		}
-		else if (KeyState.m_bPushKeyTbl['D']) { //右
-			m_inputX = 1.0f;
-		}
+		//if (KeyState.m_bPushKeyTbl['W']) { //前
+		//	m_inputY = 1.0f;
+		//}
+		//else if (KeyState.m_bPushKeyTbl['A']) { //左
+		//	m_inputX = -1.0f;
+		//}
+		//else if (KeyState.m_bPushKeyTbl['S']) { //後
+		//	m_inputY = -1.0f;
+		//}
+		//else if (KeyState.m_bPushKeyTbl['D']) { //右
+		//	m_inputX = 1.0f;
+		//}
 
 		if (KeyState.m_bPressedKeyTbl[VK_SPACE]) { //モードチェンジ
 			switch (m_state)
@@ -151,20 +152,27 @@ namespace basecross{
 
 
 		//進行方向の向き
-		m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
+		//m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
 		//m_front.y = 0;
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
 		if (KeyState.m_bPushKeyTbl['A']) { //左
-			m_front.x -= 3.0f * elapsedTime;
-			m_inputX = -1;
+			m_front.x += elapsedTime * (110.0f - m_speed)*0.005f;
+		}
+		else if (KeyState.m_bPushKeyTbl['D']) { //右
+			m_front.x -= elapsedTime * (110.0f - m_speed)*0.005f;
 		}
 
-		if (KeyState.m_bPushKeyTbl['D']) { //右
-			m_front.x += 3.0f*elapsedTime;
-			m_inputX = 1;
+		if (m_inputX != 0) {
+			if (m_inputX < 0) {
+				m_front.x -= elapsedTime * (110.0f - m_speed)*0.005f;
+			}
+			else{
+				m_front.x += elapsedTime * (110.0f - m_speed)*0.005f;
+			}
 		}
+
 		m_front.normalize();
 
 
@@ -172,7 +180,6 @@ namespace basecross{
 		auto velo = ptrPs->GetLinearVelocity();
 
 		//xとzの速度を修正
-		//velo.y = -0.5f;
 		velo.x = m_front.x * m_rollingSpeed;
 		velo.z = m_front.z * m_rollingSpeed;
 

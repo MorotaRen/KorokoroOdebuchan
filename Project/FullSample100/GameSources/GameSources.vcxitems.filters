@@ -35,7 +35,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CheckPoint.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp">
@@ -91,7 +90,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
       <Filter>Systems\Header</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CheckPoint.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h">
