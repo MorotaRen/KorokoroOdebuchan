@@ -41,6 +41,7 @@ namespace basecross {
 		bool m_boundFlagL;
 		bool m_boundFlagR;
 		float m_boundInputReceptionTime;
+		bool m_acceleFlag;
 
 		//“ü—Í‚³‚ê‚½Žž
 		void InputController();
@@ -73,7 +74,6 @@ namespace basecross {
 		float GetPlayerSpeed() { return m_speed; }
 
 		void SetPlayerFrontVec(Vec3 f) { m_front = f; }
-
 		Vec3 GetPlayerFrontVec() { return m_front; }
 
 		/// ----------------------------------------<summary>

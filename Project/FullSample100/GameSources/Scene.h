@@ -52,6 +52,7 @@ namespace basecross{
 		/// </summary>----------------------------------------------------------------------------
 		void LoadImageResources();
 		void LoadImageResources(wstring FileName,wstring KeyName);
+		void LoadImageResources(wstring FolderName);
 
 		/// ----------------------------------------------------------------------------<summary>
 		/// スタティックモデルの読み込み
