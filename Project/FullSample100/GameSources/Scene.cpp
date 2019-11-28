@@ -5,6 +5,7 @@
 
 #include "stdafx.h"
 #include "Project.h"
+#include <filesystem>
 
 namespace basecross {
 
@@ -19,9 +20,10 @@ namespace basecross {
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"TitleScene");
 
-			LoadImageResources();
+			LoadImageResources(L"Title");
+			LoadImageResources(L"Font");
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -48,12 +50,31 @@ namespace basecross {
 			{L"wall.jpg",L"TestWall"},
 			{L"Floor.png",L"TestFloor"},
 			{L"UI_Number_4.png",L"Number"},
-			{L"UI_Time.png",L"Time"}
+			{L"UI_Time.png",L"Time"},
+			{L"Title_1.png",L"Spring"},
+			{L"Title_2.png",L"Summer"},
+			{L"Title_3.png",L"Autumn"},
+			{L"Title_4.png",L"Winter"}
+
 		};
 
 		for (auto texture : textures) {
 			wstring strTexture = dataDir + L"Images\\" + texture.m_texName;
 			App::GetApp()->RegisterTexture(texture.m_texKey, strTexture);
+		}
+	}
+	/// ----------------------------------------------------------------------------<summary>
+	/// 画像の読み込み(フォルダ名指定)
+	/// </summary>----------------------------------------------------------------------------
+	void Scene::LoadImageResources(wstring FolderName) {
+		//ディレクトリ取得
+		App::GetApp()->GetDataDirectory(dataDir);
+		wstring strTexture = dataDir + L"Images\\" + FolderName;
+		namespace filesystem = std::experimental::filesystem;
+		for (auto ent : filesystem::recursive_directory_iterator(strTexture)) {
+			auto keyname = ent.path().stem().wstring();
+			auto path = ent.path();
+			App::GetApp()->RegisterTexture(keyname, path);
 		}
 	}
 	/// ----------------------------------------------------------------------------<summary>
@@ -179,18 +200,15 @@ namespace basecross {
 		//	ResetActiveStage<移動したいステージクラス>();
 		//	m_numMusic = MusicRoopStart(L"音のキー",ボリューム);
 		//}
-
-		if (event->m_MsgStr == L"ToTestStage") {
-			ResetActiveStage<TestStage>();
-
-			if (event->m_MsgStr == L"TitleScene") {
-				ResetActiveStage<TitleScene>();
-
-			}
+		if (event->m_MsgStr == L"TitleScene") {
+			ResetActiveStage<TitleScene>();
 		}
-		else if(event->m_MsgStr == L"ToTestScene") {
+		else if (event->m_MsgStr == L"ToTestStage") {
 			ResetActiveStage<TestStage>();
 		}
+		//else if (event->m_MsgStr == L"ToTestScene") {
+		//	ResetActiveStage<TestStage>();
+		//}
 	}
 }
 //end basecross

@@ -22,9 +22,9 @@ namespace basecross {
 	void TestStage::CreateUI()
 	{
 		//タイマー
-		AddGameObject<Timer>(8, L"Number", true, Vec2(320.0f, 80.0f), Vec3(150.0f, 300.0f, 0.0f));
+		AddGameObject<Timer>(8, L"UI_Number_4", true, Vec2(320.0f, 80.0f), Vec3(150.0f, 300.0f, 0.0f));
 		//timeの画像表示
-		AddGameObject<TextTime>(L"Time", Vec2(250.0f, 100.0f), Vec2(-140.0f, 300.0f));
+		AddGameObject<TextTime>(L"UI_Time", Vec2(250.0f, 100.0f), Vec2(-140.0f, 300.0f));
 
 	}
 
