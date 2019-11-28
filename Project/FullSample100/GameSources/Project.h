@@ -18,13 +18,13 @@
 #include "Sprite.h"
 #include "Timer.h"
 
+#include "TitleScene.h"
 #include "CheckPoint.h"
 #include "GameStage.h"
 #include "TestStage.h"
 #include "Player.h"
 #include "Items.h"
 
-#include "TitleScene.h"
 #include "TestBlock.h"
 #include "MyCamera.h"
 

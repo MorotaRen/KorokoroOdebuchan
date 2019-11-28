@@ -11,15 +11,24 @@ namespace basecross{
 	private:
 		//ビューの作成
 		void CreateViewLight();
+		//UIの作成
+		void CreateUI();
 
+		vector<shared_ptr<Sprite>> m_Spvec;
+
+		int m_StageNum = 0;   //今選択してるステージ番号
+		bool m_CntrolLock;    //スティックを一度倒したらロック
 	public:
 		//構築
-		TitleScene() :Stage() {}
+		TitleScene() :Stage(),m_CntrolLock(false),m_Spvec(9) {}
 		//破棄
-		~TitleScene() {}
+		virtual ~TitleScene() {}
 		//初期化
 		virtual void OnCreate() override;
 		//更新
 		virtual void OnUpdate() override;
+
+		int GetStageNum() { return m_StageNum; }
+		vector<shared_ptr<Sprite>>GetSpVec()const { return m_Spvec; }
 	};
 }
