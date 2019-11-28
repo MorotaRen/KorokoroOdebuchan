@@ -20,7 +20,8 @@ namespace basecross{
 		m_accelerate(10.0f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
-		m_boundInputReceptionTime(0.5f)
+		m_boundInputReceptionTime(0.5f),
+		m_acceleFlag(false)
 	{
 	}
 
@@ -42,7 +43,7 @@ namespace basecross{
 			ptrCamera->SetTargetObject(GetThis<GameObject>());
 			ptrCamera->SetTargetToAt(Vec3(0, 3, 1));
 		}
-		m_front = ptrCamera->GetEye() - ptrTrans->GetPosition();
+		m_front = ptrCamera->GetEye() - GetComponent<Transform>()->GetPosition();
 	}
 
 	//更新
@@ -145,56 +146,67 @@ namespace basecross{
 		auto velo = ptrPs->GetLinearVelocity();
 
 		//xとzの速度を修正
-		velo.x = m_front.x * m_rollingSpeed;
-		velo.z = m_front.z * m_rollingSpeed;
+		if (m_acceleFlag) {
+			velo.x = m_front.x * m_rollingSpeed;
+			velo.z = m_front.z * m_rollingSpeed;
 
-		//加速
-		m_rollingSpeed += m_accelerate * elapsedTime;
-
+			//加速
+			m_rollingSpeed += m_accelerate * elapsedTime;
+		}
 
 		auto ptrColl = GetComponent<CollisionSphere>();
 		//物理オブジェクトを持つ配列の取得
 		vector<shared_ptr<Rigidbody>> PsComptVec;
 		GetStage()->GetUsedDynamicCompoentVec<Rigidbody>(PsComptVec);
 		for (auto& v : PsComptVec) {
-			auto ptrG = dynamic_pointer_cast<TestWall>(v->GetGameObject());
+			auto ptrG = dynamic_pointer_cast<StageObject>(v->GetGameObject());
 			if (ptrG) {
 				//壁を取得
 				auto ptrRegBox = dynamic_pointer_cast<RigidbodyBox>(v);
-				if (ptrRegBox) {
-					Vec3 ret;
-					//壁との衝突
-					if (HitTest::SPHERE_OBB(ptrColl->GetSphere(), ptrRegBox->GetOBB(), ret)) {
-						m_rollingSpeed -= 1.5f;
-						m_boundInputReceptionTime -= elapsedTime;
+				if (ptrG->FindTag(L"Stage_Wall")) {
+					if (ptrRegBox) {
+						Vec3 ret;
+						//壁との衝突
+						if (HitTest::SPHERE_OBB(ptrColl->GetSphere(), ptrRegBox->GetOBB(), ret)) {
+							m_rollingSpeed -= 1.5f;
+							m_boundInputReceptionTime -= elapsedTime;
 
-						if (m_boundInputReceptionTime > 0.0f) {
-							if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
-								m_boundFlagL = true;
-							}
-							else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
-							{
-								m_boundFlagR = true;
+							if (m_boundInputReceptionTime > 0.0f) {
+								if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
+									m_boundFlagL = true;
+								}
+								else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+								{
+									m_boundFlagR = true;
+								}
 							}
 						}
-					}
-					else {
-						m_boundInputReceptionTime = 0.5f;
+						else {
+							m_boundInputReceptionTime = 0.5f;
+						}
 					}
 				}
+
+				//床を取得
+				if (ptrG->FindTag(L"GroundCollider")) {
+					if (ptrRegBox) {
+						Vec3 ret;
+						//床との衝突
+						if (HitTest::SPHERE_OBB(ptrColl->GetSphere(), ptrRegBox->GetOBB(), ret)) {
+							m_acceleFlag = true;
+						}
+						else {
+							m_acceleFlag = false;
+						}
+					}
+				}
+
 			}
 		}
 
 
-		auto velo = ptrPs->GetLinearVelocity();
-		//xとzの速度を修正
-		velo.x = m_front.x * m_rollingSpeed;
-		velo.z = m_front.z * m_rollingSpeed;
-
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
-
-		//SetPlayerSpeed(m_rollingSpeed);
 
 		////最高速度
 		//if (m_speed > 100.0f) {
