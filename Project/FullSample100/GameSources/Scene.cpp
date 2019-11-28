@@ -67,7 +67,7 @@ namespace basecross {
 		wstring strTexture = dataDir + L"Images\\" + FolderName;
 		namespace filesystem = std::experimental::filesystem;
 		for (auto ent : filesystem::recursive_directory_iterator(strTexture)) {
-			auto keyname = L"Tx_" + ent.path().stem().wstring();
+			auto keyname = ent.path().stem().wstring();
 			auto path = ent.path();
 			App::GetApp()->RegisterTexture(keyname, path);
 		}
