@@ -86,14 +86,14 @@ namespace basecross {
 			CreateViewLight();
 
 			//難易度のスプライトを作成
-			m_Spvec[1] = AddGameObject<Sprite>(L"Spring", Vec2(640.0f, 400.0f),Vec2(-320,200));
-			m_Spvec[2] = AddGameObject<Sprite>(L"Summer", Vec2(640.0f, 400.0f), Vec2(320.0f, 200.0f));
-			m_Spvec[3] = AddGameObject<Sprite>(L"Autumn", Vec2(640.0f, 400.0f), Vec2(-320.0f, -200.0f));
-			m_Spvec[4] = AddGameObject<Sprite>(L"Winter", Vec2(640.0f, 400.0f), Vec2(320.0f, -200.0f));
+			m_Spvec[1] = AddGameObject<Sprite>(L"Title_1", Vec2(640.0f, 400.0f),Vec2(-320,200));
+			m_Spvec[2] = AddGameObject<Sprite>(L"Title_2", Vec2(640.0f, 400.0f), Vec2(320.0f, 200.0f));
+			m_Spvec[3] = AddGameObject<Sprite>(L"Title_3", Vec2(640.0f, 400.0f), Vec2(-320.0f, -200.0f));
+			m_Spvec[4] = AddGameObject<Sprite>(L"Title_4", Vec2(640.0f, 400.0f), Vec2(320.0f, -200.0f));
 
 			//マスクスプライト
 			//m_SpotSprite = AddGameObject<SelectSpotSprite>(L"TestWall", Vec2(3840.0f, 1920.0f), Vec2(-320.0f, 200.0f));
-			m_SpotSprite = AddGameObject<SelectSpotSprite>(L"TestWall", Vec2(640.0f, 400.0f), Vec2(-320.0f, 200.0f));
+			m_SpotSprite = AddGameObject<SelectSpotSprite>(L"TitleLogo", Vec2(640.0f, 400.0f), Vec2(-320.0f, 200.0f));
 
 			//描画処理が有効
 			m_Spvec[1]->SetDrawActive(true);
