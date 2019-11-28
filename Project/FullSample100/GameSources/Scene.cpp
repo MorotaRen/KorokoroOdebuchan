@@ -5,6 +5,7 @@
 
 #include "stdafx.h"
 #include "Project.h"
+#include <filesystem>
 
 namespace basecross {
 
@@ -21,7 +22,8 @@ namespace basecross {
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
 			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
 
-			LoadImageResources();
+			LoadImageResources(L"Title");
+			LoadImageResources(L"Font");
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -56,8 +58,19 @@ namespace basecross {
 			App::GetApp()->RegisterTexture(texture.m_texKey, strTexture);
 		}
 	}
-	void LoadImageResources(wstring FolderName) {
-
+	/// ----------------------------------------------------------------------------<summary>
+	/// 画像の読み込み(フォルダ名指定)
+	/// </summary>----------------------------------------------------------------------------
+	void Scene::LoadImageResources(wstring FolderName) {
+		//ディレクトリ取得
+		App::GetApp()->GetDataDirectory(dataDir);
+		wstring strTexture = dataDir + L"Images\\" + FolderName;
+		namespace filesystem = std::experimental::filesystem;
+		for (auto ent : filesystem::recursive_directory_iterator(strTexture)) {
+			auto keyname = L"Tx_" + ent.path().stem().wstring();
+			auto path = ent.path();
+			App::GetApp()->RegisterTexture(keyname, path);
+		}
 	}
 	/// ----------------------------------------------------------------------------<summary>
 	/// 画像の読み込み(引数あり)
