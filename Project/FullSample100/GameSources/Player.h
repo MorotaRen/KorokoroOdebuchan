@@ -60,10 +60,12 @@ namespace basecross {
 		virtual void OnUpdate2() override;
 		//文字列の表示
 		void DrawStrings();
+		//初期ステータス設定
+		void SetInitialStatsSetting();
 
 		void SetBoundFlagL(bool f) { m_boundFlagL = f; }
 		bool GetBoundFlagL() { return m_boundFlagL; }
-		
+
 		void SetBoundFlagR(bool f) { m_boundFlagR = f; }
 		bool GetBoundFlagR() { return m_boundFlagR; }
 
