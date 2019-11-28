@@ -56,6 +56,9 @@ namespace basecross {
 			App::GetApp()->RegisterTexture(texture.m_texKey, strTexture);
 		}
 	}
+	void LoadImageResources(wstring FolderName) {
+
+	}
 	/// ----------------------------------------------------------------------------<summary>
 	/// ‰æ‘œ‚Ì“Ç‚İ‚İ(ˆø”‚ ‚è)
 	/// </summary>----------------------------------------------------------------------------
