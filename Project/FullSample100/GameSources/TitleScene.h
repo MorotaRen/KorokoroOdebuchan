@@ -7,6 +7,25 @@
 #include "stdafx.h"
 
 namespace basecross{
+	//--------------------------------------------------------------------------------------
+	//	選択している所を表示するスプライト
+	//--------------------------------------------------------------------------------------
+	class SelectSpotSprite :public Sprite {
+	public:
+		SelectSpotSprite(const shared_ptr<Stage>&stagePtr,
+			const wstring& textureKey,
+			const Vec2& startScale,
+			const Vec2& startPos);
+		virtual ~SelectSpotSprite() {}
+		bool SelectSpotFlag;
+		virtual void OnCreate()override;
+		virtual void OnUpdate()override;
+		bool GetSelectSpotFlag() { return SelectSpotFlag; }
+	};
+
+	//--------------------------------------------------------------------------------------
+	//	タイトルシーンのクラス
+	//--------------------------------------------------------------------------------------
 	class TitleScene : public Stage {
 	private:
 		//ビューの作成
@@ -15,6 +34,7 @@ namespace basecross{
 		void CreateUI();
 
 		vector<shared_ptr<Sprite>> m_Spvec;
+		shared_ptr<SelectSpotSprite> m_SpotSprite;
 
 		int m_StageNum = 0;   //今選択してるステージ番号
 		bool m_CntrolLock;    //スティックを一度倒したらロック
