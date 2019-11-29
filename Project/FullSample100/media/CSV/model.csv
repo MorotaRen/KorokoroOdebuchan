@@ -1,2 +1,4 @@
-False,OBJ_CourseEasy_Kabe.bmf,Easycurve_Wall,END
-False,OBJ_CourseEasy_Yuka.bmf,Easycurve_Ground,END
+True,Player_Nomal.bmf,M_PlayerNomal,walk,6,19,RowlingStart,30,7,RowlingEnd,42,8,Lose,60,40,Win,110,35,END
+False,Player_Rowling.bmf,M_PlayerRowling,,,,,,,,,,,,,,,,END
+False,OBJ_CourseEasy_Kabe.bmf,Easycurve_Ground,,,,,,,,,,,,,,,,END
+False,OBJ_CourseEasy_Yuka.bmf,Easycurve_Wall,,,,,,,,,,,,,,,,END
