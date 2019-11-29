@@ -59,6 +59,10 @@ namespace basecross {
 		virtual void OnUpdate() override;
 		//後更新
 		virtual void OnUpdate2() override;
+		//衝突判定
+		/*virtual void OnCollisionEnter(shared_ptr<GameObject>& other) override;
+		virtual void OnCollisionExit(shared_ptr<GameObject>& other) override;*/
+
 		//文字列の表示
 		void DrawStrings();
 		//初期ステータス設定

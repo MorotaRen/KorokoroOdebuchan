@@ -28,6 +28,9 @@ namespace basecross {
 
 		auto ColliderComp = AddComponent<CollisionObb>();
 		ColliderComp->SetAfterCollision(AfterCollision::Auto);
+		
+		PsBoxParam param(TransComp->GetWorldMatrix(), 1.0f, false, PsMotionType::MotionTypeFixed);
+		auto  ptrRigid = AddComponent<RigidbodyBox>(param);
 		//判定表示
 		ColliderComp->SetDrawActive(true);
 		//固定衝突オブジェクト化
