@@ -53,6 +53,8 @@ namespace basecross {
 		pos.y += moveY;
 
 		ptrTrans->SetPosition(pos);
+
+		
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -94,12 +96,17 @@ namespace basecross {
 			//マスクスプライト
 			//m_SpotSprite = AddGameObject<SelectSpotSprite>(L"TestWall", Vec2(3840.0f, 1920.0f), Vec2(-320.0f, 200.0f));
 			m_SpotSprite = AddGameObject<SelectSpotSprite>(L"TitleLogo", Vec2(640.0f, 400.0f), Vec2(-320.0f, 200.0f));
-
+			m_SpotSprite->SetDrawLayer(10);
 			//描画処理が有効
 			m_Spvec[1]->SetDrawActive(true);
 			m_Spvec[2]->SetDrawActive(true);
 			m_Spvec[3]->SetDrawActive(true);
 			m_Spvec[4]->SetDrawActive(true);
+			
+			m_Spvec[1]->SetDrawLayer(1);
+			m_Spvec[2]->SetDrawLayer(1);
+			m_Spvec[3]->SetDrawLayer(1);
+			m_Spvec[4]->SetDrawLayer(1);
 
 			//UIの作成
 			CreateUI();
@@ -123,7 +130,7 @@ namespace basecross {
 						if (m_StageNum != 3) {
 							m_StageNum++;
 							m_CntrolLock = true;
-							
+
 						}
 					}
 					else if (cntlVec.fThumbLX <= -0.8f) {
@@ -137,6 +144,7 @@ namespace basecross {
 					}
 				}
 			}
+			//上限
 			if (m_StageNum == 4) {
 				m_StageNum = 3;
 			}
