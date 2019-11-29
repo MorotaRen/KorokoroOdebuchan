@@ -20,7 +20,7 @@ namespace basecross {
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToTestStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"TitleScene");
 
 			LoadImageResources(L"Title");
 			LoadImageResources(L"Font");
@@ -50,7 +50,12 @@ namespace basecross {
 			{L"wall.jpg",L"TestWall"},
 			{L"Floor.png",L"TestFloor"},
 			{L"UI_Number_4.png",L"Number"},
-			{L"UI_Time.png",L"Time"}
+			{L"UI_Time.png",L"Time"},
+			{L"Title_1.png",L"Spring"},
+			{L"Title_2.png",L"Summer"},
+			{L"Title_3.png",L"Autumn"},
+			{L"Title_4.png",L"Winter"}
+
 		};
 
 		for (auto texture : textures) {
@@ -195,18 +200,15 @@ namespace basecross {
 		//	ResetActiveStage<移動したいステージクラス>();
 		//	m_numMusic = MusicRoopStart(L"音のキー",ボリューム);
 		//}
-
-		if (event->m_MsgStr == L"ToTestStage") {
-			ResetActiveStage<TestStage>();
-
-			if (event->m_MsgStr == L"TitleScene") {
-				ResetActiveStage<TitleScene>();
-
-			}
+		if (event->m_MsgStr == L"TitleScene") {
+			ResetActiveStage<TitleScene>();
 		}
-		else if(event->m_MsgStr == L"ToTestScene") {
+		else if (event->m_MsgStr == L"ToTestStage") {
 			ResetActiveStage<TestStage>();
 		}
+		//else if (event->m_MsgStr == L"ToTestScene") {
+		//	ResetActiveStage<TestStage>();
+		//}
 	}
 }
 //end basecross

@@ -18,7 +18,7 @@ namespace basecross {
 		m_CameraUnderRot(0.1f),
 		m_ArmLen(0.01f),
 		m_MaxArm(30.0f),
-		m_MinArm(0.01f),
+		m_MinArm(10.0f),
 		m_RotSpeed(1.0f),
 		m_ZoomSpeed(0.1f),
 		m_LRBaseMode(true),
@@ -38,7 +38,7 @@ namespace basecross {
 		m_CameraUnderRot(0.1f),
 		m_ArmLen(5.0f),
 		m_MaxArm(30.0f),
-		m_MinArm(1.0f),
+		m_MinArm(10.0f),
 		m_RotSpeed(1.0f),
 		m_ZoomSpeed(0.1f),
 		m_LRBaseMode(true),
@@ -271,8 +271,8 @@ namespace basecross {
 			}
 		}
 
-		auto front = m_ptrPlayer.lock()->GetPlayerFrontVec();
-		m_RadXZ = atan2(front.z, front.x);
+		/*auto front = m_ptrPlayer.lock()->GetPlayerFrontVec();
+		m_RadXZ = atan2(front.z, front.x);*/
 
 		//ハジキの処理
 
@@ -355,10 +355,9 @@ namespace basecross {
 		m_ArmLen = 0.1f;
 		////目指したい場所にアームの値と腕ベクトルでEyeを調整
 		Vec3 toEye = newAt + armVec * m_ArmLen;
-		//toEye.y = 1.2f;
+		toEye.y = 0.1f;
 		newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
-		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition();
-		newAt.y = 0.8f;
+		//newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition();
 		SetAt(newAt);
 		SetEye(newEye);
 		UpdateArmLengh();
