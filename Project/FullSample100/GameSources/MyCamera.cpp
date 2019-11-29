@@ -154,7 +154,7 @@ namespace basecross {
 
 	}
 
-
+	
 	void MyCamera::SetAt(const bsm::Vec3& At) {
 		Camera::SetAt(At);
 		Vec3 armVec = GetEye() - GetAt();
@@ -237,70 +237,59 @@ namespace basecross {
 			//ƒJƒƒ‰‚ªŒÀŠE‰º‚É‰º‚ª‚Á‚½‚ç‚»‚êˆÈã‰º‚ª‚ç‚È‚¢
 			m_RadY = m_CameraUnderRot;
 		}
-		//armVec.y = sin(m_RadY);
-		armVec.y = 0.0f;
+		armVec.y = sin(m_RadY);
+		//armVec.y = 0.0f;
 
 		float playerSpeed = m_ptrPlayer.lock()->GetPlayerSpeed();
 
 		//‚±‚±‚ÅYŽ²‰ñ“]‚ðì¬
-		if (fThumbLX != 0 || keyData.m_bPushKeyTbl['A'] || keyData.m_bPushKeyTbl['D']) {
-			//‰ñ“]ƒXƒs[ƒh‚ð”½‰f
-			if (fThumbLX != 0) {
-				if (IsLRBaseMode()) {
-					m_RadXZ += fThumbLX * elapsedTime * (110.0f - playerSpeed)*0.005f;
-				}
-				else {
-					m_RadXZ += -fThumbLX * elapsedTime * (110.0f - playerSpeed)*0.005f;
-				}
-			}
-			else if (keyData.m_bPushKeyTbl['A']) {
-				if (IsLRBaseMode()) {
-					m_RadXZ += -fThumbLX * elapsedTime * (10.0f - playerSpeed);
-				}
-				else {
-					m_RadXZ += fThumbLX * elapsedTime * (10.0f - playerSpeed);
-				}
-			}
-			else if (keyData.m_bPushKeyTbl['D']) {
-				if (IsLRBaseMode()) {
-					m_RadXZ += -fThumbLX * elapsedTime * (10.0f - playerSpeed);
-				}
-				else {
-					m_RadXZ += fThumbLX * elapsedTime * (10.0f - playerSpeed);
-				}
-			}
-		}
+		//if (fThumbLX != 0 || keyData.m_bPushKeyTbl['A'] || keyData.m_bPushKeyTbl['D']) {
+		//	//‰ñ“]ƒXƒs[ƒh‚ð”½‰f
+		//	if (fThumbLX != 0) {
+		//		if (fThumbLX > 0) {
+		//			m_RadXZ += elapsedTime * (110.0f - playerSpeed)*0.05f;
+		//		}
+		//		else {
+		//			m_RadXZ -= elapsedTime * (110.0f - playerSpeed)*0.05f;
+		//		}
+		//	}
+		//	else if (keyData.m_bPushKeyTbl['A']) {
+		//		m_RadXZ -= elapsedTime * (110.0f - playerSpeed)*0.05f;
+		//	}
+		//	else if (keyData.m_bPushKeyTbl['D']) {
+		//		m_RadXZ += elapsedTime * (110.0f - playerSpeed)*0.05f;
+		//	}
+		//}
 
-		/*auto front = m_ptrPlayer.lock()->GetPlayerFrontVec();
-		m_RadXZ = atan2(front.z, front.x);*/
+		auto front = m_ptrPlayer.lock()->GetPlayerFrontVec();
+		m_RadXZ = atan2(front.x, front.z);
 
 		//ƒnƒWƒL‚Ìˆ—
+		//if (m_ptrPlayer.lock()->GetBoundFlagL()) {
+		//	m_boundRotL = true;
+		//	m_ptrPlayer.lock()->SetBoundFlagL(false);
+		//}
+		//else if (m_ptrPlayer.lock()->GetBoundFlagR()) {
+		//	m_boundRotR = true;
+		//	m_ptrPlayer.lock()->SetBoundFlagR(false);
+		//}
 
-		if (m_ptrPlayer.lock()->GetBoundFlagL()) {
-			m_boundRotL = true;
-			m_ptrPlayer.lock()->SetBoundFlagL(false);
-		}
-		else if (m_ptrPlayer.lock()->GetBoundFlagR()) {
-			m_boundRotR = true;
-			m_ptrPlayer.lock()->SetBoundFlagR(false);
-		}
-
-		if (m_boundRotL) {
-			m_boundTime -= elapsedTime;
-			m_RadXZ += -1.0f * elapsedTime;
-			if (m_boundTime < 0.0f) {
-				m_boundTime = 0.3f;
-				m_boundRotL = false;
-			}
-		}
-		else if (m_boundRotR) {
-			m_boundTime -= elapsedTime;
-			m_RadXZ += 1.0f * elapsedTime;
-			if (m_boundTime < 0.0f) {
-				m_boundTime = 0.3f;
-				m_boundRotR = false;
-			}
-		}
+		//if (m_boundRotL) {
+		//	m_boundTime -= elapsedTime;
+		//	m_RadXZ += -1.0f * elapsedTime;
+		//	if (m_boundTime < 0.0f) {
+		//		m_boundTime = 0.3f;
+		//		m_boundRotL = false;
+		//	}
+		//}
+		//else if (m_boundRotR) {
+		//	m_boundTime -= elapsedTime;
+		//	m_RadXZ += 1.0f * elapsedTime;
+		//	if (m_boundTime < 0.0f) {
+		//		m_boundTime = 0.3f;
+		//		m_boundRotR = false;
+		//	}
+		//}
 
 		if (abs(m_RadXZ) >= XM_2PI) {
 			//1T‰ñ‚Á‚½‚ç0‰ñ“]‚É‚·‚é
@@ -354,10 +343,9 @@ namespace basecross {
 
 		m_ArmLen = 0.1f;
 		////–ÚŽw‚µ‚½‚¢êŠ‚ÉƒA[ƒ€‚Ì’l‚Æ˜rƒxƒNƒgƒ‹‚ÅEye‚ð’²®
-		Vec3 toEye = newAt + armVec * m_ArmLen;
-		toEye.y = 0.1f;
+		Vec3 toEye = newAt + armVec * m_ArmLen + Vec3(0, -2.0f, 0);
 		newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
-		//newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition();
+		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition() + Vec3(0, 0.3f, 0);
 		SetAt(newAt);
 		SetEye(newEye);
 		UpdateArmLengh();

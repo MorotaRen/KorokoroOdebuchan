@@ -17,7 +17,7 @@ namespace basecross{
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
-		m_accelerate(1.0f),
+		m_accelerate(0.5f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.5f),
@@ -137,6 +137,14 @@ namespace basecross{
 			else{
 				m_front.x += elapsedTime * (110.0f - m_speed)*0.005f;
 			}
+		}
+
+		//ÉnÉWÉLÇÃèàóù
+		if (m_boundFlagL) {
+			m_front.x -= 3.0f;
+		}
+		else if (m_boundFlagR) {
+			m_front.x += 3.0f;
 		}
 
 		m_front.normalize();
