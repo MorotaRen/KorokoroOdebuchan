@@ -130,10 +130,8 @@ namespace basecross {
 				////エリア分け
 				//m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
 			//ステージ壁
-			}else if (objdata.Tag == L"Stage_Wall") {
-				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate,true);
-			}else if (objdata.Tag == L"Stage_Ground") {
-				Stage->AddGameObject<StageObject>(objdata.Pos,objdata.Scale,objdata.Rotate,false);
+			}else if (objdata.Tag == L"Stage") {
+				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
 			//ステージオブジェクト
 			}else if (objdata.Tag == L"StageObject") {
 
