@@ -1,4 +1,4 @@
 True,Player_Nomal.bmf,M_PlayerNomal,Walk,6,19,RowlingStart,30,7,RowlingEnd,42,8,Lose,60,40,Win,110,35,END
-False,Player_Rowling.bmf,M_PlayerRowling,,,,,,,,,,,,,,,,END
+False,Player_Rolling.bmf,M_PlayerRowling,,,,,,,,,,,,,,,,END
 False,OBJ_Course_Spring.bmf,Course_Spring,,,,,,,,,,,,,,,,END
 
