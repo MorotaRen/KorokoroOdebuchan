@@ -17,6 +17,7 @@
 #include "ColliderObject.h"
 #include "Sprite.h"
 #include "Timer.h"
+#include "Checkpoint.h"
 
 //---------------ステージ--------------//
 #include "GameStage.h"
@@ -25,6 +26,7 @@
 
 
 //-------------オブジェクト------------//
+
 #include "Player.h"
 #include "Items.h"
 #include "Sprite.h"
