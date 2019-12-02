@@ -17,7 +17,7 @@ namespace basecross{
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
-		m_accelerate(1.0f),
+		m_accelerate(0.5f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.5f),
@@ -132,11 +132,19 @@ namespace basecross{
 
 		if (m_inputX != 0) {
 			if (m_inputX < 0) {
-				m_front.x -= elapsedTime * (110.0f - m_speed)*0.005f;
-			}
-			else{
 				m_front.x += elapsedTime * (110.0f - m_speed)*0.005f;
 			}
+			else{
+				m_front.x -= elapsedTime * (110.0f - m_speed)*0.005f;
+			}
+		}
+
+		//ハジキの処理
+		if (m_boundFlagL) {
+			m_front.x -= 3.0f;
+		}
+		else if (m_boundFlagR) {
+			m_front.x += 3.0f;
 		}
 
 		m_front.normalize();
@@ -353,8 +361,8 @@ namespace basecross{
 
 		//プレイヤーモデルの設定
 		//auto drawcomp = AddComponent<PNTBoneModelDraw>();
-		//drawcomp->SetMeshResource(L"TestModel");
-		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"TestModel");
+		//drawcomp->SetMeshResource(L"Player_Rolling.bmf");
+		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"Player_Rolling.bmf");
 		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
 		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
 

@@ -122,13 +122,13 @@ namespace basecross {
 				return PlayerObj;
 			//オブジェクトの判定
 			}else if (objdata.Tag == L"ObjectCollider") {
-				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
-				////無視用のタグ設定
-				//ColliderObj->AddTag(L"Collider");
+				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				//無視用のタグ設定
+				ColliderObj->AddTag(L"Collider");
 				////初期状態では更新を切っておく(デバック専用)
 				////ColliderObj->SetUpdateActive(false);
-				////エリア分け
-				//m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
+				//エリア分け
+				m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
 			//ステージ壁
 			}else if (objdata.Tag == L"Stage") {
 				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
@@ -197,7 +197,7 @@ namespace basecross {
 	/// </summary>----------------------------------------
 	void GameSystems::CreateModelData(vector<wstring> data) {
 		//0ボーンか
-		if (data[0] == L"True") {
+		if (data[0] == L"TRUE") {
 			//1-2	ファイル名とキーネーム
 			wstring dataDir;
 			App::GetApp()->GetDataDirectory(dataDir);
