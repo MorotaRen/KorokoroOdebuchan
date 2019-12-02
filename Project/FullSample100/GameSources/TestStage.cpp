@@ -48,6 +48,7 @@ namespace basecross {
 			m_camera->SetAt(at);
 			// UI�̍쐬
 			CreateUI();
+			AddGameObject<FadeSprite>(FadeType::FadeIn);
 
 		}
 		catch (...) {

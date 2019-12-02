@@ -30,4 +30,5 @@
 #include "Sprite.h"
 #include "TestBlock.h"
 #include "MyCamera.h"
+#include "Fade.h"
 
