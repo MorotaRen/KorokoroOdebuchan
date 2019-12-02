@@ -9,7 +9,7 @@ namespace basecross {
 	/// ----------------------------------------<summary>
 	/// コンストラクタ
 	/// </summary>----------------------------------------
-	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat, bool iswall) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat), m_iswall(iswall) {
+	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat) {
 
 	}
 
@@ -34,11 +34,6 @@ namespace basecross {
 		TransComp->SetQuaternion(m_quat);
 
 		auto DrawComp = AddComponent<BcPNTStaticDraw>();
-		if (m_iswall) {
-			DrawComp->SetMeshResource(L"Easycurve_Wall");
-		}
-		else {
-			DrawComp->SetMeshResource(L"Easycurve_Ground");;
-		}
+		DrawComp->SetMeshResource(L"Course_Spring");
 	}
 }

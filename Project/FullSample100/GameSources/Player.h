@@ -60,8 +60,8 @@ namespace basecross {
 		//ŒãXV
 		virtual void OnUpdate2() override;
 		//Õ“Ë”»’è
-		/*virtual void OnCollisionEnter(shared_ptr<GameObject>& other) override;
-		virtual void OnCollisionExit(shared_ptr<GameObject>& other) override;*/
+		//virtual void OnCollisionEnter(shared_ptr<GameObject>& other) override;
+		//virtual void OnCollisionExit(shared_ptr<GameObject>& other) override;
 
 		//•¶š—ñ‚Ì•\¦
 		void DrawStrings();
