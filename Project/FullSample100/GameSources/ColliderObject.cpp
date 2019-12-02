@@ -36,7 +36,7 @@ namespace basecross {
 		//固定衝突オブジェクト化
 		ColliderComp->SetFixed(true);
 		//無視タグの追加
-		ColliderComp->AddExcludeCollisionTag(L"Collider");
+		ColliderComp->AddExcludeCollisionTag(L"WallCollider");
 	}
 
 	/// ----------------------------------------<summary>
