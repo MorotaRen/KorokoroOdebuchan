@@ -53,6 +53,8 @@ namespace basecross {
 		pos.y += moveY;
 
 		ptrTrans->SetPosition(pos);
+
+		
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -85,27 +87,37 @@ namespace basecross {
 			//ビューとライトの作成
 			CreateViewLight();
 
+			//タイトルロゴ
+			m_Spvec[0] = AddGameObject<Sprite>(L"TitleLogo", Vec2(512.0f, 512.0f), Vec2(0, 0));
 			//難易度のスプライトを作成
-			m_Spvec[1] = AddGameObject<Sprite>(L"Title_1", Vec2(640.0f, 400.0f),Vec2(-320,200));
+			m_Spvec[1] = AddGameObject<Sprite>(L"Title_SpringStage", Vec2(640.0f, 400.0f),Vec2(-320,200));
 			m_Spvec[2] = AddGameObject<Sprite>(L"Title_2", Vec2(640.0f, 400.0f), Vec2(320.0f, 200.0f));
 			m_Spvec[3] = AddGameObject<Sprite>(L"Title_3", Vec2(640.0f, 400.0f), Vec2(-320.0f, -200.0f));
 			m_Spvec[4] = AddGameObject<Sprite>(L"Title_4", Vec2(640.0f, 400.0f), Vec2(320.0f, -200.0f));
 
 			//マスクスプライト
-			//m_SpotSprite = AddGameObject<SelectSpotSprite>(L"TestWall", Vec2(3840.0f, 1920.0f), Vec2(-320.0f, 200.0f));
-			m_SpotSprite = AddGameObject<SelectSpotSprite>(L"TitleLogo", Vec2(640.0f, 400.0f), Vec2(-320.0f, 200.0f));
+			m_SpotSprite = AddGameObject<SelectSpotSprite>(L"Title_Mask", Vec2(1921.0f, 1201.0f), Vec2(-320.0f, 200.0f));
+			m_SpotSprite->SetDrawLayer(10);
 
 			//描画処理が有効
+			m_Spvec[0]->SetDrawActive(true);
 			m_Spvec[1]->SetDrawActive(true);
 			m_Spvec[2]->SetDrawActive(true);
 			m_Spvec[3]->SetDrawActive(true);
 			m_Spvec[4]->SetDrawActive(true);
+			
+			m_Spvec[0]->SetDrawLayer(9);
+			m_Spvec[1]->SetDrawLayer(1);
+			m_Spvec[2]->SetDrawLayer(1);
+			m_Spvec[3]->SetDrawLayer(1);
+			m_Spvec[4]->SetDrawLayer(1);
 
 			//UIの作成
 			CreateUI();
 
 			CreateBackground();
-			//auto player = AddGameObject<Player>(Vec3(250, 100, 0), Vec3(1, 1, 1));
+
+			AddGameObject<FadeSprite>(FadeType::FadeIn);
 		}
 		catch (...) {
 			throw;
@@ -123,7 +135,7 @@ namespace basecross {
 						if (m_StageNum != 3) {
 							m_StageNum++;
 							m_CntrolLock = true;
-							
+
 						}
 					}
 					else if (cntlVec.fThumbLX <= -0.8f) {
@@ -137,6 +149,7 @@ namespace basecross {
 					}
 				}
 			}
+			//上限
 			if (m_StageNum == 4) {
 				m_StageNum = 3;
 			}
@@ -147,7 +160,8 @@ namespace basecross {
 
 		//シーン遷移
 		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A&&SelectSpotFlag == true) {
-			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTestStage");
+			//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTestStage");
+			AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
 		}
 	}
 }

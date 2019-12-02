@@ -49,7 +49,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Timer.cpp">
       <Filter>Objects\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Checkpoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Fade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
@@ -105,7 +105,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h">
       <Filter>Objects\Header</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Fade.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">

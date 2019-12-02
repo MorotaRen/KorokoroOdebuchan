@@ -21,7 +21,7 @@ namespace basecross{
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.5f),
-		m_acceleFlag(true)
+		m_boundTime(0.1f)
 	{
 	}
 
@@ -134,17 +134,31 @@ namespace basecross{
 			if (m_inputX < 0) {
 				m_front.x += elapsedTime * (110.0f - m_speed)*0.005f;
 			}
-			else{
+			else {
 				m_front.x -= elapsedTime * (110.0f - m_speed)*0.005f;
 			}
 		}
 
 		//ハジキの処理
 		if (m_boundFlagL) {
-			m_front.x -= 3.0f;
+			bool isBound = true;
+			m_boundTime -= elapsedTime;
+			m_front.x += 0.1f;
+			m_rollingSpeed += 0.1f;
+			if (m_boundTime < 0) {
+				m_boundTime = 0.05f;
+				m_boundFlagL = false;
+			}
 		}
 		else if (m_boundFlagR) {
-			m_front.x += 3.0f;
+			bool isBound = true;
+			m_boundTime -= elapsedTime;
+			m_front.x -= 0.1f;
+			m_rollingSpeed -= 0.05f;
+			if (m_boundTime < 0) {
+				m_boundTime = 0.1f;
+				m_boundFlagR = false;
+			}
 		}
 
 		m_front.normalize();
@@ -154,13 +168,13 @@ namespace basecross{
 		auto velo = ptrPs->GetLinearVelocity();
 
 		//xとzの速度を修正
-		if (m_acceleFlag) {
-			velo.x = m_front.x * m_rollingSpeed;
-			velo.z = m_front.z * m_rollingSpeed;
 
-			//加速
-			m_rollingSpeed += m_accelerate * elapsedTime;
-		}
+		velo.x = m_front.x * m_rollingSpeed;
+		velo.z = m_front.z * m_rollingSpeed;
+
+		//加速
+		m_rollingSpeed += m_accelerate * elapsedTime;
+
 
 		//auto ptrColl = GetComponent<CollisionSphere>();
 		////物理オブジェクトを持つ配列の取得
@@ -191,19 +205,6 @@ namespace basecross{
 		//				}
 		//				else {
 		//					m_boundInputReceptionTime = 0.5f;
-		//				}
-		//			}
-		//		}
-		//		//床を取得
-		//		if (ptrG->FindTag(L"GroundCollider")) {
-		//			if (ptrRegBox) {
-		//				Vec3 ret;
-		//				//床との衝突
-		//				if (HitTest::SPHERE_OBB(ptrColl->GetSphere(), ptrRegBox->GetOBB(), ret)) {
-		//					m_acceleFlag = true;
-		//				}
-		//				else {
-		//					m_acceleFlag = false;
 		//				}
 		//			}
 		//		}
@@ -382,9 +383,37 @@ namespace basecross{
 
 	}
 
-	/*void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
+	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
+		//コントローラの取得
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
+		WORD wButtons = 0;
+		if (cntlVec[0].bConnected) {
+			wButtons = cntlVec[0].wButtons;
+		}
+		
+		if (other->FindTag(L"WallCollider")) {
+			m_rollingSpeed -= 0.5f;
+			m_boundInputReceptionTime -= App::GetApp()->GetElapsedTime();
+			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+			
+			if (m_boundInputReceptionTime > 0.0f) {
+				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0) 
+				{
+					m_boundFlagL = true;
+				}
+				else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
+				{
+					m_boundFlagR = true;
+				}
+			}
+		}
+	}
 
-	}*/
+	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
+		if (other->FindTag(L"WallCollider")) {
+			m_boundInputReceptionTime = 0.5f;
+		}
+	}
 }
 //end basecross
 
