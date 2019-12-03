@@ -18,6 +18,7 @@
 #include "Sprite.h"
 #include "Timer.h"
 #include "Checkpoint.h"
+#include "StartPause.h"
 
 //---------------ステージ--------------//
 #include "GameStage.h"

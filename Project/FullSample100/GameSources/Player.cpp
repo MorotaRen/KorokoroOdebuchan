@@ -346,15 +346,15 @@ namespace basecross{
 		ptrRigid->SetDrawActive(true);
 
 		//プレイヤーモデルの設定
-		auto drawcomp = AddComponent<PNTBoneModelDraw>();
-		drawcomp->SetMeshResource(L"M_PlayerRowling");
+		//auto drawcomp = AddComponent<PNTStaticModelDraw>();
+		//drawcomp->SetMeshResource(L"M_PlayerRolling");
 		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"Player_Rolling.bmf");
 		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
 		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
 
 		//コリジョンをつける
 //		auto ptrColl = AddComponent<CollisionSphere>();
-///		ptrColl->SetAfterCollision(AfterCollision::Auto);
+///		ptrColl->SetAfterCollision(AfterCollision::None);
 		//重力追加
 		//auto ptrGra = AddComponent<Gravity>();
 		//影をつける（シャドウマップを描画する）
