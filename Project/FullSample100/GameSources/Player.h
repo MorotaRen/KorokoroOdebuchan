@@ -42,6 +42,7 @@ namespace basecross {
 		bool m_boundFlagR;
 		float m_boundInputReceptionTime;
 		float m_boundTime;
+		bool m_isWall;
 
 		//“ü—Í‚³‚ê‚½Žž
 		void InputController();
