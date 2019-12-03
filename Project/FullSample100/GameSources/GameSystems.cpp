@@ -197,7 +197,7 @@ namespace basecross {
 	/// </summary>----------------------------------------
 	void GameSystems::CreateModelData(vector<wstring> data) {
 		//0ボーンか
-		if (data[0] == L"True") {
+		if (data[0] == L"TRUE") {
 			//1-2	ファイル名とキーネーム
 			wstring dataDir;
 			App::GetApp()->GetDataDirectory(dataDir);
