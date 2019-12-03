@@ -1,4 +1,6 @@
-True,Player_Nomal.bmf,M_PlayerNomal,Walk,6,19,RowlingStart,30,7,RowlingEnd,42,8,Lose,60,40,Win,110,35,END
-False,Player_Rolling.bmf,M_PlayerRolling,,,,,,,,,,,,,,,,END
-False,OBJ_Course_Spring.bmf,Course_Spring,,,,,,,,,,,,,,,,END
-
+TRUE,OBJ_Player_Nomal.bmf,M_PlayerNomal,Walk,6,19,RowlingStart,30,7,RowlingEnd,42,8,Lose,60,40,Win,110,35,END
+FALSE,OBJ_Player_Rolling.bmf,M_PlayerRowling,,,,,,,,,,,,,,,,END
+FALSE,OBJ_Bariicade.bmf,M_Bariicade,,,,,,,,,,,,,,,,END
+FALSE,OBJ_Cake.bmf,M_Cake,,,,,,,,,,,,,,,,END
+FALSE,OBJ_HunburgSet.bmf,M_HunburgSet,,,,,,,,,,,,,,,,END
+FALSE,OBJ_Course_Spring.bmf,M_Spring,,,,,,,,,,,,,,,,END

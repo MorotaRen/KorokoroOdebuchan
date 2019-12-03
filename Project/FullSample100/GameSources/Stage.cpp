@@ -34,6 +34,6 @@ namespace basecross {
 		TransComp->SetQuaternion(m_quat);
 
 		auto DrawComp = AddComponent<BcPNTStaticDraw>();
-		DrawComp->SetMeshResource(L"Course_Spring");
+		DrawComp->SetMeshResource(L"M_Spring");
 	}
 }

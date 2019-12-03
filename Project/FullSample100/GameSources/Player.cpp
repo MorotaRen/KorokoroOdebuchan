@@ -347,7 +347,7 @@ namespace basecross{
 
 		//プレイヤーモデルの設定
 		auto drawcomp = AddComponent<PNTBoneModelDraw>();
-		drawcomp->SetMeshResource(L"M_PlayerRolling");
+		drawcomp->SetMeshResource(L"M_PlayerRowling");
 		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"Player_Rolling.bmf");
 		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
 		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);

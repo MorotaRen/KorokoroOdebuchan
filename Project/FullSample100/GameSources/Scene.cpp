@@ -117,6 +117,23 @@ namespace basecross {
 		App::GetApp()->RegisterResource(KeyName, staticModel);
 	}
 
+	void Scene::LoadMultiMeshModelResources() {
+		App::GetApp()->GetDataDirectory(dataDir);
+		struct InitializedParam {
+			wstring m_modelName;
+			wstring m_modelKey;
+		};
+		InitializedParam models[] = {
+			//{L"ファイル名",L"呼び出し時のキー"}
+			{L"OBJ_Corm.bmf",L"M_Corn"}
+		};
+		for (auto model : models) {
+			wstring srtmodel = dataDir + L"Models\\";
+			auto staticModel = MeshResource::CreateStaticModelMesh(srtmodel, model.m_modelName);
+			App::GetApp()->RegisterResource(model.m_modelKey, staticModel);
+		}
+	}
+
 	/// ----------------------------------------------------------------------------<summary>
 	/// ボーンモデルの読み込み(引数なし)
 	/// </summary>----------------------------------------------------------------------------
