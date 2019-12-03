@@ -144,12 +144,17 @@ namespace basecross {
 		}
 		auto PtrDraw = GetComponent<PTSpriteDraw>();
 		PtrDraw->UpdateVertices(NewVertices);
+		
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_X) {
+
+		}
 
 		//wstringstream ss;
 		//ss << L"Timer : " << m_Timer << std::endl;
-		//ss << L"桁数 : " << m_NumberOfDigits << std::endl;
+		//ss << L"TimeScore : " << m_TimeScore << std::endl;
 
-		////文字列コンポーネントの取得
+		//文字列コンポーネントの取得
 		//auto ptrString = GetComponent<StringSprite>();
 		//ptrString->SetText(ss.str());
 	}

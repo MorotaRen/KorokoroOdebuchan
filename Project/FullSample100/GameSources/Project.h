@@ -31,4 +31,5 @@
 #include "TestBlock.h"
 #include "MyCamera.h"
 #include "Fade.h"
+#include "Result.h"
 

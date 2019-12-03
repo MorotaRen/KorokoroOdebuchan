@@ -13,7 +13,8 @@ namespace basecross {
 		bool m_IsCreateObject;
 		// UI‚Ìì¬
 		void CreateUI();
-
+		//ƒŠƒUƒ‹ƒg‰æ–Ê
+		void CreateResult();
 	public:
 		//\’z‚Æ”jŠü
 		TestStage() :Stage() {}

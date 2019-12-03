@@ -27,6 +27,10 @@ namespace basecross {
 		virtual ~Timer() {}
 		virtual void OnCreate() override;
 		virtual void OnUpdate()override;
+
+		float GetTimer() {
+			return m_Timer;
+		}
 	};
 
 	//--------------------------------------------------------------------------------------

@@ -50,6 +50,7 @@
       <Filter>Objects\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Fade.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Result.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
@@ -106,6 +107,7 @@
       <Filter>Objects\Header</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Fade.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Result.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
