@@ -150,10 +150,12 @@ namespace basecross{
 				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 				{
 					m_boundFlagL = true;
+					m_isWall = false;
 				}
 				else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
 				{
 					m_boundFlagR = true;
+					m_isWall = false;
 				}
 			}
 		}
@@ -353,8 +355,8 @@ namespace basecross{
 		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
 
 		//コリジョンをつける
-//		auto ptrColl = AddComponent<CollisionSphere>();
-///		ptrColl->SetAfterCollision(AfterCollision::None);
+		auto ptrColl = AddComponent<CollisionSphere>();
+		ptrColl->SetAfterCollision(AfterCollision::None);
 		//重力追加
 		//auto ptrGra = AddComponent<Gravity>();
 		//影をつける（シャドウマップを描画する）
@@ -372,13 +374,14 @@ namespace basecross{
 		//コントローラの取得
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		WORD wButtons = 0;
+		if (other->FindTag(L"WallCollider")) {
+			m_isWall = true;
+		}
 		if (cntlVec[0].bConnected) {
 			wButtons = cntlVec[0].wButtons;
 		}
 
-		if (other->FindTag(L"WallCollider")) {
-			m_isWall = true;
-		}
+
 	}
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
