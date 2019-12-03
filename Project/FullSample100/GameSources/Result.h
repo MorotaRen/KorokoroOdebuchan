@@ -8,18 +8,18 @@
 
 namespace basecross {
 	//--------------------------------------------------------------------------------------
-	//	リザルト背景
+	//	リザルトスプライト
 	//--------------------------------------------------------------------------------------
-	class ResultBG :public Sprite {
+	class ResultSprite :public Sprite {
 		wstring m_TextureKey;
 		Vec2 m_StartScale;
 		Vec2 m_StartPos;
 	public:
-		ResultBG(const shared_ptr<Stage>&stagePtr,
+		ResultSprite(const shared_ptr<Stage>&stagePtr,
 			const wstring& textureKey,
 			const Vec2& startScale,
 			const Vec2& startPos);
-		virtual ~ResultBG() {};
+		virtual ~ResultSprite() {};
 		virtual void OnCreate()override;
 
 	};
@@ -27,7 +27,7 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	タイマーの結果表示
 	//--------------------------------------------------------------------------------------
-	class ResultTimer :public Timer {
+	class ResultTimer :public GameObject {
 		bool m_Trace;
 		Vec2 m_StartScale;
 		Vec3 m_StartPos;
@@ -45,13 +45,6 @@ namespace basecross {
 		virtual void OnCreate() override;
 		virtual void OnUpdate()override;
 	};
-	//--------------------------------------------------------------------------------------
-	//	タイトルに戻る
-	//--------------------------------------------------------------------------------------
-	//--------------------------------------------------------------------------------------
-	//	リトライ
-	//--------------------------------------------------------------------------------------
-
 }
 
 //end basecross

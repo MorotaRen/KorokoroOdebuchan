@@ -145,11 +145,6 @@ namespace basecross {
 		auto PtrDraw = GetComponent<PTSpriteDraw>();
 		PtrDraw->UpdateVertices(NewVertices);
 		
-		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
-		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_X) {
-
-		}
-
 		//wstringstream ss;
 		//ss << L"Timer : " << m_Timer << std::endl;
 		//ss << L"TimeScore : " << m_TimeScore << std::endl;

@@ -29,12 +29,6 @@ namespace basecross {
 
 	}
 
-	void TestStage::CreateResult()
-	{
-		AddGameObject<ResultBG>(L"Title_SpringStage",Vec2(960.0f, 600.0f), Vec2(0.0f, 0.0f));
-		AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(0.0f, 0.0f, 0.0f));
-	}
-
 	void TestStage::OnCreate() {
 		try {
 			//ビューとライトの作成
@@ -55,8 +49,6 @@ namespace basecross {
 			m_camera->SetAt(at);
 			// UIの作成
 			CreateUI();
-			//リザルト画面
-			CreateResult();
 
 			AddGameObject<FadeSprite>(FadeType::FadeIn);
 
@@ -74,6 +66,17 @@ namespace basecross {
 			GameSystems::GetInstans().ActiveNextCollision(0);
 			m_IsCreateObject = true;
 		}
+
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_X) {
+			GetSharedGameObject<Timer>(L"Timer")->SetScore();
+			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-50.0f, 0.0f, 0.0f));
+			
+			AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+			//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+			//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+		}
+
 	}
 
 }

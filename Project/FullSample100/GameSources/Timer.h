@@ -20,6 +20,8 @@ namespace basecross {
 		UINT m_NumberOfDigits;
 		//バックアップ頂点データ
 		vector<VertexPositionTexture> m_BackupVertices;
+		//リザルトに使う用
+		float m_Score = 0.0f;
 	public:
 		Timer(const shared_ptr<Stage>& StagePtr, UINT NumberOfDigits,
 			const wstring& TextureKey, bool Trace,
@@ -28,8 +30,12 @@ namespace basecross {
 		virtual void OnCreate() override;
 		virtual void OnUpdate()override;
 
-		float GetTimer() {
-			return m_Timer;
+		float GetScore() {
+			return m_Score;
+		}
+		//呼んだ時のタイムを記録
+		void SetScore() {
+			m_Score = m_Timer;
 		}
 	};
 
