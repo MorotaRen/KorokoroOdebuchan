@@ -20,8 +20,9 @@ namespace basecross{
 		m_accelerate(0.5f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
-		m_boundInputReceptionTime(0.5f),
-		m_boundTime(0.1f)
+		m_boundInputReceptionTime(0.7f),
+		m_boundTime(0.1f),
+		m_isWall(false)
 	{
 	}
 
@@ -139,6 +140,24 @@ namespace basecross{
 			}
 		}
 
+		//壁と衝突
+		if (m_isWall) {
+			m_rollingSpeed -= 3.0f * elapsedTime;
+			m_boundInputReceptionTime -= elapsedTime;
+			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+
+			if (m_boundInputReceptionTime > 0.0f) {
+				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
+				{
+					m_boundFlagL = true;
+				}
+				else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
+				{
+					m_boundFlagR = true;
+				}
+			}
+		}
+
 		//ハジキの処理
 		if (m_boundFlagL) {
 			bool isBound = true;
@@ -175,51 +194,13 @@ namespace basecross{
 		//加速
 		m_rollingSpeed += m_accelerate * elapsedTime;
 
-
-		//auto ptrColl = GetComponent<CollisionSphere>();
-		////物理オブジェクトを持つ配列の取得
-		//vector<shared_ptr<Rigidbody>> PsComptVec;
-		//GetStage()->GetUsedDynamicCompoentVec<Rigidbody>(PsComptVec);
-		//for (auto& v : PsComptVec) {
-		//	auto ptrG = dynamic_pointer_cast<StageObject>(v->GetGameObject());
-		//	if (ptrG) {
-		//		//壁を取得
-		//		auto ptrRegBox = dynamic_pointer_cast<RigidbodyBox>(v);
-		//		if (ptrG->FindTag(L"Stage_Wall")) {
-		//			if (ptrRegBox) {
-		//				Vec3 ret;
-		//				//壁との衝突
-		//				if (HitTest::SPHERE_OBB(ptrColl->GetSphere(), ptrRegBox->GetOBB(), ret)) {
-		//					m_rollingSpeed -= 1.5f;
-		//					m_boundInputReceptionTime -= elapsedTime;
-
-		//					if (m_boundInputReceptionTime > 0.0f) {
-		//						if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
-		//							m_boundFlagL = true;
-		//						}
-		//						else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
-		//						{
-		//							m_boundFlagR = true;
-		//						}
-		//					}
-		//				}
-		//				else {
-		//					m_boundInputReceptionTime = 0.5f;
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
-
-
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
 
-		////最高速度
-		//if (m_speed > 100.0f) {
-		//	m_speed = 100.0f;
-		//	m_rollingSpeed = 100.0f;
-		//}
+		//最低速度
+		if (m_rollingSpeed < 0.0f) {
+			m_rollingSpeed = 0.0f;
+		}
 	}
 
 	//後更新
@@ -361,17 +342,17 @@ namespace basecross{
 		ptrRigid->SetDrawActive(true);
 
 		//プレイヤーモデルの設定
-		//auto drawcomp = AddComponent<PNTBoneModelDraw>();
-		//drawcomp->SetMeshResource(L"Player_Rolling.bmf");
+		auto drawcomp = AddComponent<PNTBoneModelDraw>();
+		drawcomp->SetMeshResource(L"M_PlayerRolling");
 		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"Player_Rolling.bmf");
 		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
 		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
 
 		//コリジョンをつける
-		auto ptrColl = AddComponent<CollisionSphere>();
-		ptrColl->SetAfterCollision(AfterCollision::Auto);
+//		auto ptrColl = AddComponent<CollisionSphere>();
+///		ptrColl->SetAfterCollision(AfterCollision::Auto);
 		//重力追加
-		auto ptrGra = AddComponent<Gravity>();
+		//auto ptrGra = AddComponent<Gravity>();
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
 		//影の形（メッシュ）を設定
@@ -379,7 +360,7 @@ namespace basecross{
 		//描画コンポーネントの設定
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		//描画するメッシュを設定
-		ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
+		//ptrDraw->SetMeshResource(L"DEFAULT_SPHERE");
 
 	}
 
@@ -390,14 +371,14 @@ namespace basecross{
 		if (cntlVec[0].bConnected) {
 			wButtons = cntlVec[0].wButtons;
 		}
-		
+
 		if (other->FindTag(L"WallCollider")) {
 			m_rollingSpeed -= 0.5f;
 			m_boundInputReceptionTime -= App::GetApp()->GetElapsedTime();
 			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-			
+
 			if (m_boundInputReceptionTime > 0.0f) {
-				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0) 
+				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 				{
 					m_boundFlagL = true;
 				}
@@ -411,7 +392,8 @@ namespace basecross{
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
 		if (other->FindTag(L"WallCollider")) {
-			m_boundInputReceptionTime = 0.5f;
+			m_boundInputReceptionTime = 0.7f;
+			m_isWall = false;
 		}
 	}
 }
