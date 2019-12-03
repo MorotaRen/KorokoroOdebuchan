@@ -30,6 +30,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StartPause.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h" />
@@ -50,6 +51,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StartPause.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestBlock.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Timer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp" />
