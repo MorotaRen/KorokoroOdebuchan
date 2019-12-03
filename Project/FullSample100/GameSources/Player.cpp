@@ -17,7 +17,7 @@ namespace basecross{
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
-		m_accelerate(0.5f),
+		m_accelerate(0.25f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
@@ -201,6 +201,10 @@ namespace basecross{
 		if (m_rollingSpeed < 0.0f) {
 			m_rollingSpeed = 0.0f;
 		}
+
+		if (m_rollingSpeed > 50.0f) {
+			m_rollingSpeed = 50.0f;
+		}
 	}
 
 	//ŒãXV
@@ -373,20 +377,7 @@ namespace basecross{
 		}
 
 		if (other->FindTag(L"WallCollider")) {
-			m_rollingSpeed -= 0.5f;
-			m_boundInputReceptionTime -= App::GetApp()->GetElapsedTime();
-			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-
-			if (m_boundInputReceptionTime > 0.0f) {
-				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
-				{
-					m_boundFlagL = true;
-				}
-				else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
-				{
-					m_boundFlagR = true;
-				}
-			}
+			m_isWall = true;
 		}
 	}
 
