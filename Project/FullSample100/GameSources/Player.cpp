@@ -344,12 +344,23 @@ namespace basecross{
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
 
-		//Rigidの可視化
-		ptrRigid->SetDrawActive(true);
 
 		//プレイヤーモデルの設定
-		//auto drawcomp = AddComponent<PNTStaticModelDraw>();
-		//drawcomp->SetMeshResource(L"M_PlayerRolling");
+		auto drawcomp = AddComponent<PNTStaticModelDraw>();
+		drawcomp->SetMeshResource(L"M_PlayerRolling");
+
+
+		//Rigidの可視化
+		ptrRigid->SetDrawActive(true);
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(0.1f, 0.1f, 0.1f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, Deg2Rad(90.0f), 0.0f),
+			Vec3(0.0f, -0.7f, 0.0f)
+		);
+
+		drawcomp->SetMeshToTransformMatrix(spanMat);
 		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"Player_Rolling.bmf");
 		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
 		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
