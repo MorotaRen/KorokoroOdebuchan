@@ -131,7 +131,7 @@ namespace basecross {
 				m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
 			//ステージ壁
 			}else if (objdata.Tag == L"Stage") {
-				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
+				//Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
 			//ステージオブジェクト
 			}else if (objdata.Tag == L"StageObject") {
 

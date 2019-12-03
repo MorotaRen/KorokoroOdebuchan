@@ -368,10 +368,10 @@ namespace basecross{
 		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
 
 		//コリジョンをつける
-		auto ptrColl = AddComponent<CollisionSphere>();
-		ptrColl->SetAfterCollision(AfterCollision::Auto);
+//		auto ptrColl = AddComponent<CollisionSphere>();
+///		ptrColl->SetAfterCollision(AfterCollision::Auto);
 		//重力追加
-		auto ptrGra = AddComponent<Gravity>();
+		//auto ptrGra = AddComponent<Gravity>();
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
 		//影の形（メッシュ）を設定
@@ -390,14 +390,14 @@ namespace basecross{
 		if (cntlVec[0].bConnected) {
 			wButtons = cntlVec[0].wButtons;
 		}
-		
+
 		if (other->FindTag(L"WallCollider")) {
 			m_rollingSpeed -= 0.5f;
 			m_boundInputReceptionTime -= App::GetApp()->GetElapsedTime();
 			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-			
+
 			if (m_boundInputReceptionTime > 0.0f) {
-				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0) 
+				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 				{
 					m_boundFlagL = true;
 				}
