@@ -68,13 +68,11 @@ namespace basecross
 			}
 			else if (cntVec[0].wPressedButtons & XINPUT_GAMEPAD_A)
 			{
-				Decision();
 			}
 
 
 			if (cntVec[0].fThumbLY != 0.0f && m_once == false)
 			{
-				Selection();
 			}
 			else if (cntVec[0].fThumbLY == 0.0f && m_once == true)
 			{
