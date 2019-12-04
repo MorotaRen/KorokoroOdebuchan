@@ -25,7 +25,7 @@ namespace basecross {
 	/// </summary>----------------------------------------
 	void StageObject::OnCreate() {
 		auto TransComp = GetComponent<Transform>();
-		m_pos.x += -0.1f;
+		//m_pos.x += 0.05f;
 		m_pos.z += -0.0f;
 		TransComp->SetPosition(m_pos);
 		//‘å‚«‚¢‚Ì‚Å’²®
@@ -34,7 +34,7 @@ namespace basecross {
 		m_quat.rotationY(3.14);
 		TransComp->SetQuaternion(m_quat);
 
-		auto DrawComp = AddComponent<BcPNTStaticDraw>();
+		auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
 		DrawComp->SetMultiMeshResource(L"M_Spring");
 	}
 }
