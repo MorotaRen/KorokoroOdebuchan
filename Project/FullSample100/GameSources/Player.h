@@ -38,11 +38,11 @@ namespace basecross {
 		float m_inputY; //入力されたy方向の成分
 		float m_calory; //カロリー
 		float m_speed;
-		bool m_boundFlagL;
-		bool m_boundFlagR;
-		float m_boundInputReceptionTime;
-		float m_boundTime;
-		bool m_isWall;
+		bool m_boundFlagL; //左ハジキのフラグ
+		bool m_boundFlagR; //右ハジキのフラグ
+		float m_boundInputReceptionTime; //ハジキの入力受付時間
+		float m_boundTime; //ハジキ中の時間
+		bool m_isWall; //壁との衝突時のフラグ
 
 		//入力された時
 		void InputController();
