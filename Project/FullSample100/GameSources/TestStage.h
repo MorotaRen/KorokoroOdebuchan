@@ -14,9 +14,11 @@ namespace basecross {
 		// UI‚Ìì¬
 		void CreateUI();
 
+
 	public:
+
 		//\’z‚Æ”jŠü
-		TestStage() :Stage() {}
+		TestStage() :Stage(){}
 		virtual ~TestStage() {}
 		//‰Šú‰»
 		virtual void OnCreate()override;

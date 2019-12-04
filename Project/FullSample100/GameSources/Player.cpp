@@ -17,7 +17,7 @@ namespace basecross{
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
-		m_accelerate(0.5f),
+		m_accelerate(0.25f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
@@ -150,10 +150,12 @@ namespace basecross{
 				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 				{
 					m_boundFlagL = true;
+					m_isWall = false;
 				}
 				else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
 				{
 					m_boundFlagR = true;
+					m_isWall = false;
 				}
 			}
 		}
@@ -200,6 +202,10 @@ namespace basecross{
 		//最低速度
 		if (m_rollingSpeed < 0.0f) {
 			m_rollingSpeed = 0.0f;
+		}
+
+		if (m_rollingSpeed > 50.0f) {
+			m_rollingSpeed = 50.0f;
 		}
 	}
 
@@ -338,19 +344,30 @@ namespace basecross{
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
 
-		//Rigidの可視化
-		ptrRigid->SetDrawActive(true);
 
 		//プレイヤーモデルの設定
-		auto drawcomp = AddComponent<PNTBoneModelDraw>();
-		drawcomp->SetMeshResource(L"M_PlayerRowling");
+		auto drawcomp = AddComponent<PNTStaticModelDraw>();
+		drawcomp->SetMeshResource(L"M_PlayerRolling");
+
+
+		//Rigidの可視化
+		ptrRigid->SetDrawActive(true);
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(0.1f, 0.1f, 0.1f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, Deg2Rad(90.0f), 0.0f),
+			Vec3(0.0f, -0.7f, 0.0f)
+		);
+
+		drawcomp->SetMeshToTransformMatrix(spanMat);
 		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"Player_Rolling.bmf");
 		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
 		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
 
 		//コリジョンをつける
-//		auto ptrColl = AddComponent<CollisionSphere>();
-///		ptrColl->SetAfterCollision(AfterCollision::Auto);
+		auto ptrColl = AddComponent<CollisionSphere>();
+		ptrColl->SetAfterCollision(AfterCollision::None);
 		//重力追加
 		//auto ptrGra = AddComponent<Gravity>();
 		//影をつける（シャドウマップを描画する）
@@ -368,26 +385,14 @@ namespace basecross{
 		//コントローラの取得
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		WORD wButtons = 0;
+		if (other->FindTag(L"WallCollider")) {
+			m_isWall = true;
+		}
 		if (cntlVec[0].bConnected) {
 			wButtons = cntlVec[0].wButtons;
 		}
 
-		if (other->FindTag(L"WallCollider")) {
-			m_rollingSpeed -= 0.5f;
-			m_boundInputReceptionTime -= App::GetApp()->GetElapsedTime();
-			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
-			if (m_boundInputReceptionTime > 0.0f) {
-				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
-				{
-					m_boundFlagL = true;
-				}
-				else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
-				{
-					m_boundFlagR = true;
-				}
-			}
-		}
 	}
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {

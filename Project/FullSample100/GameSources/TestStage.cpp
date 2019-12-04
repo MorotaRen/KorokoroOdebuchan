@@ -22,7 +22,8 @@ namespace basecross {
 	void TestStage::CreateUI()
 	{
 		//タイマー
-		AddGameObject<Timer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(360.0f, 350.0f, 0.0f));
+		auto TimerPtr = AddGameObject<Timer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(360.0f, 350.0f, 0.0f));
+		SetSharedGameObject(L"Timer", TimerPtr);
 		//timeの画像表示
 		AddGameObject<TextTime>(L"UI_Time", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
 
@@ -48,6 +49,7 @@ namespace basecross {
 			m_camera->SetAt(at);
 			// UIの作成
 			CreateUI();
+
 			AddGameObject<FadeSprite>(FadeType::FadeIn);
 
 		}
@@ -64,6 +66,17 @@ namespace basecross {
 			GameSystems::GetInstans().ActiveNextCollision(0);
 			m_IsCreateObject = true;
 		}
+
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_X) {
+			GetSharedGameObject<Timer>(L"Timer")->SetScore();
+			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-50.0f, 0.0f, 0.0f));
+			
+			AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+			//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+			//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+		}
+
 	}
 
 }
