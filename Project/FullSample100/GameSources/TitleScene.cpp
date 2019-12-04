@@ -88,12 +88,12 @@ namespace basecross {
 			CreateViewLight();
 
 			//タイトルロゴ
-			m_Spvec[0] = AddGameObject<Sprite>(L"TitleLogo", Vec2(512.0f, 512.0f), Vec2(0, 0));
+			m_Spvec[0] = AddGameObject<Sprite>(L"TitleLogo", Vec2(256.0f, 256.0f), Vec2(0, 0));
 			//難易度のスプライトを作成
 			m_Spvec[1] = AddGameObject<Sprite>(L"Title_SpringStage", Vec2(640.0f, 400.0f),Vec2(-320,200));
-			m_Spvec[2] = AddGameObject<Sprite>(L"Title_2", Vec2(640.0f, 400.0f), Vec2(320.0f, 200.0f));
-			m_Spvec[3] = AddGameObject<Sprite>(L"Title_3", Vec2(640.0f, 400.0f), Vec2(-320.0f, -200.0f));
-			m_Spvec[4] = AddGameObject<Sprite>(L"Title_4", Vec2(640.0f, 400.0f), Vec2(320.0f, -200.0f));
+			m_Spvec[2] = AddGameObject<Sprite>(L"Preparation", Vec2(640.0f, 400.0f), Vec2(320.0f, 200.0f));
+			m_Spvec[3] = AddGameObject<Sprite>(L"Preparation", Vec2(640.0f, 400.0f), Vec2(-320.0f, -200.0f));
+			m_Spvec[4] = AddGameObject<Sprite>(L"Preparation", Vec2(640.0f, 400.0f), Vec2(320.0f, -200.0f));
 
 			//マスクスプライト
 			m_SpotSprite = AddGameObject<SelectSpotSprite>(L"Title_Mask", Vec2(1921.0f, 1201.0f), Vec2(-320.0f, 200.0f));

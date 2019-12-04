@@ -47,7 +47,7 @@ namespace basecross {
 			ptrDraw->SetDiffuse(color);
 			if (color.w < 0.0f) {
 				SetIsFade(false);
-				//GetStage()->RemoveGameObject<GameObject>(GetThis<GameObject>());
+				GetStage()->RemoveGameObject<GameObject>(GetThis<GameObject>());
 			}
 			break;
 		case FadeOut:
@@ -56,7 +56,7 @@ namespace basecross {
 			if (color.w > 1.0f) {
 				SetIsFade(false);
 				GetStage()->PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), m_StageString);
-				//GetStage()->RemoveGameObject<GameObject>(GetThis<GameObject>());
+				GetStage()->RemoveGameObject<GameObject>(GetThis<GameObject>());
 			}
 			break;
 		default:

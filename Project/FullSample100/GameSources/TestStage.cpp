@@ -48,8 +48,7 @@ namespace basecross {
 			m_camera->SetEye(eye);
 			m_camera->SetAt(at);
 
-			auto ptr=AddGameObject<FadeSprite>(FadeType::FadeIn);
-			SetSharedGameObject(L"ptr", ptr);
+			AddGameObject<FadeSprite>(FadeType::FadeIn);
 
 			// UIの作成
 			CreateUI();
@@ -69,37 +68,53 @@ namespace basecross {
 			m_IsCreateObject = true;
 		}
 
-		//m_deltTime += App::GetApp()->GetElapsedTime();
+		//スタート前で止まるようにする
+		m_deltTime += App::GetApp()->GetElapsedTime();
 		auto &app = App::GetApp();
 		auto scene = app->GetScene<Scene>();
 		auto stage = scene->GetActiveStage();
 		auto gameObjectVec = stage->GetGameObjectVec();
-		for (auto v : gameObjectVec) {
-			//if (GetSharedGameObject<FadeSprite>(L"ptr")->GetIsFade() == false) {
+		if (m_StartPos == false) {
+			for (auto v : gameObjectVec) {
 				if (v->FindTag(L"Player"))
 				{
-					//v->SetUpdateActive(false);
+					if (m_deltTime > 3.8f) {
+						v->SetUpdateActive(false);
+						m_StartPos = true;
+						m_deltTime = 0.0f;
+					}
 				}
 				if (v->FindTag(L"Timer"))
 				{
 					v->SetUpdateActive(false);
 				}
-			//}
+			}
 		}
 
-
+		//スタートをくぐったら
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		if (m_StartPos == true) {
+				for (auto v : gameObjectVec) {
+					if (v->FindTag(L"Player"))
+					{
+						v->SetUpdateActive(true);
+					}
+					if (v->FindTag(L"Timer"))
+					{
+						v->SetUpdateActive(true);
+					}
+			}
 
-		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_X) {
-			GetSharedGameObject<Timer>(L"Timer")->SetScore();
-			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-50.0f, 0.0f, 0.0f));
+			if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_X) {
+				//GetSharedGameObject<Timer>(L"Timer")->SetScore();
+				//AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-50.0f, 0.0f, 0.0f));
+				//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+				//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+				//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+			}
 
-			AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
-			//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
-			//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+
 		}
-
-
 	}
 }
 

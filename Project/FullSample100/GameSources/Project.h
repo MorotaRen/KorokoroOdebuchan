@@ -36,6 +36,7 @@
 #include "Sprite.h"
 #include "TestBlock.h"
 #include "MyCamera.h"
+#include "CountDown.h"
 #include "Fade.h"
 #include "Result.h"
 

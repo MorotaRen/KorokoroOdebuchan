@@ -11,7 +11,10 @@ namespace basecross {
 		weak_ptr<Player> m_ptrPlayer;
 		shared_ptr<MyCamera> m_camera;
 		bool m_IsCreateObject;
-		float m_deltTime = 0.0f;
+
+		float m_deltTime = 0.0f;	//時間を計測
+		bool m_UpdateAct = false;
+		bool m_StartPos = false;	//スタート地点についたか
 		// UIの作成
 		void CreateUI();
 
