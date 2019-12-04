@@ -12,13 +12,6 @@ namespace basecross
 
 	void StartPause::OnCreate()
 	{
-
-		//ボタンを生成する
-		auto ptrStage = GetStage();
-		//ptrStage->AddGameObject<>
-
-
-
 		auto halfSize = 0.5f;
 		//頂点の位置と色を指定して表示
 		vector<VertexPositionColorTexture> vertices =
@@ -42,19 +35,20 @@ namespace basecross
 		auto PtrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
 		//PtrDraw->SetTextureResource(L"PauseWindow.png");
 
-		SetDrawLayer(4);
+		SetDrawLayer(100);
 		SetDrawActive(false);
 	}
 
 	void StartPause::OnUpdate()
 	{
-		auto cntVec = App::GetApp()->GetInputDevice().GetControlerVec();
+		auto cntVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
 
 		//ポーズがオフの時
 		if (m_isPause == false)
 		{
-			if (cntVec[0].wPressedButtons & XINPUT_GAMEPAD_START)
+			if (cntVec.wPressedButtons & XINPUT_GAMEPAD_START)
 			{
+				//止める関数
 				Pause();
 			}
 		}
@@ -62,23 +56,10 @@ namespace basecross
 		//ポーズがオンの時
 		else if (m_isPause == true)
 		{
-			if (cntVec[0].wPressedButtons & XINPUT_GAMEPAD_START || cntVec[0].wPressedButtons & XINPUT_GAMEPAD_B)
+			if (cntVec.wPressedButtons & XINPUT_GAMEPAD_START || cntVec.wPressedButtons & XINPUT_GAMEPAD_B)
 			{
+				//動かす関数
 				Release();
-			}
-			else if (cntVec[0].wPressedButtons & XINPUT_GAMEPAD_A)
-			{
-				Decision();
-			}
-
-
-			if (cntVec[0].fThumbLY != 0.0f && m_once == false)
-			{
-				Selection();
-			}
-			else if (cntVec[0].fThumbLY == 0.0f && m_once == true)
-			{
-				m_once = false;
 			}
 		}
 
@@ -95,29 +76,9 @@ namespace basecross
 		//表示する
 		SetDrawActive(true);
 
-		//動きを止めるもの
-		//MyGameObject
-		for (size_t i = 0; i < gameObjectVec.size(); i++)
+		for (auto v : gameObjectVec)
 		{
-			auto obj = dynamic_pointer_cast<GameObject>(gameObjectVec[i]);
-			if (obj)
-			{
-				obj->SetUpdateActive(false);
-			}
-		}
-		//スポーンディレクター
-		ptrStage->GetSharedObject(L"SpawnDirector")->SetUpdateActive(false);
-
-		//背景の光
-
-
-
-
-		//UI
-		auto group = ptrStage->GetSharedObjectGroup(L"UI_Group");
-		for (size_t i = 0; i < group->size(); i++)
-		{
-			group->at(i)->SetUpdateActive(true);
+			v->SetUpdateActive(false);
 		}
 	}
 
@@ -132,27 +93,9 @@ namespace basecross
 		//表示する
 		SetDrawActive(false);
 
-		//動きを止めるもの
-		//MyGameObject
-		for (size_t i = 0; i < gameObjectVec.size(); i++)
+		for (auto v : gameObjectVec)
 		{
-			auto obj = dynamic_pointer_cast<GameObject>(gameObjectVec[i]);
-			if (obj)
-			{
-				obj->SetUpdateActive(true);
-			}
-		}
-		//スポーンディレクター
-		ptrStage->GetSharedObject(L"SpawnDirector")->SetUpdateActive(true);
-
-		//背景の光も停止させなきゃ
-
-		//UI
-		auto group = ptrStage->GetSharedObjectGroup(L"UI_Group");
-		for (size_t i = 0; i < group->size(); i++)
-		{
-			group->at(i)->SetUpdateActive(true);
+			v->SetUpdateActive(true);
 		}
 	}
-
 }

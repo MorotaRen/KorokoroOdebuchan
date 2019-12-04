@@ -30,7 +30,7 @@ namespace basecross{
 	void Player::OnCreate() {
 		//‰Šúİ’è
 		SetInitialStatsSetting();
-
+		AddTag(L"Player");
 
 		//•¶š—ñ‚ğ‚Â‚¯‚é
 		auto ptrString = AddComponent<StringSprite>();

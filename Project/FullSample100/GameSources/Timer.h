@@ -15,7 +15,7 @@ namespace basecross {
 		Vec2 m_StartScale;
 		Vec3 m_StartPos;
 		wstring m_TextureKey;
-		float m_Timer;
+		float m_Timer=0.0f;
 		//桁数
 		UINT m_NumberOfDigits;
 		//バックアップ頂点データ

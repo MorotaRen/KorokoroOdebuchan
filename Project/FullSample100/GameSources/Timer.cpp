@@ -24,6 +24,8 @@ namespace basecross {
 	{}
 
 	void Timer::OnCreate() {
+		AddTag(L"Timer");
+
 		float XPiecesize = 2.0f / (float)m_NumberOfDigits;
 		float HelfSize = 0.5f;
 

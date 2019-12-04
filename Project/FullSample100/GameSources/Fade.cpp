@@ -21,6 +21,7 @@ namespace basecross {
 
 	void FadeSprite::OnCreate() {
 		Sprite::OnCreate();
+		AddTag(L"Fade");
 		SetDrawLayer(150);
 		auto ptrDraw = GetComponent<PCTSpriteDraw>();
 		switch (m_Type)
@@ -36,7 +37,7 @@ namespace basecross {
 		}
 	}
 	void FadeSprite::OnUpdate() {
-		
+
 		auto ptrDraw = GetComponent<PCTSpriteDraw>();
 		Col4 color = ptrDraw->GetDiffuse();
 		switch (m_Type)
@@ -45,15 +46,17 @@ namespace basecross {
 			color.w -= m_FadeSpeed;
 			ptrDraw->SetDiffuse(color);
 			if (color.w < 0.0f) {
-				GetStage()->RemoveGameObject<GameObject>(GetThis<GameObject>());
+				SetIsFade(false);
+				//GetStage()->RemoveGameObject<GameObject>(GetThis<GameObject>());
 			}
 			break;
 		case FadeOut:
 			color.w += m_FadeSpeed;
 			ptrDraw->SetDiffuse(color);
 			if (color.w > 1.0f) {
+				SetIsFade(false);
 				GetStage()->PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), m_StageString);
-				GetStage()->RemoveGameObject<GameObject>(GetThis<GameObject>());
+				//GetStage()->RemoveGameObject<GameObject>(GetThis<GameObject>());
 			}
 			break;
 		default:

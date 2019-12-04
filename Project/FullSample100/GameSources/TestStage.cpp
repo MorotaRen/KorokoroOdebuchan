@@ -47,10 +47,12 @@ namespace basecross {
 			PtrView->SetCamera(m_camera);
 			m_camera->SetEye(eye);
 			m_camera->SetAt(at);
+
+			auto ptr=AddGameObject<FadeSprite>(FadeType::FadeIn);
+			SetSharedGameObject(L"ptr", ptr);
+
 			// UI�̍쐬
 			CreateUI();
-
-			AddGameObject<FadeSprite>(FadeType::FadeIn);
 
 		}
 		catch (...) {
@@ -67,16 +69,37 @@ namespace basecross {
 			m_IsCreateObject = true;
 		}
 
+		//m_deltTime += App::GetApp()->GetElapsedTime();
+		auto &app = App::GetApp();
+		auto scene = app->GetScene<Scene>();
+		auto stage = scene->GetActiveStage();
+		auto gameObjectVec = stage->GetGameObjectVec();
+		for (auto v : gameObjectVec) {
+			//if (GetSharedGameObject<FadeSprite>(L"ptr")->GetIsFade() == false) {
+				if (v->FindTag(L"Player"))
+				{
+					//v->SetUpdateActive(false);
+				}
+				if (v->FindTag(L"Timer"))
+				{
+					v->SetUpdateActive(false);
+				}
+			//}
+		}
+
+
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+
 		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_X) {
 			GetSharedGameObject<Timer>(L"Timer")->SetScore();
 			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-50.0f, 0.0f, 0.0f));
-			
+
 			AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
 			//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
 			//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
 		}
 
-	}
 
+	}
 }
+
