@@ -12,12 +12,13 @@ namespace basecross{
 		GameObject(ptrStage),
 		m_pos(pos),
 		m_scale(scale),
+		m_calory(1),
 		m_runningSpeed(3.0f),
 		m_rollingSpeed(0.0f),
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
-		m_accelerate(0.25f),
+		m_accelerate(0.5f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
@@ -116,9 +117,19 @@ namespace basecross{
 
 		auto ptrTransform = GetComponent<Transform>();
 		m_pos = ptrTransform->GetPosition();
-		m_rot = ptrTransform->GetRotation();
-
+		//m_rot = ptrTransform->GetRotation();
 		auto ptrCamera = OnGetDrawCamera();
+
+		//カロリー消費
+		m_calory -= elapsedTime * 0.001f;
+
+		if (m_calory < 0.8f) {
+			m_calory = 0.8f;
+		}
+		if (m_calory > 1.2f) {
+			m_calory = 1.2f;
+		}
+
 		//進行方向の向き
 		//m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
 		m_front.y = 0;
@@ -196,6 +207,9 @@ namespace basecross{
 		//加速
 		m_rollingSpeed += m_accelerate * elapsedTime;
 
+		//カロリー補正
+		m_rollingSpeed *= m_calory;
+
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
 
@@ -207,6 +221,7 @@ namespace basecross{
 		if (m_rollingSpeed > 50.0f) {
 			m_rollingSpeed = 50.0f;
 		}
+
 	}
 
 	//後更新
@@ -216,6 +231,8 @@ namespace basecross{
 		auto ptrTrans = GetComponent<Transform>();
 		//位置情報はそのまま設定
 		ptrTrans->SetPosition(ptrPs->GetPosition());
+		
+		//ptrTrans->SetRotation(m_rot);
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
@@ -344,19 +361,18 @@ namespace basecross{
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
 
-
 		//プレイヤーモデルの設定
 		auto drawcomp = AddComponent<PNTStaticModelDraw>();
 		drawcomp->SetMeshResource(L"M_PlayerRolling");
 
-
 		//Rigidの可視化
 		ptrRigid->SetDrawActive(true);
+
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
 			Vec3(0.1f, 0.1f, 0.1f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, Deg2Rad(90.0f), 0.0f),
+			Vec3(0.0f, Deg2Rad(-90.0f), 0.0f),
 			Vec3(0.0f, -0.7f, 0.0f)
 		);
 

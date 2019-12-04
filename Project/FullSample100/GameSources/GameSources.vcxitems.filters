@@ -50,6 +50,9 @@
       <Filter>Objects\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Fade.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Checkpoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Result.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StartPause.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
@@ -106,6 +109,9 @@
       <Filter>Objects\Header</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Fade.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Result.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StartPause.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
