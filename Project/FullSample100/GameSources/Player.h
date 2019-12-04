@@ -49,6 +49,8 @@ namespace basecross {
 		//プレイヤーの移動
 		void PlayerMove();
 
+		void PlayerChengeWeight();
+
 	public:
 		//構造と破棄
 		Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale);
