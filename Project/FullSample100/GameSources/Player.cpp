@@ -52,6 +52,7 @@ namespace basecross{
 	void Player::OnUpdate() {
 		InputController();
 		PlayerMove();
+		//PlayerChengeWeight();
 	}
 
 	//入力された時
@@ -121,7 +122,7 @@ namespace basecross{
 		auto ptrCamera = OnGetDrawCamera();
 
 		//カロリー消費
-		m_calory -= elapsedTime * 0.005f;
+		m_calory -= elapsedTime * 0.02f;
 
 		if (m_calory < 0.5f) {
 			m_calory = 0.5f;
@@ -175,7 +176,7 @@ namespace basecross{
 		if (m_boundFlagL) {
 			bool isBound = true;
 			m_boundTime -= elapsedTime;
-			m_front.x += 0.1f;
+			m_front.x += 0.2f;
 			m_rollingSpeed += 0.1f;
 			if (m_boundTime < 0) {
 				m_boundTime = 0.05f;
@@ -185,7 +186,7 @@ namespace basecross{
 		else if (m_boundFlagR) {
 			bool isBound = true;
 			m_boundTime -= elapsedTime;
-			m_front.x -= 0.1f;
+			m_front.x -= 0.2f;
 			m_rollingSpeed -= 0.05f;
 			if (m_boundTime < 0) {
 				m_boundTime = 0.1f;
@@ -220,6 +221,20 @@ namespace basecross{
 			m_rollingSpeed = 20.0f;
 		}
 
+	}
+
+	//プレイヤーの見た目の変化
+	void Player::PlayerChengeWeight() {
+		auto drawcomp = AddComponent<PNTStaticModelDraw>();
+		Mat4x4 spanMat; 
+		spanMat.affineTransformation(
+			Vec3(m_calory * 0.1f, m_calory * 0.1f, m_calory * 0.1f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, Deg2Rad(-90.0f), 0.0f),
+			Vec3(0.0f, -0.7f, 0.0f)
+		);
+
+		drawcomp->SetMeshToTransformMatrix(spanMat);
 	}
 
 	//後更新
