@@ -11,14 +11,14 @@ namespace basecross{
 	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale) :
 		GameObject(ptrStage),
 		m_pos(pos),
-		m_scale(scale),
+		m_scale(0.05f,0.05f,0.05f),
 		m_calory(1),
 		m_runningSpeed(3.0f),
 		m_rollingSpeed(0.0f),
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
-		m_accelerate(0.25f),
+		m_accelerate(0.15f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
@@ -122,7 +122,7 @@ namespace basecross{
 		auto ptrCamera = OnGetDrawCamera();
 
 		//カロリー消費
-		m_calory -= elapsedTime * 0.02f;
+		m_calory -= elapsedTime * 0.01f;
 
 		if (m_calory < 0.5f) {
 			m_calory = 0.5f;
@@ -137,18 +137,18 @@ namespace basecross{
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 		if (KeyState.m_bPushKeyTbl['A']) { //左
-			m_front.x += elapsedTime * (30.0f - m_speed)*0.005f;
+			m_front.x += elapsedTime * (40.0f - m_speed)*0.01f;
 		}
 		else if (KeyState.m_bPushKeyTbl['D']) { //右
-			m_front.x -= elapsedTime * (30.0f - m_speed)*0.005f;
+			m_front.x -= elapsedTime * (40.0f - m_speed)*0.01f;
 		}
 
 		if (m_inputX != 0) {
 			if (m_inputX < 0) {
-				m_front.x += elapsedTime * (30.0f - m_speed)*0.005f;
+				m_front.x += elapsedTime * (40.0f - m_speed)*0.01f;
 			}
 			else {
-				m_front.x -= elapsedTime * (30.0f - m_speed)*0.005f;
+				m_front.x -= elapsedTime * (40.0f - m_speed)*0.01f;
 			}
 		}
 
@@ -213,12 +213,16 @@ namespace basecross{
 		m_speed = m_rollingSpeed;
 
 		//最低速度
-		if (m_rollingSpeed < 0.0f) {
-			m_rollingSpeed = 0.0f;
+		if (m_rollingSpeed < 1.0f) {
+			m_rollingSpeed = 1.0f;
 		}
 
 		if (m_rollingSpeed > 20.0f) {
 			m_rollingSpeed = 20.0f;
+		}
+
+		if (m_pos.z < -46.5f) {
+			SetUpdateActive(false);
 		}
 
 	}
