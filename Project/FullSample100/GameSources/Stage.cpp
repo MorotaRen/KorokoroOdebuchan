@@ -25,6 +25,7 @@ namespace basecross {
 	/// </summary>----------------------------------------
 	void StageObject::OnCreate() {
 		auto TransComp = GetComponent<Transform>();
+		m_pos.x += -0.1f;
 		m_pos.z += -0.0f;
 		TransComp->SetPosition(m_pos);
 		//‘å‚«‚¢‚Ì‚Å’²®
