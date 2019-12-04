@@ -137,18 +137,18 @@ namespace basecross{
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 		if (KeyState.m_bPushKeyTbl['A']) { //ç∂
-			m_front.x += elapsedTime * (30.0f - m_speed)*0.005f;
+			m_front.x += elapsedTime * (40.0f - m_speed)*0.005f;
 		}
 		else if (KeyState.m_bPushKeyTbl['D']) { //âE
-			m_front.x -= elapsedTime * (30.0f - m_speed)*0.005f;
+			m_front.x -= elapsedTime * (40.0f - m_speed)*0.005f;
 		}
 
 		if (m_inputX != 0) {
 			if (m_inputX < 0) {
-				m_front.x += elapsedTime * (30.0f - m_speed)*0.005f;
+				m_front.x += elapsedTime * (40.0f - m_speed)*0.005f;
 			}
 			else {
-				m_front.x -= elapsedTime * (30.0f - m_speed)*0.005f;
+				m_front.x -= elapsedTime * (40.0f - m_speed)*0.005f;
 			}
 		}
 
@@ -213,8 +213,8 @@ namespace basecross{
 		m_speed = m_rollingSpeed;
 
 		//ç≈í·ë¨ìx
-		if (m_rollingSpeed < 0.0f) {
-			m_rollingSpeed = 0.0f;
+		if (m_rollingSpeed < 1.0f) {
+			m_rollingSpeed = 1.0f;
 		}
 
 		if (m_rollingSpeed > 20.0f) {
