@@ -3,11 +3,11 @@
 
 namespace basecross {
 	//ç\ë¢Ç∆îjä¸
-	TestBlock::TestBlock(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale, const Vec3 rot) :
+	TestBlock::TestBlock(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale, const Quat quat) :
 		GameObject(ptrStage),
 		m_pos(pos),
 		m_scale(scale),
-		m_rot(rot)
+		m_quat(quat)
 	{
 	}
 
@@ -17,7 +17,7 @@ namespace basecross {
 		auto ptrTrans = GetComponent<Transform>();
 
 		ptrTrans->SetScale(m_scale);
-		ptrTrans->SetRotation(m_rot);
+		ptrTrans->SetQuaternion(m_quat);
 		ptrTrans->SetPosition(m_pos);
 
 		//âeÇÇ¬ÇØÇÈ
