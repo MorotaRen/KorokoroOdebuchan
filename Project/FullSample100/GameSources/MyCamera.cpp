@@ -18,7 +18,7 @@ namespace basecross {
 		m_CameraUnderRot(0.1f),
 		m_ArmLen(0.01f),
 		m_MaxArm(30.0f),
-		m_MinArm(10.0f),
+		m_MinArm(0.001f),
 		m_RotSpeed(1.0f),
 		m_ZoomSpeed(0.1f),
 		m_LRBaseMode(true),
@@ -38,7 +38,7 @@ namespace basecross {
 		m_CameraUnderRot(0.1f),
 		m_ArmLen(5.0f),
 		m_MaxArm(30.0f),
-		m_MinArm(10.0f),
+		m_MinArm(0.01f),
 		m_RotSpeed(1.0f),
 		m_ZoomSpeed(0.1f),
 		m_LRBaseMode(true),
@@ -341,11 +341,11 @@ namespace basecross {
 			}
 		}
 
-		m_ArmLen = 0.1f;
+		m_ArmLen = 0.01f;
 		////目指したい場所にアームの値と腕ベクトルでEyeを調整
-		Vec3 toEye = newAt + armVec * m_ArmLen + Vec3(0, -2.0f, 0);
+		Vec3 toEye = newAt + armVec * m_ArmLen + Vec3(0, -2.4f, -0.4f);
 		newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
-		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition() + Vec3(0, 0.3f, 0);
+		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition() + Vec3(0, 0.2f, 0);
 		SetAt(newAt);
 		SetEye(newEye);
 		UpdateArmLengh();
