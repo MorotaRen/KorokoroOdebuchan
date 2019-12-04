@@ -18,7 +18,7 @@ namespace basecross{
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
-		m_accelerate(0.5f),
+		m_accelerate(0.25f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
@@ -121,10 +121,10 @@ namespace basecross{
 		auto ptrCamera = OnGetDrawCamera();
 
 		//カロリー消費
-		m_calory -= elapsedTime * 0.001f;
+		m_calory -= elapsedTime * 0.005f;
 
-		if (m_calory < 0.8f) {
-			m_calory = 0.8f;
+		if (m_calory < 0.5f) {
+			m_calory = 0.5f;
 		}
 		if (m_calory > 1.2f) {
 			m_calory = 1.2f;
@@ -136,18 +136,18 @@ namespace basecross{
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 		if (KeyState.m_bPushKeyTbl['A']) { //左
-			m_front.x += elapsedTime * (110.0f - m_speed)*0.005f;
+			m_front.x += elapsedTime * (30.0f - m_speed)*0.005f;
 		}
 		else if (KeyState.m_bPushKeyTbl['D']) { //右
-			m_front.x -= elapsedTime * (110.0f - m_speed)*0.005f;
+			m_front.x -= elapsedTime * (30.0f - m_speed)*0.005f;
 		}
 
 		if (m_inputX != 0) {
 			if (m_inputX < 0) {
-				m_front.x += elapsedTime * (110.0f - m_speed)*0.005f;
+				m_front.x += elapsedTime * (30.0f - m_speed)*0.005f;
 			}
 			else {
-				m_front.x -= elapsedTime * (110.0f - m_speed)*0.005f;
+				m_front.x -= elapsedTime * (30.0f - m_speed)*0.005f;
 			}
 		}
 
@@ -201,25 +201,23 @@ namespace basecross{
 
 		//xとzの速度を修正
 
-		velo.x = m_front.x * m_rollingSpeed;
-		velo.z = m_front.z * m_rollingSpeed;
+		velo.x = m_front.x * m_rollingSpeed * m_calory;
+		velo.z = m_front.z * m_rollingSpeed * m_calory;
 
 		//加速
 		m_rollingSpeed += m_accelerate * elapsedTime;
 
-		//カロリー補正
-		m_rollingSpeed *= m_calory;
-
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
+		m_speed = m_rollingSpeed;
 
 		//最低速度
 		if (m_rollingSpeed < 0.0f) {
 			m_rollingSpeed = 0.0f;
 		}
 
-		if (m_rollingSpeed > 50.0f) {
-			m_rollingSpeed = 50.0f;
+		if (m_rollingSpeed > 20.0f) {
+			m_rollingSpeed = 20.0f;
 		}
 
 	}
