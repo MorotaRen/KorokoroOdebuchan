@@ -74,7 +74,7 @@ namespace basecross {
 		auto scene = app->GetScene<Scene>();
 		auto stage = scene->GetActiveStage();
 		auto gameObjectVec = stage->GetGameObjectVec();
-		if (m_StartPos == false) {
+		/*if (m_StartPos == false) {
 			for (auto v : gameObjectVec) {
 				if (v->FindTag(L"Player"))
 				{
@@ -89,7 +89,14 @@ namespace basecross {
 					v->SetUpdateActive(false);
 				}
 			}
+		}*/
+
+		if (m_deltTime > 5.0f) {
+			m_updateFlag = true;
+			
 		}
+		
+		
 
 		//スタートをくぐったら
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
@@ -114,6 +121,16 @@ namespace basecross {
 			}
 
 
+		}
+	}
+	void TestStage::UpdateStage() {
+		if (!m_updateFlag) {
+			Stage::UpdateStage();
+		}
+
+		m_stopTime += App::GetApp()->GetElapsedTime();
+		if (m_stopTime > 10.0f) {
+			m_updateFlag = false;
 		}
 	}
 }
