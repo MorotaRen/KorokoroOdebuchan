@@ -24,6 +24,7 @@ namespace basecross {
 
 			LoadImageResources(L"Title");
 			LoadImageResources(L"Font");
+			LoadMultiMeshModelResources();
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -117,6 +118,9 @@ namespace basecross {
 		App::GetApp()->RegisterResource(KeyName, staticModel);
 	}
 
+	/// ----------------------------------------------------------------------------<summary>
+	/// マルチメッシュモデルの読み込み
+	/// </summary>----------------------------------------------------------------------------
 	void Scene::LoadMultiMeshModelResources() {
 		App::GetApp()->GetDataDirectory(dataDir);
 		struct InitializedParam {
@@ -125,12 +129,13 @@ namespace basecross {
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"OBJ_Corm.bmf",L"M_Corn"}
+			{L"OBJ_Corm.bmf",L"M_Corn"},
+			{L"OBJ_Spring.bmf",L"M_Spring"}
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";
-			auto staticModel = MeshResource::CreateStaticModelMesh(srtmodel, model.m_modelName);
-			App::GetApp()->RegisterResource(model.m_modelKey, staticModel);
+			auto multimodel = MultiMeshResource::CreateStaticModelMultiMesh(srtmodel, model.m_modelName);
+			App::GetApp()->RegisterResource(model.m_modelKey, multimodel);
 		}
 	}
 

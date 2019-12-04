@@ -67,7 +67,7 @@ namespace basecross{
 		void LoadBoneModelResources(wstring FileName,wstring KeyName);
 
 		/// ----------------------------------------------------------------------------<summary>
-		/// マルチメッシュボーンモデルの読み込み
+		/// マルチメッシュモデルの読み込み
 		/// </summary>----------------------------------------------------------------------------
 		void LoadMultiMeshModelResources();
 

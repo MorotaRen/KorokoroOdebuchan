@@ -12,6 +12,7 @@ namespace basecross{
 		GameObject(ptrStage),
 		m_pos(pos),
 		m_scale(scale),
+		m_calory(1),
 		m_runningSpeed(3.0f),
 		m_rollingSpeed(0.0f),
 		m_state(PlayerState::Running),
@@ -51,6 +52,7 @@ namespace basecross{
 	void Player::OnUpdate() {
 		InputController();
 		PlayerMove();
+		//PlayerChengeWeight();
 	}
 
 	//入力された時
@@ -116,27 +118,37 @@ namespace basecross{
 
 		auto ptrTransform = GetComponent<Transform>();
 		m_pos = ptrTransform->GetPosition();
-		m_rot = ptrTransform->GetRotation();
-
+		//m_rot = ptrTransform->GetRotation();
 		auto ptrCamera = OnGetDrawCamera();
+
+		//カロリー消費
+		m_calory -= elapsedTime * 0.02f;
+
+		if (m_calory < 0.5f) {
+			m_calory = 0.5f;
+		}
+		if (m_calory > 1.2f) {
+			m_calory = 1.2f;
+		}
+
 		//進行方向の向き
 		//m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
 		m_front.y = 0;
 
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 		if (KeyState.m_bPushKeyTbl['A']) { //左
-			m_front.x += elapsedTime * (110.0f - m_speed)*0.005f;
+			m_front.x += elapsedTime * (30.0f - m_speed)*0.005f;
 		}
 		else if (KeyState.m_bPushKeyTbl['D']) { //右
-			m_front.x -= elapsedTime * (110.0f - m_speed)*0.005f;
+			m_front.x -= elapsedTime * (30.0f - m_speed)*0.005f;
 		}
 
 		if (m_inputX != 0) {
 			if (m_inputX < 0) {
-				m_front.x += elapsedTime * (110.0f - m_speed)*0.005f;
+				m_front.x += elapsedTime * (30.0f - m_speed)*0.005f;
 			}
 			else {
-				m_front.x -= elapsedTime * (110.0f - m_speed)*0.005f;
+				m_front.x -= elapsedTime * (30.0f - m_speed)*0.005f;
 			}
 		}
 
@@ -150,10 +162,12 @@ namespace basecross{
 				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 				{
 					m_boundFlagL = true;
+					m_isWall = false;
 				}
 				else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
 				{
 					m_boundFlagR = true;
+					m_isWall = false;
 				}
 			}
 		}
@@ -162,7 +176,7 @@ namespace basecross{
 		if (m_boundFlagL) {
 			bool isBound = true;
 			m_boundTime -= elapsedTime;
-			m_front.x += 0.1f;
+			m_front.x += 0.2f;
 			m_rollingSpeed += 0.1f;
 			if (m_boundTime < 0) {
 				m_boundTime = 0.05f;
@@ -172,7 +186,7 @@ namespace basecross{
 		else if (m_boundFlagR) {
 			bool isBound = true;
 			m_boundTime -= elapsedTime;
-			m_front.x -= 0.1f;
+			m_front.x -= 0.2f;
 			m_rollingSpeed -= 0.05f;
 			if (m_boundTime < 0) {
 				m_boundTime = 0.1f;
@@ -188,23 +202,39 @@ namespace basecross{
 
 		//xとzの速度を修正
 
-		velo.x = m_front.x * m_rollingSpeed;
-		velo.z = m_front.z * m_rollingSpeed;
+		velo.x = m_front.x * m_rollingSpeed * m_calory;
+		velo.z = m_front.z * m_rollingSpeed * m_calory;
 
 		//加速
 		m_rollingSpeed += m_accelerate * elapsedTime;
 
 		//速度を設定
 		ptrPs->SetLinearVelocity(velo);
+		m_speed = m_rollingSpeed;
 
 		//最低速度
 		if (m_rollingSpeed < 0.0f) {
 			m_rollingSpeed = 0.0f;
 		}
 
-		if (m_rollingSpeed > 50.0f) {
-			m_rollingSpeed = 50.0f;
+		if (m_rollingSpeed > 20.0f) {
+			m_rollingSpeed = 20.0f;
 		}
+
+	}
+
+	//プレイヤーの見た目の変化
+	void Player::PlayerChengeWeight() {
+		auto drawcomp = AddComponent<PNTStaticModelDraw>();
+		Mat4x4 spanMat; 
+		spanMat.affineTransformation(
+			Vec3(m_calory * 0.1f, m_calory * 0.1f, m_calory * 0.1f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, Deg2Rad(-90.0f), 0.0f),
+			Vec3(0.0f, -0.7f, 0.0f)
+		);
+
+		drawcomp->SetMeshToTransformMatrix(spanMat);
 	}
 
 	//後更新
@@ -214,6 +244,8 @@ namespace basecross{
 		auto ptrTrans = GetComponent<Transform>();
 		//位置情報はそのまま設定
 		ptrTrans->SetPosition(ptrPs->GetPosition());
+		
+		//ptrTrans->SetRotation(m_rot);
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
@@ -342,19 +374,29 @@ namespace basecross{
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
 
+		//プレイヤーモデルの設定
+		auto drawcomp = AddComponent<PNTStaticModelDraw>();
+		drawcomp->SetMeshResource(L"M_PlayerRolling");
+
 		//Rigidの可視化
 		ptrRigid->SetDrawActive(true);
 
-		//プレイヤーモデルの設定
-		//auto drawcomp = AddComponent<PNTStaticModelDraw>();
-		//drawcomp->SetMeshResource(L"M_PlayerRolling");
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(0.1f, 0.1f, 0.1f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, Deg2Rad(-90.0f), 0.0f),
+			Vec3(0.0f, -0.7f, 0.0f)
+		);
+
+		drawcomp->SetMeshToTransformMatrix(spanMat);
 		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"Player_Rolling.bmf");
 		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
 		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
 
 		//コリジョンをつける
-//		auto ptrColl = AddComponent<CollisionSphere>();
-///		ptrColl->SetAfterCollision(AfterCollision::None);
+		auto ptrColl = AddComponent<CollisionSphere>();
+		ptrColl->SetAfterCollision(AfterCollision::None);
 		//重力追加
 		//auto ptrGra = AddComponent<Gravity>();
 		//影をつける（シャドウマップを描画する）
@@ -372,13 +414,14 @@ namespace basecross{
 		//コントローラの取得
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		WORD wButtons = 0;
+		if (other->FindTag(L"WallCollider")) {
+			m_isWall = true;
+		}
 		if (cntlVec[0].bConnected) {
 			wButtons = cntlVec[0].wButtons;
 		}
 
-		if (other->FindTag(L"WallCollider")) {
-			m_isWall = true;
-		}
+
 	}
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
