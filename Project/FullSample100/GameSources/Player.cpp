@@ -360,7 +360,6 @@ namespace basecross{
 	void Player::HittingDecision_Rect() {
 		auto stageObject = GetStage()->GetSharedGameObject<TestStage>(L"StageObject");
 		Vec3 hitPoint;
-		RECT rect;
 		bool isHit = false;
 
 	}
