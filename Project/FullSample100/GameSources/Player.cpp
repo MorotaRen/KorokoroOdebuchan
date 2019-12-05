@@ -6,12 +6,12 @@
 #include "stdafx.h"
 #include "Project.h"
 
-namespace basecross{
+namespace basecross {
 	//構造と破棄
 	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale) :
 		GameObject(ptrStage),
 		m_pos(pos),
-		m_scale(0.05f,0.05f,0.05f),
+		m_scale(0.05f, 0.05f, 0.05f),
 		m_calory(1),
 		m_runningSpeed(0.3f),
 		m_rollingSpeed(0.0f),
@@ -23,7 +23,8 @@ namespace basecross{
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
 		m_boundTime(0.1f),
-		m_isWall(false)
+		m_isWall(false),
+		m_GoolFlg(false)
 	{
 	}
 
@@ -54,8 +55,11 @@ namespace basecross{
 		InputController();
 		PlayerMove();
 		//PlayerChengeWeight();
+
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 		ptrDraw->UpdateAnimation(App::GetApp()->GetElapsedTime());
+
+		//PlayerChengeModel();
 
 	}
 
@@ -88,7 +92,7 @@ namespace basecross{
 
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-		
+
 		if (KeyState.m_bPressedKeyTbl[VK_SPACE]) { //モードチェンジ
 			switch (m_state)
 			{
@@ -261,23 +265,23 @@ namespace basecross{
 				}
 			}
 
-		if (!m_StageObjHit) {
-			auto ptrPs = GetComponent<RigidbodySphere>();
-			auto velo = ptrPs->GetLinearVelocity();
+			if (!m_StageObjHit) {
+				auto ptrPs = GetComponent<RigidbodySphere>();
+				auto velo = ptrPs->GetLinearVelocity();
 
-			//xとzの速度を修正
+				//xとzの速度を修正
 
-			velo.x = m_front.x * m_rollingSpeed * m_calory;
-			velo.z = m_front.z * m_rollingSpeed * m_calory;
+				velo.x = m_front.x * m_rollingSpeed * m_calory;
+				velo.z = m_front.z * m_rollingSpeed * m_calory;
 
-			//加速
-			m_rollingSpeed += m_accelerate * elapsedTime;
+				//加速
+				m_rollingSpeed += m_accelerate * elapsedTime;
 
-			//速度を設定
-			ptrPs->SetLinearVelocity(velo);
-			m_speed = m_rollingSpeed;
+				//速度を設定
+				ptrPs->SetLinearVelocity(velo);
+				m_speed = m_rollingSpeed;
 
-		}
+			}
 
 			//ハジキの処理
 			if (m_boundFlagL) {
@@ -329,6 +333,10 @@ namespace basecross{
 		}
 		//ランニングモード
 		if (m_state == PlayerState::Running) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 977239af51399b4546be010ef0428a3201881e09
 			ptrRigid->SetAutoTransform(false);
 
 			auto vec = GetMoveVector();
@@ -341,7 +349,6 @@ namespace basecross{
 
 		}
 	}
-
 	//プレイヤーのモデルの変化
 	void Player::PlayerChangeModel() {
 		auto ptrDrawRun = AddComponent<PNTBoneModelDraw>();
@@ -399,7 +406,7 @@ namespace basecross{
 		auto ptrTrans = GetComponent<Transform>();
 		//位置情報はそのまま設定
 		ptrTrans->SetPosition(ptrPs->GetPosition());
-		
+
 		if (m_state == PlayerState::Running) {
 			Vec3 angle = GetMoveVector();
 			if (angle.length() > 0.0f) {

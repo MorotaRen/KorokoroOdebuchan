@@ -24,8 +24,14 @@ namespace basecross {
 		//タイマー
 		auto TimerPtr = AddGameObject<Timer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(360.0f, 350.0f, 0.0f));
 		SetSharedGameObject(L"Timer", TimerPtr);
+		//生成されたときは止めておく
+		TimerPtr->SetUpdateActive(false);
 		//timeの画像表示
-		AddGameObject<TextTime>(L"UI_Time", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
+		auto TimePtr = AddGameObject<TextTime>(L"UI_Time", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
+		SetSharedGameObject(L"TextTime", TimePtr);
+
+		//スタート表示
+		AddGameObject<CountDown>(L"START", Vec2(0.0f, 0.0f));
 
 	}
 
@@ -70,67 +76,53 @@ namespace basecross {
 
 		//スタート前で止まるようにする
 		m_deltTime += App::GetApp()->GetElapsedTime();
+		if (m_deltTime > 1.8f) {
+			m_updateFlag = true;
+
+		}
+
+
+		//ゴールした時
+		if (m_ptrPlayer.lock()->GetGoolFlg()) {
+			GetSharedGameObject<Timer>(L"Timer")->SetScore();
+			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-50.0f, 0.0f, 0.0f));
+			AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+			GetSharedGameObject<Timer>(L"Timer")->SetDrawActive(false);
+			GetSharedGameObject<TextTime>(L"TextTime")->SetDrawActive(false);
+			m_ptrPlayer.lock()->SetGoolFlg(false);
+
+			auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+			//シーン遷移
+			if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A || KeyState.m_bPressedKeyTbl[VK_SPACE]) {
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+			}
+		}
+	}
+
+	//時を止める処理
+	void TestStage::UpdateStage() {
 		auto &app = App::GetApp();
 		auto scene = app->GetScene<Scene>();
 		auto stage = scene->GetActiveStage();
-		auto gameObjectVec = stage->GetGameObjectVec();
-		/*if (m_StartPos == false) {
-			for (auto v : gameObjectVec) {
-				if (v->FindTag(L"Player"))
-				{
-					if (m_deltTime > 3.8f) {
-						v->SetUpdateActive(false);
-						m_StartPos = true;
-						m_deltTime = 0.0f;
-					}
-				}
-				if (v->FindTag(L"Timer"))
-				{
-					v->SetUpdateActive(false);
-				}
-			}
-		}*/
+		auto gameObject = stage->GetGameObjectVec();
 
-		if (m_deltTime > 5.0f) {
-			m_updateFlag = true;
-			
-		}
-		
-		
-
-		//スタートをくぐったら
-		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
-		if (m_StartPos == true) {
-				for (auto v : gameObjectVec) {
-					if (v->FindTag(L"Player"))
-					{
-						v->SetUpdateActive(true);
-					}
-					if (v->FindTag(L"Timer"))
-					{
-						v->SetUpdateActive(true);
-					}
-			}
-
-			if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_X) {
-				//GetSharedGameObject<Timer>(L"Timer")->SetScore();
-				//AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-50.0f, 0.0f, 0.0f));
-				//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
-				//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
-				//AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
-			}
-
-
-		}
-	}
-	void TestStage::UpdateStage() {
+		//停止
 		if (!m_updateFlag) {
 			Stage::UpdateStage();
 		}
 
+		//m_stopTimeはm_deltTimeと同じく計測
+		//再開
 		m_stopTime += App::GetApp()->GetElapsedTime();
-		if (m_stopTime > 10.0f) {
+		if (m_stopTime > 5.0f) {
 			m_updateFlag = false;
+			//Timerを動かす
+			for (auto v : gameObject) {
+				if (v->FindTag(L"Timer")) {
+					v->SetUpdateActive(true);
+				}
+			}
 		}
 	}
 }

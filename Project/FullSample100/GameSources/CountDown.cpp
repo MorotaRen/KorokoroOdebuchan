@@ -14,14 +14,14 @@ namespace basecross {
 	CountDown::CountDown(const shared_ptr<Stage>&stagePtr,
 		const wstring& textureKey,
 		const Vec2& startPos) :
-		Sprite(stagePtr, textureKey, Vec2(512.0f, 512.0f), startPos),
+		Sprite(stagePtr, textureKey, Vec2(1280.0f, 512.0f), startPos),
 		m_TotalTime(0.0f),
 		m_RemoveTime(3.0f)
 	{}
 
 	void CountDown::OnCreate() {
 		Sprite::OnCreate();
-	}
+		}
 	void CountDown::OnUpdate() {
 		auto elapsedTime = App::GetApp()->GetElapsedTime();
 		m_TotalTime += elapsedTime;

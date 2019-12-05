@@ -14,9 +14,7 @@ namespace basecross {
 		bool m_updateFlag = false;
 		float m_deltTime = 0.0f;	//時間を計測
 		float m_stopTime = 0.0f;
-		bool m_UpdateAct = true;
-		bool m_StartPos = false;	//スタート地点についたか
-		// UIの作成
+
 		void CreateUI();
 
 

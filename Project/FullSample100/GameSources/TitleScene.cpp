@@ -127,6 +127,7 @@ namespace basecross {
 		//
 		bool SelectSpotFlag = m_SpotSprite->GetSelectSpotFlag();
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 		if (cntlVec.bConnected) {
 			//1回スティック倒したら戻すまでロックする
 			if (SelectSpotFlag == true) {
@@ -159,7 +160,7 @@ namespace basecross {
 		}
 
 		//シーン遷移
-		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A&&SelectSpotFlag == true) {
+		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A&&SelectSpotFlag == true || KeyState.m_bPressedKeyTbl[VK_SPACE]) {
 			//PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTestStage");
 			AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
 		}

@@ -141,6 +141,9 @@ namespace basecross {
 			}else if(objdata.Tag == L"GroundCollider"){
 				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
 				ColliderObj->AddTag(L"Collider");
+			}else if(objdata.Tag == L"GoalCollider"){
+				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				ColliderObj->AddTag(L"GoalCollider");
 			//‚È‚ñ‚Å‚à‚È‚©‚Á‚½‚ç
 			}else {
 				m_colobjs.push_back(vector<shared_ptr<ColliderObjects>>());
