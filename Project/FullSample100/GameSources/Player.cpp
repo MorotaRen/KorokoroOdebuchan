@@ -6,14 +6,14 @@
 #include "stdafx.h"
 #include "Project.h"
 
-namespace basecross{
+namespace basecross {
 	//構造と破棄
 	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale) :
 		GameObject(ptrStage),
 		m_pos(pos),
-		m_scale(0.05f,0.05f,0.05f),
+		m_scale(0.05f, 0.05f, 0.05f),
 		m_calory(1),
-		m_runningSpeed(3.0f),
+		m_runningSpeed(0.3f),
 		m_rollingSpeed(0.0f),
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
@@ -55,6 +55,7 @@ namespace basecross{
 		InputController();
 		PlayerMove();
 		//PlayerChengeWeight();
+		//PlayerChengeModel();
 	}
 
 	//入力された時
@@ -73,9 +74,11 @@ namespace basecross{
 			{
 			case PlayerState::Running:
 				m_state = PlayerState::Rolling;
+				PlayerChengeModel();
 				break;
 			case PlayerState::Rolling:
 				m_state = PlayerState::Running;
+				PlayerChengeModel();
 				break;
 			default:
 				break;
@@ -84,27 +87,17 @@ namespace basecross{
 
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-		//if (KeyState.m_bPushKeyTbl['W']) { //前
-		//	m_inputY = 1.0f;
-		//}
-		//else if (KeyState.m_bPushKeyTbl['A']) { //左
-		//	m_inputX = -1.0f;
-		//}
-		//else if (KeyState.m_bPushKeyTbl['S']) { //後
-		//	m_inputY = -1.0f;
-		//}
-		//else if (KeyState.m_bPushKeyTbl['D']) { //右
-		//	m_inputX = 1.0f;
-		//}
 
 		if (KeyState.m_bPressedKeyTbl[VK_SPACE]) { //モードチェンジ
 			switch (m_state)
 			{
 			case PlayerState::Running:
 				m_state = PlayerState::Rolling;
+				PlayerChengeModel();
 				break;
 			case PlayerState::Rolling:
 				m_state = PlayerState::Running;
+				PlayerChengeModel();
 				break;
 			default:
 				break;
@@ -112,128 +105,287 @@ namespace basecross{
 		}
 	}
 
+	//移動方向に向く
+	void Player::RotToHead(const Vec3& Velocity, float LerpFact) {
+		if (LerpFact <= 0.0f) {
+			//補間係数が0以下なら何もしない
+			return;
+		}
+		auto ptrTransform = GetComponent<Transform>();
+		//回転の更新
+		if (Velocity.length() > 0.0f) {
+			Vec3 temp = Velocity;
+			temp.normalize();
+			float toAngle = atan2(-temp.x, -temp.z);
+			Quat qt;
+			qt.rotationRollPitchYawFromVector(Vec3(0, toAngle, 0));
+			qt.normalize();
+			//現在の回転を取得
+			Quat nowQt = ptrTransform->GetQuaternion();
+			//現在と目標を補間
+			if (LerpFact >= 1.0f) {
+				nowQt = qt;
+			}
+			else {
+				//クオータニオンの補間処理
+				nowQt = XMQuaternionSlerp(nowQt, qt, LerpFact);
+			}
+			ptrTransform->SetQuaternion(nowQt);
+		}
+	}
+
+	Vec3 Player::GetMoveVector() const {
+		Vec3 angle(0, 0, 0);
+		//コントローラの取得
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
+		float fThumbLY = 0.0f;
+		float fThumbLX = 0.0f;
+		WORD wButtons = 0;
+		if (cntlVec[0].bConnected) {
+			fThumbLY = cntlVec[0].fThumbLY;
+			fThumbLX = cntlVec[0].fThumbLX;
+			wButtons = cntlVec[0].wButtons;
+		}
+		//キーボードの取得(キーボード優先)
+		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+		if (KeyState.m_bPushKeyTbl['W']) {
+			//前
+			fThumbLY = -1.0f;
+		}
+		else if (KeyState.m_bPushKeyTbl['A']) {
+			//左
+			fThumbLX = 1.0f;
+		}
+		else if (KeyState.m_bPushKeyTbl['S']) {
+			//後ろ
+			fThumbLY = 1.0f;
+		}
+		else if (KeyState.m_bPushKeyTbl['D']) {
+			//右
+			fThumbLX = -1.0f;
+		}
+		if (fThumbLX != 0 || fThumbLY != 0) {
+			float moveLength = 0;	//動いた時のスピード
+			auto ptrTransform = GetComponent<Transform>();
+			auto ptrCamera = OnGetDrawCamera();
+			//進行方向の向きを計算
+			auto front = ptrCamera->GetEye() - ptrTransform->GetPosition();
+			front.y = 0;
+			front.normalize();
+			//進行方向向きからの角度を算出
+			float frontAngle = atan2(front.z, front.x);
+			//コントローラの向き計算
+			float moveX = fThumbLX;
+			float moveZ = fThumbLY;
+			Vec2 moveVec(moveX, moveZ);
+			float moveSize = moveVec.length();
+			//コントローラの向きから角度を計算
+			float cntlAngle = atan2(-moveX, moveZ);
+			//トータルの角度を算出
+			float totalAngle = frontAngle + cntlAngle;
+			//角度からベクトルを作成
+			angle = Vec3(cos(totalAngle), 0, sin(totalAngle));
+			//正規化する
+			angle.normalize();
+			//移動サイズを設定。
+			angle *= moveSize;
+			//Y軸は変化させない
+			angle.y = 0;
+		}
+		return angle;
+	}
+
 	//プレイヤーの移動
 	void Player::PlayerMove() {
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		auto elapsedTime = App::GetApp()->GetElapsedTime();
 		Vec3 angle(0, 0, 0);
-
+		auto ptrRigid = GetComponent<RigidbodySphere>();
 		auto ptrTransform = GetComponent<Transform>();
 		m_pos = ptrTransform->GetPosition();
 		//m_rot = ptrTransform->GetRotation();
 		auto ptrCamera = OnGetDrawCamera();
 
-		//カロリー消費
-		m_calory -= elapsedTime * 0.01f;
+		//ローリングモード
+		if (m_state == PlayerState::Rolling) {
+			ptrRigid->SetAutoTransform(true);
 
-		if (m_calory < 0.5f) {
-			m_calory = 0.5f;
-		}
-		if (m_calory > 1.2f) {
-			m_calory = 1.2f;
-		}
+			//カロリー消費
+			m_calory -= elapsedTime * 0.01f;
 
-		//進行方向の向き
-		//m_front = ptrTransform->GetPosition() - ptrCamera->GetEye();
-		m_front.y = 0;
+			if (m_calory < 0.5f) {
+				m_calory = 0.5f;
+			}
+			if (m_calory > 1.2f) {
+				m_calory = 1.2f;
+			}
 
-		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-		if (KeyState.m_bPushKeyTbl['A']) { //左
-			m_front.x += elapsedTime * (40.0f - m_speed)*0.01f;
-		}
-		else if (KeyState.m_bPushKeyTbl['D']) { //右
-			m_front.x -= elapsedTime * (40.0f - m_speed)*0.01f;
-		}
+			//進行方向の向き
+			m_front.y = 0;
 
-		if (m_inputX != 0) {
-			if (m_inputX < 0) {
+			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+			if (KeyState.m_bPushKeyTbl['A']) { //左
 				m_front.x += elapsedTime * (40.0f - m_speed)*0.01f;
 			}
-			else {
+			else if (KeyState.m_bPushKeyTbl['D']) { //右
 				m_front.x -= elapsedTime * (40.0f - m_speed)*0.01f;
 			}
-		}
 
-		//壁と衝突
-		if (m_isWall) {
-			m_rollingSpeed -= 3.0f * elapsedTime;
-			m_boundInputReceptionTime -= elapsedTime;
-			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-
-			if (m_boundInputReceptionTime > 0.0f) {
-				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
-				{
-					m_boundFlagL = true;
-					m_isWall = false;
+			if (m_inputX != 0) {
+				if (m_inputX < 0) {
+					m_front.x += elapsedTime * (40.0f - m_speed)*0.01f;
 				}
-				else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
-				{
-					m_boundFlagR = true;
-					m_isWall = false;
+				else {
+					m_front.x -= elapsedTime * (40.0f - m_speed)*0.01f;
 				}
 			}
-		}
 
-		//ハジキの処理
-		if (m_boundFlagL) {
-			bool isBound = true;
-			m_boundTime -= elapsedTime;
-			m_front.x += 0.2f;
-			m_rollingSpeed += 0.1f;
-			if (m_boundTime < 0) {
-				m_boundTime = 0.05f;
-				m_boundFlagL = false;
+			//壁と衝突
+			if (m_isWall) {
+				m_rollingSpeed -= 3.0f * elapsedTime;
+				m_boundInputReceptionTime -= elapsedTime;
+				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+
+				if (m_boundInputReceptionTime > 0.0f) {
+					if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
+					{
+						m_boundFlagL = true;
+						m_isWall = false;
+					}
+					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
+					{
+						m_boundFlagR = true;
+						m_isWall = false;
+					}
+				}
+			}
+
+			if (!m_StageObjHit) {
+				auto ptrPs = GetComponent<RigidbodySphere>();
+				auto velo = ptrPs->GetLinearVelocity();
+
+				//xとzの速度を修正
+
+				velo.x = m_front.x * m_rollingSpeed * m_calory;
+				velo.z = m_front.z * m_rollingSpeed * m_calory;
+
+				//加速
+				m_rollingSpeed += m_accelerate * elapsedTime;
+
+				//速度を設定
+				ptrPs->SetLinearVelocity(velo);
+				m_speed = m_rollingSpeed;
+
+			}
+
+			//ハジキの処理
+			if (m_boundFlagL) {
+				bool isBound = true;
+				m_boundTime -= elapsedTime;
+				m_front.x += 0.2f;
+				m_rollingSpeed += 0.1f;
+				if (m_boundTime < 0) {
+					m_boundTime = 0.05f;
+					m_boundFlagL = false;
+				}
+			}
+			else if (m_boundFlagR) {
+				bool isBound = true;
+				m_boundTime -= elapsedTime;
+				m_front.x -= 0.2f;
+				m_rollingSpeed -= 0.05f;
+				if (m_boundTime < 0) {
+					m_boundTime = 0.1f;
+					m_boundFlagR = false;
+				}
+			}
+
+			m_front.normalize();
+
+			auto velo = ptrRigid->GetLinearVelocity();
+
+			////xとzの速度を修正
+			//velo.x = m_front.x * m_rollingSpeed * m_calory;
+			//velo.z = m_front.z * m_rollingSpeed * m_calory;
+			////加速
+			//m_rollingSpeed += m_accelerate * elapsedTime;
+			////速度を設定
+			//ptrRigid->SetLinearVelocity(velo);
+			//m_speed = m_rollingSpeed;
+
+			//最低速度
+			if (m_rollingSpeed < 1.0f) {
+				m_rollingSpeed = 1.0f;
+			}
+
+			if (m_rollingSpeed > 20.0f) {
+				m_rollingSpeed = 20.0f;
+			}
+
+			if (m_pos.z < -46.5f) {
+				SetUpdateActive(false);
 			}
 		}
-		else if (m_boundFlagR) {
-			bool isBound = true;
-			m_boundTime -= elapsedTime;
-			m_front.x -= 0.2f;
-			m_rollingSpeed -= 0.05f;
-			if (m_boundTime < 0) {
-				m_boundTime = 0.1f;
-				m_boundFlagR = false;
-			}
+		//ランニングモード
+		if (m_state == PlayerState::Running) {
+
+			ptrRigid->SetAutoTransform(false);
+
+			auto vec = GetMoveVector();
+			auto velo = ptrRigid->GetLinearVelocity();
+			//xとzの速度を修正
+			velo.x = vec.x * m_runningSpeed;
+			velo.z = vec.z * m_runningSpeed;
+			//速度を設定
+			ptrRigid->SetLinearVelocity(velo);
+
 		}
-
-		m_front.normalize();
-
-
-		auto ptrPs = GetComponent<RigidbodySphere>();
-		auto velo = ptrPs->GetLinearVelocity();
-
-		//xとzの速度を修正
-
-		velo.x = m_front.x * m_rollingSpeed * m_calory;
-		velo.z = m_front.z * m_rollingSpeed * m_calory;
-
-		//加速
-		m_rollingSpeed += m_accelerate * elapsedTime;
-
-		//速度を設定
-		ptrPs->SetLinearVelocity(velo);
-		m_speed = m_rollingSpeed;
-
-		//最低速度
-		if (m_rollingSpeed < 1.0f) {
-			m_rollingSpeed = 1.0f;
-		}
-
-		if (m_rollingSpeed > 20.0f) {
-			m_rollingSpeed = 20.0f;
-		}
-
-		if (m_pos.z < -46.5f) {
-			m_GoolFlg = true;
-			SetUpdateActive(false);
-		}
-
 	}
 
-	//プレイヤーの見た目の変化
+	if (m_pos.z < -46.5f) {
+		m_GoolFlg = true;
+		SetUpdateActive(false);
+	}
+	//プレイヤーのモデルの変化
+	void Player::PlayerChengeModel() {
+		auto ptrDrawRun = AddComponent<PNTBoneModelDraw>();
+		auto ptrDrawRoll = AddComponent<PNTStaticModelDraw>();
+
+		if (m_state == PlayerState::Running) {
+			ptrDrawRun->SetMeshResource(L"M_PlayerNomal");
+
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(0.15f, 0.15f, 0.15f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, -0.7f, 0.0f)
+			);
+			ptrDrawRun->SetMeshToTransformMatrix(spanMat);
+			ptrDrawRun->SetDrawActive(true);
+			ptrDrawRoll->SetDrawActive(false);
+		}
+		else if (m_state == PlayerState::Rolling) {
+			ptrDrawRoll->SetMeshResource(L"M_PlayerRolling");
+
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(0.1f, 0.1f, 0.1f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, Deg2Rad(-90.0f), 0.0f),
+				Vec3(0.0f, -0.7f, 0.0f)
+			);
+			ptrDrawRoll->SetMeshToTransformMatrix(spanMat);
+			ptrDrawRun->SetDrawActive(false);
+			ptrDrawRoll->SetDrawActive(true);
+
+		}
+	}
+
+	//プレイヤーの体重変化
 	void Player::PlayerChengeWeight() {
 		auto drawcomp = AddComponent<PNTStaticModelDraw>();
-		Mat4x4 spanMat; 
+		Mat4x4 spanMat;
 		spanMat.affineTransformation(
 			Vec3(m_calory * 0.1f, m_calory * 0.1f, m_calory * 0.1f),
 			Vec3(0.0f, 0.0f, 0.0f),
@@ -251,8 +403,14 @@ namespace basecross{
 		auto ptrTrans = GetComponent<Transform>();
 		//位置情報はそのまま設定
 		ptrTrans->SetPosition(ptrPs->GetPosition());
-		
-		//ptrTrans->SetRotation(m_rot);
+
+		if (m_state == PlayerState::Running) {
+			Vec3 angle = GetMoveVector();
+			if (angle.length() > 0.0f) {
+				//補間処理を行う回転。
+				RotToHead(angle, 0.1f);
+			}
+		}
 
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
@@ -361,7 +519,6 @@ namespace basecross{
 	void Player::HittingDecision_Rect() {
 		auto stageObject = GetStage()->GetSharedGameObject<TestStage>(L"StageObject");
 		Vec3 hitPoint;
-		RECT rect;
 		bool isHit = false;
 
 	}
@@ -377,22 +534,26 @@ namespace basecross{
 		//WorldMatrixをもとにRigidbodySphereのパラメータを作成
 		PsSphereParam param(ptrTrans->GetWorldMatrix(), 1.0f, false, PsMotionType::MotionTypeActive);
 		auto  ptrRigid = AddComponent<RigidbodySphere>(param);
-
+		//自動的にTransformを設定するフラグは無し
+		ptrRigid->SetAutoTransform(false);
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
 
 		//プレイヤーモデルの設定
-		auto drawcomp = AddComponent<PNTStaticModelDraw>();
-		drawcomp->SetMeshResource(L"M_PlayerRolling");
+		//auto drawcomp = AddComponent<PNTStaticModelDraw>();
+		//drawcomp->SetMeshResource(L"M_PlayerRolling");
+		auto drawcomp = AddComponent<PNTBoneModelDraw>();
+		drawcomp->SetMeshResource(L"M_PlayerNomal");
+
 
 		//Rigidの可視化
 		ptrRigid->SetDrawActive(true);
 
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.1f, 0.1f, 0.1f),
+			Vec3(0.15f, 0.15f, 0.15f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, Deg2Rad(-90.0f), 0.0f),
+			Vec3(0.0f, Deg2Rad(0.0f), 0.0f),
 			Vec3(0.0f, -0.7f, 0.0f)
 		);
 
@@ -421,6 +582,11 @@ namespace basecross{
 		//コントローラの取得
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		WORD wButtons = 0;
+		if (other->FindTag(L"CourseObject")) {
+			m_StageObjHit = true;
+			m_speed = 0;
+		}
+
 		if (other->FindTag(L"WallCollider")) {
 			m_isWall = true;
 		}
@@ -429,12 +595,16 @@ namespace basecross{
 		}
 
 
+
 	}
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
 		if (other->FindTag(L"WallCollider")) {
 			m_boundInputReceptionTime = 0.7f;
 			m_isWall = false;
+		}
+		if (other->FindTag(L"CourseObject")) {
+			m_StageObjHit = false;
 		}
 	}
 }

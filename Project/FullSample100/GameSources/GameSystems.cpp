@@ -115,7 +115,7 @@ namespace basecross {
 		{
 			//プレイヤー開始地点
 			if (objdata.Tag == L"PlayerStartPos") {
-				Stage->AddGameObject<TestBlock>(objdata.Pos,objdata.Scale,objdata.Rotate.toRotVec());
+				//Stage->AddGameObject<TestBlock>(objdata.Pos,objdata.Scale,objdata.Rotate.toRotVec());
 				auto PlayerObj = Stage->AddGameObject<Player>(objdata.Pos,Vec3(0.1f,0.1f,0.1f));
 				Stage->SetSharedGameObject(L"Player", PlayerObj);
 				PlayerObj->AddTag(L"Player");
@@ -135,7 +135,8 @@ namespace basecross {
 				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
 			//ステージオブジェクト
 			}else if (objdata.Tag == L"StageObject") {
-
+				auto obj = Stage->AddGameObject<TestBlock>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				obj->AddTag(L"CourseObject");
 			//床
 			}else if(objdata.Tag == L"GroundCollider"){
 				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
