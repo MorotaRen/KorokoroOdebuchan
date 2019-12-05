@@ -326,17 +326,9 @@ namespace basecross {
 			if (m_rollingSpeed > 20.0f) {
 				m_rollingSpeed = 20.0f;
 			}
-
-			if (m_pos.z < -46.5f) {
-				SetUpdateActive(false);
-			}
 		}
 		//ランニングモード
 		if (m_state == PlayerState::Running) {
-<<<<<<< HEAD
-=======
-
->>>>>>> 977239af51399b4546be010ef0428a3201881e09
 			ptrRigid->SetAutoTransform(false);
 
 			auto vec = GetMoveVector();
@@ -582,9 +574,6 @@ namespace basecross {
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
-		//コントローラの取得
-		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
-		WORD wButtons = 0;
 		if (other->FindTag(L"CourseObject")) {
 			m_StageObjHit = true;
 			m_speed = 0;
@@ -593,12 +582,9 @@ namespace basecross {
 		if (other->FindTag(L"WallCollider")) {
 			m_isWall = true;
 		}
-		if (cntlVec[0].bConnected) {
-			wButtons = cntlVec[0].wButtons;
+		if (other->FindTag(L"GoalCollider")) {
+			m_GoolFlg = true;
 		}
-
-
-
 	}
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
