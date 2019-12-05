@@ -35,8 +35,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp">
       <Filter>Scenes\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp">
       <Filter>Objects\Source</Filter>
     </ClCompile>
@@ -49,11 +47,35 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Timer.cpp">
       <Filter>Objects\Source</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="$(MSBuildThisFileDirectory)Fade.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Checkpoint.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Result.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StartPause.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CountDown.cpp" />
+=======
+    <ClCompile Include="$(MSBuildThisFileDirectory)CountDown.cpp">
+      <Filter>Systems\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Fade.cpp">
+      <Filter>Systems\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Result.cpp">
+      <Filter>Systems\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StartPause.cpp">
+      <Filter>Systems\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Checkpoint.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp">
+      <Filter>Objects\Source</Filter>
+    </ClCompile>
+>>>>>>> f07355d3182548ef7d46cb07265a12b3fb969621
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
@@ -95,8 +117,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
       <Filter>Systems\Header</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h">
       <Filter>Objects\Header</Filter>
     </ClInclude>
@@ -109,11 +129,35 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h">
       <Filter>Objects\Header</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="$(MSBuildThisFileDirectory)Fade.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Result.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StartPause.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CountDown.h" />
+=======
+    <ClInclude Include="$(MSBuildThisFileDirectory)CountDown.h">
+      <Filter>Systems\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Fade.h">
+      <Filter>Systems\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Result.h">
+      <Filter>Systems\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StartPause.h">
+      <Filter>Systems\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h">
+      <Filter>Objects\Header</Filter>
+    </ClInclude>
+>>>>>>> f07355d3182548ef7d46cb07265a12b3fb969621
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
