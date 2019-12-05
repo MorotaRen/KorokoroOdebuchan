@@ -87,16 +87,20 @@ namespace basecross {
 			GetSharedGameObject<Timer>(L"Timer")->SetScore();
 			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-50.0f, 0.0f, 0.0f));
 			AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
+			AddGameObject<ResultSprite>(L"Title_1", Vec2(128.0f, 64.0f), Vec2(-100.0f, -50.0f));
+			AddGameObject<ResultSprite>(L"Title_2", Vec2(128.0f, 64.0f), Vec2(100.0f, -50.0f));
+			
 			GetSharedGameObject<Timer>(L"Timer")->SetDrawActive(false);
 			GetSharedGameObject<TextTime>(L"TextTime")->SetDrawActive(false);
-			m_ptrPlayer.lock()->SetGoolFlg(false);
 
 			auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
-			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 			//ÉVÅ[ÉìëJà⁄
-			if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A || KeyState.m_bPressedKeyTbl[VK_SPACE]) {
+			//if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A) {
 				AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
-			}
+			//}
+
+			m_ptrPlayer.lock()->SetGoolFlg(false);
+
 		}
 	}
 
