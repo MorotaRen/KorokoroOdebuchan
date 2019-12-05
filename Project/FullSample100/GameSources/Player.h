@@ -53,9 +53,9 @@ namespace basecross {
 		//プレイヤーの移動
 		void PlayerMove();
 
-		void PlayerChengeWeight();
+		void PlayerChangeWeight();
 
-		void PlayerChengeModel();
+		void PlayerChangeModel();
 		//進行方向を得る
 		Vec3 GetMoveVector() const;
 		//回転の向きを進行方向にする

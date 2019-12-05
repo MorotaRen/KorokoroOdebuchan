@@ -55,12 +55,12 @@ namespace basecross {
 		InputController();
 		PlayerMove();
 		//PlayerChengeWeight();
+
+		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+		ptrDraw->UpdateAnimation(App::GetApp()->GetElapsedTime());
+
 		//PlayerChengeModel();
 
-		if (m_pos.z < -46.5f) {
-			m_GoolFlg = true;
-			SetUpdateActive(false);
-		}
 	}
 
 	//入力された時
@@ -79,11 +79,11 @@ namespace basecross {
 			{
 			case PlayerState::Running:
 				m_state = PlayerState::Rolling;
-				PlayerChengeModel();
+				PlayerChangeModel();
 				break;
 			case PlayerState::Rolling:
 				m_state = PlayerState::Running;
-				PlayerChengeModel();
+				PlayerChangeModel();
 				break;
 			default:
 				break;
@@ -98,11 +98,11 @@ namespace basecross {
 			{
 			case PlayerState::Running:
 				m_state = PlayerState::Rolling;
-				PlayerChengeModel();
+				PlayerChangeModel();
 				break;
 			case PlayerState::Rolling:
 				m_state = PlayerState::Running;
-				PlayerChengeModel();
+				PlayerChangeModel();
 				break;
 			default:
 				break;
@@ -326,14 +326,9 @@ namespace basecross {
 			if (m_rollingSpeed > 20.0f) {
 				m_rollingSpeed = 20.0f;
 			}
-
-			if (m_pos.z < -46.5f) {
-				SetUpdateActive(false);
-			}
 		}
 		//ランニングモード
 		if (m_state == PlayerState::Running) {
-
 			ptrRigid->SetAutoTransform(false);
 
 			auto vec = GetMoveVector();
@@ -347,12 +342,14 @@ namespace basecross {
 		}
 	}
 	//プレイヤーのモデルの変化
-	void Player::PlayerChengeModel() {
+	void Player::PlayerChangeModel() {
 		auto ptrDrawRun = AddComponent<PNTBoneModelDraw>();
 		auto ptrDrawRoll = AddComponent<PNTStaticModelDraw>();
 
 		if (m_state == PlayerState::Running) {
 			ptrDrawRun->SetMeshResource(L"M_PlayerNomal");
+			auto ptrDrawRun = GetComponent<PNTBoneModelDraw>();
+			ptrDrawRun->ChangeCurrentAnimation(L"Walk");
 
 			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 			spanMat.affineTransformation(
@@ -367,7 +364,6 @@ namespace basecross {
 		}
 		else if (m_state == PlayerState::Rolling) {
 			ptrDrawRoll->SetMeshResource(L"M_PlayerRolling");
-
 			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 			spanMat.affineTransformation(
 				Vec3(0.1f, 0.1f, 0.1f),
@@ -383,7 +379,7 @@ namespace basecross {
 	}
 
 	//プレイヤーの体重変化
-	void Player::PlayerChengeWeight() {
+	void Player::PlayerChangeWeight() {
 		auto drawcomp = AddComponent<PNTStaticModelDraw>();
 		Mat4x4 spanMat;
 		spanMat.affineTransformation(
@@ -392,7 +388,6 @@ namespace basecross {
 			Vec3(0.0f, Deg2Rad(-90.0f), 0.0f),
 			Vec3(0.0f, -0.7f, 0.0f)
 		);
-
 		drawcomp->SetMeshToTransformMatrix(spanMat);
 	}
 
@@ -547,7 +542,7 @@ namespace basecross {
 
 
 		//Rigidの可視化
-		ptrRigid->SetDrawActive(true);
+		//ptrRigid->SetDrawActive(true);
 
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
@@ -558,9 +553,9 @@ namespace basecross {
 		);
 
 		drawcomp->SetMeshToTransformMatrix(spanMat);
-		//int animrow = GameSystems::GetInstans().LoadAnimationData(L"Player_Rolling.bmf");
-		//auto AnimData = GameSystems::GetInstans().GetAnimationData();
-		//drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
+		int animrow = GameSystems::GetInstans().LoadAnimationData(L"M_PlayerNomal");
+		auto AnimData = GameSystems::GetInstans().GetAnimationData();
+		drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
 
 		//コリジョンをつける
 		auto ptrColl = AddComponent<CollisionSphere>();
@@ -579,9 +574,6 @@ namespace basecross {
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
-		//コントローラの取得
-		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
-		WORD wButtons = 0;
 		if (other->FindTag(L"CourseObject")) {
 			m_StageObjHit = true;
 			m_speed = 0;
@@ -590,12 +582,9 @@ namespace basecross {
 		if (other->FindTag(L"WallCollider")) {
 			m_isWall = true;
 		}
-		if (cntlVec[0].bConnected) {
-			wButtons = cntlVec[0].wButtons;
+		if (other->FindTag(L"GoalCollider")) {
+			m_GoolFlg = true;
 		}
-
-
-
 	}
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
