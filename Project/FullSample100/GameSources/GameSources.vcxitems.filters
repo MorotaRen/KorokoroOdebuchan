@@ -53,6 +53,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Checkpoint.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Result.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StartPause.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CountDown.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
@@ -112,6 +113,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Result.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StartPause.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CountDown.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">

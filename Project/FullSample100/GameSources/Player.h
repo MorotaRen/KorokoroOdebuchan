@@ -43,6 +43,7 @@ namespace basecross {
 		float m_boundInputReceptionTime; //ハジキの入力受付時間
 		float m_boundTime; //ハジキ中の時間
 		bool m_isWall; //壁との衝突時のフラグ
+		bool m_GoolFlg;//ゴールしたかフラグ
 
 		//入力された時
 		void InputController();
@@ -107,6 +108,8 @@ namespace basecross {
 			return m_rollingSpeed;
 		}
 
+		void SetGoolFlg(bool f) { m_GoolFlg = f; }
+		bool GetGoolFlg() { return m_GoolFlg; }
 	};
 }
 

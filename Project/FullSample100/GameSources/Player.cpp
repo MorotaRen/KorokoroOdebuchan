@@ -23,7 +23,8 @@ namespace basecross{
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
 		m_boundTime(0.1f),
-		m_isWall(false)
+		m_isWall(false),
+		m_GoolFlg(false)
 	{
 	}
 
@@ -223,6 +224,7 @@ namespace basecross{
 		}
 
 		if (m_pos.z < -46.5f) {
+			m_GoolFlg = true;
 			SetUpdateActive(false);
 		}
 
