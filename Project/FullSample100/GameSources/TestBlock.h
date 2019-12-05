@@ -11,11 +11,11 @@ namespace basecross {
 	protected:
 		Vec3 m_pos;//ˆÊ’u
 		Vec3 m_scale;//‘å‚«‚³
-		Vec3 m_rot;//‰ñ“]
+		Quat m_quat;//‰ñ“]
 
 	public:
 		//\‘¢‚Æ”jŠü
-		TestBlock(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale, const Vec3 rot);
+		TestBlock(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale, const Quat quat);
 		~TestBlock() {};
 
 		//‰Šú‰»

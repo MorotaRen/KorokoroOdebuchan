@@ -197,22 +197,23 @@ namespace basecross{
 
 		m_front.normalize();
 
+		if (!m_StageObjHit) {
+			auto ptrPs = GetComponent<RigidbodySphere>();
+			auto velo = ptrPs->GetLinearVelocity();
 
-		auto ptrPs = GetComponent<RigidbodySphere>();
-		auto velo = ptrPs->GetLinearVelocity();
+			//xとzの速度を修正
 
-		//xとzの速度を修正
+			velo.x = m_front.x * m_rollingSpeed * m_calory;
+			velo.z = m_front.z * m_rollingSpeed * m_calory;
 
-		velo.x = m_front.x * m_rollingSpeed * m_calory;
-		velo.z = m_front.z * m_rollingSpeed * m_calory;
+			//加速
+			m_rollingSpeed += m_accelerate * elapsedTime;
 
-		//加速
-		m_rollingSpeed += m_accelerate * elapsedTime;
+			//速度を設定
+			ptrPs->SetLinearVelocity(velo);
+			m_speed = m_rollingSpeed;
 
-		//速度を設定
-		ptrPs->SetLinearVelocity(velo);
-		m_speed = m_rollingSpeed;
-
+		}
 		//最低速度
 		if (m_rollingSpeed < 1.0f) {
 			m_rollingSpeed = 1.0f;
@@ -231,7 +232,7 @@ namespace basecross{
 	//プレイヤーの見た目の変化
 	void Player::PlayerChengeWeight() {
 		auto drawcomp = AddComponent<PNTStaticModelDraw>();
-		Mat4x4 spanMat; 
+		Mat4x4 spanMat;
 		spanMat.affineTransformation(
 			Vec3(m_calory * 0.1f, m_calory * 0.1f, m_calory * 0.1f),
 			Vec3(0.0f, 0.0f, 0.0f),
@@ -249,7 +250,7 @@ namespace basecross{
 		auto ptrTrans = GetComponent<Transform>();
 		//位置情報はそのまま設定
 		ptrTrans->SetPosition(ptrPs->GetPosition());
-		
+
 		//ptrTrans->SetRotation(m_rot);
 
 		GetStage()->SetCollisionPerformanceActive(true);
@@ -419,6 +420,11 @@ namespace basecross{
 		//コントローラの取得
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		WORD wButtons = 0;
+		if (other->FindTag(L"CourseObject")) {
+			m_StageObjHit = true;
+			m_speed = 0;
+		}
+
 		if (other->FindTag(L"WallCollider")) {
 			m_isWall = true;
 		}
@@ -427,12 +433,16 @@ namespace basecross{
 		}
 
 
+
 	}
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
 		if (other->FindTag(L"WallCollider")) {
 			m_boundInputReceptionTime = 0.7f;
 			m_isWall = false;
+		}
+		if (other->FindTag(L"CourseObject")) {
+			m_StageObjHit = false;
 		}
 	}
 }
