@@ -36,6 +36,8 @@ namespace basecross {
 		float m_rollingSpeed; //ローリングモードの速度
 		float m_inputX; //入力されたx方向の成分
 		float m_inputY; //入力されたy方向の成分
+		float m_runX;
+		float m_runY;
 		float m_calory; //カロリー
 		float m_speed;
 		bool m_boundFlagL; //左ハジキのフラグ
@@ -50,6 +52,12 @@ namespace basecross {
 		void PlayerMove();
 
 		void PlayerChengeWeight();
+
+		void PlayerChengeModel();
+		//進行方向を得る
+		Vec3 GetMoveVector() const;
+		//回転の向きを進行方向にする
+		void RotToHead(const Vec3& Velocity, float LerpFact);
 
 	public:
 		//構造と破棄
