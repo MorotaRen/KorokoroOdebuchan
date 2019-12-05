@@ -135,7 +135,8 @@ namespace basecross {
 				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
 			//ステージオブジェクト
 			}else if (objdata.Tag == L"StageObject") {
-				Stage->AddGameObject<TestBlock>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				auto obj = Stage->AddGameObject<TestBlock>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				obj->AddTag(L"CourseObject");
 			//床
 			}else if(objdata.Tag == L"GroundCollider"){
 				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);

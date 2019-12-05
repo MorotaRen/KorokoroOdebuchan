@@ -130,7 +130,8 @@ namespace basecross {
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
 			{L"OBJ_Corm.bmf",L"M_Corn"},
-			{L"OBJ_Spring.bmf",L"M_Spring"}
+			{L"OBJ_Spring.bmf",L"M_Spring"},
+			{L"OBJ_Omikosi.bmf",L"M_Omikosi"}
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";
