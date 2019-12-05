@@ -25,6 +25,16 @@ namespace basecross {
 		Sprite::OnCreate();
 		SetDrawLayer(13);
 	}
+	void ResultSprite::Transluc(bool Active) {
+		if (Active) {
+			auto ptrDraw = GetComponent<PCTSpriteDraw>();
+			ptrDraw->SetDiffuse(Col4(1.0f, 1.0f, 1.0f, 1.0f));
+		}
+		else {
+			auto ptrDraw = GetComponent<PCTSpriteDraw>();
+			ptrDraw->SetDiffuse(Col4(1.0f, 1.0f, 1.0f, 0.4f));
+		}
+	}
 	//--------------------------------------------------------------------------------------
 	//	タイマーの結果表示
 	//--------------------------------------------------------------------------------------

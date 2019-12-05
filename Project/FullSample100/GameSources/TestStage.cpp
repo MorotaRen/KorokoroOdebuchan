@@ -54,10 +54,10 @@ namespace basecross {
 			m_camera->SetEye(eye);
 			m_camera->SetAt(at);
 
-			AddGameObject<FadeSprite>(FadeType::FadeIn);
-
 			// UIの作成
 			CreateUI();
+
+			AddGameObject<FadeSprite>(FadeType::FadeIn);
 
 		}
 		catch (...) {
@@ -85,25 +85,59 @@ namespace basecross {
 		//ゴールした時
 		if (m_ptrPlayer.lock()->GetGoolFlg()) {
 			GetSharedGameObject<Timer>(L"Timer")->SetScore();
-			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-50.0f, 0.0f, 0.0f));
+			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-60.0f, 60.0f, 0.0f));
 			AddGameObject<ResultSprite>(L"gray", Vec2(500.0f, 500.0f), Vec2(0.0f, 0.0f));
-			AddGameObject<ResultSprite>(L"Title_1", Vec2(128.0f, 64.0f), Vec2(-100.0f, -50.0f));
-			AddGameObject<ResultSprite>(L"Title_2", Vec2(128.0f, 64.0f), Vec2(100.0f, -50.0f));
-			
+			m_SpVec[0] = AddGameObject<ResultSprite>(L"Title_1", Vec2(128.0f, 64.0f), Vec2(-100.0f, -50.0f));
+			m_SpVec[1] = AddGameObject<ResultSprite>(L"Title_2", Vec2(128.0f, 64.0f), Vec2(100.0f, -50.0f));
+
 			GetSharedGameObject<Timer>(L"Timer")->SetDrawActive(false);
 			GetSharedGameObject<TextTime>(L"TextTime")->SetDrawActive(false);
 
 			auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
 			//シーン遷移
 			//if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A) {
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+				//AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
 			//}
 
-			m_ptrPlayer.lock()->SetGoolFlg(false);
+			if (cntlVec.bConnected) {
+				//1回スティック倒したら戻すまでロックする
+				if (!m_CntrolLock) {
+					if (cntlVec.fThumbLX >= 0.8f) {
+							m_StageNum++;
+							m_CntrolLock = true;
 
+					}
+					else if (cntlVec.fThumbLX <= -0.8f) {
+						m_StageNum--;
+						m_CntrolLock = true;
+					}
+				}
+				else {
+					if (cntlVec.fThumbLX<0.8f&&cntlVec.fThumbLX>-0.8f) {
+						m_CntrolLock = false;
+					}
+				}
+				//上限
+				if (m_StageNum == 2) {
+					m_StageNum = 0;
+				}
+				else if (m_StageNum == -1) {
+					m_StageNum = 1;
+				}
+
+				//
+				if (m_StageNum == 0) {
+					m_SpVec[0]->Transluc(true);
+					m_SpVec[1]->Transluc(false);
+				}
+				else if (m_StageNum == 1) {
+					m_SpVec[0]->Transluc(false);
+					m_SpVec[1]->Transluc(true);
+				}
+			}
+			m_ptrPlayer.lock()->SetGoolFlg(false);
 		}
 	}
-
 	//時を止める処理
 	void TestStage::UpdateStage() {
 		auto &app = App::GetApp();

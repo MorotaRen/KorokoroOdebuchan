@@ -21,7 +21,7 @@ namespace basecross {
 			const Vec2& startPos);
 		virtual ~ResultSprite() {};
 		virtual void OnCreate()override;
-
+		void Transluc(bool Active);
 	};
 
 	//--------------------------------------------------------------------------------------
