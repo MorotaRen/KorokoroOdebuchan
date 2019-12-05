@@ -13,7 +13,7 @@ namespace basecross {
 		m_pos(pos),
 		m_scale(0.05f, 0.05f, 0.05f),
 		m_calory(1),
-		m_runningSpeed(0.3f),
+		m_runningSpeed(0.2f),
 		m_rollingSpeed(0.0f),
 		m_state(PlayerState::Running),
 		m_inputX(0.0f),
@@ -155,19 +155,19 @@ namespace basecross {
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 		if (KeyState.m_bPushKeyTbl['W']) {
 			//前
-			fThumbLY = -1.0f;
+			fThumbLY = 1.0f;
 		}
 		else if (KeyState.m_bPushKeyTbl['A']) {
 			//左
-			fThumbLX = 1.0f;
+			fThumbLX = -1.0f;
 		}
 		else if (KeyState.m_bPushKeyTbl['S']) {
 			//後ろ
-			fThumbLY = 1.0f;
+			fThumbLY = -1.0f;
 		}
 		else if (KeyState.m_bPushKeyTbl['D']) {
 			//右
-			fThumbLX = -1.0f;
+			fThumbLX = 1.0f;
 		}
 		if (fThumbLX != 0 || fThumbLY != 0) {
 			float moveLength = 0;	//動いた時のスピード
@@ -180,8 +180,8 @@ namespace basecross {
 			//進行方向向きからの角度を算出
 			float frontAngle = atan2(front.z, front.x);
 			//コントローラの向き計算
-			float moveX = fThumbLX;
-			float moveZ = fThumbLY;
+			float moveX = -fThumbLX;
+			float moveZ = -fThumbLY;
 			Vec2 moveVec(moveX, moveZ);
 			float moveSize = moveVec.length();
 			//コントローラの向きから角度を計算
@@ -230,18 +230,18 @@ namespace basecross {
 
 			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 			if (KeyState.m_bPushKeyTbl['A']) { //左
-				m_front.x += elapsedTime * (40.0f - m_speed)*0.01f;
+				m_front.x += elapsedTime * (40.0f - m_speed)*0.007f;
 			}
 			else if (KeyState.m_bPushKeyTbl['D']) { //右
-				m_front.x -= elapsedTime * (40.0f - m_speed)*0.01f;
+				m_front.x -= elapsedTime * (40.0f - m_speed)*0.007f;
 			}
 
 			if (m_inputX != 0) {
 				if (m_inputX < 0) {
-					m_front.x += elapsedTime * (40.0f - m_speed)*0.01f;
+					m_front.x += elapsedTime * (40.0f - m_speed)*0.007f;
 				}
 				else {
-					m_front.x -= elapsedTime * (40.0f - m_speed)*0.01f;
+					m_front.x -= elapsedTime * (40.0f - m_speed)*0.007f;
 				}
 			}
 
@@ -374,6 +374,8 @@ namespace basecross {
 			ptrDrawRoll->SetMeshToTransformMatrix(spanMat);
 			ptrDrawRun->SetDrawActive(false);
 			ptrDrawRoll->SetDrawActive(true);
+			auto ptrCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());
+			m_front = GetComponent<Transform>()->GetPosition() - ptrCamera->GetEye();
 
 		}
 	}
