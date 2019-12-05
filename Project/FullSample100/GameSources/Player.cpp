@@ -56,6 +56,11 @@ namespace basecross {
 		PlayerMove();
 		//PlayerChengeWeight();
 		//PlayerChengeModel();
+
+		if (m_pos.z < -46.5f) {
+			m_GoolFlg = true;
+			SetUpdateActive(false);
+		}
 	}
 
 	//入力された時
@@ -340,11 +345,6 @@ namespace basecross {
 			ptrRigid->SetLinearVelocity(velo);
 
 		}
-	}
-
-	if (m_pos.z < -46.5f) {
-		m_GoolFlg = true;
-		SetUpdateActive(false);
 	}
 	//プレイヤーのモデルの変化
 	void Player::PlayerChengeModel() {
