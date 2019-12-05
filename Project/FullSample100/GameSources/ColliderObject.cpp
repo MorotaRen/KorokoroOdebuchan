@@ -33,7 +33,7 @@ namespace basecross {
 		auto  ptrRigid = AddComponent<RigidbodyBox>(param);
 		//ptrRigid->SetDrawActive(true);
 		//判定表示
-		ColliderComp->SetDrawActive(true);
+		//ColliderComp->SetDrawActive(true);
 		//固定衝突オブジェクト化
 		//ColliderComp->SetFixed(true);
 		//無視タグの追加
