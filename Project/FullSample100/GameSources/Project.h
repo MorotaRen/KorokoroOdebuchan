@@ -16,6 +16,7 @@
 #include "Scene.h"
 //----------------‘O’ñ-----------------//
 #include "GameSystems.h"
+#include "Network.h"
 #include "Stage.h"
 #include "ColliderObject.h"
 #include "Sprite.h"

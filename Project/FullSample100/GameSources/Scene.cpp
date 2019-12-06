@@ -27,6 +27,7 @@ namespace basecross {
 			LoadImageResources(L"Result");
 			LoadMultiMeshModelResources();
 			GameSystems::GetInstans().LoadModelCSV();
+			NetWork::GetInstans().Main();
 		}
 		catch (...) {
 			throw;
