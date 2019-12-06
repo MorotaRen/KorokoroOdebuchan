@@ -586,6 +586,9 @@ namespace basecross {
 		}
 		if (other->FindTag(L"GoalCollider")) {
 			m_GoolFlg = true;
+			auto time = GetStage()->GetSharedGameObject<Timer>(L"Timer")->GetTimer();
+			App::GetApp()->GetScene <Scene>()->SetRecodeTime(time);
+			GetStage()->AddGameObject<FadeSprite>(FadeType::FadeOut, L"ResultScene");
 		}
 	}
 

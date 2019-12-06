@@ -16,7 +16,7 @@ namespace basecross{
 		weak_ptr<XAudio2Manager> m_audioManager = App::GetApp()->GetXAudio2Manager();
 		weak_ptr<SoundItem> m_numMusic;
 		wstring dataDir;
-
+		float m_RecodeTime = 0.0f;
 
 	public:
 		//--------------------------------------------------------------------------------------
@@ -85,6 +85,13 @@ namespace basecross{
 		/// サウンドをループ再生
 		/// </summary>----------------------------------------------------------------------------
 		shared_ptr<SoundItem> MusicRoopStart(wstring key,float volume);
+
+		void SetRecodeTime(float f) {
+			m_RecodeTime = f;
+		}
+		float GetRecodeTime() {
+			return m_RecodeTime;
+		}
 	};
 
 }
