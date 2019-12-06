@@ -249,7 +249,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	{
 		return FALSE;
 	}
-
+	ShowCursor(false);
 	return  MainLoop(hInstance, hWnd, isFullScreen, iClientWidth, iClientHeight);
 
 }
