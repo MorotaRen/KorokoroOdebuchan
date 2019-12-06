@@ -345,11 +345,17 @@ namespace basecross {
 	void Player::PlayerChangeModel() {
 		auto ptrDrawRun = AddComponent<PNTBoneModelDraw>();
 		auto ptrDrawRoll = AddComponent<PNTStaticModelDraw>();
-
+		
 		if (m_state == PlayerState::Running) {
 			ptrDrawRun->SetMeshResource(L"M_PlayerNomal");
 			auto ptrDrawRun = GetComponent<PNTBoneModelDraw>();
 			ptrDrawRun->ChangeCurrentAnimation(L"Walk");
+
+			auto ptrTrans = GetComponent<Transform>();
+			auto rot = ptrTrans->GetRotation();
+			rot.z = 0;
+			rot.x = 0;
+			ptrTrans->SetRotation(rot);
 
 			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 			spanMat.affineTransformation(
@@ -364,6 +370,7 @@ namespace basecross {
 		}
 		else if (m_state == PlayerState::Rolling) {
 			ptrDrawRoll->SetMeshResource(L"M_PlayerRolling");
+			//ptrDrawRun->ChangeCurrentAnimation(L"RollingStart");
 			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 			spanMat.affineTransformation(
 				Vec3(0.1f, 0.1f, 0.1f),
