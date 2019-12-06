@@ -24,6 +24,7 @@ namespace basecross {
 
 			LoadImageResources(L"Title");
 			LoadImageResources(L"Font");
+			LoadImageResources(L"Result");
 			LoadMultiMeshModelResources();
 			GameSystems::GetInstans().LoadModelCSV();
 		}

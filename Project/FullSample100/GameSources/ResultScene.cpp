@@ -207,12 +207,11 @@ namespace basecross {
 
 			CreateBackground();
 
-			//ゴールした時
-			//App::GetApp()->GetScene<TestStage>()->GetSharedGameObject<Timer>(L"Timer")->SetScore();
-			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(160.0f, 40.0f), Vec3(-60.0f, 60.0f, 0.0f));
-			AddGameObject<ResultSprite>(L"gray", Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
-			m_SpVec[0] = AddGameObject<ResultSprite>(L"Title_1", Vec2(128.0f, 64.0f), Vec2(-100.0f, -50.0f));
-			m_SpVec[1] = AddGameObject<ResultSprite>(L"Title_2", Vec2(128.0f, 64.0f), Vec2(100.0f, -50.0f));
+			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(380.0f, 120.0f), Vec3(-180.0f, 60.0f, 0.0f));
+			AddGameObject<ResultSprite>(L"Result", Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
+			AddGameObject<ResultSprite>(L"UI_Time_2", Vec2(256.0f, 128.0f), Vec2(0.0f, 250.0f));
+			m_SpVec[0] = AddGameObject<ResultSprite>(L"ritorai", Vec2(160.0f, 100.0f), Vec2(-150.0f, -150.0f));
+			m_SpVec[1] = AddGameObject<ResultSprite>(L"title", Vec2(160.0f, 100.0f), Vec2(150.0f, -150.0f));
 
 			AddGameObject<FadeSprite>(FadeType::FadeIn);
 		}
@@ -223,10 +222,7 @@ namespace basecross {
 	void ResultScene::OnUpdate() {
 
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
-		//シーン遷移
-		//if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A) {
-			//AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
-		//}
+		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
 		if (cntlVec.bConnected) {
 			//1回スティック倒したら戻すまでロックする
@@ -264,8 +260,17 @@ namespace basecross {
 				m_SpVec[1]->Transluc(true);
 			}
 		}
-	}
 
+		//シーン遷移
+		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A || KeyState.m_bPushKeyTbl[VK_SPACE]) {
+			if (m_StageNum == 0) {
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+			}
+			else if (m_StageNum == 1) {
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+			}
+		}
+	}
 }
 
 //end basecross
