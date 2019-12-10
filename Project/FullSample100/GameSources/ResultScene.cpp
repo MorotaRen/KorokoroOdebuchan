@@ -207,11 +207,12 @@ namespace basecross {
 
 			CreateBackground();
 
-			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(380.0f, 120.0f), Vec3(-180.0f, 60.0f, 0.0f));
+			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(380.0f, 120.0f), Vec3(-180.0f, -40.0f, 0.0f));
 			AddGameObject<ResultSprite>(L"Result1", Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
-			AddGameObject<ResultSprite>(L"UI_Time_2", Vec2(256.0f, 128.0f), Vec2(0.0f, 250.0f));
-			m_SpVec[0] = AddGameObject<ResultSprite>(L"ritorai", Vec2(160.0f, 100.0f), Vec2(-150.0f, -150.0f));
-			m_SpVec[1] = AddGameObject<ResultSprite>(L"title", Vec2(160.0f, 100.0f), Vec2(150.0f, -150.0f));
+			AddGameObject<ResultSprite>(L"UI_Time_2", Vec2(256.0f, 128.0f), Vec2(0.0f, 150.0f));
+			AddGameObject<ResultSprite>(L"Result", Vec2(256.0f, 128.0f), Vec2(0.0f, 300.0f));
+			m_SpVec[0] = AddGameObject<ResultSprite>(L"ritorai", Vec2(160.0f, 100.0f), Vec2(-150.0f, -250.0f));
+			m_SpVec[1] = AddGameObject<ResultSprite>(L"title", Vec2(160.0f, 100.0f), Vec2(150.0f, -250.0f));
 
 			AddGameObject<FadeSprite>(FadeType::FadeIn);
 		}

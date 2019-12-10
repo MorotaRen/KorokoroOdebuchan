@@ -35,7 +35,7 @@ namespace basecross{
 
 		vector<shared_ptr<Sprite>> m_Spvec;
 		shared_ptr<SelectSpotSprite> m_SpotSprite;
-
+		shared_ptr<SoundItem> m_BGM;
 		int m_StageNum = 0;   //今選択してるステージ番号
 		bool m_CntrolLock;    //スティックを一度倒したらロック
 
