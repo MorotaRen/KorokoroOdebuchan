@@ -41,9 +41,6 @@ namespace basecross {
 
 			// UIの作成
 			CreateUI();
-			//エフェクトの作成
-			CreateEffect();
-
 			AddGameObject<FadeSprite>(FadeType::FadeIn);
 
 		}

@@ -13,8 +13,6 @@ namespace basecross {
 		void CreateViewLight();
 		//UI
 		void CreateUI();
-		//エフェクトの作成
-		void CreateEffect();
 
 		bool m_IsCreateObject;
 		bool m_updateFlag = false;
