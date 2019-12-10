@@ -8,7 +8,7 @@ namespace basecross {
 	class TestStage : public Stage {
 		weak_ptr<Player> m_ptrPlayer;
 		shared_ptr<MyCamera> m_camera;
-
+		shared_ptr<SoundItem> m_BGM;
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
 		//UI
@@ -23,12 +23,14 @@ namespace basecross {
 
 		//\’z‚Æ”jŠü
 		TestStage() :Stage(){}
-		virtual ~TestStage() {}
+		virtual ~TestStage();
 		//‰Šú‰»
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
 		virtual void UpdateStage()override;
 
+		void PlayBGM(wstring key, float vol);
+		void StopBGM();
 	};
 
 

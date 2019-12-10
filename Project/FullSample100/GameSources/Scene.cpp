@@ -26,6 +26,8 @@ namespace basecross {
 			LoadImageResources(L"Font");
 			LoadImageResources(L"Result");
 			LoadMultiMeshModelResources();
+			LoadSoundResources();
+
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -181,7 +183,9 @@ namespace basecross {
 		};
 		//ファイル名とキーの設定
 		InitializedParam musics[] = {
-			{}
+			//{L"ファイル名",L"呼び出し時のキー"}
+			{L"Title.wav",L"TitleBGM"},
+			{L"Movie.wav",L"MainBGM"}
 		};
 		//プロジェクトに登録
 		for (auto music : musics) {

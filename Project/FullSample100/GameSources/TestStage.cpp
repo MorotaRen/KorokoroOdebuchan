@@ -2,7 +2,9 @@
 #include "Project.h"
 
 namespace basecross {
-
+	TestStage::~TestStage() {
+		StopBGM();
+	}
 	void TestStage::CreateViewLight() {
 		//マルチライトの作成
 		auto PtrMultiLight = CreateLight<MultiLight>();
@@ -38,9 +40,11 @@ namespace basecross {
 		try {
 			//ビューとライトの作成
 			CreateViewLight();
-
 			// UIの作成
 			CreateUI();
+
+			PlayBGM(L"MainBGM", 0.5f);
+
 			AddGameObject<FadeSprite>(FadeType::FadeIn);
 
 		}
@@ -88,6 +92,17 @@ namespace basecross {
 				}
 			}
 		}
+	}
+
+	//BGMの再生
+	void TestStage::PlayBGM(wstring key, float vol) {
+		auto XAPtr = App::GetApp()->GetXAudio2Manager();
+		m_BGM = XAPtr->Start(key, XAUDIO2_LOOP_INFINITE, vol);
+	}
+	//BGMの停止
+	void TestStage::StopBGM() {
+		auto XAPtr = App::GetApp()->GetXAudio2Manager();
+		XAPtr->Stop(m_BGM);
 	}
 }
 
