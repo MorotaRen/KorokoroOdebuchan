@@ -27,7 +27,7 @@
 #include "GameStage.h"
 #include "TestStage.h"
 #include "TitleScene.h"
-
+#include "ResultScene.h"
 
 //-------------オブジェクト------------//
 
@@ -38,5 +38,4 @@
 #include "MyCamera.h"
 #include "CountDown.h"
 #include "Fade.h"
-#include "Result.h"
 

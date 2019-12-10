@@ -12,7 +12,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Result.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
@@ -22,6 +21,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ResultScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
@@ -37,7 +37,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Project.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Result.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
@@ -46,5 +45,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ResultScene.h" />
   </ItemGroup>
 </Project>

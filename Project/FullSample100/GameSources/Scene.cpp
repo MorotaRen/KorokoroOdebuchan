@@ -24,6 +24,7 @@ namespace basecross {
 
 			LoadImageResources(L"Title");
 			LoadImageResources(L"Font");
+			LoadImageResources(L"Result");
 			LoadMultiMeshModelResources();
 			GameSystems::GetInstans().LoadModelCSV();
 		}
@@ -229,9 +230,9 @@ namespace basecross {
 		else if (event->m_MsgStr == L"ToTestStage") {
 			ResetActiveStage<TestStage>();
 		}
-		//else if (event->m_MsgStr == L"ToTestScene") {
-		//	ResetActiveStage<TestStage>();
-		//}
+		else if (event->m_MsgStr == L"ResultScene") {
+			ResetActiveStage<ResultScene>();
+		}
 	}
 }
 //end basecross

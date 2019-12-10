@@ -9,7 +9,7 @@
 
 namespace basecross {
 	//--------------------------------------------------------------------------------------
-	//	リザルト背景
+	//	リザルトスプライト
 	//--------------------------------------------------------------------------------------
 	ResultSprite::ResultSprite(const shared_ptr<Stage>&stagePtr,
 		const wstring& textureKey,
@@ -24,6 +24,16 @@ namespace basecross {
 	void ResultSprite::OnCreate() {
 		Sprite::OnCreate();
 		SetDrawLayer(13);
+	}
+	void ResultSprite::Transluc(bool Active) {
+		if (Active) {
+			auto ptrDraw = GetComponent<PCTSpriteDraw>();
+			ptrDraw->SetDiffuse(Col4(1.0f, 1.0f, 1.0f, 1.0f));
+		}
+		else {
+			auto ptrDraw = GetComponent<PCTSpriteDraw>();
+			ptrDraw->SetDiffuse(Col4(1.0f, 1.0f, 1.0f, 0.4f));
+		}
 	}
 	//--------------------------------------------------------------------------------------
 	//	タイマーの結果表示
@@ -89,7 +99,8 @@ namespace basecross {
 	}
 
 	void ResultTimer::OnUpdate() {
-		m_TimerScore = GetStage()->GetSharedGameObject<Timer>(L"Timer")->GetScore();
+		m_TimerScore = App::GetApp()->GetScene<Scene>()->GetRecodeTime();
+
 
 		vector<VertexPositionTexture> NewVertices;
 		UINT Num;
@@ -168,6 +179,97 @@ namespace basecross {
 		//文字列コンポーネントの取得
 		//auto ptrString = GetComponent<StringSprite>();
 		//ptrString->SetText(ss.str());
+	}
+
+	//--------------------------------------------------------------------------------------
+	//	リザルトシーンのクラス
+	//--------------------------------------------------------------------------------------
+	void ResultScene::CreateViewLight() {
+		auto PtrView = CreateView<SingleView>();
+		//ビューのカメラの設定
+		auto PtrCamera = ObjectFactory::Create<Camera>();
+		PtrView->SetCamera(PtrCamera);
+		PtrCamera->SetEye(Vec3(0.0f, 2.0f, -3.0f));
+		PtrCamera->SetAt(0.0f, 0.0f, 0.0f);
+		//マルチライトの作成
+		auto PtrMultiLight = CreateLight<MultiLight>();
+		//デフォルトのライティングを指定
+		PtrMultiLight->SetDefaultLighting();
+	}
+
+	void ResultScene::CreateBackground() {
+	}
+
+	void ResultScene::OnCreate() {
+		try {
+			//ビューとライトの作成
+			CreateViewLight();
+
+			CreateBackground();
+
+			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(380.0f, 120.0f), Vec3(-180.0f, 60.0f, 0.0f));
+			AddGameObject<ResultSprite>(L"Result1", Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
+			AddGameObject<ResultSprite>(L"UI_Time_2", Vec2(256.0f, 128.0f), Vec2(0.0f, 250.0f));
+			m_SpVec[0] = AddGameObject<ResultSprite>(L"ritorai", Vec2(160.0f, 100.0f), Vec2(-150.0f, -150.0f));
+			m_SpVec[1] = AddGameObject<ResultSprite>(L"title", Vec2(160.0f, 100.0f), Vec2(150.0f, -150.0f));
+
+			AddGameObject<FadeSprite>(FadeType::FadeIn);
+		}
+		catch (...) {
+			throw;
+		}
+	}
+	void ResultScene::OnUpdate() {
+
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+
+		if (cntlVec.bConnected) {
+			//1回スティック倒したら戻すまでロックする
+			if (!m_CntrolLock) {
+				if (cntlVec.fThumbLX >= 0.8f) {
+					m_StageNum++;
+					m_CntrolLock = true;
+
+				}
+				else if (cntlVec.fThumbLX <= -0.8f) {
+					m_StageNum--;
+					m_CntrolLock = true;
+				}
+			}
+			else {
+				if (cntlVec.fThumbLX<0.8f&&cntlVec.fThumbLX>-0.8f) {
+					m_CntrolLock = false;
+				}
+			}
+			//上限
+			if (m_StageNum == 2) {
+				m_StageNum = 0;
+			}
+			else if (m_StageNum == -1) {
+				m_StageNum = 1;
+			}
+
+			//
+			if (m_StageNum == 0) {
+				m_SpVec[0]->Transluc(true);
+				m_SpVec[1]->Transluc(false);
+			}
+			else if (m_StageNum == 1) {
+				m_SpVec[0]->Transluc(false);
+				m_SpVec[1]->Transluc(true);
+			}
+		}
+
+		//シーン遷移
+		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A || KeyState.m_bPushKeyTbl[VK_SPACE]) {
+			if (m_StageNum == 0) {
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+			}
+			else if (m_StageNum == 1) {
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+			}
+		}
 	}
 }
 

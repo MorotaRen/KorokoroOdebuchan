@@ -21,7 +21,7 @@ namespace basecross {
 			const Vec2& startPos);
 		virtual ~ResultSprite() {};
 		virtual void OnCreate()override;
-
+		void Transluc(bool Active);
 	};
 
 	//--------------------------------------------------------------------------------------
@@ -45,6 +45,37 @@ namespace basecross {
 		virtual void OnCreate() override;
 		virtual void OnUpdate()override;
 	};
+
+	//--------------------------------------------------------------------------------------
+	// リザルトシーンのクラス
+	//--------------------------------------------------------------------------------------
+	//class ResultSprite;
+	//class Player;
+
+	class ResultScene : public Stage {
+	private:
+		//ビューの作成
+		void CreateViewLight();
+		weak_ptr<Player> m_ptrPlayer;
+		vector<shared_ptr<ResultSprite>> m_SpVec;
+
+		int m_StageNum = 0;   //今選択してるステージ番号
+		bool m_CntrolLock;    //スティックを一度倒したらロック
+
+		//背景の作成
+		void CreateBackground();
+
+	public:
+		//構築
+		ResultScene() :Stage(), m_CntrolLock(false), m_SpVec(2) {}
+		//破棄
+		virtual ~ResultScene() {}
+		//初期化
+		virtual void OnCreate() override;
+		//更新
+		virtual void OnUpdate() override;
+	};
+
 }
 
 //end basecross
