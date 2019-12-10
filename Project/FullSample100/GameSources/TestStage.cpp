@@ -4,19 +4,19 @@
 namespace basecross {
 
 	void TestStage::CreateViewLight() {
-		const Vec3 eye(0.0f, 5.0f, -10.0f);
-		const Vec3 at(0.0f, 0.0f, 0.0f);
-		auto PtrView = CreateView<SingleView>();
-		//ビューのカメラの設定
-		auto PtrCamera = ObjectFactory::Create<MyCamera>();
-		PtrView->SetCamera(PtrCamera);
-		PtrCamera->SetEye(eye);
-		PtrCamera->SetAt(at);
-		PtrCamera->SetPlayer(m_ptrPlayer);
 		//マルチライトの作成
 		auto PtrMultiLight = CreateLight<MultiLight>();
 		//デフォルトのライティングを指定
 		PtrMultiLight->SetDefaultLighting();
+
+		const Vec3 eye(0.0f, 0.0f, -10.0f);
+		const Vec3 at(0.0f, 0.0f, 0.0f);
+		auto PtrView = CreateView<SingleView>();
+		//ビューのカメラの設定
+		m_camera = ObjectFactory::Create<MyCamera>();
+		PtrView->SetCamera(m_camera);
+		m_camera->SetEye(eye);
+		m_camera->SetAt(at);
 	}
 
 	void TestStage::CreateUI()
@@ -34,34 +34,20 @@ namespace basecross {
 		AddGameObject<CountDown>(L"START", Vec2(0.0f, 0.0f));
 
 	}
-
 	void TestStage::OnCreate() {
 		try {
 			//ビューとライトの作成
-			//CreateViewLight();
-
-			//マルチライトの作成
-			auto PtrMultiLight = CreateLight<MultiLight>();
-			//デフォルトのライティングを指定
-			PtrMultiLight->SetDefaultLighting();
-
-			const Vec3 eye(0.0f, 0.0f, -10.0f);
-			const Vec3 at(0.0f, 0.0f, 0.0f);
-			auto PtrView = CreateView<SingleView>();
-			//ビューのカメラの設定
-			m_camera = ObjectFactory::Create<MyCamera>();
-			PtrView->SetCamera(m_camera);
-			m_camera->SetEye(eye);
-			m_camera->SetAt(at);
+			CreateViewLight();
 
 			// UIの作成
 			CreateUI();
+			//エフェクトの作成
+			CreateEffect();
 
 			AddGameObject<FadeSprite>(FadeType::FadeIn);
 
 		}
-		catch (...) {
-			throw;
+		catch (...) {		throw;
 		}
 	}
 
@@ -73,14 +59,14 @@ namespace basecross {
 			GameSystems::GetInstans().ActiveNextCollision(0);
 			m_IsCreateObject = true;
 		}
-
 		//スタート前で止まるようにする
 		m_deltTime += App::GetApp()->GetElapsedTime();
 		if (m_deltTime > 1.8f) {
 			m_updateFlag = true;
-
 		}
+
 	}
+
 	//時を止める処理
 	void TestStage::UpdateStage() {
 		auto &app = App::GetApp();

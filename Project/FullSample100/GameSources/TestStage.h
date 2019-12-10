@@ -6,17 +6,20 @@ namespace basecross {
 	class MyCamera;
 
 	class TestStage : public Stage {
-		//ビューの作成
-		void CreateViewLight();
 		weak_ptr<Player> m_ptrPlayer;
 		shared_ptr<MyCamera> m_camera;
+
+		//ビューの作成
+		void CreateViewLight();
+		//UI
+		void CreateUI();
+		//エフェクトの作成
+		void CreateEffect();
+
 		bool m_IsCreateObject;
 		bool m_updateFlag = false;
 		float m_deltTime = 0.0f;	//時間を計測
 		float m_stopTime = 0.0f;
-
-		void CreateUI();
-
 
 	public:
 
@@ -27,6 +30,7 @@ namespace basecross {
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
 		virtual void UpdateStage()override;
+
 	};
 
 
