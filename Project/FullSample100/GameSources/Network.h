@@ -18,9 +18,15 @@ namespace basecross {
 		//デストラクタ
 		~NetWork() {};
 		//初期化
-		bool Initialize();
+		void Initialize(WSAData wsad);
+		//Soketの作成
+		SOCKET CreateSocket();
+		//接続
+		void Connection_Sending();
+		//受信
+		void Connection_Receiving();
 
-		WSADATA m_pwsaData;
+		struct sockaddr_in m_server;
 
 	public:
 		static NetWork& GetInstans() {
