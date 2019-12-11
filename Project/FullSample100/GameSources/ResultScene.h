@@ -7,6 +7,7 @@
 #include "stdafx.h"
 
 namespace basecross {
+	class WinPlayer;
 	//--------------------------------------------------------------------------------------
 	//	リザルトスプライト
 	//--------------------------------------------------------------------------------------
@@ -44,6 +45,17 @@ namespace basecross {
 		virtual ~ResultTimer() {}
 		virtual void OnCreate() override;
 		virtual void OnUpdate()override;
+	};
+	//--------------------------------------------------------------------------------------
+	//	playerプレビュー
+	//--------------------------------------------------------------------------------------
+	class WinPlayer :public GameObject {
+	public:
+		WinPlayer(const shared_ptr<Stage>&stagePtr);
+		~WinPlayer(){}
+		virtual void OnCreate() override;
+		virtual void OnUpdate()override;
+
 	};
 
 	//--------------------------------------------------------------------------------------
