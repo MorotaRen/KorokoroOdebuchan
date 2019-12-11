@@ -16,7 +16,7 @@ namespace basecross {
 		const Vec2& startPos) :
 		Sprite(stagePtr, textureKey, Vec2(1280.0f, 512.0f), startPos),
 		m_TotalTime(0.0f),
-		m_RemoveTime(3.0f)
+		m_RemoveTime(5.0f)
 	{}
 
 	void CountDown::OnCreate() {

@@ -3,8 +3,10 @@
 
 namespace basecross {
 	TestStage::~TestStage() {
+		//BGMを止める
 		StopBGM();
 	}
+
 	void TestStage::CreateViewLight() {
 		//マルチライトの作成
 		auto PtrMultiLight = CreateLight<MultiLight>();
@@ -26,14 +28,24 @@ namespace basecross {
 		//タイマー
 		auto TimerPtr = AddGameObject<Timer>(8, L"UI_Number_5", true, Vec2(160.0f, 40.0f), Vec3(360.0f, 350.0f, 0.0f));
 		SetSharedGameObject(L"Timer", TimerPtr);
-		//生成されたときは止めておく
+		///生成されたときは止めておく
 		TimerPtr->SetUpdateActive(false);
 		//timeの画像表示
 		auto TimePtr = AddGameObject<TextTime>(L"UI_Time_2", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
 		SetSharedGameObject(L"TextTime", TimePtr);
 
-		//スタート表示
+		//スタートの表示
 		AddGameObject<CountDown>(L"START", Vec2(0.0f, 0.0f));
+
+		//ポーズ画面の画像
+		AddGameObject<StartPause>(L"PauseBG", Vec2(600, 600), Vec2(0, 0));
+		auto pause = AddGameObject<StartPause>(L"Back", Vec2(160.0f, 100.0f), Vec2(0, 90));
+		pause->Akarusa(true);
+		m_SpVec[0] = pause;
+		pause = AddGameObject<StartPause>(L"title", Vec2(160.0f, 100.0f), Vec2(0, -25));
+		pause->Akarusa(false);
+		m_SpVec[1] = pause;
+		pause->GetComponent<PCTSpriteDraw>()->SetDiffuse(Col4(1, 1, 1, 0.5f));
 
 	}
 	void TestStage::OnCreate() {
@@ -45,10 +57,11 @@ namespace basecross {
 
 			PlayBGM(L"MainBGM", 0.5f);
 
-			AddGameObject<FadeSprite>(FadeType::FadeIn);
-
+			auto FadePtr = AddGameObject<FadeSprite>(FadeType::FadeIn);
+			SetSharedGameObject(L"Fade", FadePtr);
 		}
-		catch (...) {		throw;
+		catch (...) {
+			throw;
 		}
 	}
 
@@ -60,14 +73,13 @@ namespace basecross {
 			GameSystems::GetInstans().ActiveNextCollision(0);
 			m_IsCreateObject = true;
 		}
-		//スタート前で止まるようにする
-		m_deltTime += App::GetApp()->GetElapsedTime();
-		if (m_deltTime > 1.8f) {
+		//フェードが終わったらスタート前で止まるようにする
+		auto Fade = GetSharedGameObject<FadeSprite>(L"Fade")->GetIsFade();
+		if (Fade == false) {
 			m_updateFlag = true;
 		}
 
 	}
-
 	//時を止める処理
 	void TestStage::UpdateStage() {
 		auto &app = App::GetApp();
@@ -79,11 +91,9 @@ namespace basecross {
 		if (!m_updateFlag) {
 			Stage::UpdateStage();
 		}
-
-		//m_stopTimeはm_deltTimeと同じく計測
 		//再開
 		m_stopTime += App::GetApp()->GetElapsedTime();
-		if (m_stopTime > 5.0f) {
+		if (!m_Pause&&m_stopTime > 5.0f) {
 			m_updateFlag = false;
 			//Timerを動かす
 			for (auto v : gameObject) {
@@ -92,7 +102,98 @@ namespace basecross {
 				}
 			}
 		}
+
+		//ポーズメニューに関すること
+		auto cntlvec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		if (cntlvec.bConnected) {
+			if (m_Pause) {
+				if (!m_cntlrock) {
+					if (cntlvec.fThumbLY <= -0.8f) {
+						PauseSelect++;
+						if (PauseSelect == 2) {
+							PauseSelect = 0;
+						}
+						m_cntlrock = true;
+						ChangePause(PauseSelect);
+					}
+					else if (cntlvec.fThumbLY >= 0.8f) {
+						PauseSelect--;
+						if (PauseSelect == -1) {
+							PauseSelect = 1;
+						}
+						m_cntlrock = true;
+						ChangePause(PauseSelect);
+					}
+				}
+				else {
+					if (cntlvec.fThumbLY<0.8f&&cntlvec.fThumbLY>-0.8f) {
+						m_cntlrock = false;
+					}
+				}
+			}
+		}
+		//シーン遷移
+		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+			if (PauseSelect == 0) {
+			}
+			else if (PauseSelect == 1&&m_Pause) {
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+			}
+		}
+
+		//switch (PauseSelect)
+		//{
+		//	//ゲームに戻る
+		//case 0:
+		//	if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+		//		auto vec = GetGameObjectVec();
+		//		if (m_Pause) {
+		//			for (auto v : vec) {
+		//				v->SetUpdateActive(true);
+		//				if (v->FindTag(L"StartPause")) {
+		//					//ポーズメニューをけす
+		//					v->SetDrawActive(false);
+		//				}
+		//			}
+		//			m_Pause = false;
+		//		}
+		//	}
+		//	break;
+		//	//タイトルへ
+		//case 1:
+		//	if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+		//		if (m_Pause) {
+		//			AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+		//		}
+		//	}
+		//	break;
+		//}
+
+		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_START) {
+			auto vec = GetGameObjectVec();
+			if (m_Pause) {
+				for (auto v : vec) {
+					v->SetUpdateActive(true);
+					if (v->FindTag(L"StartPause")) {
+						//ポーズメニューをけす
+						v->SetDrawActive(false);
+					}
+				}
+				m_Pause = false;
+			}
+			else {
+				for (auto v : vec) {
+					if (v->FindTag(L"StartPause")) {
+						//ポーズメニューを出す
+						v->SetDrawActive(true);
+					}
+				}
+				m_updateFlag = true;
+				m_Pause = true;
+			}
+		}
 	}
+
 
 	//BGMの再生
 	void TestStage::PlayBGM(wstring key, float vol) {
@@ -103,6 +204,21 @@ namespace basecross {
 	void TestStage::StopBGM() {
 		auto XAPtr = App::GetApp()->GetXAudio2Manager();
 		XAPtr->Stop(m_BGM);
+	}
+	//
+	void TestStage::ChangePause(int num) {
+		for (int i = 0; i < 2; i++) {
+			shared_ptr<StartPause>shptr = m_SpVec[i].lock();
+			if (shptr) {
+				if (i == num) {
+					shptr->Akarusa(true);
+				}
+				else {
+					shptr->Akarusa(false);
+					shptr->GetComponent<PCTSpriteDraw>()->SetDiffuse(Col4(1, 1, 1, 0.5));
+				}
+			}
+		}
 	}
 }
 
