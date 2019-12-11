@@ -25,7 +25,11 @@ namespace basecross {
 		m_boundInputReceptionTime(0.7f),
 		m_boundTime(0.1f),
 		m_isWall(false),
-		m_GoolFlg(false)
+		m_GoolFlg(false),
+		m_smashCount(0),
+		m_smashAccele(7.0f),
+		m_isSmash(false),
+		m_smashTime(1.0f)
 	{
 	}
 
@@ -52,9 +56,14 @@ namespace basecross {
 		//エフェクトの初期化
 		wstring DataDir;
 		App::GetApp()->GetDataDirectory(DataDir);
-		wstring TestEffectStr = DataDir + L"Effects\\PlayerCrashEffect.efk";
 		auto ShEfkInterface = GetTypeStage<TestStage>()->GetEfkInterface();
-		m_efkEffect = ObjectFactory::Create<EfkEffect>(ShEfkInterface, TestEffectStr);
+		//壁と衝突時のエフェクト
+		wstring efkStr = L"Effects\\PlayerCrashEffect.efk";
+		m_efkEffect[0] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//ハジキのエフェクト
+		efkStr = L"Effects\\PlayerHazikiEffect.efk";
+		m_efkEffect[1] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+
 	}
 
 	//更新
@@ -270,7 +279,7 @@ namespace basecross {
 					crashPos.z -= 0.01f;
 				}
 				//エフェクト再生
-				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect, ptrTransform->GetPosition() + crashPos);
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[0], ptrTransform->GetPosition() + crashPos);
 
 				if (m_effectCount >= 9) {
 					m_effectCount = 0;
@@ -283,13 +292,19 @@ namespace basecross {
 				if (m_boundInputReceptionTime > 0.0f) {
 					if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 					{
+						//エフェクト再生
+						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
 						m_boundFlagL = true;
 						m_isWall = false;
+						m_smashCount++;
 					}
 					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
 					{
+						//エフェクト再生
+						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
 						m_boundFlagR = true;
 						m_isWall = false;
+						m_smashCount++;
 					}
 				}
 			}
@@ -334,26 +349,34 @@ namespace basecross {
 				}
 			}
 
+			//スマッシュローリング
+			if (m_smashCount >= 10) {
+				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
+					m_isSmash = true;
+					m_smashTime = 1.0f;
+				}
+			}
+			if (m_isSmash) {
+				m_smashTime -= elapsedTime;
+				m_rollingSpeed = m_smashAccele;
+				if (m_smashTime < 0.0f) {
+					m_rollingSpeed = 5.0f;
+					m_isSmash = false;
+				}
+			}
+
 			m_front.normalize();
 
 			auto velo = ptrRigid->GetLinearVelocity();
 
-			////xとzの速度を修正
-			//velo.x = m_front.x * m_rollingSpeed * m_calory;
-			//velo.z = m_front.z * m_rollingSpeed * m_calory;
-			////加速
-			//m_rollingSpeed += m_accelerate * elapsedTime;
-			////速度を設定
-			//ptrRigid->SetLinearVelocity(velo);
-			//m_speed = m_rollingSpeed;
 
 			//最低速度
 			if (m_rollingSpeed < 1.0f) {
 				m_rollingSpeed = 1.0f;
 			}
 
-			if (m_rollingSpeed > 20.0f) {
-				m_rollingSpeed = 20.0f;
+			if (m_rollingSpeed > 8.0f) {
+				m_rollingSpeed = 8.0f;
 			}
 		}
 		//ランニングモード
@@ -370,6 +393,7 @@ namespace basecross {
 
 		}
 	}
+
 	//プレイヤーのモデルの変化
 	void Player::PlayerChangeModel() {
 		auto ptrDrawRun = AddComponent<PNTBoneModelDraw>();
@@ -412,7 +436,7 @@ namespace basecross {
 			ptrDrawRoll->SetDrawActive(true);
 			auto ptrCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());
 			m_front = GetComponent<Transform>()->GetPosition() - ptrCamera->GetEye();
-
+			m_rollingSpeed = 1.0f;
 		}
 	}
 
