@@ -21,10 +21,7 @@ namespace basecross {
 		void Initialize(WSAData wsad);
 		//Soket‚Ìì¬
 		SOCKET CreateSocket();
-		//Ú‘±
-		void Connection_Sending();
-		//óM
-		void Connection_Receiving();
+
 
 		struct sockaddr_in m_server;
 
@@ -35,6 +32,9 @@ namespace basecross {
 		}
 		//Às
 		void Main();
-
+		//Ú‘±
+		void Connection_Sending();
+		//óM
+		void Connection_Receiving();
 	};
 }

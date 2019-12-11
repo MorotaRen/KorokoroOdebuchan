@@ -96,8 +96,13 @@ namespace basecross {
 
 		//受信データ用バッファ
 		char buf[2048];
+
+		//テスト表示
+		MessageBox(0, (LPCWSTR)buf,0,0);
+
 		//残らないように一回Clear
 		memset(buf,0,sizeof(buf));
+
 
 		//socketの破棄
 		closesocket(sock);
