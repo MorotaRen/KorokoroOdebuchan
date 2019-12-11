@@ -18,7 +18,7 @@ namespace basecross {
 		//デストラクタ
 		~NetWork() {};
 		//初期化
-		void Initialize(WSAData wsad);
+		void Initialize(WSAData &wsad);
 		//Soketの作成
 		SOCKET CreateSocket();
 

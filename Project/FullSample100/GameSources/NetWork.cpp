@@ -11,7 +11,7 @@ namespace basecross {
 	void NetWork::Main() {
 	}
 	//‰Šú‰»‚ğ‚·‚é
-	void NetWork::Initialize(WSAData wsad) {
+	void NetWork::Initialize(WSAData &wsad) {
 		//winsock‚Ì‰Šú‰»
 		//(winsockƒo[ƒWƒ‡ƒ“,‰Šú‰»‚µ‚½‚à‚Ì‚ğ“ü‚ê‚éŠ)
 		int error;
