@@ -166,7 +166,23 @@ namespace basecross {
 		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A&&SelectSpotFlag == true || KeyState.m_bPressedKeyTbl[VK_SPACE]) {
 			auto XAPtr = App::GetApp()->GetXAudio2Manager();
 			XAPtr->Stop(m_BGM);
-			AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+			if (m_StageNum == 0) {
+				//èt
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+			}
+			else if (m_StageNum == 1) {
+				//âƒ
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+			}
+			else if (m_StageNum == 2) {
+				//èH
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+			}
+			else if (m_StageNum == 3) {
+				//ì~
+				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+			}
+
 		}
 	}
 }
