@@ -258,15 +258,30 @@ namespace basecross {
 	}
 
 	void GameSystems::NET_CharToVec3(char* pos) {
-		Vec3 v_pos;
-		char *ptr,*ctx;
-		ptr = strtok_s(pos,",",&ctx);
-		v_pos.x = atof(ptr);
-		ptr = strtok_s(NULL, ",",&ctx);
-		v_pos.y = atof(ptr);
-		ptr = strtok_s(NULL,",", &ctx);
-		v_pos.z = atof(ptr);
+		if (pos[0] == *"\0") {
 
-		m_netvec = v_pos;
+		}else {
+			Vec3 v_pos;
+			int loopnum = 0;
+			char *ptr, *ctx;
+			ptr = strtok_s(pos, ",", &ctx);
+			v_pos.x = atof(ptr);
+
+			while (ptr)
+			{
+				if (loopnum == 0) {
+					ptr = strtok_s(nullptr, ",", &ctx);
+					v_pos.y = atof(ptr);
+					loopnum++;
+				}
+				else {
+					ptr = strtok_s(nullptr, ",", &ctx);
+					v_pos.z = atof(ptr);
+					loopnum++;
+				}
+
+			}
+			m_netvec = v_pos;
+		}
 	}
 }

@@ -58,7 +58,8 @@ namespace basecross {
 
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 		ptrDraw->UpdateAnimation(App::GetApp()->GetElapsedTime());
-		NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
+		//‘—M‘¤
+		//NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
 		//PlayerChengeModel();
 
 	}
@@ -422,6 +423,8 @@ namespace basecross {
 
 
 
+		//óM‘¤
+		NetWork::GetInstans().Connection_Receiving();
 
 		//auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
 		//wstring strFps(L"FPS: ");
