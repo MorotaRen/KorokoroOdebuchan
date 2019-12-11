@@ -6,6 +6,10 @@ namespace basecross {
 	class MyCamera;
 
 	class TestStage : public Stage {
+		shared_ptr<EfkInterface> m_efkInterface;
+		//エフェクトの配列
+		shared_ptr<EfkEffect> m_effect;
+
 		weak_ptr<Player> m_ptrPlayer;
 		shared_ptr<MyCamera> m_camera;
 		shared_ptr<SoundItem> m_BGM;
@@ -28,6 +32,12 @@ namespace basecross {
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
 		virtual void UpdateStage()override;
+		virtual void OnDraw()override;
+
+
+		shared_ptr<EfkInterface> GetEfkInterface() const { return m_efkInterface; }		
+
+		void CreateEffect();
 
 		void PlayBGM(wstring key, float vol);
 		void StopBGM();

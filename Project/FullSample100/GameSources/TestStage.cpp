@@ -21,6 +21,17 @@ namespace basecross {
 		m_camera->SetAt(at);
 	}
 
+	//エフェクトの作成
+	void TestStage::CreateEffect()
+	{
+		m_efkInterface = ObjectFactory::Create<EfkInterface>();
+
+		wstring dataDir;
+		App::GetApp()->GetDataDirectory(dataDir);
+		
+	}
+
+
 	void TestStage::CreateUI()
 	{
 		//タイマー
@@ -42,6 +53,8 @@ namespace basecross {
 			CreateViewLight();
 			// UIの作成
 			CreateUI();
+			//エフェクトの作成
+			CreateEffect();
 
 			PlayBGM(L"MainBGM", 0.5f);
 
@@ -53,6 +66,8 @@ namespace basecross {
 	}
 
 	void TestStage::OnUpdate() {
+		m_efkInterface->OnUpdate();
+
 		if (!m_IsCreateObject) {
 			GameSystems::GetInstans().LoadStageCSV();
 			m_ptrPlayer = GameSystems::GetInstans().CreateStage();
@@ -103,6 +118,17 @@ namespace basecross {
 	void TestStage::StopBGM() {
 		auto XAPtr = App::GetApp()->GetXAudio2Manager();
 		XAPtr->Stop(m_BGM);
+	}
+
+	//描画処理
+	void TestStage::OnDraw() {
+		//レイヤーの取得と設定
+		set<int> drawLayers;
+		auto& ptrCamera = GetView()->GetTargetCamera();
+
+		m_efkInterface->SetViewProj(ptrCamera->GetViewMatrix(), ptrCamera->GetProjMatrix());
+		m_efkInterface->OnDraw();
+
 	}
 }
 

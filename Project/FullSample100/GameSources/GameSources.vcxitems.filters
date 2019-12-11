@@ -22,6 +22,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ResultScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Effekseerface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
@@ -46,5 +47,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ResultScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Effekseerface.h" />
   </ItemGroup>
 </Project>

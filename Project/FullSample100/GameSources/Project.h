@@ -22,7 +22,7 @@
 #include "Timer.h"
 #include "Checkpoint.h"
 #include "StartPause.h"
-
+#include "Effekseerface.h"
 //---------------ステージ--------------//
 #include "GameStage.h"
 #include "TestStage.h"
