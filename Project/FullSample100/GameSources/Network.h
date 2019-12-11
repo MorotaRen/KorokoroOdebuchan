@@ -33,7 +33,7 @@ namespace basecross {
 		//Às
 		void Main();
 		//Ú‘±
-		void Connection_Sending();
+		void Connection_Sending(Vec3 trans);
 		//óM
 		void Connection_Receiving();
 	};

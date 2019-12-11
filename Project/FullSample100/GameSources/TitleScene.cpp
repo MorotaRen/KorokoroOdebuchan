@@ -54,7 +54,7 @@ namespace basecross {
 
 		ptrTrans->SetPosition(pos);
 
-		
+
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ namespace basecross {
 			m_Spvec[2]->SetDrawActive(true);
 			m_Spvec[3]->SetDrawActive(true);
 			m_Spvec[4]->SetDrawActive(true);
-			
+
 			m_Spvec[0]->SetDrawLayer(9);
 			m_Spvec[1]->SetDrawLayer(1);
 			m_Spvec[2]->SetDrawLayer(1);

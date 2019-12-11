@@ -257,5 +257,16 @@ namespace basecross {
 		return m_animationData;
 	}
 
+	void GameSystems::NET_CharToVec3(char* pos) {
+		Vec3 v_pos;
+		char *ptr,*ctx;
+		ptr = strtok_s(pos,",",&ctx);
+		v_pos.x = atof(ptr);
+		ptr = strtok_s(NULL, ",",&ctx);
+		v_pos.y = atof(ptr);
+		ptr = strtok_s(NULL,",", &ctx);
+		v_pos.z = atof(ptr);
 
+		m_netvec = v_pos;
+	}
 }

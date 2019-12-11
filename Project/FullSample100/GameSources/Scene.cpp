@@ -29,7 +29,6 @@ namespace basecross {
 			LoadSoundResources();
 
 			GameSystems::GetInstans().LoadModelCSV();
-			NetWork::GetInstans().Connection_Sending();
 		}
 		catch (...) {
 			throw;
