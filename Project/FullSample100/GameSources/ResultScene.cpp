@@ -182,6 +182,37 @@ namespace basecross {
 	}
 
 	//--------------------------------------------------------------------------------------
+	//	playerプレビュー
+	//--------------------------------------------------------------------------------------
+	WinPlayer::WinPlayer(const shared_ptr<Stage>& stagePtr):
+		GameObject(stagePtr)
+	{}
+	void WinPlayer::OnCreate() {
+		auto ptrTrans = GetComponent<Transform>();
+		ptrTrans->SetScale(Vec3(0.08f, 0.08f, 0.08f));
+		ptrTrans->SetRotation(Vec3(0, 0.3f, 0));
+		ptrTrans->SetPosition(Vec3(1.2f, 0.1f, 0));
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(0.15f, 0.15f, 0.15f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, -0.7f, 0.0f)
+		);
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
+		ptrDraw->SetMeshResource(L"M_PlayerNomal");
+		ptrDraw->AddAnimation(L"Win", 110, 145, true, 45.0f);
+		ptrDraw->ChangeCurrentAnimation(L"Win");
+		SetDrawLayer(100);
+	}
+	void WinPlayer::OnUpdate() {
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
+		ptrDraw->SetMeshResource(L"M_PlayerNomal");
+		float elapsedTime = App::GetApp()->GetElapsedTime();
+		ptrDraw->UpdateAnimation(elapsedTime);
+
+	}
+	//--------------------------------------------------------------------------------------
 	//	リザルトシーンのクラス
 	//--------------------------------------------------------------------------------------
 	void ResultScene::CreateViewLight() {
@@ -189,7 +220,7 @@ namespace basecross {
 		//ビューのカメラの設定
 		auto PtrCamera = ObjectFactory::Create<Camera>();
 		PtrView->SetCamera(PtrCamera);
-		PtrCamera->SetEye(Vec3(0.0f, 2.0f, -3.0f));
+		PtrCamera->SetEye(Vec3(0.0f, 0.0f, -3.0f));
 		PtrCamera->SetAt(0.0f, 0.0f, 0.0f);
 		//マルチライトの作成
 		auto PtrMultiLight = CreateLight<MultiLight>();
@@ -213,6 +244,8 @@ namespace basecross {
 			AddGameObject<ResultSprite>(L"Result", Vec2(256.0f, 128.0f), Vec2(0.0f, 300.0f));
 			m_SpVec[0] = AddGameObject<ResultSprite>(L"ritorai", Vec2(160.0f, 100.0f), Vec2(-150.0f, -250.0f));
 			m_SpVec[1] = AddGameObject<ResultSprite>(L"title", Vec2(160.0f, 100.0f), Vec2(150.0f, -250.0f));
+
+			AddGameObject<WinPlayer>();
 
 			AddGameObject<FadeSprite>(FadeType::FadeIn);
 		}
