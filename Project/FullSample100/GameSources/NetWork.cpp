@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <WinSock2.h>	//winsock前提
+#include <ws2tcpip.h>
 #include "Project.h"
 #pragma comment(lib, "Ws2_32.lib")
 
@@ -41,7 +42,7 @@ namespace basecross {
 	}
 	//Socketの作成
 	SOCKET NetWork::CreateSocket() {
-		SOCKET sock = socket(AF_INET,SOCK_STREAM,0);
+		SOCKET sock = socket(AF_INET, SOCK_DGRAM,0);
 		if (sock == INVALID_SOCKET) {
 			MessageBox(0,L"Socketの作成に失敗しました",0,0);
 			return NULL;
@@ -50,18 +51,29 @@ namespace basecross {
 		}
 	}
 	//通信の開始
-	void NetWork::Connection_Sending() {
+	void NetWork::Connection_Sending(Vec3 trans) {
 		WSAData wsaData;
 		Initialize(wsaData);
 		SOCKET socket = CreateSocket();
 
 		//接続先指定用構造体の準備
-		m_server.sin_family = AF_INET;								//IPv4
-		m_server.sin_port = htons(12345);							//ポート番号
-		m_server.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");		//送信アドレス
+		memset(&m_server,0,sizeof(m_server));
+		m_server.sin_family = AF_INET;									//IPv4
+		m_server.sin_port = htons(65530);								//ポート番号
+		m_server.sin_addr.S_un.S_addr = inet_addr("192.168.7.78");		//送信アドレス
 
 		//送信データバッファ
-		char buf[2048] = "HELLO";
+		char x[512], y[512], z[512];
+		snprintf(x,2048,"%f",trans.x);
+		snprintf(y,2048,"%f",trans.y);
+		snprintf(z,2048,"%f",trans.z);
+		char buf[2048];
+		strcat(buf, x);
+		strcat(buf, ",");
+		strcat(buf, y);
+		strcat(buf, ",");
+		strcat(buf, z);
+
 
 		//送信する
 		// sendto(ソケット, 送信するデータ, データのバイト数, フラグ, アドレス情報, アドレス情報のサイズ);
@@ -82,28 +94,15 @@ namespace basecross {
 
 		struct sockaddr_in addr;
 		addr.sin_family = AF_INET;
-		addr.sin_port = htons(12345);
-		addr.sin_addr.S_un.S_addr = INADDR_ANY;
+		addr.sin_port = htons(65530);
+		addr.sin_addr.S_un.S_addr = inet_addr("192.168.7.78");
 
 		//バインド
-		bind(sock,(struct sockaddr *)&addr,sizeof(addr));
-
-		//ブロッキングの設定
-		//0 ブロッキングモード(受信されるまで待機)
-		//1 ノンブロッキング(受信されなくても次へ)
-		u_long val = 1;
-		ioctlsocket(sock, FIONBIO, &val);
-
-		//受信データ用バッファ
+		bind(sock, (struct sockaddr *) &m_server, sizeof(m_server));
+		//受信
 		char buf[2048];
-
-		//テスト表示
-		MessageBox(0, (LPCWSTR)buf,0,0);
-
-		//残らないように一回Clear
-		memset(buf,0,sizeof(buf));
-
-
+		recvfrom(sock, buf, 2048, 0, NULL, NULL);
+		GameSystems::GetInstans().NET_CharToVec3(buf);
 		//socketの破棄
 		closesocket(sock);
 		//終了

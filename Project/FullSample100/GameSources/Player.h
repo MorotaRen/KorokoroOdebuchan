@@ -121,6 +121,8 @@ namespace basecross {
 
 		void SetGoolFlg(bool f) { m_GoolFlg = f; }
 		bool GetGoolFlg() { return m_GoolFlg; }
+
+
 	};
 }
 
