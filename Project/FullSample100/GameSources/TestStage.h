@@ -22,7 +22,6 @@ namespace basecross {
 		bool m_IsCreateObject;
 		bool m_updateFlag = false;
 		bool m_Pause = false;
-		bool m_PauseFade = false;
 		bool m_cntlrock = false;
 		float m_stopTime = 0.0f;    //ŽžŠÔ‚ðŒv‘ª
 		int PauseSelect = 0;        

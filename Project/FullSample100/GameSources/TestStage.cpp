@@ -50,10 +50,10 @@ namespace basecross {
 
 		//ポーズ画面の画像
 		AddGameObject<StartPause>(L"PauseBG", Vec2(600, 600), Vec2(0, 0));
-		auto pause = AddGameObject<StartPause>(L"Back", Vec2(160.0f, 100.0f), Vec2(0, 90));
+		auto pause = AddGameObject<StartPause>(L"Back", Vec2(320.0f, 150.0f), Vec2(0, 50));
 		pause->Akarusa(true);
 		m_SpVec[0] = pause;
-		pause = AddGameObject<StartPause>(L"title", Vec2(160.0f, 100.0f), Vec2(0, -25));
+		pause = AddGameObject<StartPause>(L"title", Vec2(320.0f, 150.0f), Vec2(0, -150));
 		pause->Akarusa(false);
 		m_SpVec[1] = pause;
 		pause->GetComponent<PCTSpriteDraw>()->SetDiffuse(Col4(1, 1, 1, 0.5f));
@@ -106,7 +106,7 @@ namespace basecross {
 		if (!m_updateFlag) {
 			Stage::UpdateStage();
 		}
-		//再開
+		//スタート位置から〇秒後スタート
 		m_stopTime += App::GetApp()->GetElapsedTime();
 		if (!m_Pause&&m_stopTime > 5.0f) {
 			m_updateFlag = false;
@@ -147,42 +147,43 @@ namespace basecross {
 				}
 			}
 		}
-		//シーン遷移
-		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
-			if (PauseSelect == 0) {
-			}
-			else if (PauseSelect == 1 && m_Pause) {
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
-			}
-		}
 
-		//switch (PauseSelect)
-		//{
-		//	//ゲームに戻る
-		//case 0:
-		//	if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
-		//		auto vec = GetGameObjectVec();
-		//		if (m_Pause) {
-		//			for (auto v : vec) {
-		//				v->SetUpdateActive(true);
-		//				if (v->FindTag(L"StartPause")) {
-		//					//ポーズメニューをけす
-		//					v->SetDrawActive(false);
-		//				}
-		//			}
-		//			m_Pause = false;
-		//		}
-		//	}
-		//	break;
-		//	//タイトルへ
-		//case 1:
-		//	if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
-		//		if (m_Pause) {
-		//			AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
-		//		}
-		//	}
-		//	break;
-		//}
+		switch (PauseSelect)
+		{
+			//ゲームに戻る
+		case 0:
+			if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+				auto vec = GetGameObjectVec();
+				if (m_Pause) {
+					for (auto v : vec) {
+						v->SetUpdateActive(true);
+						if (v->FindTag(L"StartPause")) {
+							//ポーズメニューをけす
+							v->SetDrawActive(false);
+						}
+					}
+					m_Pause = false;
+				}
+			}
+			break;
+			//タイトルへ
+		case 1:
+			if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+				auto vec = GetGameObjectVec();
+				if (m_Pause) {
+					for (auto v : vec) {
+						v->SetUpdateActive(true);
+						if (v->FindTag(L"StartPause")) {
+							//ポーズメニューをけす
+							v->SetDrawActive(false);
+						}
+					}
+					m_Pause = false;
+					AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+				}
+			}
+			break;
+		}
 
 		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_START) {
 			auto vec = GetGameObjectVec();
@@ -220,7 +221,6 @@ namespace basecross {
 		auto XAPtr = App::GetApp()->GetXAudio2Manager();
 		XAPtr->Stop(m_BGM);
 	}
-	//
 	void TestStage::ChangePause(int num) {
 		for (int i = 0; i < 2; i++) {
 			shared_ptr<StartPause>shptr = m_SpVec[i].lock();

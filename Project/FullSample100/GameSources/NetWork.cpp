@@ -53,8 +53,8 @@ namespace basecross {
 	//通信の開始
 	void NetWork::Connection_Sending(Vec3 trans) {
 		WSAData wsaData;
-		Initialize(wsaData);
-		SOCKET socket = CreateSocket();
+		WSAStartup(MAKEWORD(2,0),&wsaData);
+		SOCKET sock = socket(AF_INET,SOCK_DGRAM,0);
 
 		//接続先指定用構造体の準備
 		memset(&m_server,0,sizeof(m_server));
@@ -67,7 +67,7 @@ namespace basecross {
 		snprintf(x,2048,"%f",trans.x);
 		snprintf(y,2048,"%f",trans.y);
 		snprintf(z,2048,"%f",trans.z);
-		char buf[2048];
+		char buf[2048] = {NULL};
 		strcat(buf, x);
 		strcat(buf, ",");
 		strcat(buf, y);
@@ -77,12 +77,8 @@ namespace basecross {
 
 		//送信する
 		// sendto(ソケット, 送信するデータ, データのバイト数, フラグ, アドレス情報, アドレス情報のサイズ);
-		sendto(socket, buf, sizeof(buf), 0, (struct  sockaddr *)&m_server, sizeof(m_server));
+		sendto(sock, buf, sizeof(buf), 0, (struct  sockaddr *)&m_server, sizeof(m_server));
 
-		//socketの破棄
-		closesocket(socket);
-		//終了
-		WSACleanup();
 	}
 	//受信
 	void NetWork::Connection_Receiving() {
