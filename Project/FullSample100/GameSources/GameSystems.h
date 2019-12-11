@@ -44,6 +44,8 @@ namespace basecross {
 		int m_animationDataRow = 0;
 		//ステージのエリアごとの判定達
 		vector<vector<shared_ptr<ColliderObjects>>> m_colobjs;
+
+		Vec3 m_netvec;
 	public:
 
 		//関数呼ぶときにここから
@@ -73,5 +75,12 @@ namespace basecross {
 		vector<vector<wstring>> GetAnimationData();
 		//送られてきたナンバーの判定をActiveにして前のやつをFalseに
 		void ActiveNextCollision(unsigned int nextnum);
+
+
+		//ネットできた座標のVec3化
+		void NET_CharToVec3(char* pos);
+		Vec3 NET_GetVec3() {
+			return m_netvec;
+		}
 	};
 }

@@ -16,6 +16,7 @@ namespace basecross {
 		m_runningSpeed(0.2f),
 		m_rollingSpeed(0.0f),
 		m_state(PlayerState::Running),
+		m_effectCount(0),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
 		m_accelerate(0.15f),
@@ -47,6 +48,13 @@ namespace basecross {
 			ptrCamera->SetTargetToAt(Vec3(0, 3, 1));
 		}
 		m_front = ptrCamera->GetEye() - GetComponent<Transform>()->GetPosition();
+
+		//エフェクトの初期化
+		wstring DataDir;
+		App::GetApp()->GetDataDirectory(DataDir);
+		wstring TestEffectStr = DataDir + L"Effects\\PlayerCrashEffect.efk";
+		auto ShEfkInterface = GetTypeStage<TestStage>()->GetEfkInterface();
+		m_efkEffect = ObjectFactory::Create<EfkEffect>(ShEfkInterface, TestEffectStr);
 	}
 
 	//更新
@@ -58,7 +66,7 @@ namespace basecross {
 
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 		ptrDraw->UpdateAnimation(App::GetApp()->GetElapsedTime());
-
+		NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
 		//PlayerChengeModel();
 
 	}
@@ -247,6 +255,27 @@ namespace basecross {
 
 			//壁と衝突
 			if (m_isWall) {
+				Vec3 crashPos(0, 0, 0);
+				if (m_pos.x < m_collisionPos.x) {
+					crashPos.x += 0.01f;
+				}
+				else{
+					crashPos.x -= 0.01f;
+				}
+
+				if (m_pos.z < m_collisionPos.z) {
+					crashPos.z += 0.01f;
+				}
+				else {
+					crashPos.z -= 0.01f;
+				}
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect, ptrTransform->GetPosition() + crashPos);
+
+				if (m_effectCount >= 9) {
+					m_effectCount = 0;
+				}
+
 				m_rollingSpeed -= 3.0f * elapsedTime;
 				m_boundInputReceptionTime -= elapsedTime;
 				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -345,7 +374,7 @@ namespace basecross {
 	void Player::PlayerChangeModel() {
 		auto ptrDrawRun = AddComponent<PNTBoneModelDraw>();
 		auto ptrDrawRoll = AddComponent<PNTStaticModelDraw>();
-		
+
 		if (m_state == PlayerState::Running) {
 			ptrDrawRun->SetMeshResource(L"M_PlayerNomal");
 			auto ptrDrawRun = GetComponent<PNTBoneModelDraw>();
@@ -453,12 +482,16 @@ namespace basecross {
 		//auto ptrString = GetComponent<StringSprite>();
 		//ptrString->SetText(str);
 
-		//DrawStrings();
+		DrawStrings();
 	}
 
 	//文字列の表示
 	void Player::DrawStrings() {
-
+		auto Pos = GameSystems::GetInstans().NET_GetVec3();
+		wstring strNETPos(L"NETPosition:\t");
+		strNETPos += L"X=" + Util::FloatToWStr(Pos.x, 6, Util::FloatModify::Fixed) + L",\t";
+		strNETPos += L"Y=" + Util::FloatToWStr(Pos.y, 6, Util::FloatModify::Fixed) + L",\t";
+		strNETPos += L"Z=" + Util::FloatToWStr(Pos.z, 6, Util::FloatModify::Fixed) + L"\n";
 		//文字列表示
 		wstring strMess(L"\n");
 		//オブジェクト数
@@ -511,7 +544,7 @@ namespace basecross {
 		wstring strSpeed(L"PlayerSpeed:\t");
 		strSpeed += L"Speed=" + Util::FloatToWStr(m_speed, 6, Util::FloatModify::Fixed) + L",\n";
 
-		wstring str = strMess + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed;
+		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed;
 		//文字列をつける
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
@@ -590,6 +623,7 @@ namespace basecross {
 
 		if (other->FindTag(L"WallCollider")) {
 			m_isWall = true;
+			m_collisionPos = other->GetComponent<Transform>()->GetPosition();
 		}
 		if (other->FindTag(L"GoalCollider")) {
 			m_GoolFlg = true;

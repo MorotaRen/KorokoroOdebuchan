@@ -23,14 +23,16 @@ namespace basecross {
 	{
 
 	private:
-
-	protected:
+		shared_ptr<EfkEffect> m_efkEffect;
+		shared_ptr<EfkPlay> m_efkPlay[11];
 		PlayerState m_state; //プレイヤーのモード
 		Vec3 m_pos; //位置
 		Vec3 m_scale; //大きさ
 		Vec3 m_rot; //回転
 		Vec3 m_front; //前方向のベクトル
 		Vec3 m_ret;
+		Vec3 m_collisionPos; //衝突したオブジェクトの座標
+		int m_effectCount;
 		float m_accelerate; //加速度
 		float m_runningSpeed; //ランニングモードの速度
 		float m_rollingSpeed; //ローリングモードの速度
@@ -119,6 +121,8 @@ namespace basecross {
 
 		void SetGoolFlg(bool f) { m_GoolFlg = f; }
 		bool GetGoolFlg() { return m_GoolFlg; }
+
+
 	};
 }
 

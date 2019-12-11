@@ -2,6 +2,35 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="$(MSBuildThisFileDirectory)ResultScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Effekseerface.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CountDown.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Fade.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Items.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Objects.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Project.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StartPause.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ResultScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Effekseerface.h" />
+=======
     <ClCompile Include="$(MSBuildThisFileDirectory)Checkpoint.cpp">
       <Filter>Colliders</Filter>
     </ClCompile>
@@ -153,5 +182,6 @@
     <Filter Include="Projects">
       <UniqueIdentifier>{6701ac47-7dd1-4dcd-b3ec-20e03d40683f}</UniqueIdentifier>
     </Filter>
+>>>>>>> 9063f174032713399d9bbeed753140d88b36c9f9
   </ItemGroup>
 </Project>
