@@ -20,11 +20,10 @@ namespace basecross {
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"TitleScene");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ResultScene");
 
 			LoadImageResources(L"Title");
 			LoadImageResources(L"Font");
-			LoadImageResources(L"Result");
 			LoadImageResources(L"Pause");
 			LoadMultiMeshModelResources();
 			LoadSoundResources();

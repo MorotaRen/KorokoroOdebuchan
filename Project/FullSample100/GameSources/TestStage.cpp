@@ -49,11 +49,12 @@ namespace basecross {
 		AddGameObject<CountDown>(L"START", Vec2(0.0f, 0.0f));
 
 		//ポーズ画面の画像
-		AddGameObject<StartPause>(L"PauseBG", Vec2(600, 600), Vec2(0, 0));
+		AddGameObject<StartPause>(L"ResultBG", Vec2(600, 600), Vec2(0, 0));
+		AddGameObject<StartPause>(L"Pause", Vec2(256.0f, 64.0f), Vec2(0, 200));
 		auto pause = AddGameObject<StartPause>(L"Back", Vec2(320.0f, 150.0f), Vec2(0, 50));
 		pause->Akarusa(true);
 		m_SpVec[0] = pause;
-		pause = AddGameObject<StartPause>(L"title", Vec2(320.0f, 150.0f), Vec2(0, -150));
+		pause = AddGameObject<StartPause>(L"Title", Vec2(256.0f, 64.0f), Vec2(0, -150));
 		pause->Akarusa(false);
 		m_SpVec[1] = pause;
 		pause->GetComponent<PCTSpriteDraw>()->SetDiffuse(Col4(1, 1, 1, 0.5f));
@@ -210,6 +211,17 @@ namespace basecross {
 		}
 	}
 
+	//描画処理
+	void TestStage::OnDraw() {
+		//レイヤーの取得と設定
+		set<int> drawLayers;
+		auto& ptrCamera = GetView()->GetTargetCamera();
+
+		m_efkInterface->SetViewProj(ptrCamera->GetViewMatrix(), ptrCamera->GetProjMatrix());
+		m_efkInterface->OnDraw();
+
+	}
+
 
 	//BGMの再生
 	void TestStage::PlayBGM(wstring key, float vol) {
@@ -234,16 +246,6 @@ namespace basecross {
 				}
 			}
 		}
-	}
-	//描画処理
-	void TestStage::OnDraw() {
-		//レイヤーの取得と設定
-		set<int> drawLayers;
-		auto& ptrCamera = GetView()->GetTargetCamera();
-
-		m_efkInterface->SetViewProj(ptrCamera->GetViewMatrix(), ptrCamera->GetProjMatrix());
-		m_efkInterface->OnDraw();
-
 	}
 }
 
