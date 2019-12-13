@@ -7,21 +7,6 @@
 #include "stdafx.h"
 
 namespace basecross{
-	//--------------------------------------------------------------------------------------
-	//	選択している所を表示するスプライト
-	//--------------------------------------------------------------------------------------
-	class SelectSpotSprite :public Sprite {
-	public:
-		SelectSpotSprite(const shared_ptr<Stage>&stagePtr,
-			const wstring& textureKey,
-			const Vec2& startScale,
-			const Vec2& startPos);
-		virtual ~SelectSpotSprite() {}
-		bool SelectSpotFlag;
-		virtual void OnCreate()override;
-		virtual void OnUpdate()override;
-		bool GetSelectSpotFlag() { return SelectSpotFlag; }
-	};
 
 	//--------------------------------------------------------------------------------------
 	//	タイトルシーンのクラス
@@ -33,7 +18,7 @@ namespace basecross{
 		//UIの作成
 		void CreateUI();
 
-		vector<shared_ptr<Sprite>> m_Spvec;
+		vector<shared_ptr<TitleSceneSprite>> m_Spvec;
 		shared_ptr<SelectSpotSprite> m_SpotSprite;
 		shared_ptr<SoundItem> m_BGM;
 		int m_StageNum = 0;   //今選択してるステージ番号
@@ -53,6 +38,6 @@ namespace basecross{
 		virtual void OnUpdate() override;
 
 		int GetStageNum() { return m_StageNum; }
-		vector<shared_ptr<Sprite>>GetSpVec()const { return m_Spvec; }
+		vector<shared_ptr<TitleSceneSprite>>GetSpVec()const { return m_Spvec; }
 	};
 }

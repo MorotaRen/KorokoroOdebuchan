@@ -20,9 +20,8 @@
 #include "Stage.h"
 #include "ColliderObject.h"
 #include "Sprite.h"
-#include "Timer.h"
 #include "Checkpoint.h"
-#include "StartPause.h"
+#include "UI.h"
 #include "Effekseerface.h"
 //---------------ステージ--------------//
 #include "GameStage.h"
@@ -31,12 +30,10 @@
 #include "ResultScene.h"
 
 //-------------オブジェクト------------//
-
 #include "Player.h"
 #include "Items.h"
 #include "Sprite.h"
 #include "TestBlock.h"
 #include "MyCamera.h"
-#include "CountDown.h"
 #include "Fade.h"
 
