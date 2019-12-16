@@ -63,7 +63,9 @@ namespace basecross {
 		//ハジキのエフェクト
 		efkStr = L"Effects\\PlayerHazikiEffect.efk";
 		m_efkEffect[1] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
-
+		//オーラのエフェクト
+		efkStr = L"Effects\\PlayerAuraEffect.efk";
+		m_efkEffect[2] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
 	}
 
 	//更新
@@ -281,10 +283,6 @@ namespace basecross {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[0], ptrTransform->GetPosition() + crashPos);
 
-				if (m_effectCount >= 9) {
-					m_effectCount = 0;
-				}
-
 				m_rollingSpeed -= 3.0f * elapsedTime;
 				m_boundInputReceptionTime -= elapsedTime;
 				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -351,12 +349,17 @@ namespace basecross {
 
 			//スマッシュローリング
 			if (m_smashCount >= 10) {
+
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
 					m_isSmash = true;
 					m_smashTime = 1.0f;
+					m_smashCount = 0;
 				}
 			}
 			if (m_isSmash) {
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());
+
 				m_smashTime -= elapsedTime;
 				m_rollingSpeed = m_smashAccele;
 				if (m_smashTime < 0.0f) {
@@ -377,6 +380,11 @@ namespace basecross {
 
 			if (m_rollingSpeed > 8.0f) {
 				m_rollingSpeed = 8.0f;
+			}
+
+			//エフェクトカウンターリセット
+			if (m_effectCount >= 19) {
+				m_effectCount = 0;
 			}
 		}
 		//ランニングモード
