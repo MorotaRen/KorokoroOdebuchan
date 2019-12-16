@@ -13,6 +13,7 @@ namespace basecross {
 		weak_ptr<Player> m_ptrPlayer;
 		shared_ptr<MyCamera> m_camera;
 		shared_ptr<SoundItem> m_BGM;
+		vector<weak_ptr<StartPause>>m_SpVec;
 		//ビューの作成
 		void CreateViewLight();
 		//UI
@@ -20,13 +21,15 @@ namespace basecross {
 
 		bool m_IsCreateObject;
 		bool m_updateFlag = false;
-		float m_deltTime = 0.0f;	//時間を計測
-		float m_stopTime = 0.0f;
+		bool m_Pause = false;
+		bool m_cntlrock = false;
+		float m_stopTime = 0.0f;    //時間を計測
+		int PauseSelect = 0;        
 
 	public:
 
 		//構築と破棄
-		TestStage() :Stage(){}
+		TestStage() :Stage(),m_SpVec(2){}
 		virtual ~TestStage();
 		//初期化
 		virtual void OnCreate()override;
@@ -39,8 +42,12 @@ namespace basecross {
 
 		void CreateEffect();
 
+		//BGMの再生
 		void PlayBGM(wstring key, float vol);
+		//BGMの停止
 		void StopBGM();
+		//
+		void ChangePause(int num);
 	};
 
 

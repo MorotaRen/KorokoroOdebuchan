@@ -74,12 +74,14 @@ namespace basecross {
 		InputController();
 		PlayerMove();
 		//PlayerChengeWeight();
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 		ptrDraw->UpdateAnimation(App::GetApp()->GetElapsedTime());
-		NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
-		//PlayerChengeModel();
-
+		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_A) {
+			NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
+			//PlayerChengeModel();
+		}
 	}
 
 	//“ü—Í‚³‚ê‚½Žž
