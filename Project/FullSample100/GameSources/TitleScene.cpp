@@ -70,7 +70,7 @@ namespace basecross {
 			auto XAPtr = App::GetApp()->GetXAudio2Manager();
 			m_BGM = XAPtr->Start(L"TitleBGM", XAUDIO2_LOOP_INFINITE, 0.5f);
 
-			AddGameObject<FadeSprite>(FadeType::FadeIn);
+			AddGameObject<FadeSprite>(FadeType::FadeIn, 0.01f);
 		}
 		catch (...) {
 			throw;
@@ -128,19 +128,19 @@ namespace basecross {
 			XAPtr->Stop(m_BGM);
 			if (m_StageNum == 0) {
 				//èt
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
 			else if (m_StageNum == 1) {
 				//âƒ
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
 			else if (m_StageNum == 2) {
 				//èH
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
 			else if (m_StageNum == 3) {
 				//ì~
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
 
 		}

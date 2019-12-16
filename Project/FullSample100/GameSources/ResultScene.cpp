@@ -71,7 +71,7 @@ namespace basecross {
 
 			AddGameObject<WinPlayer>();
 
-			AddGameObject<FadeSprite>(FadeType::FadeIn);
+			AddGameObject<FadeSprite>(FadeType::FadeIn, 0.01f);
 		}
 		catch (...) {
 			throw;
@@ -122,10 +122,10 @@ namespace basecross {
 		//ÉVÅ[ÉìëJà⁄
 		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A || KeyState.m_bPushKeyTbl[VK_SPACE]) {
 			if (m_StageNum == 0) {
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
 			else if (m_StageNum == 1) {
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"TitleScene");
 			}
 		}
 	}

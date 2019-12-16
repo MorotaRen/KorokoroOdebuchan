@@ -13,9 +13,11 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	FadeSprite::FadeSprite(const shared_ptr<Stage>&stagePtr,
 		const FadeType& fadeType,
+		float fadeSpeed,
 		const wstring&stageString) :
 		Sprite(stagePtr, L"Black", Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f)),
 		m_Type(fadeType),
+		m_FadeSpeed(fadeSpeed),
 		m_StageString(stageString)
 	{}
 

@@ -71,7 +71,7 @@ namespace basecross {
 
 			PlayBGM(L"MainBGM", 0.5f);
 
-			auto FadePtr = AddGameObject<FadeSprite>(FadeType::FadeIn);
+			auto FadePtr = AddGameObject<FadeSprite>(FadeType::FadeIn, 0.01f);
 			SetSharedGameObject(L"Fade", FadePtr);
 		}
 		catch (...) {
@@ -180,7 +180,7 @@ namespace basecross {
 						}
 					}
 					m_Pause = false;
-					AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+					AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"TitleScene");
 				}
 			}
 			break;
