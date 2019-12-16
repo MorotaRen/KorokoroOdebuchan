@@ -23,8 +23,8 @@ namespace basecross {
 	{
 
 	private:
-		shared_ptr<EfkEffect> m_efkEffect[4];
-		shared_ptr<EfkPlay> m_efkPlay[20];
+		shared_ptr<EfkEffect> m_efkEffect[5];
+		shared_ptr<EfkPlay> m_efkPlay[50];
 		PlayerState m_state; //プレイヤーのモード
 		Vec3 m_pos; //位置
 		Vec3 m_scale; //大きさ
