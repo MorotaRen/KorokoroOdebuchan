@@ -23,13 +23,14 @@ namespace basecross {
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
-		m_boundTime(0.1f),
+		m_boundTime(1.0f),
 		m_isWall(false),
 		m_GoolFlg(false),
 		m_smashCount(0),
 		m_smashAccele(7.0f),
 		m_isSmash(false),
-		m_smashTime(1.0f)
+		m_smashTime(1.0f),
+		m_isAccele(false)
 	{
 	}
 
@@ -329,22 +330,24 @@ namespace basecross {
 
 			//ÉnÉWÉLÇÃèàóù
 			if (m_boundFlagL) {
-				bool isBound = true;
+				m_isAccele = true;
 				m_boundTime -= elapsedTime;
-				m_front.x += 0.2f;
-				m_rollingSpeed += 0.1f;
+				m_front.x += 0.01f;
+				m_rollingSpeed += 0.005f;
 				if (m_boundTime < 0) {
-					m_boundTime = 0.05f;
+					m_boundTime = 1.0f;
+					m_isAccele = false;
 					m_boundFlagL = false;
 				}
 			}
 			else if (m_boundFlagR) {
-				bool isBound = true;
+				m_isAccele = true;
 				m_boundTime -= elapsedTime;
-				m_front.x -= 0.2f;
-				m_rollingSpeed -= 0.05f;
+				m_front.x -= 0.01f;
+				m_rollingSpeed += 0.005f;
 				if (m_boundTime < 0) {
-					m_boundTime = 0.1f;
+					m_boundTime = 1.0f;
+					m_isAccele = false;
 					m_boundFlagR = false;
 				}
 			}

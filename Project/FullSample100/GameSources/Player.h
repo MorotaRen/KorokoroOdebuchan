@@ -53,6 +53,7 @@ namespace basecross {
 		bool m_GoolFlg;//ゴールしたかフラグ
 		bool m_StageObjHit = false;
 		bool m_isSmash; //スマッシュローリング可否のフラグ
+		bool m_isAccele;
 
 		//入力された時
 		void InputController();
@@ -125,6 +126,8 @@ namespace basecross {
 
 		void SetGoolFlg(bool f) { m_GoolFlg = f; }
 		bool GetGoolFlg() { return m_GoolFlg; }
+
+		bool GetIsAccele() { return m_isAccele; }
 
 
 	};

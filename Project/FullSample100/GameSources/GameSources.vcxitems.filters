@@ -21,7 +21,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CountDown.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StartPause.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
@@ -45,6 +47,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)UI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CountDown.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StartPause.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Timer.h" />
   </ItemGroup>
 </Project>
