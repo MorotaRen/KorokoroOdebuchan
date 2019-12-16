@@ -34,8 +34,6 @@ namespace basecross {
 		int m_StageNum = 0;   //今選択してるステージ番号
 		bool m_CntrolLock;    //スティックを一度倒したらロック
 
-		//背景の作成
-		void CreateBackground();
 
 	public:
 		//構築
