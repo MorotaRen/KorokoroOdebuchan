@@ -51,10 +51,10 @@ namespace basecross {
 		//É|Å[ÉYâÊñ ÇÃâÊëú
 		AddGameObject<StartPause>(L"ResultBG", Vec2(600, 600), Vec2(0, 0));
 		AddGameObject<StartPause>(L"Pause", Vec2(256.0f, 64.0f), Vec2(0, 200));
-		auto pause = AddGameObject<StartPause>(L"Back", Vec2(320.0f, 150.0f), Vec2(0, 50));
+		auto pause = AddGameObject<StartPause>(L"Gameback", Vec2(368.0f, 65.0f), Vec2(0, 50));
 		pause->Akarusa(true);
 		m_SpVec[0] = pause;
-		pause = AddGameObject<StartPause>(L"Title", Vec2(256.0f, 64.0f), Vec2(0, -150));
+		pause = AddGameObject<StartPause>(L"Titleback", Vec2(427.0f, 59.0f), Vec2(0, -100));
 		pause->Akarusa(false);
 		m_SpVec[1] = pause;
 		pause->GetComponent<PCTSpriteDraw>()->SetDiffuse(Col4(1, 1, 1, 0.5f));
