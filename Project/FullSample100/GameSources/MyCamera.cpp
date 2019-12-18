@@ -25,7 +25,9 @@ namespace basecross {
 		m_UDBaseMode(true),
 		m_boundRotL(false),
 		m_boundRotR(false),
-		m_boundTime(0.3f)
+		m_boundTime(0.3f),
+		m_culcEye(0, -2.4f, -0.4f)
+
 	{}
 
 	MyCamera::MyCamera(float ArmLen) :
@@ -341,9 +343,22 @@ namespace basecross {
 			}
 		}
 
+		if (m_ptrPlayer.lock()->GetIsAccele()) {
+			m_culcEye.y += 0.25f*elapsedTime;
+			m_culcEye.z += 0.4f * elapsedTime;
+		}
+		else {
+			if (m_culcEye.z > -0.4f) {
+				m_culcEye.z -= 1.2f * elapsedTime;
+			}
+			if (m_culcEye.y > -2.41f) {
+				m_culcEye.y -= 0.75f * elapsedTime;
+			}
+		}
+
 		m_ArmLen = 0.01f;
 		////目指したい場所にアームの値と腕ベクトルでEyeを調整
-		Vec3 toEye = newAt + armVec * m_ArmLen + Vec3(0, -2.4f, -0.4f);
+		Vec3 toEye = newAt + armVec * m_ArmLen + m_culcEye;
 		newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
 		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition() + Vec3(0, 0.2f, 0);
 		SetAt(newAt);

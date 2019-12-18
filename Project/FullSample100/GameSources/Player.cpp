@@ -23,13 +23,14 @@ namespace basecross {
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
-		m_boundTime(0.1f),
+		m_boundTime(0.75f),
 		m_isWall(false),
 		m_GoolFlg(false),
 		m_smashCount(0),
 		m_smashAccele(7.0f),
 		m_isSmash(false),
-		m_smashTime(1.0f)
+		m_smashTime(1.0f),
+		m_isAccele(false)
 	{
 	}
 
@@ -66,6 +67,12 @@ namespace basecross {
 		//オーラのエフェクト
 		efkStr = L"Effects\\PlayerAuraEffect.efk";
 		m_efkEffect[2] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//花びらのエフェクト
+		efkStr = L"Effects\\Petal.efk";
+		m_efkEffect[3] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//加速エフェクト
+		efkStr = L"Effects\\PlayerAccelerate.efk";
+		m_efkEffect[4] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
 	}
 
 	//更新
@@ -110,6 +117,8 @@ namespace basecross {
 				break;
 			}
 		}
+
+		
 
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -294,17 +303,23 @@ namespace basecross {
 					{
 						//エフェクト再生
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
+						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
+
 						m_boundFlagL = true;
 						m_isWall = false;
 						m_smashCount++;
+						m_front.x += 0.5f;
 					}
 					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
 					{
 						//エフェクト再生
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
+						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 						m_boundFlagR = true;
 						m_isWall = false;
 						m_smashCount++;
+						m_front.x -= 0.5f;
+
 					}
 				}
 			}
@@ -329,29 +344,33 @@ namespace basecross {
 
 			//ハジキの処理
 			if (m_boundFlagL) {
-				bool isBound = true;
+				m_isAccele = true;
 				m_boundTime -= elapsedTime;
-				m_front.x += 0.2f;
-				m_rollingSpeed += 0.1f;
+				m_rollingSpeed += 0.005f;
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 				if (m_boundTime < 0) {
-					m_boundTime = 0.05f;
+					m_boundTime = 0.75;
+					m_isAccele = false;
 					m_boundFlagL = false;
 				}
 			}
 			else if (m_boundFlagR) {
-				bool isBound = true;
+				m_isAccele = true;
 				m_boundTime -= elapsedTime;
-				m_front.x -= 0.2f;
-				m_rollingSpeed -= 0.05f;
+				m_rollingSpeed += 0.005f;
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 				if (m_boundTime < 0) {
-					m_boundTime = 0.1f;
+					m_boundTime = 0.75;
+					m_isAccele = false;
 					m_boundFlagR = false;
 				}
 			}
 
 			//スマッシュローリング
 			if (m_smashCount >= 10) {
-
+				m_smashCount = 10;
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
 					m_isSmash = true;
 					m_smashTime = 1.0f;
@@ -385,7 +404,7 @@ namespace basecross {
 			}
 
 			//エフェクトカウンターリセット
-			if (m_effectCount >= 19) {
+			if (m_effectCount >= 45) {
 				m_effectCount = 0;
 			}
 		}
@@ -430,6 +449,11 @@ namespace basecross {
 			ptrDrawRun->SetMeshToTransformMatrix(spanMat);
 			ptrDrawRun->SetDrawActive(true);
 			ptrDrawRoll->SetDrawActive(false);
+
+			m_boundFlagL = false;
+			m_boundFlagR = false;
+			m_isAccele = false;
+
 		}
 		else if (m_state == PlayerState::Rolling) {
 			ptrDrawRoll->SetMeshResource(L"M_PlayerRolling");
@@ -578,7 +602,10 @@ namespace basecross {
 		wstring strSpeed(L"PlayerSpeed:\t");
 		strSpeed += L"Speed=" + Util::FloatToWStr(m_speed, 6, Util::FloatModify::Fixed) + L",\n";
 
-		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed;
+		wstring strEffect(L"PlayerSpeed:\t");
+		strEffect += L"Effect=" + Util::FloatToWStr(m_effectCount, 6, Util::FloatModify::Fixed) + L",\n";
+
+		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed + strEffect;
 		//文字列をつける
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);

@@ -118,18 +118,18 @@
                 </ColorAll_Fixed>
                 <ColorAll_Random>
                   <R>
+                    <Max>5</Max>
+                    <Min>156</Min>
                     <DrawnAs>0</DrawnAs>
                   </R>
                   <G>
                     <Center>130</Center>
-                    <Max>144</Max>
-                    <Min>116</Min>
+                    <Max>242</Max>
+                    <Min>241</Min>
                     <DrawnAs>0</DrawnAs>
                   </G>
                   <B>
                     <Center>5</Center>
-                    <Max>5</Max>
-                    <Min>5</Min>
                     <DrawnAs>0</DrawnAs>
                   </B>
                   <A>
@@ -243,18 +243,18 @@
                 </ColorAll_Fixed>
                 <ColorAll_Random>
                   <R>
+                    <Max>5</Max>
+                    <Min>111</Min>
                     <DrawnAs>0</DrawnAs>
                   </R>
                   <G>
                     <Center>130</Center>
-                    <Max>144</Max>
-                    <Min>116</Min>
+                    <Max>146</Max>
+                    <Min>207</Min>
                     <DrawnAs>0</DrawnAs>
                   </G>
                   <B>
                     <Center>5</Center>
-                    <Max>5</Max>
-                    <Min>5</Min>
                     <DrawnAs>0</DrawnAs>
                   </B>
                   <A>
@@ -349,20 +349,19 @@
                 <ColorAll_Random>
                   <R>
                     <Center>250</Center>
-                    <Max>254</Max>
-                    <Min>247</Min>
+                    <Max>89</Max>
+                    <Min>179</Min>
                     <DrawnAs>0</DrawnAs>
                   </R>
                   <G>
                     <Center>108</Center>
-                    <Max>110</Max>
-                    <Min>106</Min>
+                    <Max>193</Max>
+                    <Min>231</Min>
                     <DrawnAs>0</DrawnAs>
                   </G>
                   <B>
                     <Center>9</Center>
-                    <Max>9</Max>
-                    <Min>9</Min>
+                    <Min>254</Min>
                     <DrawnAs>0</DrawnAs>
                   </B>
                   <A>
@@ -390,8 +389,8 @@
             <Min>15</Min>
           </Life>
           <GenerationTime>
-            <Center>1.000005</Center>
-            <Max>2</Max>
+            <Center>1E-05</Center>
+            <Max>1E-05</Max>
             <Min>1E-05</Min>
           </GenerationTime>
         </CommonValues>
@@ -517,18 +516,18 @@
                     <ColorAll>1</ColorAll>
                     <ColorAll_Random>
                       <R>
+                        <Max>53</Max>
+                        <Min>0</Min>
                         <DrawnAs>0</DrawnAs>
                       </R>
                       <G>
                         <Center>125</Center>
-                        <Max>130</Max>
-                        <Min>120</Min>
+                        <Max>184</Max>
+                        <Min>198</Min>
                         <DrawnAs>0</DrawnAs>
                       </G>
                       <B>
                         <Center>26</Center>
-                        <Max>53</Max>
-                        <Min>0</Min>
                         <DrawnAs>0</DrawnAs>
                       </B>
                       <A>

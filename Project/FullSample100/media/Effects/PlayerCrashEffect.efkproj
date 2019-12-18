@@ -27,7 +27,7 @@
           <Node>
             <CommonValues>
               <MaxGeneration>
-                <Value>10</Value>
+                <Value>5</Value>
               </MaxGeneration>
               <Life>
                 <Center>15</Center>
@@ -151,7 +151,7 @@
               <Node>
                 <CommonValues>
                   <MaxGeneration>
-                    <Value>5</Value>
+                    <Value>3</Value>
                   </MaxGeneration>
                   <Life>
                     <Center>7</Center>
