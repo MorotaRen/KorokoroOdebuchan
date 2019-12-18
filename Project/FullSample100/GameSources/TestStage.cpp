@@ -48,6 +48,10 @@ namespace basecross {
 		//スタートの表示
 		AddGameObject<CountDown>(L"START", Vec2(0.0f, 0.0f));
 
+		//スマッシュゲージ
+		auto SmashPtr = AddGameObject<SmashGauge>(L"gray", Vec2(275.0f, 30.0f), Vec2(500.0f, 0.0f));
+		SetSharedGameObject(L"Smash", SmashPtr);
+
 		//ポーズ画面の画像
 		AddGameObject<StartPause>(L"ResultBG", Vec2(600, 600), Vec2(0, 0));
 		AddGameObject<StartPause>(L"Pause", Vec2(256.0f, 64.0f), Vec2(0, 200));
@@ -95,6 +99,13 @@ namespace basecross {
 			m_updateFlag = true;
 		}
 
+		auto cntlvec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		auto sharedObj = GetSharedGameObject<SmashGauge>(L"Smash");
+		if (sharedObj->GetSmashPoint() >= 10) {
+			if (cntlvec.wButtons&XINPUT_GAMEPAD_Y) {
+				sharedObj->SetActive(true);
+			}
+		}
 	}
 	//時を止める処理
 	void TestStage::UpdateStage() {

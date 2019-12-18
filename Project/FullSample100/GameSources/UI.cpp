@@ -15,7 +15,7 @@ namespace basecross {
 		const wstring& textureKey,
 		const Vec2& startScale,
 		const Vec2& startPos) :
-		Sprite(stagePtr,textureKey,startScale,startPos)
+		Sprite(stagePtr, textureKey, startScale, startPos)
 	{}
 
 	//--------------------------------------------------------------------------------------
@@ -206,10 +206,6 @@ namespace basecross {
 		auto PtrDraw = AddComponent<PTSpriteDraw>(m_BackupVertices, indices);
 		PtrDraw->SetTextureResource(m_TextureKey);
 
-		//文字列をつける
-		//auto ptrString = AddComponent<StringSprite>();
-		//ptrString->SetText(L"");
-		//ptrString->SetTextRect(Rect2D<float>(1000.0f, 16.0f, 1200.0f, 480.0f));
 
 	}
 
@@ -286,13 +282,6 @@ namespace basecross {
 		auto PtrDraw = GetComponent<PTSpriteDraw>();
 		PtrDraw->UpdateVertices(NewVertices);
 
-		//wstringstream ss;
-		//ss << L"Timer : " << m_Timer << std::endl;
-		//ss << L"TimeScore : " << m_TimeScore << std::endl;
-
-		//文字列コンポーネントの取得
-		//auto ptrString = GetComponent<StringSprite>();
-		//ptrString->SetText(ss.str());
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -307,6 +296,98 @@ namespace basecross {
 
 	void TextTime::OnCreate() {
 		Sprite::OnCreate();
+	}
+
+	//--------------------------------------------------------------------------------------
+	//	スマッシュゲージのUI
+	//--------------------------------------------------------------------------------------
+	SmashGauge::SmashGauge(const shared_ptr<Stage>&stagePtr,
+		const wstring& textureKey,
+		const Vec2& startScale,
+		const Vec2& startPos) :
+		Sprite(stagePtr, textureKey, startScale, startPos)
+	{}
+
+	void SmashGauge::OnCreate() {
+		float helfSize = 0.5f;
+		//頂点配列(縦横5個ずつ表示)
+		vector<VertexPositionColorTexture> vertices = {
+			{ VertexPositionColorTexture(Vec3(-0, helfSize, 0),Col4(1.0f,1.0f,1.0f,1.0f), Vec2(0.0f, 0.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize*2.0f, helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f, 0.0f)) },
+			{ VertexPositionColorTexture(Vec3(-0, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(0.0f, 1.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize*2.0f, -helfSize, 0), Col4(1.0f, 01.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f)) },
+		};
+		//インデックス配列
+		vector<uint16_t> indices = { 0, 1, 2, 1, 3, 2 };
+		auto ptrTrans = GetComponent<Transform>();
+		ptrTrans->SetScale(0.0f, m_StartScale.y, 1.0f);
+		ptrTrans->SetRotation(0, 0, XM_PIDIV2);
+		ptrTrans->SetPosition(Vec3(m_StartPos.x, m_StartPos.y, 0.0f));
+		// ピボットを右端にする
+		ptrTrans->SetPivot(0.0f, 0.0f, 0.0f);
+		//頂点とインデックスを指定してスプライト作成
+		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
+		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
+		ptrDraw->SetTextureResource(m_TextureKey);
+
+		//文字列をつける
+		auto ptrString = AddComponent<StringSprite>();
+		ptrString->SetText(L"");
+		ptrString->SetTextRect(Rect2D<float>(1000.0f, 100.0f, 1200.0f, 480.0f));
+
+	}
+	void SmashGauge::OnUpdate() {
+		if (m_Active) {
+				UseSmashPoint();
+		}
+		else {
+
+		}
+
+		wstringstream ss;
+		ss << L"m_MinSmashPoint : " << m_MinSmashPoint << std::endl;
+		ss << L"m_SmashPoint : " << m_SmashPoint << std::endl;
+		ss << L"m_MaxSmashPoint : " << m_MaxSmashPoint << std::endl;
+
+		//文字列コンポーネントの取得
+		//auto ptrString = GetComponent<StringSprite>();
+		//ptrString->SetText(ss.str());
+
+	}
+	void SmashGauge::CargeSmashPoint(int f) {
+		if (m_UsePoint == false) {
+			auto ptrTrans = GetComponent<Transform>();
+			auto scale = ptrTrans->GetScale();
+
+			m_SmashPoint += f * 1.0f;
+			if (m_SmashPoint >= m_MaxSmashPoint) {
+				m_SmashPoint = m_MaxSmashPoint;
+				m_IsUsable = true;
+			}
+
+			scale.x = 27.5f *m_SmashPoint;
+			ptrTrans->SetScale(scale);
+		}
+	}
+
+	void SmashGauge::UseSmashPoint() {
+		if (m_IsUsable == true) {
+			auto ptrTrans = GetComponent<Transform>();
+			auto scale = ptrTrans->GetScale();
+			float rate = m_MaxSmashPoint / m_SmashPoint;
+			m_UsePoint = true;
+			ElapsedTime = App::GetApp()->GetElapsedTime();
+			m_SmashPoint -= ElapsedTime;
+			if (m_SmashPoint <= m_MinSmashPoint) {
+				m_SmashPoint = m_MinSmashPoint;
+				m_Active = false;
+				m_UsePoint = false;
+				m_IsUsable = false;
+			}
+
+			scale.x = m_StartScale.x / rate;
+			ptrTrans->SetScale(scale);
+		}
 	}
 
 	/***************************************************************************************
