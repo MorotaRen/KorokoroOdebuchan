@@ -61,6 +61,7 @@ namespace basecross {
 	public:
 		CountDown(const shared_ptr<Stage>&stagePtr,
 			const wstring& textureKey,
+			const Vec2& startScale,
 			const Vec2& startPos);
 
 		virtual ~CountDown() {}

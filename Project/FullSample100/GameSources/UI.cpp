@@ -82,14 +82,16 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	CountDown::CountDown(const shared_ptr<Stage>&stagePtr,
 		const wstring& textureKey,
+		const Vec2& startScale,
 		const Vec2& startPos) :
-		Sprite(stagePtr, textureKey, Vec2(1280.0f, 512.0f), startPos),
+		Sprite(stagePtr, textureKey, startScale, startPos),
 		m_TotalTime(0.0f),
 		m_RemoveTime(5.0f)
 	{}
 
 	void CountDown::OnCreate() {
 		Sprite::OnCreate();
+		SetAlphaActive(50);
 	}
 	void CountDown::OnUpdate() {
 		auto elapsedTime = App::GetApp()->GetElapsedTime();
