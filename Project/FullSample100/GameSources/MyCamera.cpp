@@ -356,6 +356,14 @@ namespace basecross {
 			}
 		}
 
+		if (m_culcEye.y < -3.4f) {
+			m_culcEye.y = -3.4f;
+		}
+
+		if (m_culcEye.z < -2.0f) {
+			m_culcEye.z = -2.0f;
+		}
+
 		m_ArmLen = 0.01f;
 		////目指したい場所にアームの値と腕ベクトルでEyeを調整
 		Vec3 toEye = newAt + armVec * m_ArmLen + m_culcEye;

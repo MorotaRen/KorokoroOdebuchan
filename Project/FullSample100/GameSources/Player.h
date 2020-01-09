@@ -54,6 +54,7 @@ namespace basecross {
 		bool m_StageObjHit = false;
 		bool m_isSmash; //スマッシュローリング可否のフラグ
 		bool m_isAccele;
+		int m_vibrationCount;
 
 		//入力された時
 		void InputController();
