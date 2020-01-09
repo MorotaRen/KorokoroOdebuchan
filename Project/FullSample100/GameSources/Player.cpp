@@ -293,6 +293,7 @@ namespace basecross {
 				}
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[0], ptrTransform->GetPosition() + crashPos);
+				
 
 				m_rollingSpeed -= 3.0f * elapsedTime;
 				m_boundInputReceptionTime -= elapsedTime;
@@ -304,7 +305,12 @@ namespace basecross {
 						//エフェクト再生
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
-
+						//コントローラーの振動
+						auto controller = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+						if (controller.bConnected) {
+							//コントローラーの振動
+							//Vibration::Instance()->SetVibration(2.0f, 0.0f, 0.2f);
+						}
 						m_boundFlagL = true;
 						m_isWall = false;
 						m_smashCount++;
@@ -315,6 +321,12 @@ namespace basecross {
 						//エフェクト再生
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
+						//コントローラーの振動
+						auto controller = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+						if (controller.bConnected) {
+							//コントローラーの振動
+							//Vibration::Instance()->SetVibration(2.0f, 0.2f, 0.0f);
+						}
 						m_boundFlagR = true;
 						m_isWall = false;
 						m_smashCount++;
@@ -380,7 +392,7 @@ namespace basecross {
 			if (m_isSmash) {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());
-
+				
 				m_smashTime -= elapsedTime;
 				m_rollingSpeed = m_smashAccele;
 				if (m_smashTime < 0.0f) {

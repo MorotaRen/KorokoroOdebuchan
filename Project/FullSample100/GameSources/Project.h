@@ -23,6 +23,8 @@
 #include "Checkpoint.h"
 #include "UI.h"
 #include "Effekseerface.h"
+#include "Vibration.h"
+
 //---------------ステージ--------------//
 #include "GameStage.h"
 #include "TestStage.h"
