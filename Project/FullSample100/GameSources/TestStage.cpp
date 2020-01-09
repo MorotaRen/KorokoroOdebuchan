@@ -46,7 +46,11 @@ namespace basecross {
 		SetSharedGameObject(L"TextTime", TimePtr);
 
 		//スタートの表示
-		AddGameObject<CountDown>(L"START", Vec2(0.0f, 0.0f));
+		AddGameObject<CountDown>(L"START", Vec2(1280.0f, 512.0f), Vec2(0.0f, 0.0f));
+
+		//スマッシュゲージ
+		auto SmashPtr = AddGameObject<SmashGauge>(L"gray", Vec2(275.0f, 30.0f), Vec2(500.0f, 0.0f));
+		SetSharedGameObject(L"Smash", SmashPtr);
 
 		//ポーズ画面の画像
 		AddGameObject<StartPause>(L"ResultBG", Vec2(600, 600), Vec2(0, 0));
@@ -71,7 +75,7 @@ namespace basecross {
 
 			PlayBGM(L"MainBGM", 0.5f);
 
-			auto FadePtr = AddGameObject<FadeSprite>(FadeType::FadeIn);
+			auto FadePtr = AddGameObject<FadeSprite>(FadeType::FadeIn, 0.01f);
 			SetSharedGameObject(L"Fade", FadePtr);
 		}
 		catch (...) {
@@ -95,6 +99,13 @@ namespace basecross {
 			m_updateFlag = true;
 		}
 
+		auto cntlvec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		auto sharedObj = GetSharedGameObject<SmashGauge>(L"Smash");
+		if (sharedObj->GetSmashPoint() >= 10) {
+			if (cntlvec.wButtons&XINPUT_GAMEPAD_Y) {
+				sharedObj->SetActive(true);
+			}
+		}
 	}
 	//時を止める処理
 	void TestStage::UpdateStage() {
@@ -106,9 +117,11 @@ namespace basecross {
 		//停止
 		if (!m_updateFlag) {
 			Stage::UpdateStage();
+			
 		}
-		//スタート位置から〇秒後スタート
 		m_stopTime += App::GetApp()->GetElapsedTime();
+
+		//スタート位置から〇秒後スタート
 		if (!m_Pause&&m_stopTime > 5.0f) {
 			m_updateFlag = false;
 			//Timerを動かす
@@ -180,7 +193,7 @@ namespace basecross {
 						}
 					}
 					m_Pause = false;
-					AddGameObject<FadeSprite>(FadeType::FadeOut, L"TitleScene");
+					AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"TitleScene");
 				}
 			}
 			break;

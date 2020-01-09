@@ -697,12 +697,13 @@ namespace basecross {
 		if (other->FindTag(L"WallCollider")) {
 			m_isWall = true;
 			m_collisionPos = other->GetComponent<Transform>()->GetPosition();
+			GetStage()->GetSharedGameObject<SmashGauge>(L"Smash")->CargeSmashPoint(1);
 		}
 		if (other->FindTag(L"GoalCollider")) {
 			m_GoolFlg = true;
 			auto time = GetStage()->GetSharedGameObject<Timer>(L"Timer")->GetTimer();
 			App::GetApp()->GetScene <Scene>()->SetRecodeTime(time);
-			GetStage()->AddGameObject<FadeSprite>(FadeType::FadeOut, L"ResultScene");
+			GetStage()->AddGameObject<FadeSprite>(FadeType::FadeOut, 0.1f, L"ResultScene");
 		}
 	}
 

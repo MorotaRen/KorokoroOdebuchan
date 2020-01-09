@@ -17,7 +17,7 @@ namespace basecross {
 		auto PtrCamera = ObjectFactory::Create<Camera>();
 		PtrView->SetCamera(PtrCamera);
 		PtrCamera->SetEye(Vec3(0.0f, 2.0f, -3.0f));
-		PtrCamera->SetAt(0.0f,0.0f,0.0f);
+		PtrCamera->SetAt(0.0f, 0.0f, 0.0f);
 		//マルチライトの作成
 		auto PtrMultiLight = CreateLight<MultiLight>();
 		//デフォルトのライティングを指定
@@ -54,7 +54,7 @@ namespace basecross {
 
 	void TitleScene::CreateBackground() {
 		//ゲーム画面サイズ
-		Vec2 gamesize = Vec2((float)App::GetApp()->GetGameWidth(),(float)App::GetApp()->GetGameHeight());
+		Vec2 gamesize = Vec2((float)App::GetApp()->GetGameWidth(), (float)App::GetApp()->GetGameHeight());
 	}
 
 	void TitleScene::OnCreate() {
@@ -70,7 +70,7 @@ namespace basecross {
 			auto XAPtr = App::GetApp()->GetXAudio2Manager();
 			m_BGM = XAPtr->Start(L"TitleBGM", XAUDIO2_LOOP_INFINITE, 0.5f);
 
-			AddGameObject<FadeSprite>(FadeType::FadeIn);
+			AddGameObject<FadeSprite>(FadeType::FadeIn, 0.01f);
 		}
 		catch (...) {
 			throw;
@@ -96,6 +96,16 @@ namespace basecross {
 						m_StageNum--;
 						m_CntrolLock = true;
 					}
+
+					if (cntlVec.fThumbLY >= 0.8f) {
+						m_StageNum -= 2;
+						m_CntrolLock = true;
+
+					}
+					else if (cntlVec.fThumbLY <= -0.8f) {
+						m_StageNum += 2;
+						m_CntrolLock = true;
+					}
 				}
 				else {
 					if (cntlVec.fThumbLX<0.8f&&cntlVec.fThumbLX>-0.8f) {
@@ -104,10 +114,10 @@ namespace basecross {
 				}
 			}
 			//上限
-			if (m_StageNum == 4) {
+			if (m_StageNum > 3) {
 				m_StageNum = 3;
 			}
-			else if (m_StageNum == -1) {
+			else if (m_StageNum < 0) {
 				m_StageNum = 0;
 			}
 		}
@@ -118,19 +128,19 @@ namespace basecross {
 			XAPtr->Stop(m_BGM);
 			if (m_StageNum == 0) {
 				//春
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
 			else if (m_StageNum == 1) {
 				//夏
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
 			else if (m_StageNum == 2) {
 				//秋
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
 			else if (m_StageNum == 3) {
 				//冬
-				AddGameObject<FadeSprite>(FadeType::FadeOut, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
 
 		}

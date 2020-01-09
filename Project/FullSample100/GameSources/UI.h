@@ -61,6 +61,7 @@ namespace basecross {
 	public:
 		CountDown(const shared_ptr<Stage>&stagePtr,
 			const wstring& textureKey,
+			const Vec2& startScale,
 			const Vec2& startPos);
 
 		virtual ~CountDown() {}
@@ -124,6 +125,37 @@ namespace basecross {
 
 		virtual ~TextTime() {}
 		virtual void OnCreate() override;
+
+	};
+
+	//--------------------------------------------------------------------------------------
+	//	スマッシュゲージのUI
+	//--------------------------------------------------------------------------------------
+	class SmashGauge :public Sprite {
+		float m_MaxSmashPoint = 10;
+		float m_MinSmashPoint = 0;
+		float m_SmashPoint = m_MinSmashPoint;
+		float ElapsedTime = 0.0f;
+		bool m_Active = false; //ゲージを使うためのスイッチ
+		bool m_UsePoint = false;//UseSmashPointを使っているかを判定
+		bool m_IsUsable = false;//UseSmashPointを使えるか判定
+
+	public:
+		SmashGauge(const shared_ptr<Stage>&stagePtr,
+			const wstring& textureKey,
+			const Vec2& startScale,
+			const Vec2& startPos);
+
+		virtual ~SmashGauge() {}
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+
+		void CargeSmashPoint(int f);
+		void UseSmashPoint();
+		void SetActive(bool active) {
+			m_Active = active;
+		}
+		float GetSmashPoint() { return m_SmashPoint; }
 
 	};
 
