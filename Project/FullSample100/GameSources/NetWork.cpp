@@ -56,6 +56,8 @@ namespace basecross {
 		Initialize(wsaData);
 		SOCKET socket = CreateSocket();
 		unsigned short port = 65530;
+		WSAStartup(MAKEWORD(2,0),&wsaData);
+		SOCKET sock = socket(AF_INET,SOCK_DGRAM,0);
 
 		//Ú‘±æw’è—p\‘¢‘Ì‚Ì€”õ
 		memset(&m_server,0,sizeof(m_server));
