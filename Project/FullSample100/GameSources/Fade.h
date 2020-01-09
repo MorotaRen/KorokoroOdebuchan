@@ -18,17 +18,21 @@ namespace basecross {
 	class FadeSprite :public Sprite {
 	private:
 
-		float m_FadeSpeed = 0.01f;
 		//フェードのタイプ
 		FadeType m_Type;
 		//遷移するステージへ
 		wstring m_StageString=L"";
+
 		//フェード中かどうか
 		bool m_isFade = true;
+
+		float m_FadeSpeed;
 	public:
 		FadeSprite(const shared_ptr<Stage>&stagePtr,
 			const FadeType& fadeType,
-			const wstring&stageString=L"");
+			float fadeSpeed = 0.0f ,
+			const wstring&stageString=L""
+		);
 		~FadeSprite() {}
 
 		virtual void OnCreate()override;

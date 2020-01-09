@@ -35,6 +35,8 @@ namespace basecross {
 		//上下スティック変更のモード
 		bool m_UDBaseMode;
 
+		Vec3 m_culcEye;
+
 	public:
 		//構造と破棄
 		MyCamera();

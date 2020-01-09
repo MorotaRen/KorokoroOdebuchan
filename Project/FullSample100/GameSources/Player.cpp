@@ -16,15 +16,21 @@ namespace basecross {
 		m_runningSpeed(0.2f),
 		m_rollingSpeed(0.0f),
 		m_state(PlayerState::Running),
+		m_effectCount(0),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
 		m_accelerate(0.15f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
-		m_boundTime(0.1f),
+		m_boundTime(0.75f),
 		m_isWall(false),
-		m_GoolFlg(false)
+		m_GoolFlg(false),
+		m_smashCount(0),
+		m_smashAccele(7.0f),
+		m_isSmash(false),
+		m_smashTime(1.0f),
+		m_isAccele(false)
 	{
 	}
 
@@ -47,6 +53,26 @@ namespace basecross {
 			ptrCamera->SetTargetToAt(Vec3(0, 3, 1));
 		}
 		m_front = ptrCamera->GetEye() - GetComponent<Transform>()->GetPosition();
+
+		//エフェクトの初期化
+		wstring DataDir;
+		App::GetApp()->GetDataDirectory(DataDir);
+		auto ShEfkInterface = GetTypeStage<TestStage>()->GetEfkInterface();
+		//壁と衝突時のエフェクト
+		wstring efkStr = L"Effects\\PlayerCrashEffect.efk";
+		m_efkEffect[0] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//ハジキのエフェクト
+		efkStr = L"Effects\\PlayerHazikiEffect.efk";
+		m_efkEffect[1] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//オーラのエフェクト
+		efkStr = L"Effects\\PlayerAuraEffect.efk";
+		m_efkEffect[2] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//花びらのエフェクト
+		efkStr = L"Effects\\Petal.efk";
+		m_efkEffect[3] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//加速エフェクト
+		efkStr = L"Effects\\PlayerAccelerate.efk";
+		m_efkEffect[4] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
 	}
 
 	//更新
@@ -55,9 +81,15 @@ namespace basecross {
 		InputController();
 		PlayerMove();
 		//PlayerChengeWeight();
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 		ptrDraw->UpdateAnimation(App::GetApp()->GetElapsedTime());
+		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_A) {
+			NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
+			//PlayerChengeModel();
+		}
+	}
 		//送信側
 		//NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
 		//PlayerChengeModel();
@@ -90,6 +122,8 @@ namespace basecross {
 				break;
 			}
 		}
+
+		
 
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -248,6 +282,23 @@ namespace basecross {
 
 			//壁と衝突
 			if (m_isWall) {
+				Vec3 crashPos(0, 0, 0);
+				if (m_pos.x < m_collisionPos.x) {
+					crashPos.x += 0.01f;
+				}
+				else{
+					crashPos.x -= 0.01f;
+				}
+
+				if (m_pos.z < m_collisionPos.z) {
+					crashPos.z += 0.01f;
+				}
+				else {
+					crashPos.z -= 0.01f;
+				}
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[0], ptrTransform->GetPosition() + crashPos);
+
 				m_rollingSpeed -= 3.0f * elapsedTime;
 				m_boundInputReceptionTime -= elapsedTime;
 				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -255,13 +306,25 @@ namespace basecross {
 				if (m_boundInputReceptionTime > 0.0f) {
 					if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 					{
+						//エフェクト再生
+						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
+						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
+
 						m_boundFlagL = true;
 						m_isWall = false;
+						m_smashCount++;
+						m_front.x += 0.5f;
 					}
 					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
 					{
+						//エフェクト再生
+						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
+						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 						m_boundFlagR = true;
 						m_isWall = false;
+						m_smashCount++;
+						m_front.x -= 0.5f;
+
 					}
 				}
 			}
@@ -286,23 +349,48 @@ namespace basecross {
 
 			//ハジキの処理
 			if (m_boundFlagL) {
-				bool isBound = true;
+				m_isAccele = true;
 				m_boundTime -= elapsedTime;
-				m_front.x += 0.2f;
-				m_rollingSpeed += 0.1f;
+				m_rollingSpeed += 0.005f;
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 				if (m_boundTime < 0) {
-					m_boundTime = 0.05f;
+					m_boundTime = 0.75;
+					m_isAccele = false;
 					m_boundFlagL = false;
 				}
 			}
 			else if (m_boundFlagR) {
-				bool isBound = true;
+				m_isAccele = true;
 				m_boundTime -= elapsedTime;
-				m_front.x -= 0.2f;
-				m_rollingSpeed -= 0.05f;
+				m_rollingSpeed += 0.005f;
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 				if (m_boundTime < 0) {
-					m_boundTime = 0.1f;
+					m_boundTime = 0.75;
+					m_isAccele = false;
 					m_boundFlagR = false;
+				}
+			}
+
+			//スマッシュローリング
+			if (m_smashCount >= 10) {
+				m_smashCount = 10;
+				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
+					m_isSmash = true;
+					m_smashTime = 1.0f;
+					m_smashCount = 0;
+				}
+			}
+			if (m_isSmash) {
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());
+
+				m_smashTime -= elapsedTime;
+				m_rollingSpeed = m_smashAccele;
+				if (m_smashTime < 0.0f) {
+					m_rollingSpeed = 5.0f;
+					m_isSmash = false;
 				}
 			}
 
@@ -310,22 +398,19 @@ namespace basecross {
 
 			auto velo = ptrRigid->GetLinearVelocity();
 
-			////xとzの速度を修正
-			//velo.x = m_front.x * m_rollingSpeed * m_calory;
-			//velo.z = m_front.z * m_rollingSpeed * m_calory;
-			////加速
-			//m_rollingSpeed += m_accelerate * elapsedTime;
-			////速度を設定
-			//ptrRigid->SetLinearVelocity(velo);
-			//m_speed = m_rollingSpeed;
 
 			//最低速度
 			if (m_rollingSpeed < 1.0f) {
 				m_rollingSpeed = 1.0f;
 			}
 
-			if (m_rollingSpeed > 20.0f) {
-				m_rollingSpeed = 20.0f;
+			if (m_rollingSpeed > 8.0f) {
+				m_rollingSpeed = 8.0f;
+			}
+
+			//エフェクトカウンターリセット
+			if (m_effectCount >= 45) {
+				m_effectCount = 0;
 			}
 		}
 		//ランニングモード
@@ -342,6 +427,7 @@ namespace basecross {
 
 		}
 	}
+
 	//プレイヤーのモデルの変化
 	void Player::PlayerChangeModel() {
 		auto ptrDrawRun = AddComponent<PNTBoneModelDraw>();
@@ -368,6 +454,11 @@ namespace basecross {
 			ptrDrawRun->SetMeshToTransformMatrix(spanMat);
 			ptrDrawRun->SetDrawActive(true);
 			ptrDrawRoll->SetDrawActive(false);
+
+			m_boundFlagL = false;
+			m_boundFlagR = false;
+			m_isAccele = false;
+
 		}
 		else if (m_state == PlayerState::Rolling) {
 			ptrDrawRoll->SetMeshResource(L"M_PlayerRolling");
@@ -384,7 +475,7 @@ namespace basecross {
 			ptrDrawRoll->SetDrawActive(true);
 			auto ptrCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());
 			m_front = GetComponent<Transform>()->GetPosition() - ptrCamera->GetEye();
-
+			m_rollingSpeed = 1.0f;
 		}
 	}
 
@@ -518,7 +609,10 @@ namespace basecross {
 		wstring strSpeed(L"PlayerSpeed:\t");
 		strSpeed += L"Speed=" + Util::FloatToWStr(m_speed, 6, Util::FloatModify::Fixed) + L",\n";
 
-		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed;
+		wstring strEffect(L"PlayerSpeed:\t");
+		strEffect += L"Effect=" + Util::FloatToWStr(m_effectCount, 6, Util::FloatModify::Fixed) + L",\n";
+
+		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed + strEffect;
 		//文字列をつける
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
@@ -597,12 +691,14 @@ namespace basecross {
 
 		if (other->FindTag(L"WallCollider")) {
 			m_isWall = true;
+			m_collisionPos = other->GetComponent<Transform>()->GetPosition();
+			GetStage()->GetSharedGameObject<SmashGauge>(L"Smash")->CargeSmashPoint(1);
 		}
 		if (other->FindTag(L"GoalCollider")) {
 			m_GoolFlg = true;
 			auto time = GetStage()->GetSharedGameObject<Timer>(L"Timer")->GetTimer();
 			App::GetApp()->GetScene <Scene>()->SetRecodeTime(time);
-			GetStage()->AddGameObject<FadeSprite>(FadeType::FadeOut, L"ResultScene");
+			GetStage()->AddGameObject<FadeSprite>(FadeType::FadeOut, 0.1f, L"ResultScene");
 		}
 	}
 

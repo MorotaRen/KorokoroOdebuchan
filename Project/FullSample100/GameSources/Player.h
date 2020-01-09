@@ -23,14 +23,18 @@ namespace basecross {
 	{
 
 	private:
-
-	protected:
+		shared_ptr<EfkEffect> m_efkEffect[5];
+		shared_ptr<EfkPlay> m_efkPlay[50];
 		PlayerState m_state; //プレイヤーのモード
 		Vec3 m_pos; //位置
 		Vec3 m_scale; //大きさ
 		Vec3 m_rot; //回転
 		Vec3 m_front; //前方向のベクトル
 		Vec3 m_ret;
+		Vec3 m_collisionPos; //衝突したオブジェクトの座標
+		int m_effectCount;
+		int m_smashCount; //スマッシュローリングのカウンター
+		float m_smashAccele;//スマッシュローリング時の加速度
 		float m_accelerate; //加速度
 		float m_runningSpeed; //ランニングモードの速度
 		float m_rollingSpeed; //ローリングモードの速度
@@ -44,9 +48,12 @@ namespace basecross {
 		bool m_boundFlagR; //右ハジキのフラグ
 		float m_boundInputReceptionTime; //ハジキの入力受付時間
 		float m_boundTime; //ハジキ中の時間
+		float m_smashTime; //スマッシュローリングの時間
 		bool m_isWall; //壁との衝突時のフラグ
 		bool m_GoolFlg;//ゴールしたかフラグ
 		bool m_StageObjHit = false;
+		bool m_isSmash; //スマッシュローリング可否のフラグ
+		bool m_isAccele;
 
 		//入力された時
 		void InputController();
@@ -119,6 +126,8 @@ namespace basecross {
 
 		void SetGoolFlg(bool f) { m_GoolFlg = f; }
 		bool GetGoolFlg() { return m_GoolFlg; }
+
+		bool GetIsAccele() { return m_isAccele; }
 
 
 	};

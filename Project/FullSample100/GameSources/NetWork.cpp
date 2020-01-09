@@ -78,12 +78,8 @@ namespace basecross {
 
 		//送信する
 		// sendto(ソケット, 送信するデータ, データのバイト数, フラグ, アドレス情報, アドレス情報のサイズ);
-		sendto(socket, buf, sizeof(buf), 0, (struct  sockaddr *)&m_server, sizeof(m_server));
+		sendto(sock, buf, sizeof(buf), 0, (struct  sockaddr *)&m_server, sizeof(m_server));
 
-		//socketの破棄
-		closesocket(socket);
-		//終了
-		WSACleanup();
 	}
 	//受信
 	void NetWork::Connection_Receiving() {
