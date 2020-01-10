@@ -36,5 +36,10 @@ namespace basecross {
 
 		auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
 		DrawComp->SetMultiMeshResource(L"M_Spring");
+		auto a = DrawComp->GetMultiMeshResource();
+		size_t b = 0;
+		auto d = a->GetMeshVec();
+		d[1].m_Vertices;
+		//auto c = a->GetVertexBuffer;
 	}
 }
