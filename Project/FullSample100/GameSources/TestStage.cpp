@@ -99,13 +99,6 @@ namespace basecross {
 			m_updateFlag = true;
 		}
 
-		auto cntlvec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
-		auto sharedObj = GetSharedGameObject<SmashGauge>(L"Smash");
-		if (sharedObj->GetSmashPoint() >= 10) {
-			if (cntlvec.wButtons&XINPUT_GAMEPAD_Y) {
-				sharedObj->SetActive(true);
-			}
-		}
 	}
 	//‚ğ~‚ß‚éˆ—
 	void TestStage::UpdateStage() {

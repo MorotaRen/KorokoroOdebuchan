@@ -33,7 +33,6 @@ namespace basecross {
 		Vec3 m_ret;
 		Vec3 m_collisionPos; //衝突したオブジェクトの座標
 		int m_effectCount;
-		int m_smashCount; //スマッシュローリングのカウンター
 		float m_smashAccele;//スマッシュローリング時の加速度
 		float m_accelerate; //加速度
 		float m_runningSpeed; //ランニングモードの速度

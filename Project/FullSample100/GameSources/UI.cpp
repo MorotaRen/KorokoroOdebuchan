@@ -347,16 +347,14 @@ namespace basecross {
 		}
 
 		wstringstream ss;
-		ss << L"m_MinSmashPoint : " << m_MinSmashPoint << std::endl;
 		ss << L"m_SmashPoint : " << m_SmashPoint << std::endl;
-		ss << L"m_MaxSmashPoint : " << m_MaxSmashPoint << std::endl;
 
 		//文字列コンポーネントの取得
-		//auto ptrString = GetComponent<StringSprite>();
-		//ptrString->SetText(ss.str());
+		auto ptrString = GetComponent<StringSprite>();
+		ptrString->SetText(ss.str());
 
 	}
-	void SmashGauge::CargeSmashPoint(int f) {
+	void SmashGauge::CargeSmashPoint(float f) {
 		if (m_UsePoint == false) {
 			auto ptrTrans = GetComponent<Transform>();
 			auto scale = ptrTrans->GetScale();
@@ -376,10 +374,10 @@ namespace basecross {
 		if (m_IsUsable == true) {
 			auto ptrTrans = GetComponent<Transform>();
 			auto scale = ptrTrans->GetScale();
-			float rate = m_MaxSmashPoint / m_SmashPoint;
+			m_rate = m_MaxSmashPoint / m_SmashPoint;
 			m_UsePoint = true;
 			ElapsedTime = App::GetApp()->GetElapsedTime();
-			m_SmashPoint -= ElapsedTime;
+			m_SmashPoint -= ElapsedTime*6;
 			if (m_SmashPoint <= m_MinSmashPoint) {
 				m_SmashPoint = m_MinSmashPoint;
 				m_Active = false;
@@ -387,7 +385,7 @@ namespace basecross {
 				m_IsUsable = false;
 			}
 
-			scale.x = m_StartScale.x / rate;
+			scale.x = m_StartScale.x / m_rate;
 			ptrTrans->SetScale(scale);
 		}
 	}

@@ -26,7 +26,6 @@ namespace basecross {
 		m_boundTime(0.75f),
 		m_isWall(false),
 		m_GoolFlg(false),
-		m_smashCount(0),
 		m_smashAccele(7.0f),
 		m_isSmash(false),
 		m_smashTime(1.0f),
@@ -299,6 +298,9 @@ namespace basecross {
 				m_boundInputReceptionTime -= elapsedTime;
 				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
+				auto stage = GetTypeStage<TestStage>();
+				auto sharedObj = stage->GetSharedGameObject<SmashGauge>(L"Smash");
+
 				if (m_boundInputReceptionTime > 0.0f) {
 					if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 					{
@@ -313,7 +315,7 @@ namespace basecross {
 						}
 						m_boundFlagL = true;
 						m_isWall = false;
-						m_smashCount++;
+						sharedObj->CargeSmashPoint(1.0f);
 						m_front.x += 0.5f;
 					}
 					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
@@ -329,7 +331,7 @@ namespace basecross {
 						}
 						m_boundFlagR = true;
 						m_isWall = false;
-						m_smashCount++;
+						sharedObj->CargeSmashPoint(1.0f);
 						m_front.x -= 0.5f;
 
 					}
@@ -381,12 +383,15 @@ namespace basecross {
 			}
 
 			//スマッシュローリング
-			if (m_smashCount >= 10) {
-				m_smashCount = 10;
+			auto stage = GetTypeStage<TestStage>();
+			auto sharedObj = stage->GetSharedGameObject<SmashGauge>(L"Smash");
+			if (sharedObj->GetSmashPoint() >= 10) {
+				
+
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
+					sharedObj->SetActive(true);
 					m_isSmash = true;
 					m_smashTime = 1.0f;
-					m_smashCount = 0;
 				}
 			}
 			if (m_isSmash) {
@@ -697,7 +702,6 @@ namespace basecross {
 		if (other->FindTag(L"WallCollider")) {
 			m_isWall = true;
 			m_collisionPos = other->GetComponent<Transform>()->GetPosition();
-			GetStage()->GetSharedGameObject<SmashGauge>(L"Smash")->CargeSmashPoint(1);
 		}
 		if (other->FindTag(L"GoalCollider")) {
 			m_GoolFlg = true;
