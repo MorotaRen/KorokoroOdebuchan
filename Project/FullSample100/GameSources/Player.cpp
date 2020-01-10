@@ -94,8 +94,6 @@ namespace basecross {
 		//NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
 		//PlayerChengeModel();
 
-	}
-
 	//入力された時
 	void Player::InputController() {
 		//コントローラの取得
@@ -123,7 +121,7 @@ namespace basecross {
 			}
 		}
 
-		
+
 
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();

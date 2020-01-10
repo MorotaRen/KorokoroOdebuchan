@@ -57,7 +57,7 @@ namespace basecross {
 		SOCKET socket = CreateSocket();
 		unsigned short port = 65530;
 		WSAStartup(MAKEWORD(2,0),&wsaData);
-		SOCKET sock = socket(AF_INET,SOCK_DGRAM,0);
+		//SOCKET sock = socket(AF_INET,SOCK_DGRAM,0);
 
 		//接続先指定用構造体の準備
 		memset(&m_server,0,sizeof(m_server));
@@ -80,7 +80,7 @@ namespace basecross {
 
 		//送信する
 		// sendto(ソケット, 送信するデータ, データのバイト数, フラグ, アドレス情報, アドレス情報のサイズ);
-		sendto(sock, buf, sizeof(buf), 0, (struct  sockaddr *)&m_server, sizeof(m_server));
+		//sendto(sock, buf, sizeof(buf), 0, (struct  sockaddr *)&m_server, sizeof(m_server));
 
 	}
 	//受信
