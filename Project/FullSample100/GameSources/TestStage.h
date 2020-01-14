@@ -46,8 +46,11 @@ namespace basecross {
 		void PlayBGM(wstring key, float vol);
 		//BGMの停止
 		void StopBGM();
-		//
+		//画像の明るさ
 		void ChangePause(int num);
+
+		//コントローラーのロックのゲッター
+		bool GetCntLock() { return m_cntlrock; }
 	};
 
 

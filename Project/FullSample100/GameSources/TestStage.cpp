@@ -46,7 +46,8 @@ namespace basecross {
 		SetSharedGameObject(L"TextTime", TimePtr);
 
 		//スタートの表示
-		AddGameObject<CountDown>(L"START", Vec2(1280.0f, 512.0f), Vec2(0.0f, 0.0f));
+		auto StartPtr = AddGameObject<CountDown>(L"START", Vec2(1280.0f, 512.0f), Vec2(0.0f, 0.0f));
+		SetSharedGameObject(L"CountDown", StartPtr);
 
 		//スマッシュゲージ
 		auto SmashPtr = AddGameObject<SmashGauge>(L"gray", Vec2(275.0f, 30.0f), Vec2(500.0f, 0.0f));
@@ -113,10 +114,10 @@ namespace basecross {
 			
 		}
 		m_stopTime += App::GetApp()->GetElapsedTime();
-
 		//スタート位置から〇秒後スタート
 		if (!m_Pause&&m_stopTime > 5.0f) {
 			m_updateFlag = false;
+			m_cntlrock = true;
 			//Timerを動かす
 			for (auto v : gameObject) {
 				if (v->FindTag(L"Timer")) {
@@ -191,7 +192,7 @@ namespace basecross {
 			}
 			break;
 		}
-
+		//ポーズ出す
 		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_START) {
 			auto vec = GetGameObjectVec();
 			if (m_Pause) {
