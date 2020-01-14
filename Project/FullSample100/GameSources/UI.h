@@ -37,6 +37,24 @@ namespace basecross {
 		bool GetSelectSpotFlag() { return SelectSpotFlag; }
 	};
 
+	//--------------------------------------------------------------------------------------
+	//	カウントダウン
+	//--------------------------------------------------------------------------------------
+	class CountDown :public Sprite {
+	private:
+		float m_TotalTime;
+		float m_RemoveTime;
+		int m_Count;
+	public:
+		CountDown(const shared_ptr<Stage>&stagePtr,
+			const wstring& textureKey,
+			const Vec2& startScale,
+			const Vec2& startPos);
+
+		virtual ~CountDown() {}
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+	};
 
 	/***************************************************************************************
 				                      メインシーンのUI
@@ -50,23 +68,6 @@ namespace basecross {
 			const Vec2& startPos);
 		virtual ~MainSceneSprite() {};
 
-	};
-	//--------------------------------------------------------------------------------------
-	//	スタートを表示
-	//--------------------------------------------------------------------------------------
-	class CountDown :public Sprite {
-	private:
-		float m_TotalTime;
-		float m_RemoveTime;
-	public:
-		CountDown(const shared_ptr<Stage>&stagePtr,
-			const wstring& textureKey,
-			const Vec2& startScale,
-			const Vec2& startPos);
-
-		virtual ~CountDown() {}
-		virtual void OnCreate() override;
-		virtual void OnUpdate() override;
 	};
 
 	//--------------------------------------------------------------------------------------

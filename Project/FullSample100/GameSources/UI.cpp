@@ -68,17 +68,8 @@ namespace basecross {
 
 	}
 
-	/***************************************************************************************
-									  メインシーンのUI
-	***************************************************************************************/
-	MainSceneSprite::MainSceneSprite(const shared_ptr<Stage>& stagePtr,
-		const wstring& textureKey,
-		const Vec2& startScale,
-		const Vec2& startPos) :
-		Sprite(stagePtr, textureKey, startScale, startPos)
-	{}
 	//--------------------------------------------------------------------------------------
-	//	2Dのスプライト
+	//	カウントダウン
 	//--------------------------------------------------------------------------------------
 	CountDown::CountDown(const shared_ptr<Stage>&stagePtr,
 		const wstring& textureKey,
@@ -86,12 +77,14 @@ namespace basecross {
 		const Vec2& startPos) :
 		Sprite(stagePtr, textureKey, startScale, startPos),
 		m_TotalTime(0.0f),
-		m_RemoveTime(5.0f)
+		m_RemoveTime(5.0f),
+		m_Count(0)
 	{}
 
 	void CountDown::OnCreate() {
 		Sprite::OnCreate();
 		SetAlphaActive(50);
+		SetDrawLayer(20);
 	}
 	void CountDown::OnUpdate() {
 		auto elapsedTime = App::GetApp()->GetElapsedTime();
@@ -103,7 +96,7 @@ namespace basecross {
 
 		auto ptrDraw = GetComponent<PCTSpriteDraw>();
 
-		float removeTimeHalf = m_RemoveTime / 2.0f;
+		float removeTimeHalf = m_RemoveTime / 3.0f;
 
 		float dis;
 		if (m_TotalTime < removeTimeHalf) {
@@ -114,14 +107,39 @@ namespace basecross {
 		{
 			dis = (m_TotalTime - removeTimeHalf) / removeTimeHalf;
 			ptrDraw->SetDiffuse(Col4(1.0f, 1.0f, 1.0f, 1.0f - dis));
+			m_Count++;
+			m_TotalTime = 0;
 		}
 
-		if (m_TotalTime > m_RemoveTime) {
+		switch (m_Count)
+		{
+		case 1:
+			ptrDraw->SetTextureResource(L"UI_2");
+			break;
+		case 2:
+			ptrDraw->SetTextureResource(L"UI_1");
+			break;
+		case 3:
+			//スタートの表示
+			ptrTrans->SetScale(Vec3(1280.0f, 512.0f, 0));
+			ptrDraw->SetTextureResource(L"START");
+			break;
+		case 4:
+			GetTypeStage<TestStage>()->SetStart(true);
 			GetStage()->RemoveGameObject<GameObject>(GetThis<GameObject>());
+			break;
 		}
 	}
 
-
+	/***************************************************************************************
+									  メインシーンのUI
+	***************************************************************************************/
+	MainSceneSprite::MainSceneSprite(const shared_ptr<Stage>& stagePtr,
+		const wstring& textureKey,
+		const Vec2& startScale,
+		const Vec2& startPos) :
+		Sprite(stagePtr, textureKey, startScale, startPos)
+	{}
 	//--------------------------------------------------------------------------------------
 	//	ポーズ用のメニュー
 	//--------------------------------------------------------------------------------------

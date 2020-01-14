@@ -23,6 +23,8 @@ namespace basecross {
 		bool m_updateFlag = false;
 		bool m_Pause = false;
 		bool m_cntlrock = false;
+		//スタート画像が表示されたかどうか
+		bool m_StartActive = false;
 		float m_stopTime = 0.0f;    //時間を計測
 		int PauseSelect = 0;        
 
@@ -51,6 +53,11 @@ namespace basecross {
 
 		//コントローラーのロックのゲッター
 		bool GetCntLock() { return m_cntlrock; }
+		//スタート画像が表示されたかどうか
+		bool GetStart() { return m_StartActive; }
+		void SetStart(bool active) {
+			m_StartActive = active;
+		}
 	};
 
 
