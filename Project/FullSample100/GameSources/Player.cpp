@@ -76,8 +76,9 @@ namespace basecross {
 
 	//更新
 	void Player::OnUpdate() {
-
-		InputController();
+		if (GetTypeStage<TestStage>()->GetCntLock()) {
+			InputController();
+		}
 		PlayerMove();
 		//PlayerChengeWeight();
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
@@ -169,64 +170,66 @@ namespace basecross {
 	}
 
 	Vec3 Player::GetMoveVector() const {
-		Vec3 angle(0, 0, 0);
-		//コントローラの取得
-		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
-		float fThumbLY = 0.0f;
-		float fThumbLX = 0.0f;
-		WORD wButtons = 0;
-		if (cntlVec[0].bConnected) {
-			fThumbLY = cntlVec[0].fThumbLY;
-			fThumbLX = cntlVec[0].fThumbLX;
-			wButtons = cntlVec[0].wButtons;
+		if (GetTypeStage<TestStage>()->GetCntLock()) {
+			Vec3 angle(0, 0, 0);
+			//コントローラの取得
+			auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
+			float fThumbLY = 0.0f;
+			float fThumbLX = 0.0f;
+			WORD wButtons = 0;
+			if (cntlVec[0].bConnected) {
+				fThumbLY = cntlVec[0].fThumbLY;
+				fThumbLX = cntlVec[0].fThumbLX;
+				wButtons = cntlVec[0].wButtons;
+			}
+			//キーボードの取得(キーボード優先)
+			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+			if (KeyState.m_bPushKeyTbl['W']) {
+				//前
+				fThumbLY = 1.0f;
+			}
+			else if (KeyState.m_bPushKeyTbl['A']) {
+				//左
+				fThumbLX = -1.0f;
+			}
+			else if (KeyState.m_bPushKeyTbl['S']) {
+				//後ろ
+				fThumbLY = -1.0f;
+			}
+			else if (KeyState.m_bPushKeyTbl['D']) {
+				//右
+				fThumbLX = 1.0f;
+			}
+			if (fThumbLX != 0 || fThumbLY != 0) {
+				float moveLength = 0;	//動いた時のスピード
+				auto ptrTransform = GetComponent<Transform>();
+				auto ptrCamera = OnGetDrawCamera();
+				//進行方向の向きを計算
+				auto front = ptrCamera->GetEye() - ptrTransform->GetPosition();
+				front.y = 0;
+				front.normalize();
+				//進行方向向きからの角度を算出
+				float frontAngle = atan2(front.z, front.x);
+				//コントローラの向き計算
+				float moveX = -fThumbLX;
+				float moveZ = -fThumbLY;
+				Vec2 moveVec(moveX, moveZ);
+				float moveSize = moveVec.length();
+				//コントローラの向きから角度を計算
+				float cntlAngle = atan2(-moveX, moveZ);
+				//トータルの角度を算出
+				float totalAngle = frontAngle + cntlAngle;
+				//角度からベクトルを作成
+				angle = Vec3(cos(totalAngle), 0, sin(totalAngle));
+				//正規化する
+				angle.normalize();
+				//移動サイズを設定。
+				angle *= moveSize;
+				//Y軸は変化させない
+				angle.y = 0;
+			}
+			return angle;
 		}
-		//キーボードの取得(キーボード優先)
-		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-		if (KeyState.m_bPushKeyTbl['W']) {
-			//前
-			fThumbLY = 1.0f;
-		}
-		else if (KeyState.m_bPushKeyTbl['A']) {
-			//左
-			fThumbLX = -1.0f;
-		}
-		else if (KeyState.m_bPushKeyTbl['S']) {
-			//後ろ
-			fThumbLY = -1.0f;
-		}
-		else if (KeyState.m_bPushKeyTbl['D']) {
-			//右
-			fThumbLX = 1.0f;
-		}
-		if (fThumbLX != 0 || fThumbLY != 0) {
-			float moveLength = 0;	//動いた時のスピード
-			auto ptrTransform = GetComponent<Transform>();
-			auto ptrCamera = OnGetDrawCamera();
-			//進行方向の向きを計算
-			auto front = ptrCamera->GetEye() - ptrTransform->GetPosition();
-			front.y = 0;
-			front.normalize();
-			//進行方向向きからの角度を算出
-			float frontAngle = atan2(front.z, front.x);
-			//コントローラの向き計算
-			float moveX = -fThumbLX;
-			float moveZ = -fThumbLY;
-			Vec2 moveVec(moveX, moveZ);
-			float moveSize = moveVec.length();
-			//コントローラの向きから角度を計算
-			float cntlAngle = atan2(-moveX, moveZ);
-			//トータルの角度を算出
-			float totalAngle = frontAngle + cntlAngle;
-			//角度からベクトルを作成
-			angle = Vec3(cos(totalAngle), 0, sin(totalAngle));
-			//正規化する
-			angle.normalize();
-			//移動サイズを設定。
-			angle *= moveSize;
-			//Y軸は変化させない
-			angle.y = 0;
-		}
-		return angle;
 	}
 
 	//プレイヤーの移動
@@ -297,7 +300,9 @@ namespace basecross {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[0], ptrTransform->GetPosition() + crashPos);
 
-				m_rollingSpeed -= 3.0f * elapsedTime;
+				if (m_rollingSpeed > 1.0f) {
+					m_rollingSpeed -= 3.0f * elapsedTime;
+				}
 				m_boundInputReceptionTime -= elapsedTime;
 				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
@@ -695,7 +700,9 @@ namespace basecross {
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
 		if (other->FindTag(L"CourseObject")) {
 			m_StageObjHit = true;
-			m_speed = 0;
+			m_rollingSpeed = 1.0f;
+			
+			
 		}
 
 		if (other->FindTag(L"WallCollider")) {
@@ -712,7 +719,7 @@ namespace basecross {
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
 		if (other->FindTag(L"WallCollider")) {
-			m_boundInputReceptionTime = 0.7f;
+			m_boundInputReceptionTime = 0.5f;
 			m_isWall = false;
 		}
 		if (other->FindTag(L"CourseObject")) {
