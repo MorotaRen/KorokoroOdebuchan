@@ -245,6 +245,10 @@ namespace basecross {
 		if (m_state == PlayerState::Rolling) {
 			ptrRigid->SetAutoTransform(true);
 
+			/*if (cntlVec[0].bConnected) {
+				Vibration::Instance()->SetVibration(0.01f, 0.01f, 0.01f);
+			}*/
+
 			//カロリー消費
 			m_calory -= elapsedTime * 0.01f;
 
@@ -293,7 +297,6 @@ namespace basecross {
 				}
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[0], ptrTransform->GetPosition() + crashPos);
-				
 
 				m_rollingSpeed -= 3.0f * elapsedTime;
 				m_boundInputReceptionTime -= elapsedTime;
@@ -306,10 +309,8 @@ namespace basecross {
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 						//コントローラーの振動
-						auto controller = App::GetApp()->GetInputDevice().GetControlerVec()[0];
-						if (controller.bConnected) {
-							//コントローラーの振動
-							//Vibration::Instance()->SetVibration(2.0f, 0.0f, 0.2f);
+						if (cntlVec[0].bConnected) {
+							Vibration::Instance()->SetVibration(0.25f, 0.5f, 0.8f);
 						}
 						m_boundFlagL = true;
 						m_isWall = false;
@@ -322,10 +323,8 @@ namespace basecross {
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
 						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 						//コントローラーの振動
-						auto controller = App::GetApp()->GetInputDevice().GetControlerVec()[0];
-						if (controller.bConnected) {
-							//コントローラーの振動
-							//Vibration::Instance()->SetVibration(2.0f, 0.2f, 0.0f);
+						if (cntlVec[0].bConnected) {
+							Vibration::Instance()->SetVibration(0.25f, 0.8f, 0.5f);
 						}
 						m_boundFlagR = true;
 						m_isWall = false;

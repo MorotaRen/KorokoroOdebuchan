@@ -9,6 +9,9 @@ namespace basecross
 	class Vibration
 	{
 	protected:
+		bool m_isVibration = false;
+		float m_interval;
+		float m_count;
 		bool m_isVib[4] = {};			//U“®ƒtƒ‰ƒO
 		float m_vibInterval[4] = {};	//U“®‚·‚éŠÔ
 		float m_vibCount[4] = {};		//Œo‰ßŠÔ
