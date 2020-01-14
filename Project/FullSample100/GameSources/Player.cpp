@@ -297,7 +297,9 @@ namespace basecross {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[0], ptrTransform->GetPosition() + crashPos);
 
-				m_rollingSpeed -= 3.0f * elapsedTime;
+				if (m_rollingSpeed > 4.0f) {
+					m_rollingSpeed -= 3.0f * elapsedTime;
+				}
 				m_boundInputReceptionTime -= elapsedTime;
 				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
