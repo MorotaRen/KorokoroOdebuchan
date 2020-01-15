@@ -118,8 +118,6 @@ namespace basecross {
 			}
 		}
 
-		
-
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
@@ -176,6 +174,7 @@ namespace basecross {
 		float fThumbLY = 0.0f;
 		float fThumbLX = 0.0f;
 		WORD wButtons = 0;
+
 		if (cntlVec[0].bConnected) {
 			fThumbLY = cntlVec[0].fThumbLY;
 			fThumbLX = cntlVec[0].fThumbLX;
@@ -514,11 +513,13 @@ namespace basecross {
 		//位置情報はそのまま設定
 		ptrTrans->SetPosition(ptrPs->GetPosition());
 
-		if (m_state == PlayerState::Running) {
-			Vec3 angle = GetMoveVector();
-			if (angle.length() > 0.0f) {
-				//補間処理を行う回転。
-				RotToHead(angle, 0.1f);
+		if (GetTypeStage<TestStage>()->GetCntLock()) {
+			if (m_state == PlayerState::Running) {
+				Vec3 angle = GetMoveVector();
+				if (angle.length() > 0.0f) {
+					//補間処理を行う回転。
+					RotToHead(angle, 0.1f);
+				}
 			}
 		}
 
