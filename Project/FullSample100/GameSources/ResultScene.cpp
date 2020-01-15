@@ -71,6 +71,9 @@ namespace basecross {
 
 			AddGameObject<WinPlayer>();
 
+			auto XAPtr = App::GetApp()->GetXAudio2Manager();
+			m_BGM = XAPtr->Start(L"ResultBGM", XAUDIO2_LOOP_INFINITE, 0.5f);
+
 			AddGameObject<FadeSprite>(FadeType::FadeIn, 0.01f);
 		}
 		catch (...) {
@@ -121,6 +124,8 @@ namespace basecross {
 
 		//ƒV[ƒ“‘JˆÚ
 		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A || KeyState.m_bPushKeyTbl[VK_SPACE]) {
+			auto XAPtr = App::GetApp()->GetXAudio2Manager();
+			XAPtr->Stop(m_BGM);
 			if (m_StageNum == 0) {
 				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}

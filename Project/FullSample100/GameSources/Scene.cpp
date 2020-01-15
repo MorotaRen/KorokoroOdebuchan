@@ -185,7 +185,10 @@ namespace basecross {
 		InitializedParam musics[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
 			{L"Title.wav",L"TitleBGM"},
-			{L"Movie.wav",L"MainBGM"}
+			{L"Movie.wav",L"MainBGM"},
+			{L"SE_WallHit_01.wav",L"WallHit"},
+			{L"MovieEnd.wav",L"ResultBGM"}
+
 		};
 		//プロジェクトに登録
 		for (auto music : musics) {

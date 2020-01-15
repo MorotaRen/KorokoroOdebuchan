@@ -708,6 +708,7 @@ namespace basecross {
 		if (other->FindTag(L"WallCollider")) {
 			m_isWall = true;
 			m_collisionPos = other->GetComponent<Transform>()->GetPosition();
+			App::GetApp()->GetXAudio2Manager()->Start(L"WallHit", 0, 0.5f);
 		}
 		if (other->FindTag(L"GoalCollider")) {
 			m_GoolFlg = true;
