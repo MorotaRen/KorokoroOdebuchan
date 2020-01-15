@@ -23,9 +23,9 @@ Physics Effects under the filename: physics_effects_license.txt
 
 //J メッシュのリソース制限
 //E Define some limitations of a triangle mesh
-#define SCE_PFX_NUMMESHFACETS		64
-#define SCE_PFX_NUMMESHEDGES		192
-#define SCE_PFX_NUMMESHVERTICES		128
+#define SCE_PFX_NUMMESHFACETS		256//64
+#define SCE_PFX_NUMMESHEDGES		257//192
+#define SCE_PFX_NUMMESHVERTICES		257//128
 
 //J エッジの角
 //E Edge types
@@ -44,7 +44,7 @@ namespace PhysicsEffects {
 struct PfxQuantize
 {
 	PfxInt16 elem;
-	
+
 	PfxQuantize(PfxInt16 value)
 	{
 		elem = value;
@@ -90,7 +90,7 @@ struct PfxBvhStack {
 		SCE_PFX_ASSERT(cur<maxData-1);
 		data[cur++] = d;
 	}
-	
+
 	T pop()
 	{
 		return data[--cur];
@@ -157,7 +157,7 @@ struct SCE_PFX_ALIGNED(16) PfxConvexMesh
 	{
 		m_numVerts = m_numIndices = 0;
 	}
-	
+
 	inline void updateAABB();
 };
 
@@ -184,7 +184,7 @@ struct PfxEdge
 inline
 bool operator ==(const PfxEdge &e1,const PfxEdge &e2)
 {
-	return  (e1.m_vertId[0] == e2.m_vertId[0] && e1.m_vertId[1] == e2.m_vertId[1]) || 
+	return  (e1.m_vertId[0] == e2.m_vertId[0] && e1.m_vertId[1] == e2.m_vertId[1]) ||
 			(e1.m_vertId[1] == e2.m_vertId[0] && e1.m_vertId[0] == e2.m_vertId[1]);
 }
 

@@ -25,21 +25,52 @@ namespace basecross {
 	/// </summary>----------------------------------------
 	void StageObject::OnCreate() {
 		auto TransComp = GetComponent<Transform>();
-		//m_pos.x += 0.05f;
-		m_pos.z += -0.0f;
-		TransComp->SetPosition(m_pos);
+		auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
+		//DrawComp->SetMultiMeshResource(L"M_Spring");
+		DrawComp->SetMeshResource(L"MS_Spring");
+		CreateStageCollider();
+
+
 		//大きいので調整
 		TransComp->SetScale(Vec3(0.1f,0.1f,0.1f));
 		//Y軸180°回転
-		m_quat.rotationY(3.14);
 		TransComp->SetQuaternion(m_quat);
 
-		auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
-		DrawComp->SetMultiMeshResource(L"M_Spring");
-		auto a = DrawComp->GetMultiMeshResource();
-		size_t b = 0;
-		auto d = a->GetMeshVec();
-		d[1].m_Vertices;
-		//auto c = a->GetVertexBuffer;
+
 	}
+	/// ----------------------------------------<summary>
+	/// ステージの当たり判定の作成
+	/// </summary>----------------------------------------
+	shared_ptr<MeshResource> StageObject::m_ConvexMesh = nullptr;
+	shared_ptr<PsConvexMeshResource> StageObject::m_PsConvexMesh = nullptr;
+	void StageObject::CreateStageCollider()
+	{
+		auto DrawComp = GetComponent<BcPNTStaticModelDraw>();
+		auto Mesh = DrawComp->GetMeshResource();
+
+		if (!m_ConvexMesh || !m_PsConvexMesh) {
+			vector<VertexPositionNormalTexture> vertices = Mesh->GetBackupVerteces<VertexPositionNormalTexture>();
+			vector<uint16_t> indices = Mesh->GetBackupIndices<VertexPositionNormalTexture>();
+
+			//MeshUtill::CreateDodecahedron(0.5,vertices,indices);
+			m_ConvexMesh = MeshResource::CreateMeshResource(vertices,indices,true);
+			m_PsConvexMesh = PsConvexMeshResource::CreateMeshResource(vertices,indices);
+		}
+		//物理計算
+		PsConvexParam param;
+
+		param.m_ConvexMeshResource = m_PsConvexMesh;
+		param.m_Mass = 1.0f;
+		//慣性の計算
+		param.m_Inertia = BasePhysics::CalcInertiaBox(Vec3(0.5f),param.m_Mass);
+		param.m_MotionType = PsMotionType::MotionTypeFixed;
+		m_quat.rotationY(3.14);
+		param.m_Quat = m_quat;
+		m_pos.y -= 1.0f;
+		param.m_Pos = m_pos;
+		auto PsPtr = AddComponent<RigidbodyConvex>(param);
+		PsPtr->SetDrawActive(true);
+
+	}
+
 }

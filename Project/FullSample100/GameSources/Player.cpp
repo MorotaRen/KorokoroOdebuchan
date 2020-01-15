@@ -296,7 +296,7 @@ namespace basecross {
 				}
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[0], ptrTransform->GetPosition() + crashPos);
-				
+
 
 				m_rollingSpeed -= 3.0f * elapsedTime;
 				m_boundInputReceptionTime -= elapsedTime;
@@ -395,7 +395,7 @@ namespace basecross {
 			if (m_isSmash) {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());
-				
+
 				m_smashTime -= elapsedTime;
 				m_rollingSpeed = m_smashAccele;
 				if (m_smashTime < 0.0f) {

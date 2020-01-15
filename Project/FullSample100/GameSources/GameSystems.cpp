@@ -122,14 +122,14 @@ namespace basecross {
 				return PlayerObj;
 			//オブジェクトの判定
 			}else if (objdata.Tag == L"ObjectCollider") {
-				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
 				//無視用のタグ設定
-				ColliderObj->AddTag(L"WallCollider");
+				//ColliderObj->AddTag(L"WallCollider");
 				//ColliderObj->AddTag(L"Wall");
 				//初期状態では更新を切っておく(デバック専用)
 				////ColliderObj->SetUpdateActive(false);
 				//エリア分け
-				m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
+				//m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
 			//ステージ壁
 			}else if (objdata.Tag == L"Stage") {
 				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
@@ -142,8 +142,8 @@ namespace basecross {
 				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
 				ColliderObj->AddTag(L"Collider");
 			}else if(objdata.Tag == L"GoalCollider"){
-				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
-				ColliderObj->AddTag(L"GoalCollider");
+				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				//ColliderObj->AddTag(L"GoalCollider");
 			//なんでもなかったら
 			}else {
 				m_colobjs.push_back(vector<shared_ptr<ColliderObjects>>());
