@@ -9,10 +9,14 @@ namespace basecross {
 	private:
 
 	protected:
+		shared_ptr<EfkEffect> m_efkEffect;
+		shared_ptr<EfkPlay> m_efkPlay;
 		Vec3 m_pos;//ˆÊ’u
 		Vec3 m_scale;//‘å‚«‚³
 		Quat m_quat;//‰ñ“]
 		bool m_isHit = false;
+		const float m_destroyTime = 2.0f;
+		float m_destroyElapese;
 
 	public:
 		//\‘¢‚Æ”jŠü

@@ -77,8 +77,13 @@ namespace basecross {
 	//更新
 	void Player::OnUpdate() {
 		if (GetTypeStage<TestStage>()->GetCntLock()) {
+			if (m_state == PlayerState::Running) {
+				m_state = PlayerState::Rolling;
+				PlayerChangeModel();
+			}
 			InputController();
 		}
+
 		PlayerMove();
 		//PlayerChengeWeight();
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
@@ -102,21 +107,21 @@ namespace basecross {
 			m_inputX = cntlVec[0].fThumbLX;
 			wButtons = cntlVec[0].wButtons;
 		}
-		if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_A) { //モードチェンジ
-			switch (m_state)
-			{
-			case PlayerState::Running:
-				m_state = PlayerState::Rolling;
-				PlayerChangeModel();
-				break;
-			case PlayerState::Rolling:
-				m_state = PlayerState::Running;
-				PlayerChangeModel();
-				break;
-			default:
-				break;
-			}
-		}
+		//if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_A) { //モードチェンジ
+		//	switch (m_state)
+		//	{
+		//	case PlayerState::Running:
+		//		m_state = PlayerState::Rolling;
+		//		PlayerChangeModel();
+		//		break;
+		//	case PlayerState::Rolling:
+		//		m_state = PlayerState::Running;
+		//		PlayerChangeModel();
+		//		break;
+		//	default:
+		//		break;
+		//	}
+		//}
 
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -410,8 +415,8 @@ namespace basecross {
 			ptrRigid->SetLinearVelocity(velo);
 
 			//最低速度
-			if (m_rollingSpeed < 1.0f) {
-				m_rollingSpeed = 1.0f;
+			if (m_rollingSpeed < 0.3f) {
+				m_rollingSpeed = 0.3f;
 			}
 
 			if (m_rollingSpeed > 8.0f) {
@@ -700,7 +705,7 @@ namespace basecross {
 		if (other->FindTag(L"CourseObject")) {
 			m_StageObjHit = true;
 			if (m_rollingSpeed < 5.0f) {
-				m_rollingSpeed -= 2.0f;
+				m_rollingSpeed = 0.0f;
 			}
 		}
 

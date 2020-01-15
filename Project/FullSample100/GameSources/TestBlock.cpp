@@ -7,7 +7,8 @@ namespace basecross {
 		GameObject(ptrStage),
 		m_pos(pos),
 		m_scale(scale),
-		m_quat(quat)
+		m_quat(quat),
+		m_destroyElapese(0)
 	{
 	}
 
@@ -43,12 +44,13 @@ namespace basecross {
 		auto ptrColl = AddComponent<CollisionObb>();
 		//ptrColl->SetDrawActive(true);
 
-
-		////物理計算ボックス
-		//PsBoxParam param(ptrTrans->GetWorldMatrix(), 0.0f, true, PsMotionType::MotionTypeFixed);
-		//auto PsPtr = AddComponent<RigidbodyBox>(param);
-		//PsPtr->SetDrawActive(true);
-
+		//エフェクトの初期化
+		wstring DataDir;
+		App::GetApp()->GetDataDirectory(DataDir);
+		auto ShEfkInterface = GetTypeStage<TestStage>()->GetEfkInterface();
+		//大破エフェクト
+		wstring efkStr = L"Effects\\OmikoshiBreak.efk";
+		m_efkEffect = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
 	}
 
 	//更新
@@ -57,18 +59,25 @@ namespace basecross {
 			auto ptrTrans = GetComponent<Transform>();
 			PsBoxParam param(ptrTrans->GetWorldMatrix(), 0.0f, true, PsMotionType::MotionTypeFixed);
 			auto ptrThis = GetThis<TestBlock>();
-			GetTypeStage<TestStage>()->RemoveGameObject<TestBlock>(ptrThis);
+			auto ptrDraw = GetComponent<BcPNTStaticModelDraw>();
+			m_destroyElapese += App::GetApp()->GetElapsedTime();
 
-			//GetComponent<CollisionObb>()->SetUpdateActive(false);
-			//GetComponent<RigidbodyBox>()->SetUpdateActive(false);
-			//RemoveComponent<CollisionObb>();
-			//RemoveComponent<RigidbodyBox>();
+			GetComponent<CollisionObb>()->SetUpdateActive(false);
+			GetComponent<RigidbodyBox>()->SetContactFilterSelf(0);
+
+			if (m_destroyElapese > m_destroyTime) {
+				GetTypeStage<TestStage>()->RemoveGameObject<TestBlock>(ptrThis);
+			}
 		}
 	}
 
 	void TestBlock::OnCollisionEnter(shared_ptr<GameObject>& other) {
 		if (other->FindTag(L"Player")) {
 			m_isHit = true;
+
+			auto ptrTrans = GetComponent<Transform>();
+			//エフェクト再生
+			m_efkPlay = ObjectFactory::Create<EfkPlay>(m_efkEffect, ptrTrans->GetPosition());
 		}
 	}
 }
