@@ -62,7 +62,7 @@ namespace basecross {
 			//ビューとライトの作成
 			CreateViewLight();
 
-			AddGameObject<ResultTimer>(8, L"UI_Number_4", true, Vec2(380.0f, 120.0f), Vec3(-180.0f, -40.0f, 0.0f));
+			AddGameObject<ResultTimer>(8, L"UI_Number_5", true, Vec2(380.0f, 120.0f), Vec3(-180.0f, -40.0f, 0.0f));
 			AddGameObject<ResultSceneSprite>(L"ResultBG", Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
 			AddGameObject<ResultSceneSprite>(L"UI_Time_2", Vec2(384.0f, 128.0f), Vec2(0.0f, 150.0f));
 			AddGameObject<ResultSceneSprite>(L"Result", Vec2(256.0f, 64.0f), Vec2(0.0f, 300.0f));
