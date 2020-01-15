@@ -343,7 +343,7 @@ namespace basecross {
 			}
 		}
 
-		if (m_ptrPlayer.lock()->GetIsAccele()) {
+		if (m_ptrPlayer.lock()->GetIsZoomOut()) {
 			m_culcEye.y += 0.25f*elapsedTime;
 			m_culcEye.z += 0.4f * elapsedTime;
 		}
@@ -351,17 +351,17 @@ namespace basecross {
 			if (m_culcEye.z > -0.4f) {
 				m_culcEye.z -= 1.2f * elapsedTime;
 			}
-			if (m_culcEye.y > -2.41f) {
+			if (m_culcEye.y > -2.4f) {
 				m_culcEye.y -= 0.75f * elapsedTime;
 			}
 		}
 
-		if (m_culcEye.y < -3.4f) {
-			m_culcEye.y = -3.4f;
+		if (m_culcEye.y < -2.2f) {
+			m_culcEye.y = -2.2f;
 		}
 
-		if (m_culcEye.z < -2.0f) {
-			m_culcEye.z = -2.0f;
+		if (m_culcEye.z < 0.0f) {
+			m_culcEye.z = 0.0f;
 		}
 
 		m_ArmLen = 0.01f;

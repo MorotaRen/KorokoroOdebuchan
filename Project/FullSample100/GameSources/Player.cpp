@@ -170,66 +170,65 @@ namespace basecross {
 	}
 
 	Vec3 Player::GetMoveVector() const {
-		if (GetTypeStage<TestStage>()->GetCntLock()) {
-			Vec3 angle(0, 0, 0);
-			//コントローラの取得
-			auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
-			float fThumbLY = 0.0f;
-			float fThumbLX = 0.0f;
-			WORD wButtons = 0;
-			if (cntlVec[0].bConnected) {
-				fThumbLY = cntlVec[0].fThumbLY;
-				fThumbLX = cntlVec[0].fThumbLX;
-				wButtons = cntlVec[0].wButtons;
-			}
-			//キーボードの取得(キーボード優先)
-			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-			if (KeyState.m_bPushKeyTbl['W']) {
-				//前
-				fThumbLY = 1.0f;
-			}
-			else if (KeyState.m_bPushKeyTbl['A']) {
-				//左
-				fThumbLX = -1.0f;
-			}
-			else if (KeyState.m_bPushKeyTbl['S']) {
-				//後ろ
-				fThumbLY = -1.0f;
-			}
-			else if (KeyState.m_bPushKeyTbl['D']) {
-				//右
-				fThumbLX = 1.0f;
-			}
-			if (fThumbLX != 0 || fThumbLY != 0) {
-				float moveLength = 0;	//動いた時のスピード
-				auto ptrTransform = GetComponent<Transform>();
-				auto ptrCamera = OnGetDrawCamera();
-				//進行方向の向きを計算
-				auto front = ptrCamera->GetEye() - ptrTransform->GetPosition();
-				front.y = 0;
-				front.normalize();
-				//進行方向向きからの角度を算出
-				float frontAngle = atan2(front.z, front.x);
-				//コントローラの向き計算
-				float moveX = -fThumbLX;
-				float moveZ = -fThumbLY;
-				Vec2 moveVec(moveX, moveZ);
-				float moveSize = moveVec.length();
-				//コントローラの向きから角度を計算
-				float cntlAngle = atan2(-moveX, moveZ);
-				//トータルの角度を算出
-				float totalAngle = frontAngle + cntlAngle;
-				//角度からベクトルを作成
-				angle = Vec3(cos(totalAngle), 0, sin(totalAngle));
-				//正規化する
-				angle.normalize();
-				//移動サイズを設定。
-				angle *= moveSize;
-				//Y軸は変化させない
-				angle.y = 0;
-			}
-			return angle;
+		Vec3 angle(0, 0, 0);
+		//コントローラの取得
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
+		float fThumbLY = 0.0f;
+		float fThumbLX = 0.0f;
+		WORD wButtons = 0;
+		if (cntlVec[0].bConnected) {
+			fThumbLY = cntlVec[0].fThumbLY;
+			fThumbLX = cntlVec[0].fThumbLX;
+			wButtons = cntlVec[0].wButtons;
 		}
+		//キーボードの取得(キーボード優先)
+		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
+		if (KeyState.m_bPushKeyTbl['W']) {
+			//前
+			fThumbLY = 1.0f;
+		}
+		else if (KeyState.m_bPushKeyTbl['A']) {
+			//左
+			fThumbLX = -1.0f;
+		}
+		else if (KeyState.m_bPushKeyTbl['S']) {
+			//後ろ
+			fThumbLY = -1.0f;
+		}
+		else if (KeyState.m_bPushKeyTbl['D']) {
+			//右
+			fThumbLX = 1.0f;
+		}
+		if (fThumbLX != 0 || fThumbLY != 0) {
+			float moveLength = 0;	//動いた時のスピード
+			auto ptrTransform = GetComponent<Transform>();
+			auto ptrCamera = OnGetDrawCamera();
+			//進行方向の向きを計算
+			auto front = ptrCamera->GetEye() - ptrTransform->GetPosition();
+			front.y = 0;
+			front.normalize();
+			//進行方向向きからの角度を算出
+			float frontAngle = atan2(front.z, front.x);
+			//コントローラの向き計算
+			float moveX = -fThumbLX;
+			float moveZ = -fThumbLY;
+			Vec2 moveVec(moveX, moveZ);
+			float moveSize = moveVec.length();
+			//コントローラの向きから角度を計算
+			float cntlAngle = atan2(-moveX, moveZ);
+			//トータルの角度を算出
+			float totalAngle = frontAngle + cntlAngle;
+			//角度からベクトルを作成
+			angle = Vec3(cos(totalAngle), 0, sin(totalAngle));
+			//正規化する
+			angle.normalize();
+			//移動サイズを設定。
+			angle *= moveSize;
+			//Y軸は変化させない
+			angle.y = 0;
+		}
+		return angle;
+
 	}
 
 	//プレイヤーの移動
@@ -342,27 +341,10 @@ namespace basecross {
 				}
 			}
 
-			if (!m_StageObjHit) {
-				auto ptrPs = GetComponent<RigidbodySphere>();
-				auto velo = ptrPs->GetLinearVelocity();
-
-				//xとzの速度を修正
-
-				velo.x = m_front.x * m_rollingSpeed * m_calory;
-				velo.z = m_front.z * m_rollingSpeed * m_calory;
-
-				//加速
-				m_rollingSpeed += m_accelerate * elapsedTime;
-
-				//速度を設定
-				ptrPs->SetLinearVelocity(velo);
-				m_speed = m_rollingSpeed;
-
-			}
-
 			//ハジキの処理
 			if (m_boundFlagL) {
 				m_isAccele = true;
+				m_isZoomOut = true;
 				m_boundTime -= elapsedTime;
 				m_rollingSpeed += 0.005f;
 				//エフェクト再生
@@ -370,11 +352,13 @@ namespace basecross {
 				if (m_boundTime < 0) {
 					m_boundTime = 0.75;
 					m_isAccele = false;
+					m_isZoomOut = false;
 					m_boundFlagL = false;
 				}
 			}
 			else if (m_boundFlagR) {
 				m_isAccele = true;
+				m_isZoomOut = true;
 				m_boundTime -= elapsedTime;
 				m_rollingSpeed += 0.005f;
 				//エフェクト再生
@@ -382,6 +366,7 @@ namespace basecross {
 				if (m_boundTime < 0) {
 					m_boundTime = 0.75;
 					m_isAccele = false;
+					m_isZoomOut = false;
 					m_boundFlagR = false;
 				}
 			}
@@ -395,6 +380,7 @@ namespace basecross {
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
 					sharedObj->SetActive(true);
 					m_isSmash = true;
+					m_isZoomOut = true;
 					m_smashTime = 1.0f;
 				}
 			}
@@ -407,13 +393,22 @@ namespace basecross {
 				if (m_smashTime < 0.0f) {
 					m_rollingSpeed = 5.0f;
 					m_isSmash = false;
+					m_isZoomOut = false;
 				}
 			}
 
+			//加速
+			m_rollingSpeed += m_accelerate * elapsedTime;
+
 			m_front.normalize();
 
+			auto ptrPs = GetComponent<RigidbodySphere>();
 			auto velo = ptrRigid->GetLinearVelocity();
-
+			//xとzの速度を修正
+			velo.x = m_front.x * m_rollingSpeed * m_calory;
+			velo.z = m_front.z * m_rollingSpeed * m_calory;
+			//速度を設定
+			ptrRigid->SetLinearVelocity(velo);
 
 			//最低速度
 			if (m_rollingSpeed < 1.0f) {
@@ -432,8 +427,11 @@ namespace basecross {
 		//ランニングモード
 		if (m_state == PlayerState::Running) {
 			ptrRigid->SetAutoTransform(false);
-
-			auto vec = GetMoveVector();
+			auto vec = Vec3(0, 0, 0);
+			if (GetTypeStage<TestStage>()->GetCntLock()) {
+				vec = GetMoveVector();
+			}
+			
 			auto velo = ptrRigid->GetLinearVelocity();
 			//xとzの速度を修正
 			velo.x = vec.x * m_runningSpeed;
@@ -621,7 +619,7 @@ namespace basecross {
 		strCamera += L"Z=" + Util::FloatToWStr(cameraPos.z, 6, Util::FloatModify::Fixed) + L"\n";
 
 		wstring strSpeed(L"PlayerSpeed:\t");
-		strSpeed += L"Speed=" + Util::FloatToWStr(m_speed, 6, Util::FloatModify::Fixed) + L",\n";
+		strSpeed += L"Speed=" + Util::FloatToWStr(m_rollingSpeed, 6, Util::FloatModify::Fixed) + L",\n";
 
 		wstring strEffect(L"PlayerSpeed:\t");
 		strEffect += L"Effect=" + Util::FloatToWStr(m_effectCount, 6, Util::FloatModify::Fixed) + L",\n";
@@ -700,9 +698,9 @@ namespace basecross {
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
 		if (other->FindTag(L"CourseObject")) {
 			m_StageObjHit = true;
-			m_rollingSpeed = 1.0f;
-			
-			
+			if (m_rollingSpeed < 5.0f) {
+				m_rollingSpeed -= 2.0f;
+			}
 		}
 
 		if (other->FindTag(L"WallCollider")) {

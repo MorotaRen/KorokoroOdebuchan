@@ -54,6 +54,7 @@ namespace basecross {
 		bool m_isSmash; //スマッシュローリング可否のフラグ
 		bool m_isAccele;
 		int m_vibrationCount;
+		bool m_isZoomOut;
 
 		//入力された時
 		void InputController();
@@ -127,7 +128,7 @@ namespace basecross {
 		void SetGoolFlg(bool f) { m_GoolFlg = f; }
 		bool GetGoolFlg() { return m_GoolFlg; }
 
-		bool GetIsAccele() { return m_isAccele; }
+		bool GetIsZoomOut() { return m_isZoomOut; }
 
 
 	};

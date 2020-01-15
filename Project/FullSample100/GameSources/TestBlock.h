@@ -24,6 +24,8 @@ namespace basecross {
 		//XV
 		virtual void OnUpdate() override;
 
+		virtual void OnCollisionEnter(shared_ptr<GameObject>& other) override;
+
 		void SetIsHit(bool f) { m_isHit = f; }
 	};
 
