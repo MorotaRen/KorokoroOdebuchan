@@ -56,7 +56,14 @@ namespace basecross {
 		if (m_isHit) {
 			auto ptrTrans = GetComponent<Transform>();
 			PsBoxParam param(ptrTrans->GetWorldMatrix(), 0.0f, true, PsMotionType::MotionTypeFixed);
-			RemoveComponent<RigidbodyBox>();
+			auto ptrThis = GetThis<TestBlock>();
+			GetTypeStage<TestStage>()->RemoveGameObject<TestBlock>(ptrThis);
+		}
+	}
+
+	void TestBlock::OnCollisionEnter(shared_ptr<GameObject>& other) {
+		if (other->FindTag(L"Player")) {
+			m_isHit = true;
 		}
 	}
 }
