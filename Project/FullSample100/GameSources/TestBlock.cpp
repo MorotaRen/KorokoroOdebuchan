@@ -58,6 +58,11 @@ namespace basecross {
 			PsBoxParam param(ptrTrans->GetWorldMatrix(), 0.0f, true, PsMotionType::MotionTypeFixed);
 			auto ptrThis = GetThis<TestBlock>();
 			GetTypeStage<TestStage>()->RemoveGameObject<TestBlock>(ptrThis);
+
+			//GetComponent<CollisionObb>()->SetUpdateActive(false);
+			//GetComponent<RigidbodyBox>()->SetUpdateActive(false);
+			//RemoveComponent<CollisionObb>();
+			//RemoveComponent<RigidbodyBox>();
 		}
 	}
 
