@@ -158,6 +158,7 @@ namespace basecross {
 							v->SetDrawActive(false);
 						}
 					}
+					m_updateFlag = false;
 					m_Pause = false;
 				}
 			}
@@ -174,6 +175,7 @@ namespace basecross {
 							v->SetDrawActive(false);
 						}
 					}
+					m_updateFlag = false;
 					m_Pause = false;
 					AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"TitleScene");
 				}
@@ -191,6 +193,7 @@ namespace basecross {
 						v->SetDrawActive(false);
 					}
 				}
+				m_updateFlag = false;
 				m_Pause = false;
 			}
 			else {
