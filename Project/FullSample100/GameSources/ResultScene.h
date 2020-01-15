@@ -30,6 +30,7 @@ namespace basecross {
 		void CreateViewLight();
 		weak_ptr<Player> m_ptrPlayer;
 		vector<shared_ptr<ResultSceneSprite>> m_SpVec;
+		shared_ptr<SoundItem> m_BGM;
 
 		int m_StageNum = 0;   //今選択してるステージ番号
 		bool m_CntrolLock;    //スティックを一度倒したらロック
