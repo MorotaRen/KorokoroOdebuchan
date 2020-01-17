@@ -49,6 +49,8 @@ namespace basecross {
 		auto SmashPtr = AddGameObject<SmashGauge>(L"gray", Vec2(275.0f, 30.0f), Vec2(500.0f, 0.0f));
 		SetSharedGameObject(L"Smash", SmashPtr);
 
+		AddGameObject<GaugeMax>(L"OnPush", Vec2(275.0f, 30.0f), Vec2(500.0f, -10.0f));
+
 		//É|Å[ÉYâÊñ ÇÃâÊëú
 		AddGameObject<StartPause>(L"ResultBG", Vec2(600, 600), Vec2(0, 0));
 		AddGameObject<StartPause>(L"Pause", Vec2(256.0f, 64.0f), Vec2(0, 200));
@@ -103,6 +105,17 @@ namespace basecross {
 			for (auto v : gameObject) {
 				if (v->FindTag(L"Timer")) {
 					v->SetUpdateActive(true);
+				}
+			}
+		}
+		auto sg = GetSharedGameObject<SmashGauge>(L"Smash")->GetSmashPoint();
+		for (auto v : gameObject) {
+			if (v->FindTag(L"GaugeMax")) {
+				if (sg >= 10.0f) {
+					v->SetDrawActive(true);
+				}
+				else {
+					v->SetDrawActive(false);
 				}
 			}
 		}

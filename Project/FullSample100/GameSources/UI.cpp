@@ -329,6 +329,7 @@ namespace basecross {
 	{}
 
 	void SmashGauge::OnCreate() {
+		AddTag(L"SmashGauge");
 		float helfSize = 0.5f;
 		//頂点配列(縦横5個ずつ表示)
 		vector<VertexPositionColorTexture> vertices = {
@@ -358,7 +359,7 @@ namespace basecross {
 	}
 	void SmashGauge::OnUpdate() {
 		if (m_Active) {
-				UseSmashPoint();
+			UseSmashPoint();
 		}
 		else {
 
@@ -395,7 +396,7 @@ namespace basecross {
 			m_rate = m_MaxSmashPoint / m_SmashPoint;
 			m_UsePoint = true;
 			ElapsedTime = App::GetApp()->GetElapsedTime();
-			m_SmashPoint -= ElapsedTime*6;
+			m_SmashPoint -= ElapsedTime * 6;
 			if (m_SmashPoint <= m_MinSmashPoint) {
 				m_SmashPoint = m_MinSmashPoint;
 				m_Active = false;
@@ -406,6 +407,21 @@ namespace basecross {
 			scale.x = m_StartScale.x / m_rate;
 			ptrTrans->SetScale(scale);
 		}
+	}
+	//--------------------------------------------------------------------------------------
+	//	スマッシュゲージがたまったことをお知らせ
+	//--------------------------------------------------------------------------------------
+	GaugeMax::GaugeMax(const shared_ptr<Stage>& stagePtr,
+		const wstring& textureKey,
+		const Vec2& startScale,
+		const Vec2& startPos) :
+		Sprite(stagePtr, textureKey, startScale, startPos)
+	{}
+	void GaugeMax::OnCreate() {
+		Sprite::OnCreate();
+		AddTag(L"GaugeMax");
+	}
+	void GaugeMax::OnUpdate() {
 	}
 
 	/***************************************************************************************

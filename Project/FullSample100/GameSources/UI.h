@@ -160,6 +160,19 @@ namespace basecross {
 		float GetSmashPoint() { return m_SmashPoint; }
 		bool GetUsable() { return m_IsUsable; }
 	};
+	//--------------------------------------------------------------------------------------
+	//	スマッシュゲージがたまったことをお知らせ
+	//--------------------------------------------------------------------------------------
+	class GaugeMax :public Sprite {
+	public:
+		GaugeMax(const shared_ptr<Stage>&stagePtr,
+			const wstring& textureKey,
+			const Vec2& startScale,
+			const Vec2& startPos);
+		virtual ~GaugeMax() {};
+		virtual void OnCreate()override;
+		virtual void OnUpdate() override;
+	};
 
 	/***************************************************************************************
 									  リザルトシーンのUI
