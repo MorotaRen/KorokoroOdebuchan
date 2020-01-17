@@ -23,9 +23,9 @@ Physics Effects under the filename: physics_effects_license.txt
 
 //J メッシュのリソース制限
 //E Define some limitations of a triangle mesh
-#define SCE_PFX_NUMMESHFACETS		256//64
-#define SCE_PFX_NUMMESHEDGES		257//192
-#define SCE_PFX_NUMMESHVERTICES		257//128
+#define SCE_PFX_NUMMESHFACETS		2500//64
+#define SCE_PFX_NUMMESHEDGES		2500//192
+#define SCE_PFX_NUMMESHVERTICES		2500//128
 
 //J エッジの角
 //E Edge types

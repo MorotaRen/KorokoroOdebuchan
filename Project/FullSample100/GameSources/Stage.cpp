@@ -53,20 +53,20 @@ namespace basecross {
 			vector<uint16_t> indices = Mesh->GetBackupIndices<VertexPositionNormalTexture>();
 
 			//MeshUtill::CreateDodecahedron(0.5,vertices,indices);
-			m_ConvexMesh = MeshResource::CreateMeshResource(vertices,indices,true);
+			m_ConvexMesh = MeshResource::CreateMeshResource(vertices,indices,);
 			m_PsConvexMesh = PsConvexMeshResource::CreateMeshResource(vertices,indices);
 		}
 		//ï®óùåvéZ
 		PsConvexParam param;
 
 		param.m_ConvexMeshResource = m_PsConvexMesh;
-		param.m_Mass = 1.0f;
+		param.m_Mass = 0.0f;
 		//äµê´ÇÃåvéZ
 		param.m_Inertia = BasePhysics::CalcInertiaBox(Vec3(0.5f),param.m_Mass);
 		param.m_MotionType = PsMotionType::MotionTypeFixed;
 		m_quat.rotationY(3.14);
 		param.m_Quat = m_quat;
-		m_pos.y -= 1.0f;
+		m_pos.y += 0.02f;
 		param.m_Pos = m_pos;
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
 		PsPtr->SetDrawActive(true);
