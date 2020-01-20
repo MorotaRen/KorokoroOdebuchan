@@ -23,6 +23,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Vibration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WaitScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
@@ -49,5 +50,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Vibration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SS5Object.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WaitScene.h" />
   </ItemGroup>
 </Project>

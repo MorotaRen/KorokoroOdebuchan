@@ -276,7 +276,7 @@
 	</cellmapNames>
 	<animeList>
 		<anime>
-			<name>anime_1</name>
+			<name>LoadAnim</name>
 			<overrideSettings>0</overrideSettings>
 			<settings>
 				<fps>30</fps>

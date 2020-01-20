@@ -11,6 +11,8 @@ namespace basecross{
 		~SS5Object();
 		//‰Šú‰»
 		virtual void OnCreate() override;
-
+		//XV
+		virtual void OnUpdate() override;
+		Mat4x4 m_ToAnimeMatrix;
 	};
 }

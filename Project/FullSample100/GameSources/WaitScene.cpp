@@ -16,6 +16,10 @@ namespace basecross {
 		PtrMultiLight->SetDefaultLighting();
 	}
 
+	bool WaitScene::m_Loaded = false;
+	std::mutex WaitScene::mtx;
+
+
 	void WaitScene::LoadResourceFunc()
 	{
 		mtx.lock();
@@ -23,17 +27,27 @@ namespace basecross {
 		mtx.unlock();
 
 		//読み込み
+		wstring dataDir;
+		App::GetApp()->GetDataDirectory(dataDir);
+		struct InitializedParam {
+			wstring m_modelName;
+			wstring m_modelKey;
+		};
+		InitializedParam models[] = {
+			//{L"ファイル名",L"呼び出し時のキー"}
+			{L"OBJ_CourseSpring_Road.bmf",L"MS_Spring"}
+		};
+		for (auto model : models) {
+			wstring srtmodel = dataDir + L"Models\\";
+			auto staticModel = MeshResource::CreateStaticModelMesh(srtmodel, model.m_modelName, true);
+			App::GetApp()->RegisterResource(model.m_modelKey, staticModel);
+		}
+		mtx.lock();
+		m_Loaded = true;
+		mtx.unlock();
 
 	}
 
-	//構築
-	WaitScene::WaitScene() {
-
-	}
-	//破棄
-	WaitScene::~WaitScene() {
-
-	}
 	//生成
 	void WaitScene::OnCreate() {
 		CreateViewLight();
@@ -41,7 +55,7 @@ namespace basecross {
 		App::GetApp()->GetDataDirectory(dataDir);
 		wstring srtmodel = dataDir + L"SpriteStudio\\";
 
-		AddGameObject<SS5Object>(srtmodel, L"LoadingAnimation.ssae", L"anime_1");
+		AddGameObject<SS5Object>(srtmodel, L"LoadingAnimation.ssae", L"LoadAnim");
 
 		//その他リソースの読み込み
 		std::thread LoadThread(LoadResourceFunc);
@@ -51,6 +65,9 @@ namespace basecross {
 	}
 	//更新
 	void WaitScene::OnUpdate() {
-
+		if (m_Loaded) {
+			//リソースのロードが終了したらタイトルステージに移行
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"ToTestStage");
+		}
 	}
 }

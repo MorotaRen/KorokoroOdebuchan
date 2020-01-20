@@ -2,11 +2,9 @@
 #include <stdafx.h>
 
 namespace basecross {
-	class WaitScene : Stage {
+	class WaitScene : public Stage {
 		//ビューの作成
 		void CreateViewLight();
-		//スプライトの作成
-		void CreateTitleSprite();
 		//リソースロード用のスレッド（スタティック関数）
 		static void LoadResourceFunc();
 		//リソースを読み込んだことを知らせるフラグ（スタティック変数）

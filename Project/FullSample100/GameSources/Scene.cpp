@@ -27,7 +27,6 @@ namespace basecross {
 			LoadImageResources(L"Pause");
 			LoadMultiMeshModelResources();
 			LoadSoundResources();
-			LoadStaticModelResources();
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -239,6 +238,9 @@ namespace basecross {
 		}
 		else if (event->m_MsgStr == L"ResultScene") {
 			ResetActiveStage<ResultScene>();
+		}
+		else if (event->m_MsgStr == L"ToWaitScene") {
+			ResetActiveStage<WaitScene>();
 		}
 	}
 }
