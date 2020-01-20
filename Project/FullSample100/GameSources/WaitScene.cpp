@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Project.h"
+#include "WaitScene.h"
 
 namespace basecross {
 	void WaitScene::CreateViewLight() {
@@ -15,6 +16,16 @@ namespace basecross {
 		PtrMultiLight->SetDefaultLighting();
 	}
 
+	void WaitScene::LoadResourceFunc()
+	{
+		mtx.lock();
+		m_Loaded = false;
+		mtx.unlock();
+
+		//読み込み
+
+	}
+
 	//構築
 	WaitScene::WaitScene() {
 
@@ -26,12 +37,20 @@ namespace basecross {
 	//生成
 	void WaitScene::OnCreate() {
 		CreateViewLight();
+		wstring dataDir;
+		App::GetApp()->GetDataDirectory(dataDir);
+		wstring srtmodel = dataDir + L"SpriteStudio\\";
+
+		AddGameObject<SS5Object>(srtmodel, L"LoadingAnimation.ssae", L"anime_1");
+
+		//その他リソースの読み込み
+		std::thread LoadThread(LoadResourceFunc);
+		//終了まで待たない
+		LoadThread.detach();
+
 	}
 	//更新
 	void WaitScene::OnUpdate() {
-		wstring DataDir;
-		App::GetApp()->GetAssetsDirectory(DataDir);
-		//待機データだけ読み込み
-		wstring strdata = DataDir + L"";
+
 	}
 }
