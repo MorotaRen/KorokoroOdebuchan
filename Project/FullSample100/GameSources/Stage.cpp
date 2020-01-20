@@ -53,7 +53,7 @@ namespace basecross {
 			vector<uint16_t> indices = Mesh->GetBackupIndices<VertexPositionNormalTexture>();
 
 			//MeshUtill::CreateDodecahedron(0.5,vertices,indices);
-			m_ConvexMesh = MeshResource::CreateMeshResource(vertices,indices,);
+			m_ConvexMesh = MeshResource::CreateMeshResource(vertices,indices,true);
 			m_PsConvexMesh = PsConvexMeshResource::CreateMeshResource(vertices,indices);
 		}
 		//ï®óùåvéZ
