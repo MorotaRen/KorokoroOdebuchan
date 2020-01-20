@@ -27,8 +27,9 @@
 
 //---------------ステージ--------------//
 #include "GameStage.h"
-#include "TestStage.h"
 #include "TitleScene.h"
+#include "SelectScene.h"
+#include "TestStage.h"
 #include "ResultScene.h"
 
 //-------------オブジェクト------------//

@@ -9,9 +9,19 @@
 
 namespace basecross {
 	/***************************************************************************************
-									  タイトルシーンのUI
+								  タイトルシーンのUI
 	***************************************************************************************/
 	TitleSceneSprite::TitleSceneSprite(const shared_ptr<Stage>& stagePtr,
+		const wstring& textureKey,
+		const Vec2& startScale,
+		const Vec2& startPos) :
+		Sprite(stagePtr, textureKey, startScale, startPos)
+	{}
+
+	/***************************************************************************************
+									  セレクトシーンのUI
+	***************************************************************************************/
+	SelectSceneSprite::SelectSceneSprite(const shared_ptr<Stage>& stagePtr,
 		const wstring& textureKey,
 		const Vec2& startScale,
 		const Vec2& startPos) :
@@ -36,9 +46,9 @@ namespace basecross {
 		auto ptrTrans = GetComponent<Transform>();
 		auto pos = ptrTrans->GetPosition();
 		// 配置してあるステージから、今選択しているステージ番号を取得
-		auto stageNum = GetTypeStage<TitleScene>()->GetStageNum();
+		auto stageNum = GetTypeStage<SelectScene>()->GetStageNum();
 		// 配置してあるステージから、ステージスプライトの配列を取得
-		auto spVec = GetTypeStage<TitleScene>()->GetSpVec();
+		auto spVec = GetTypeStage<SelectScene>()->GetSpVec();
 		// ステージ番号から今選択しているステージスプライトを特定
 		auto stageSprite = spVec[++stageNum];
 		//特定したスプライトの位置を取得

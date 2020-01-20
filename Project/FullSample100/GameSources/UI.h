@@ -8,7 +8,7 @@
 
 namespace basecross {
 	/***************************************************************************************
-									  タイトルシーンのUI
+								  タイトルシーンのUI
 	***************************************************************************************/
 	class TitleSceneSprite :public Sprite
 	{
@@ -18,6 +18,20 @@ namespace basecross {
 			const Vec2& startScale,
 			const Vec2& startPos);
 		virtual ~TitleSceneSprite() {};
+
+	};
+
+	/***************************************************************************************
+									  セレクトシーンのUI
+	***************************************************************************************/
+	class SelectSceneSprite :public Sprite
+	{
+	public:
+		SelectSceneSprite(const shared_ptr<Stage>&stagePtr,
+			const wstring& textureKey,
+			const Vec2& startScale,
+			const Vec2& startPos);
+		virtual ~SelectSceneSprite() {};
 
 	};
 

@@ -25,6 +25,7 @@ namespace basecross {
 			LoadImageResources(L"Title");
 			LoadImageResources(L"Font");
 			LoadImageResources(L"Pause");
+			LoadImageResources(L"Prototype");
 			LoadMultiMeshModelResources();
 			LoadSoundResources();
 
@@ -233,6 +234,11 @@ namespace basecross {
 		//}
 		if (event->m_MsgStr == L"TitleScene") {
 			ResetActiveStage<TitleScene>();
+			//App::GetApp()->GetStepTimer().SetFixedTimeStep(true);
+			//App::GetApp()->GetStepTimer().SetTargetElapsedSeconds(0.03333);
+		}
+		else if (event->m_MsgStr == L"SelectScene") {
+			ResetActiveStage<SelectScene>();
 		}
 		else if (event->m_MsgStr == L"ToTestStage") {
 			ResetActiveStage<TestStage>();
