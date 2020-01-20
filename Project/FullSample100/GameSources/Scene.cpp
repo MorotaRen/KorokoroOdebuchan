@@ -28,7 +28,7 @@ namespace basecross {
 			LoadImageResources(L"Prototype");
 			LoadMultiMeshModelResources();
 			LoadSoundResources();
-
+			LoadStaticModelResources();
 			GameSystems::GetInstans().LoadModelCSV();
 		}
 		catch (...) {
@@ -104,11 +104,11 @@ namespace basecross {
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{}
+			{L"OBJ_CourseSpring_Road.bmf",L"MS_Spring"}
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";
-			auto staticModel = MeshResource::CreateStaticModelMesh(srtmodel, model.m_modelName);
+			auto staticModel = MeshResource::CreateStaticModelMesh(srtmodel, model.m_modelName,true);
 			App::GetApp()->RegisterResource(model.m_modelKey, staticModel);
 		}
 	}

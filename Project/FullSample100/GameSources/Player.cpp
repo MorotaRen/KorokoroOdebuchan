@@ -123,6 +123,8 @@ namespace basecross {
 		//	}
 		//}
 
+		
+
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
@@ -391,7 +393,7 @@ namespace basecross {
 			if (m_isSmash) {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());
-				
+
 				m_smashTime -= elapsedTime;
 				m_rollingSpeed = m_smashAccele;
 				if (m_smashTime < 0.0f) {
@@ -534,6 +536,8 @@ namespace basecross {
 
 
 
+		//受信側
+		NetWork::GetInstans().Connection_Receiving();
 
 		//auto fps = App::GetApp()->GetStepTimer().GetFramesPerSecond();
 		//wstring strFps(L"FPS: ");

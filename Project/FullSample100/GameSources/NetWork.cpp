@@ -53,13 +53,16 @@ namespace basecross {
 	//通信の開始
 	void NetWork::Connection_Sending(Vec3 trans) {
 		WSAData wsaData;
+		Initialize(wsaData);
+		SOCKET socket = CreateSocket();
+		unsigned short port = 65530;
 		WSAStartup(MAKEWORD(2,0),&wsaData);
-		SOCKET sock = socket(AF_INET,SOCK_DGRAM,0);
+		//SOCKET sock = socket(AF_INET,SOCK_DGRAM,0);
 
 		//接続先指定用構造体の準備
 		memset(&m_server,0,sizeof(m_server));
 		m_server.sin_family = AF_INET;									//IPv4
-		m_server.sin_port = htons(65530);								//ポート番号
+		m_server.sin_port = htons(port);								//ポート番号
 		m_server.sin_addr.S_un.S_addr = inet_addr("192.168.7.78");		//送信アドレス
 
 		//送信データバッファ
@@ -77,31 +80,32 @@ namespace basecross {
 
 		//送信する
 		// sendto(ソケット, 送信するデータ, データのバイト数, フラグ, アドレス情報, アドレス情報のサイズ);
-		sendto(sock, buf, sizeof(buf), 0, (struct  sockaddr *)&m_server, sizeof(m_server));
+		//sendto(sock, buf, sizeof(buf), 0, (struct  sockaddr *)&m_server, sizeof(m_server));
 
 	}
 	//受信
 	void NetWork::Connection_Receiving() {
 		WSAData wsaData;
-		Initialize(wsaData);
+		WSAStartup(MAKEWORD(2, 0), &wsaData);
 
 		SOCKET sock;
-		sock = CreateSocket();
+		sock = socket(AF_INET, SOCK_DGRAM, 0);
+		if (sock == INVALID_SOCKET) {
+			MessageBox(0,L"ソケット作成に失敗！",0,0);
+		}
+		char r_buf[2048] = { NULL };
 
+		unsigned short port = 65530;
 		struct sockaddr_in addr;
+		memset(&addr, 0, sizeof(addr));
 		addr.sin_family = AF_INET;
-		addr.sin_port = htons(65530);
+		addr.sin_port = htons(port);
 		addr.sin_addr.S_un.S_addr = inet_addr("192.168.7.78");
-
 		//バインド
-		bind(sock, (struct sockaddr *) &m_server, sizeof(m_server));
+		bind(sock, (struct sockaddr *) &addr, sizeof(addr));
+
 		//受信
-		char buf[2048];
-		recvfrom(sock, buf, 2048, 0, NULL, NULL);
-		GameSystems::GetInstans().NET_CharToVec3(buf);
-		//socketの破棄
-		closesocket(sock);
-		//終了
-		WSACleanup();
+		recvfrom(sock, r_buf, 2048, 0, NULL, NULL);
+		GameSystems::GetInstans().NET_CharToVec3(r_buf);
 	}
 }

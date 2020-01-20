@@ -76,7 +76,6 @@ namespace basecross {
 		//送られてきたナンバーの判定をActiveにして前のやつをFalseに
 		void ActiveNextCollision(unsigned int nextnum);
 
-
 		//ネットできた座標のVec3化
 		void NET_CharToVec3(char* pos);
 		Vec3 NET_GetVec3() {
