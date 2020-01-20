@@ -123,7 +123,7 @@ namespace basecross {
 		//	}
 		//}
 
-		
+
 
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -292,7 +292,7 @@ namespace basecross {
 				if (m_pos.x < m_collisionPos.x) {
 					crashPos.x += 0.01f;
 				}
-				else{
+				else {
 					crashPos.x -= 0.01f;
 				}
 
@@ -311,8 +311,7 @@ namespace basecross {
 				m_boundInputReceptionTime -= elapsedTime;
 				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
-				auto stage = GetTypeStage<TestStage>();
-				auto sharedObj = stage->GetSharedGameObject<SmashGauge>(L"Smash");
+				//auto sharedObj = GetStage()->GetSharedObjectGroup(L"GageGroup");
 
 				if (m_boundInputReceptionTime > 0.0f) {
 					if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
@@ -326,7 +325,7 @@ namespace basecross {
 						}
 						m_boundFlagL = true;
 						m_isWall = false;
-						sharedObj->CargeSmashPoint(1.0f);
+						//shrPtr->SetSmashPoint(1);
 						m_front.x += 0.5f;
 					}
 					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
@@ -340,7 +339,7 @@ namespace basecross {
 						}
 						m_boundFlagR = true;
 						m_isWall = false;
-						sharedObj->CargeSmashPoint(1.0f);
+						//shrPtr->SetSmashPoint(1);
 						m_front.x -= 0.5f;
 
 					}
@@ -378,18 +377,15 @@ namespace basecross {
 			}
 
 			//スマッシュローリング
-			auto stage = GetTypeStage<TestStage>();
-			auto sharedObj = stage->GetSharedGameObject<SmashGauge>(L"Smash");
-			if (sharedObj->GetSmashPoint() >= 10) {
-				
-
+			//auto sharedObj = GetStage()->GetSharedObjectGroup(L"GageGroup");
+			//if (shrPtr->GetSmashPoint() >= 5) {
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
-					sharedObj->SetActive(true);
+					//sharedObj->SetActive(true);
 					m_isSmash = true;
 					m_isZoomOut = true;
 					m_smashTime = 1.0f;
 				}
-			}
+			//}
 			if (m_isSmash) {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());
@@ -437,7 +433,7 @@ namespace basecross {
 			if (GetTypeStage<TestStage>()->GetCntLock()) {
 				vec = GetMoveVector();
 			}
-			
+
 			auto velo = ptrRigid->GetLinearVelocity();
 			//xとzの速度を修正
 			velo.x = vec.x * m_runningSpeed;
@@ -687,7 +683,7 @@ namespace basecross {
 		drawcomp->SetMeshToTransformMatrix(spanMat);
 		int animrow = GameSystems::GetInstans().LoadAnimationData(L"M_PlayerNomal");
 		auto AnimData = GameSystems::GetInstans().GetAnimationData();
-		drawcomp->AddAnimation(AnimData[animrow].at(1),std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)),true,10.0f);
+		drawcomp->AddAnimation(AnimData[animrow].at(1), std::stoi(AnimData[animrow].at(2)), std::stoi(AnimData[animrow].at(3)), true, 10.0f);
 
 		//コリジョンをつける
 		auto ptrColl = AddComponent<CollisionSphere>();

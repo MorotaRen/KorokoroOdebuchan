@@ -147,15 +147,7 @@ namespace basecross {
 	//	スマッシュゲージのUI
 	//--------------------------------------------------------------------------------------
 	class SmashGauge :public Sprite {
-		float m_MaxSmashPoint = 10;
-		float m_MinSmashPoint = 0;
-		float m_SmashPoint = m_MinSmashPoint;
-		float ElapsedTime = 0.0f;
-		float m_rate = 0.0;
-		bool m_Active = false; //ゲージを使うためのスイッチ
-		bool m_UsePoint = false;//UseSmashPointを使っているかを判定
-		bool m_IsUsable = false;//UseSmashPointを使えるか判定
-
+		int m_SmashPoint = 0;
 	public:
 		SmashGauge(const shared_ptr<Stage>&stagePtr,
 			const wstring& textureKey,
@@ -166,13 +158,14 @@ namespace basecross {
 		virtual void OnCreate() override;
 		virtual void OnUpdate() override;
 
-		void CargeSmashPoint(float f);
-		void UseSmashPoint();
-		void SetActive(bool active) {
-			m_Active = active;
+		void Tentou(bool flg);
+
+		int GetSmashPoint() {
+			return m_SmashPoint;
 		}
-		float GetSmashPoint() { return m_SmashPoint; }
-		bool GetUsable() { return m_IsUsable; }
+		void SetSmashPoint(int i) {
+			m_SmashPoint = i;
+		}
 	};
 	//--------------------------------------------------------------------------------------
 	//	スマッシュゲージがたまったことをお知らせ

@@ -45,13 +45,22 @@ namespace basecross {
 		auto TimePtr = AddGameObject<TextTime>(L"UI_Time_2", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
 		SetSharedGameObject(L"TextTime", TimePtr);
 
-		//スマッシュゲージ
-		auto SmashPtr = AddGameObject<SmashGauge>(L"gray", Vec2(275.0f, 30.0f), Vec2(500.0f, 0.0f));
-		SetSharedGameObject(L"Smash", SmashPtr);
+		//スマッシュゲージ*************************************************************************
+		//auto GageGroup = CreateSharedObjectGroup(L"GageGroup");
+		//auto m_GageSpVec0 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(100.0f, 0.0f));
+		//GageGroup->IntoGroup(m_GageSpVec0);
+		//auto m_GageSpVec1 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(200.0f, 0.0f));
+		//GageGroup->IntoGroup(m_GageSpVec1);
+		//auto m_GageSpVec2 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(300.0f, 0.0f));
+		//GageGroup->IntoGroup(m_GageSpVec2);
+		//auto m_GageSpVec3 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(400.0f, 0.0f));
+		//GageGroup->IntoGroup(m_GageSpVec3);
+		//auto m_GageSpVec4 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(500.0f, 0.0f));
+		//GageGroup->IntoGroup(m_GageSpVec4);
 
-		AddGameObject<GaugeMax>(L"OnPush", Vec2(275.0f, 30.0f), Vec2(500.0f, -10.0f));
+		//AddGameObject<GaugeMax>(L"OnPush", Vec2(275.0f, 30.0f), Vec2(500.0f, -10.0f));
 
-		//ポーズ画面の画像
+		//ポーズ画面の画像*************************************************************************
 		AddGameObject<StartPause>(L"ResultBG", Vec2(600, 600), Vec2(0, 0));
 		AddGameObject<StartPause>(L"Pause", Vec2(256.0f, 64.0f), Vec2(0, 200));
 		auto pause = AddGameObject<StartPause>(L"Gameback", Vec2(368.0f, 65.0f), Vec2(0, 50));
@@ -108,17 +117,8 @@ namespace basecross {
 				}
 			}
 		}
-		auto sg = GetSharedGameObject<SmashGauge>(L"Smash")->GetSmashPoint();
-		for (auto v : gameObject) {
-			if (v->FindTag(L"GaugeMax")) {
-				if (sg >= 10.0f) {
-					v->SetDrawActive(true);
-				}
-				else {
-					v->SetDrawActive(false);
-				}
-			}
-		}
+
+		//
 	}
 	//時を止める処理
 	void TestStage::UpdateStage() {

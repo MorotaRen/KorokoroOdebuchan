@@ -339,27 +339,8 @@ namespace basecross {
 	{}
 
 	void SmashGauge::OnCreate() {
+		Sprite::OnCreate();
 		AddTag(L"SmashGauge");
-		float helfSize = 0.5f;
-		//頂点配列(縦横5個ずつ表示)
-		vector<VertexPositionColorTexture> vertices = {
-			{ VertexPositionColorTexture(Vec3(-0, helfSize, 0),Col4(1.0f,1.0f,1.0f,1.0f), Vec2(0.0f, 0.0f)) },
-			{ VertexPositionColorTexture(Vec3(helfSize*2.0f, helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f, 0.0f)) },
-			{ VertexPositionColorTexture(Vec3(-0, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(0.0f, 1.0f)) },
-			{ VertexPositionColorTexture(Vec3(helfSize*2.0f, -helfSize, 0), Col4(1.0f, 01.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f)) },
-		};
-		//インデックス配列
-		vector<uint16_t> indices = { 0, 1, 2, 1, 3, 2 };
-		auto ptrTrans = GetComponent<Transform>();
-		ptrTrans->SetScale(0.0f, m_StartScale.y, 1.0f);
-		ptrTrans->SetRotation(0, 0, XM_PIDIV2);
-		ptrTrans->SetPosition(Vec3(m_StartPos.x, m_StartPos.y, 0.0f));
-		// ピボットを右端にする
-		ptrTrans->SetPivot(0.0f, 0.0f, 0.0f);
-		//頂点とインデックスを指定してスプライト作成
-		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
-		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
-		ptrDraw->SetTextureResource(m_TextureKey);
 
 		//文字列をつける
 		auto ptrString = AddComponent<StringSprite>();
@@ -368,12 +349,6 @@ namespace basecross {
 
 	}
 	void SmashGauge::OnUpdate() {
-		if (m_Active) {
-			UseSmashPoint();
-		}
-		else {
-
-		}
 
 		wstringstream ss;
 		ss << L"m_SmashPoint : " << m_SmashPoint << std::endl;
@@ -383,39 +358,14 @@ namespace basecross {
 		ptrString->SetText(ss.str());
 
 	}
-	void SmashGauge::CargeSmashPoint(float f) {
-		if (m_UsePoint == false) {
-			auto ptrTrans = GetComponent<Transform>();
-			auto scale = ptrTrans->GetScale();
-
-			m_SmashPoint += f * 1.0f;
-			if (m_SmashPoint >= m_MaxSmashPoint) {
-				m_SmashPoint = m_MaxSmashPoint;
-				m_IsUsable = true;
-			}
-
-			scale.x = 27.5f *m_SmashPoint;
-			ptrTrans->SetScale(scale);
+	void SmashGauge::Tentou(bool flg)
+	{
+		auto ptrDraw = GetComponent<PCTSpriteDraw>();
+		if (true) {
+			ptrDraw->SetTextureResource(L"Yellou");
 		}
-	}
-
-	void SmashGauge::UseSmashPoint() {
-		if (m_IsUsable == true) {
-			auto ptrTrans = GetComponent<Transform>();
-			auto scale = ptrTrans->GetScale();
-			m_rate = m_MaxSmashPoint / m_SmashPoint;
-			m_UsePoint = true;
-			ElapsedTime = App::GetApp()->GetElapsedTime();
-			m_SmashPoint -= ElapsedTime * 6;
-			if (m_SmashPoint <= m_MinSmashPoint) {
-				m_SmashPoint = m_MinSmashPoint;
-				m_Active = false;
-				m_UsePoint = false;
-				m_IsUsable = false;
-			}
-
-			scale.x = m_StartScale.x / m_rate;
-			ptrTrans->SetScale(scale);
+		else {
+			ptrDraw->SetTextureResource(L"gray");
 		}
 	}
 	//--------------------------------------------------------------------------------------
