@@ -31,6 +31,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ResultScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SS5Object.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h" />

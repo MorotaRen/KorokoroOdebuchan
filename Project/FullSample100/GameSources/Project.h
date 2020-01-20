@@ -30,6 +30,7 @@
 #include "TestStage.h"
 #include "TitleScene.h"
 #include "ResultScene.h"
+#include "WaitScene.h"
 
 //-------------オブジェクト------------//
 #include "Player.h"
@@ -38,4 +39,4 @@
 #include "TestBlock.h"
 #include "MyCamera.h"
 #include "Fade.h"
-
+#include "SS5Object.h"

@@ -49,6 +49,11 @@ namespace basecross {
 		m_Spvec[2]->SetDrawLayer(1);
 		m_Spvec[3]->SetDrawLayer(1);
 		m_Spvec[4]->SetDrawLayer(1);
+		wstring dataDir;
+		App::GetApp()->GetDataDirectory(dataDir);
+		wstring srtmodel = dataDir + L"SpriteStudio\\";
+
+		AddGameObject<SS5Object>(srtmodel,L"LoadingAnimation.ssae",L"anime_1");
 
 	}
 

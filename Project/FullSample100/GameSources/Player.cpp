@@ -123,7 +123,7 @@ namespace basecross {
 		//	}
 		//}
 
-		
+
 
 		//キーボードの取得(キーボード優先)
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -381,7 +381,7 @@ namespace basecross {
 			auto stage = GetTypeStage<TestStage>();
 			auto sharedObj = stage->GetSharedGameObject<SmashGauge>(L"Smash");
 			if (sharedObj->GetSmashPoint() >= 10) {
-				
+
 
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
 					sharedObj->SetActive(true);
@@ -437,7 +437,7 @@ namespace basecross {
 			if (GetTypeStage<TestStage>()->GetCntLock()) {
 				vec = GetMoveVector();
 			}
-			
+
 			auto velo = ptrRigid->GetLinearVelocity();
 			//xとzの速度を修正
 			velo.x = vec.x * m_runningSpeed;

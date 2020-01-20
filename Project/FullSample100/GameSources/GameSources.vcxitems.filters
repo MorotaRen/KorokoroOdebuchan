@@ -48,5 +48,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Vibration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SS5Object.h" />
   </ItemGroup>
 </Project>
