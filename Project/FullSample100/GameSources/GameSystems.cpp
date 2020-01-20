@@ -122,14 +122,14 @@ namespace basecross {
 				return PlayerObj;
 			//オブジェクトの判定
 			}else if (objdata.Tag == L"ObjectCollider") {
-				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
 				//無視用のタグ設定
-				ColliderObj->AddTag(L"WallCollider");
+				//ColliderObj->AddTag(L"WallCollider");
 				//ColliderObj->AddTag(L"Wall");
 				//初期状態では更新を切っておく(デバック専用)
 				////ColliderObj->SetUpdateActive(false);
 				//エリア分け
-				m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
+				//m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
 			//ステージ壁
 			}else if (objdata.Tag == L"Stage") {
 				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
@@ -142,8 +142,8 @@ namespace basecross {
 				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
 				ColliderObj->AddTag(L"Collider");
 			}else if(objdata.Tag == L"GoalCollider"){
-				auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
-				ColliderObj->AddTag(L"GoalCollider");
+				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
+				//ColliderObj->AddTag(L"GoalCollider");
 			//なんでもなかったら
 			}else {
 				m_colobjs.push_back(vector<shared_ptr<ColliderObjects>>());
@@ -258,15 +258,30 @@ namespace basecross {
 	}
 
 	void GameSystems::NET_CharToVec3(char* pos) {
-		Vec3 v_pos;
-		char *ptr,*ctx;
-		ptr = strtok_s(pos,",",&ctx);
-		v_pos.x = atof(ptr);
-		ptr = strtok_s(NULL, ",",&ctx);
-		v_pos.y = atof(ptr);
-		ptr = strtok_s(NULL,",", &ctx);
-		v_pos.z = atof(ptr);
+		if (pos[0] == *"\0") {
 
-		m_netvec = v_pos;
+		}else {
+			Vec3 v_pos;
+			int loopnum = 0;
+			char *ptr, *ctx;
+			ptr = strtok_s(pos, ",", &ctx);
+			v_pos.x = atof(ptr);
+
+			while (ptr)
+			{
+				if (loopnum == 0) {
+					ptr = strtok_s(nullptr, ",", &ctx);
+					v_pos.y = atof(ptr);
+					loopnum++;
+				}
+				else {
+					ptr = strtok_s(nullptr, ",", &ctx);
+					v_pos.z = atof(ptr);
+					loopnum++;
+				}
+
+			}
+			m_netvec = v_pos;
+		}
 	}
 }
