@@ -23,7 +23,7 @@ namespace basecross {
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
-		m_boundTime(0.75f),
+		m_boundTime(0.2f),
 		m_isWall(false),
 		m_GoolFlg(false),
 		m_smashAccele(7.0f),
@@ -269,18 +269,18 @@ namespace basecross {
 
 			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 			if (KeyState.m_bPushKeyTbl['A']) { //左
-				m_front.x += elapsedTime * (40.0f - m_speed)*0.007f;
+				m_front.x += elapsedTime * (15.0f - m_rollingSpeed)*0.01f;
 			}
 			else if (KeyState.m_bPushKeyTbl['D']) { //右
-				m_front.x -= elapsedTime * (40.0f - m_speed)*0.007f;
+				m_front.x -= elapsedTime * (15.0f - m_rollingSpeed)*0.01f;
 			}
 
 			if (m_inputX != 0) {
 				if (m_inputX < 0) {
-					m_front.x += elapsedTime * (40.0f - m_speed)*0.007f;
+					m_front.x += elapsedTime * (15.0f - m_rollingSpeed)*0.01f;
 				}
 				else {
-					m_front.x -= elapsedTime * (40.0f - m_speed)*0.007f;
+					m_front.x -= elapsedTime * (15.0f - m_rollingSpeed)*0.01f;
 				}
 			}
 
@@ -323,9 +323,9 @@ namespace basecross {
 							Vibration::Instance()->SetVibration(0.25f, 0.5f, 0.8f);
 						}
 						m_boundFlagL = true;
+						m_isAccele = true;
 						m_isWall = false;
 						sharedObj->CargeSmashPoint(1.0f);
-						m_front.x += 0.5f;
 					}
 					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
 					{
@@ -337,40 +337,47 @@ namespace basecross {
 							Vibration::Instance()->SetVibration(0.25f, 0.8f, 0.5f);
 						}
 						m_boundFlagR = true;
+						m_isAccele = true;
 						m_isWall = false;
 						sharedObj->CargeSmashPoint(1.0f);
-						m_front.x -= 0.5f;
-
 					}
 				}
 			}
 
 			//ハジキの処理
 			if (m_boundFlagL) {
-				m_isAccele = true;
-				m_isZoomOut = true;
 				m_boundTime -= elapsedTime;
-				m_rollingSpeed += 0.005f;
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
+				if (m_isAccele) {
+					m_isZoomOut = true;
+					m_rollingSpeed += 2.0f * elapsedTime;
+					m_front.x += 2.2f * elapsedTime;
+				}
 				if (m_boundTime < 0) {
-					m_boundTime = 0.75;
 					m_isAccele = false;
 					m_isZoomOut = false;
+				}
+				if (m_boundTime < -0.8f) {
+					m_boundTime = 0.2;
 					m_boundFlagL = false;
 				}
 			}
 			else if (m_boundFlagR) {
-				m_isAccele = true;
-				m_isZoomOut = true;
 				m_boundTime -= elapsedTime;
-				m_rollingSpeed += 0.005f;
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
+				if (m_isAccele) {
+					m_isZoomOut = true;
+					m_rollingSpeed += 2.0f * elapsedTime;
+					m_front.x -= 2.2f * elapsedTime;
+				}
 				if (m_boundTime < 0) {
-					m_boundTime = 0.75;
 					m_isAccele = false;
 					m_isZoomOut = false;
+				}
+				if (m_boundTime < -0.8f) {
+					m_boundTime = 0.2;
 					m_boundFlagR = false;
 				}
 			}
@@ -391,7 +398,8 @@ namespace basecross {
 			if (m_isSmash) {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());
-				
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
+
 				m_smashTime -= elapsedTime;
 				m_rollingSpeed = m_smashAccele;
 				if (m_smashTime < 0.0f) {

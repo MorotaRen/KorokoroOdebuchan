@@ -10,15 +10,15 @@ namespace basecross {
 	//構築と破棄
 	MyCamera::MyCamera() :
 		Camera(),
-		m_ToTargetLerp(1.0f),
+		m_ToTargetLerp(2.0f),
 		m_TargetToAt(0, 0, 0),
 		m_RadY(0.5f),
 		m_RadXZ(0),
 		m_CameraUpDownSpeed(0.5f),
 		m_CameraUnderRot(0.1f),
-		m_ArmLen(0.01f),
-		m_MaxArm(30.0f),
-		m_MinArm(0.001f),
+		m_ArmLen(1.0f),
+		m_MaxArm(1.0f),
+		m_MinArm(0.01f),
 		m_RotSpeed(1.0f),
 		m_ZoomSpeed(0.1f),
 		m_LRBaseMode(true),
@@ -26,7 +26,8 @@ namespace basecross {
 		m_boundRotL(false),
 		m_boundRotR(false),
 		m_boundTime(0.3f),
-		m_culcEye(0, -2.4f, -0.4f)
+		m_culcEye(0, 0, -1.0f),
+		m_arm(1.0f)
 
 	{}
 
@@ -179,6 +180,8 @@ namespace basecross {
 	void MyCamera::OnUpdate() {
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		auto keyData = App::GetApp()->GetInputDevice().GetKeyState();
+		Easing<Vec3> easing;
+
 		//前回のターンからの時間
 		float elapsedTime = App::GetApp()->GetElapsedTime();
 		Vec3 newEye = GetEye();
@@ -196,42 +199,6 @@ namespace basecross {
 			wButtons = cntlVec[0].wButtons;
 		}
 
-		//キーボードの取得(キーボード優先)
-		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
-		if (KeyState.m_bPushKeyTbl['W']) {
-			//前
-			fThumbLY = 1.0f;
-		}
-		else if (KeyState.m_bPushKeyTbl['A']) {
-			//左
-			fThumbLX = -1.0f;
-		}
-		else if (KeyState.m_bPushKeyTbl['S']) {
-			//後ろ
-			fThumbLY = -1.0f;
-		}
-		else if (KeyState.m_bPushKeyTbl['D']) {
-			//右
-			fThumbLX = 1.0f;
-		}
-
-		//上下角度の変更
-		//if (fThumbLY >= 0.1f || keyData.m_bPushKeyTbl[VK_UP]) {
-		//	if (IsUDBaseMode()) {
-		//		m_RadY += m_CameraUpDownSpeed * elapsedTime;
-		//	}
-		//	else {
-		//		m_RadY -= m_CameraUpDownSpeed * elapsedTime;
-		//	}
-		//}
-		//else if (fThumbLY <= -0.1f || keyData.m_bPushKeyTbl[VK_DOWN]) {
-		//	if (IsUDBaseMode()) {
-		//		m_RadY -= m_CameraUpDownSpeed * elapsedTime;
-		//	}
-		//	else {
-		//		m_RadY += m_CameraUpDownSpeed * elapsedTime;
-		//	}
-		//}
 		if (m_RadY > XM_PI * 4 / 9.0f) {
 			m_RadY = XM_PI * 4 / 9.0f;
 		}
@@ -244,54 +211,8 @@ namespace basecross {
 
 		float playerSpeed = m_ptrPlayer.lock()->GetPlayerSpeed();
 
-		//ここでY軸回転を作成
-		//if (fThumbLX != 0 || keyData.m_bPushKeyTbl['A'] || keyData.m_bPushKeyTbl['D']) {
-		//	//回転スピードを反映
-		//	if (fThumbLX != 0) {
-		//		if (fThumbLX > 0) {
-		//			m_RadXZ += elapsedTime * (110.0f - playerSpeed)*0.05f;
-		//		}
-		//		else {
-		//			m_RadXZ -= elapsedTime * (110.0f - playerSpeed)*0.05f;
-		//		}
-		//	}
-		//	else if (keyData.m_bPushKeyTbl['A']) {
-		//		m_RadXZ -= elapsedTime * (110.0f - playerSpeed)*0.05f;
-		//	}
-		//	else if (keyData.m_bPushKeyTbl['D']) {
-		//		m_RadXZ += elapsedTime * (110.0f - playerSpeed)*0.05f;
-		//	}
-		//}
-
 		auto front = m_ptrPlayer.lock()->GetPlayerFrontVec();
 		m_RadXZ = atan2(front.x, front.z);
-
-		//ハジキの処理
-		//if (m_ptrPlayer.lock()->GetBoundFlagL()) {
-		//	m_boundRotL = true;
-		//	m_ptrPlayer.lock()->SetBoundFlagL(false);
-		//}
-		//else if (m_ptrPlayer.lock()->GetBoundFlagR()) {
-		//	m_boundRotR = true;
-		//	m_ptrPlayer.lock()->SetBoundFlagR(false);
-		//}
-
-		//if (m_boundRotL) {
-		//	m_boundTime -= elapsedTime;
-		//	m_RadXZ += -1.0f * elapsedTime;
-		//	if (m_boundTime < 0.0f) {
-		//		m_boundTime = 0.3f;
-		//		m_boundRotL = false;
-		//	}
-		//}
-		//else if (m_boundRotR) {
-		//	m_boundTime -= elapsedTime;
-		//	m_RadXZ += 1.0f * elapsedTime;
-		//	if (m_boundTime < 0.0f) {
-		//		m_boundTime = 0.3f;
-		//		m_boundRotR = false;
-		//	}
-		//}
 
 		if (abs(m_RadXZ) >= XM_2PI) {
 			//1週回ったら0回転にする
@@ -344,30 +265,43 @@ namespace basecross {
 		}
 
 		if (m_ptrPlayer.lock()->GetIsZoomOut()) {
-			m_culcEye.y += 0.25f*elapsedTime;
-			m_culcEye.z += 0.4f * elapsedTime;
+			//m_culcEye.y += 0.25f*elapsedTime;
+			//m_culcEye.z += 0.4f * elapsedTime;
+			m_arm += 2.0f * elapsedTime;
 		}
 		else {
-			if (m_culcEye.z > -0.4f) {
+			if (m_culcEye.z > -1.0f) {
 				m_culcEye.z -= 1.2f * elapsedTime;
+				
 			}
-			if (m_culcEye.y > -2.4f) {
+			/*if (m_culcEye.y > -2.0f) {
 				m_culcEye.y -= 0.75f * elapsedTime;
+			}*/
+			if (m_arm > 1.0f) {
+				m_arm -= 2.0f * elapsedTime;
 			}
 		}
 
-		if (m_culcEye.y < -2.2f) {
-			m_culcEye.y = -2.2f;
+		/*if (m_culcEye.y < -1.0f) {
+			m_culcEye.y = -1.0f;
+		}*/
+
+		if (m_culcEye.z < -1.0f) {
+			m_culcEye.z = -1.0f;
 		}
 
-		if (m_culcEye.z < 0.0f) {
-			m_culcEye.z = 0.0f;
+		if (m_arm < 1.0f) {
+			m_arm = 1.0f;
 		}
 
-		m_ArmLen = 0.01f;
-		////目指したい場所にアームの値と腕ベクトルでEyeを調整
-		Vec3 toEye = newAt + armVec * m_ArmLen + m_culcEye;
-		newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
+		//m_ArmLen = 0.01f;
+		Vec3 culcArm(m_arm, 1, m_arm);
+		//目指したい場所にアームの値と腕ベクトルでEyeを調整
+		//Vec3 toEye = newAt + armVec * m_ArmLen + m_culcEye;
+		Vec3 toEye = newAt + ((armVec + m_culcEye) * m_ArmLen) + Vec3(0,-2.7f,0);
+		//Vec3 toEye = newAt + ((armVec + m_culcEye) * m_ArmLen) * m_arm + Vec3(0,-2.7f,0);
+		//newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
+		newEye = easing.EaseInOut(EasingType::Exponential, toEye, GetEye(), elapsedTime, 1.0f);
 		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition() + Vec3(0, 0.2f, 0);
 		SetAt(newAt);
 		SetEye(newEye);

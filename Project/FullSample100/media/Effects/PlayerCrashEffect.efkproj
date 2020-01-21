@@ -125,15 +125,15 @@
                         <DrawnAs>0</DrawnAs>
                       </R>
                       <G>
-                        <Center>125</Center>
-                        <Max>130</Max>
-                        <Min>120</Min>
+                        <Center>32</Center>
+                        <Max>92</Max>
+                        <Min>87</Min>
                         <DrawnAs>0</DrawnAs>
                       </G>
                       <B>
                         <Center>26</Center>
                         <Max>53</Max>
-                        <Min>0</Min>
+                        <Min>47</Min>
                         <DrawnAs>0</DrawnAs>
                       </B>
                       <A>
@@ -250,9 +250,9 @@
                         <DrawnAs>0</DrawnAs>
                       </R>
                       <G>
-                        <Center>130</Center>
-                        <Max>144</Max>
-                        <Min>116</Min>
+                        <Center>5</Center>
+                        <Max>64</Max>
+                        <Min>42</Min>
                         <DrawnAs>0</DrawnAs>
                       </G>
                       <B>

@@ -24,6 +24,7 @@ namespace basecross {
 		float m_CameraUnderRot;
 		//腕の長さの設定
 		float m_ArmLen;
+		float m_arm;
 		float m_MaxArm;
 		float m_MinArm;
 		//回転スピード
