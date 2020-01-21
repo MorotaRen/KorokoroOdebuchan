@@ -26,7 +26,7 @@ namespace basecross {
 		//スタート画像が表示されたかどうか
 		bool m_StartActive = false;
 		float m_stopTime = 0.0f;    //時間を計測
-		int PauseSelect = 0;        
+		int PauseSelect = 0;      
 
 	public:
 
@@ -58,6 +58,7 @@ namespace basecross {
 		void SetStart(bool active) {
 			m_StartActive = active;
 		}
+
 	};
 
 

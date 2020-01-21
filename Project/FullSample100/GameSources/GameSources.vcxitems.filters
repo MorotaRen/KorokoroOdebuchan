@@ -23,6 +23,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Vibration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SelectScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
@@ -48,5 +49,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Vibration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SelectScene.h" />
   </ItemGroup>
 </Project>
