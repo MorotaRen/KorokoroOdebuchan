@@ -142,6 +142,8 @@ namespace basecross {
 			default:
 				break;
 			}
+			//auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			//ptrXA->Start(L"WallHit", 0, 1.0f);
 		}
 	}
 
@@ -326,7 +328,7 @@ namespace basecross {
 						m_boundFlagL = true;
 						m_isAccele = true;
 						m_isWall = false;
-						sharedObj->CargeSmashPoint(1.0f);
+						//sharedObj->CargeSmashPoint(1.0f);
 						//shrPtr->SetSmashPoint(1);
 					}
 					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
@@ -341,7 +343,7 @@ namespace basecross {
 						m_boundFlagR = true;
 						m_isAccele = true;
 						m_isWall = false;
-						sharedObj->CargeSmashPoint(1.0f);
+						//sharedObj->CargeSmashPoint(1.0f);
 						//shrPtr->SetSmashPoint(1);
 					}
 				}
@@ -393,6 +395,7 @@ namespace basecross {
 					m_isSmash = true;
 					m_isZoomOut = true;
 					m_smashTime = 1.0f;
+					
 				}
 			//}
 			if (m_isSmash) {
