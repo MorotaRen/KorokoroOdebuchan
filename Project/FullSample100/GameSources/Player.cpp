@@ -311,8 +311,6 @@ namespace basecross {
 				m_boundInputReceptionTime -= elapsedTime;
 				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 
-				//auto sharedObj = GetStage()->GetSharedObjectGroup(L"GageGroup");
-
 				if (m_boundInputReceptionTime > 0.0f) {
 					if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 					{
@@ -326,8 +324,7 @@ namespace basecross {
 						m_boundFlagL = true;
 						m_isAccele = true;
 						m_isWall = false;
-						sharedObj->CargeSmashPoint(1.0f);
-						//shrPtr->SetSmashPoint(1);
+						GameSystems::GetInstans().SetSmashPoint(1);
 					}
 					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
 					{
@@ -341,8 +338,7 @@ namespace basecross {
 						m_boundFlagR = true;
 						m_isAccele = true;
 						m_isWall = false;
-						sharedObj->CargeSmashPoint(1.0f);
-						//shrPtr->SetSmashPoint(1);
+						GameSystems::GetInstans().SetSmashPoint(1);
 					}
 				}
 			}
@@ -386,15 +382,14 @@ namespace basecross {
 			}
 
 			//スマッシュローリング
-			//auto sharedObj = GetStage()->GetSharedObjectGroup(L"GageGroup");
-			//if (shrPtr->GetSmashPoint() >= 5) {
+			if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
 					//sharedObj->SetActive(true);
 					m_isSmash = true;
 					m_isZoomOut = true;
 					m_smashTime = 1.0f;
 				}
-			//}
+			}
 			if (m_isSmash) {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());

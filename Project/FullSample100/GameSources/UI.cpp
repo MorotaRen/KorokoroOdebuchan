@@ -351,7 +351,7 @@ namespace basecross {
 	void SmashGauge::OnUpdate() {
 
 		wstringstream ss;
-		ss << L"m_SmashPoint : " << m_SmashPoint << std::endl;
+		ss << L"m_SmashPoint : " << GameSystems::GetInstans().GetSmashPoint()<< std::endl;
 
 		//文字列コンポーネントの取得
 		auto ptrString = GetComponent<StringSprite>();

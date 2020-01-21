@@ -46,17 +46,11 @@ namespace basecross {
 		SetSharedGameObject(L"TextTime", TimePtr);
 
 		//スマッシュゲージ*************************************************************************
-		//auto GageGroup = CreateSharedObjectGroup(L"GageGroup");
-		//auto m_GageSpVec0 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(100.0f, 0.0f));
-		//GageGroup->IntoGroup(m_GageSpVec0);
-		//auto m_GageSpVec1 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(200.0f, 0.0f));
-		//GageGroup->IntoGroup(m_GageSpVec1);
-		//auto m_GageSpVec2 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(300.0f, 0.0f));
-		//GageGroup->IntoGroup(m_GageSpVec2);
-		//auto m_GageSpVec3 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(400.0f, 0.0f));
-		//GageGroup->IntoGroup(m_GageSpVec3);
-		//auto m_GageSpVec4 = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(500.0f, 0.0f));
-		//GageGroup->IntoGroup(m_GageSpVec4);
+		//m_SpGage[1] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(100.0f, 0.0f));
+		//m_SpGage[2] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(200.0f, 0.0f));
+		//m_SpGage[3] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(300.0f, 0.0f));
+		//m_SpGage[4] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(400.0f, 0.0f));
+		//m_SpGage[5] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(500.0f, 0.0f));
 
 		//AddGameObject<GaugeMax>(L"OnPush", Vec2(275.0f, 30.0f), Vec2(500.0f, -10.0f));
 
@@ -119,6 +113,10 @@ namespace basecross {
 		}
 
 		//
+		auto cntlvec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+			GameSystems::GetInstans().SetSmashPoint(1);
+		}
 	}
 	//時を止める処理
 	void TestStage::UpdateStage() {

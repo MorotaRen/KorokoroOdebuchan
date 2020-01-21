@@ -46,6 +46,9 @@ namespace basecross {
 		vector<vector<shared_ptr<ColliderObjects>>> m_colobjs;
 
 		Vec3 m_netvec;
+
+		//壁に当たった回数を入れておく
+		int m_SmashPoint = 0;
 	public:
 
 		//関数呼ぶときにここから
@@ -80,6 +83,14 @@ namespace basecross {
 		void NET_CharToVec3(char* pos);
 		Vec3 NET_GetVec3() {
 			return m_netvec;
+		}
+
+		//ゲッター、セッター
+		int GetSmashPoint() {
+			return m_SmashPoint;
+		}
+		void SetSmashPoint(int i) {
+			m_SmashPoint += i;
 		}
 	};
 }
