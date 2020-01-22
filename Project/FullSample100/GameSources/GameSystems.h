@@ -49,6 +49,8 @@ namespace basecross {
 
 		//壁に当たった回数を入れておく
 		int m_SmashPoint = 0;
+		//プレイヤーのスピード
+		float m_playerSpeed = 0;
 	public:
 
 		//関数呼ぶときにここから
@@ -92,5 +94,9 @@ namespace basecross {
 		void SetSmashPoint(int i) {
 			m_SmashPoint += i;
 		}
+
+		float GetPlayerSpeed() { return m_playerSpeed; }
+
+		void SetPlayerSeed(float s) { m_playerSpeed = s; }
 	};
 }

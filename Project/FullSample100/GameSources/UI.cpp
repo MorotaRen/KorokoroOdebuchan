@@ -475,9 +475,10 @@ namespace basecross {
 	}
 	void SpeedMeterNeedle::OnUpdate() {
 		auto ptrTrans = GetComponent<Transform>();
+		m_speed = GameSystems::GetInstans().GetPlayerSpeed();
 		float culcSpeed = m_speed *= 11.25f;
 		float angle = 90 - culcSpeed;
-		if(angle <= 0) m_rotate = angle * XM_PI / 180;
+		if(angle >= 0) m_rotate = angle * XM_PI / 180;
 		ptrTrans->SetRotation(0, 0, m_rotate);
 
 		wstringstream ss;
