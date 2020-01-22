@@ -19,14 +19,16 @@ namespace basecross {
 	{}
 	void TitleSceneSprite::OnCreate() {
 		Sprite::OnCreate();
-		auto ptrAction = AddComponent<Action>();
-		ptrAction->AddMoveBy(0.5f, Vec3(XM_PI*10, 0, 0));
-		ptrAction->AddMoveTo(0.5f, Vec3(-XM_PI*10, 0, 0));
-		//ループする
-		ptrAction->SetLooped(true);
-		//アクション開始
-		ptrAction->Run();
-		
+	}
+	void TitleSceneSprite::SetActive(bool Active) {
+		auto ptrDraw = GetComponent<PCTSpriteDraw>();
+		if (Active) {
+			ptrDraw->SetDiffuse(Col4(1.0f, 1.0f, 1.0f, 1.0f));
+		}
+		else
+		{
+			ptrDraw->SetDiffuse(Col4(1.0f, 1.0f, 1.0f, 0.0f));
+		}
 	}
 	/***************************************************************************************
 									  セレクトシーンのUI
@@ -103,7 +105,6 @@ namespace basecross {
 
 	void CountDown::OnCreate() {
 		Sprite::OnCreate();
-		SetAlphaActive(50);
 		SetDrawLayer(20);
 	}
 	void CountDown::OnUpdate() {
