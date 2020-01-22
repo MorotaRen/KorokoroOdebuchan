@@ -653,10 +653,7 @@ namespace basecross {
 		wstring strSpeed(L"PlayerSpeed:\t");
 		strSpeed += L"Speed=" + Util::FloatToWStr(m_rollingSpeed, 6, Util::FloatModify::Fixed) + L",\n";
 
-		wstring strEffect(L"PlayerSpeed:\t");
-		strEffect += L"Effect=" + Util::FloatToWStr(m_effectCount, 6, Util::FloatModify::Fixed) + L",\n";
-
-		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed + strEffect;
+		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed;
 		//•¶Žš—ñ‚ð‚Â‚¯‚é
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
