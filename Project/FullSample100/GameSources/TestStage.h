@@ -11,6 +11,7 @@ namespace basecross {
 		shared_ptr<EfkEffect> m_effect;
 
 		weak_ptr<Player> m_ptrPlayer;
+		weak_ptr<SpeedMeterNeedle> m_ptrSpeedMeterNeedle;
 		shared_ptr<MyCamera> m_camera;
 		shared_ptr<SoundItem> m_BGM;
 		vector<weak_ptr<StartPause>>m_SpVec;

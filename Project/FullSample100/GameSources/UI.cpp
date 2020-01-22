@@ -394,7 +394,101 @@ namespace basecross {
 	}
 	void GaugeMax::OnUpdate() {
 	}
+	//--------------------------------------------------------------------------------------
+	//	スピードメーターのUI
+	//--------------------------------------------------------------------------------------
+	SpeedMeter::SpeedMeter(const shared_ptr<Stage>&stagePtr) :
+		GameObject(stagePtr)
+	{}
 
+	void SpeedMeter::OnCreate() {
+
+		float helfSize = 0.5f;
+		//頂点配列（縦横５個ずつ表示）
+		vector<VertexPositionColorTexture> vertices = {
+			{ VertexPositionColorTexture(Vec3(-helfSize,  helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(-0.0f, -0.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize,  helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f, -0.0f)) },
+			{ VertexPositionColorTexture(Vec3(-helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(-0.0f,  1.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f,  1.0f)) },
+		};
+		//インデックス配列
+		vector<uint16_t> indices = { 0, 1, 2, 1, 3, 2 };
+		//0  1
+		//2  3
+		//
+		SetAlphaActive(true);
+		SetDrawLayer(1);
+		auto ptrTransform = GetComponent<Transform>();
+		ptrTransform->SetScale(250, 250, 1.0f);
+		ptrTransform->SetRotation(0, 0, 0);
+		ptrTransform->SetPosition(450, -200, 0.0f);
+
+		//頂点とインデックスを指定してスプライト作成
+		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
+		ptrDraw->SetTextureResource(L"SpeedMeter");
+		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
+
+		GetTypeStage<TestStage>()->AddGameObject<SpeedMeterNeedle>();
+	}
+	void SpeedMeter::OnUpdate() {
+
+
+	}
+
+	SpeedMeterNeedle::SpeedMeterNeedle(const shared_ptr<Stage>&stagePtr) :
+		GameObject(stagePtr),
+		m_speed(0),
+		m_rotate(90 * XM_PI / 180)
+		
+	{}
+
+	void SpeedMeterNeedle::OnCreate() {
+
+		float helfSize = 0.5f;
+		//頂点配列（縦横５個ずつ表示）
+		vector<VertexPositionColorTexture> vertices = {
+			{ VertexPositionColorTexture(Vec3(-helfSize,  helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(-0.0f, -0.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize,  helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f, -0.0f)) },
+			{ VertexPositionColorTexture(Vec3(-helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(-0.0f,  1.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f,  1.0f)) },
+		};
+		//インデックス配列
+		vector<uint16_t> indices = { 0, 1, 2, 1, 3, 2 };
+		//0  1
+		//2  3
+		//
+		SetAlphaActive(true);
+		SetDrawLayer(2);
+		auto ptrTransform = GetComponent<Transform>();
+		ptrTransform->SetScale(100, 500, 1.0f);
+		ptrTransform->SetRotation(0, 0, m_rotate);
+		ptrTransform->SetPosition(575, -325 , 0.0f);
+
+		//頂点とインデックスを指定してスプライト作成
+		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
+		ptrDraw->SetTextureResource(L"SpeedMeterNeedle");
+		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
+		//文字列をつける
+		auto ptrString = AddComponent<StringSprite>();
+		ptrString->SetText(L"");
+		ptrString->SetTextRect(Rect2D<float>(1000.0f, 100.0f, 1200.0f, 480.0f));
+
+	}
+	void SpeedMeterNeedle::OnUpdate() {
+		auto ptrTrans = GetComponent<Transform>();
+		float culcSpeed = m_speed *= 11.25f;
+		float angle = 90 - culcSpeed;
+		if(angle <= 0) m_rotate = angle * XM_PI / 180;
+		ptrTrans->SetRotation(0, 0, m_rotate);
+
+		wstringstream ss;
+		ss << L"m_rotate : " << m_rotate << std::endl;
+
+		//文字列コンポーネントの取得
+		auto ptrString = GetComponent<StringSprite>();
+		ptrString->SetText(ss.str());
+
+	}
 	/***************************************************************************************
 									  リザルトシーンのUI
 	***************************************************************************************/

@@ -95,8 +95,8 @@ namespace basecross {
 		void SetBoundFlagR(bool f) { m_boundFlagR = f; }
 		bool GetBoundFlagR() { return m_boundFlagR; }
 
-		void SetPlayerSpeed(float s) { m_speed = s; }
-		float GetPlayerSpeed() { return m_speed; }
+		void SetPlayerSpeed(float s) { m_rollingSpeed = s; }
+		float GetPlayerSpeed() { return m_rollingSpeed; }
 
 		void SetPlayerFrontVec(Vec3 f) { m_front = f; }
 		Vec3 GetPlayerFrontVec() { return m_front; }

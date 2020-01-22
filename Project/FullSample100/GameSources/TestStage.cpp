@@ -53,6 +53,8 @@ namespace basecross {
 		//m_SpGage[5] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(500.0f, 0.0f));
 
 		//AddGameObject<GaugeMax>(L"OnPush", Vec2(275.0f, 30.0f), Vec2(500.0f, -10.0f));
+		//スピードメーター*************************************************************************
+		AddGameObject<SpeedMeter>();
 
 		//ポーズ画面の画像*************************************************************************
 		AddGameObject<StartPause>(L"ResultBG", Vec2(600, 600), Vec2(0, 0));
