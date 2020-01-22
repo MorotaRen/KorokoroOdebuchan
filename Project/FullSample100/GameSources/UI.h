@@ -18,7 +18,7 @@ namespace basecross {
 			const Vec2& startScale,
 			const Vec2& startPos);
 		virtual ~TitleSceneSprite() {};
-
+		virtual void OnCreate()override;
 	};
 
 	/***************************************************************************************
@@ -147,7 +147,6 @@ namespace basecross {
 	//	スマッシュゲージのUI
 	//--------------------------------------------------------------------------------------
 	class SmashGauge :public Sprite {
-		int m_SmashPoint = 0;
 	public:
 		SmashGauge(const shared_ptr<Stage>&stagePtr,
 			const wstring& textureKey,
@@ -159,13 +158,6 @@ namespace basecross {
 		virtual void OnUpdate() override;
 
 		void Tentou(bool flg);
-
-		int GetSmashPoint() {
-			return m_SmashPoint;
-		}
-		void SetSmashPoint(int i) {
-			m_SmashPoint = i;
-		}
 	};
 	//--------------------------------------------------------------------------------------
 	//	スマッシュゲージがたまったことをお知らせ

@@ -17,7 +17,17 @@ namespace basecross {
 		const Vec2& startPos) :
 		Sprite(stagePtr, textureKey, startScale, startPos)
 	{}
-
+	void TitleSceneSprite::OnCreate() {
+		Sprite::OnCreate();
+		auto ptrAction = AddComponent<Action>();
+		ptrAction->AddMoveBy(0.5f, Vec3(XM_PI*10, 0, 0));
+		ptrAction->AddMoveTo(0.5f, Vec3(-XM_PI*10, 0, 0));
+		//ループする
+		ptrAction->SetLooped(true);
+		//アクション開始
+		ptrAction->Run();
+		
+	}
 	/***************************************************************************************
 									  セレクトシーンのUI
 	***************************************************************************************/
@@ -351,7 +361,7 @@ namespace basecross {
 	void SmashGauge::OnUpdate() {
 
 		wstringstream ss;
-		ss << L"m_SmashPoint : " << m_SmashPoint << std::endl;
+		ss << L"m_SmashPoint : " << GameSystems::GetInstans().GetSmashPoint()<< std::endl;
 
 		//文字列コンポーネントの取得
 		auto ptrString = GetComponent<StringSprite>();
