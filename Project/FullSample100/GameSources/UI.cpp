@@ -17,7 +17,17 @@ namespace basecross {
 		const Vec2& startPos) :
 		Sprite(stagePtr, textureKey, startScale, startPos)
 	{}
-
+	void TitleSceneSprite::OnCreate() {
+		Sprite::OnCreate();
+		auto ptrAction = AddComponent<Action>();
+		ptrAction->AddMoveBy(0.5f, Vec3(XM_PI*10, 0, 0));
+		ptrAction->AddMoveTo(0.5f, Vec3(-XM_PI*10, 0, 0));
+		//ループする
+		ptrAction->SetLooped(true);
+		//アクション開始
+		ptrAction->Run();
+		
+	}
 	/***************************************************************************************
 									  セレクトシーンのUI
 	***************************************************************************************/

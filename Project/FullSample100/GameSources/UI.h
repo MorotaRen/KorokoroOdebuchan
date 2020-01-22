@@ -18,7 +18,7 @@ namespace basecross {
 			const Vec2& startScale,
 			const Vec2& startPos);
 		virtual ~TitleSceneSprite() {};
-
+		virtual void OnCreate()override;
 	};
 
 	/***************************************************************************************

@@ -117,6 +117,12 @@ namespace basecross {
 		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
 			GameSystems::GetInstans().SetSmashPoint(1);
 		}
+		//‰¼
+		auto pos = GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
+		if (pos.y < -15.0f) {
+			AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+		}
+
 	}
 	//‚ğ~‚ß‚éˆ—
 	void TestStage::UpdateStage() {
