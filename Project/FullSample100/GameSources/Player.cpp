@@ -94,6 +94,8 @@ namespace basecross {
 			NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
 			//PlayerChengeModel();
 		}
+
+		//GetTypeStage<TestStage>()->GetSharedGameObject<SpeedMeterNeedle>(L"SpeedMeterNeedle")->SetSpeed(m_rollingSpeed);
 	}
 
 	//“ü—Í‚³‚ê‚½Žž
@@ -405,7 +407,7 @@ namespace basecross {
 				m_smashTime -= elapsedTime;
 				m_rollingSpeed = m_smashAccele;
 				if (m_smashTime < 0.0f) {
-					m_rollingSpeed = 5.0f;
+					m_rollingSpeed = 6.0f;
 					m_isSmash = false;
 					m_isZoomOut = false;
 				}

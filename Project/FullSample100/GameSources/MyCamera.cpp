@@ -299,6 +299,7 @@ namespace basecross {
 		//目指したい場所にアームの値と腕ベクトルでEyeを調整
 		//Vec3 toEye = newAt + armVec * m_ArmLen + m_culcEye;
 		Vec3 toEye = newAt + ((armVec + m_culcEye) * m_ArmLen) + Vec3(0,-2.7f,0);
+		//Vec3 toEye = newAt + ((armVec + m_culcEye) * m_arm) + Vec3(0,-2.7f,0);
 		//Vec3 toEye = newAt + ((armVec + m_culcEye) * m_ArmLen) * m_arm + Vec3(0,-2.7f,0);
 		//newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
 		newEye = easing.EaseInOut(EasingType::Exponential, toEye, GetEye(), elapsedTime, 1.0f);

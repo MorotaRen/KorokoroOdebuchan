@@ -26,6 +26,7 @@ namespace basecross {
 			LoadImageResources(L"Font");
 			LoadImageResources(L"Pause");
 			LoadImageResources(L"Prototype");
+			LoadImageResources(L"SpeedMeter");
 			LoadMultiMeshModelResources();
 			LoadSoundResources();
 			LoadStaticModelResources();

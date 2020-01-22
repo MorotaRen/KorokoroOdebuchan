@@ -181,6 +181,33 @@ namespace basecross {
 		virtual void OnUpdate() override;
 	};
 
+	//--------------------------------------------------------------------------------------
+	//	スピードメーターのUI
+	//--------------------------------------------------------------------------------------
+	class SpeedMeter :public GameObject{
+	public:
+		SpeedMeter(const shared_ptr<Stage>&stagePtr);
+
+		virtual ~SpeedMeter() {}
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+
+	};
+
+	class SpeedMeterNeedle :public GameObject {
+		float m_speed;
+		float m_rotate;
+
+	public:
+		SpeedMeterNeedle(const shared_ptr<Stage>&stagePtr);
+
+		virtual ~SpeedMeterNeedle() {}
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+		//プレイヤーのスピードを取得する
+		void SetSpeed(float s) { m_speed = s; }
+	};
+
 	/***************************************************************************************
 									  リザルトシーンのUI
 	***************************************************************************************/
