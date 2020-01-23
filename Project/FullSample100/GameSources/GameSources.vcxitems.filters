@@ -23,6 +23,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Vibration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WaitScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SelectScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -50,5 +51,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Vibration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SelectScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SS5Object.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WaitScene.h" />
   </ItemGroup>
 </Project>

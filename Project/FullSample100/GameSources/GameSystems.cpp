@@ -265,18 +265,18 @@ namespace basecross {
 			int loopnum = 0;
 			char *ptr, *ctx;
 			ptr = strtok_s(pos, ",", &ctx);
-			v_pos.x = atof(ptr);
+			v_pos.x = (float)atof(ptr);
 
 			while (ptr)
 			{
 				if (loopnum == 0) {
 					ptr = strtok_s(nullptr, ",", &ctx);
-					v_pos.y = atof(ptr);
+					v_pos.y = (float)atof(ptr);
 					loopnum++;
 				}
 				else {
 					ptr = strtok_s(nullptr, ",", &ctx);
-					v_pos.z = atof(ptr);
+					v_pos.z = (float)atof(ptr);
 					loopnum++;
 				}
 
