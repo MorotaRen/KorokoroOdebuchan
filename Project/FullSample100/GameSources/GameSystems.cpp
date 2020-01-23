@@ -42,25 +42,21 @@ namespace basecross {
 		FileDir = DataDir + L"CSV\\Collider.csv";
 		m_stageCSV.SetFileName(FileDir);
 		m_stageCSV.ReadCsv();
-		//‘S‘Ì”z—ñæ“¾
 		auto& LineVec = m_stageCSV.GetCsvVec();
-		//s‚É•ª‚¯‚é
 		for (size_t i = 0; i < LineVec.size(); i++) {
 			vector<wstring> Tokens;
-			//ƒg[ƒNƒ“iƒJƒ‰ƒ€j’PˆÊ‚Å•¶š—ñ‚ğ’Šo(L','‚ğƒfƒŠƒ~ƒ^‚Æ‚µ‚Ä‹æ•ª‚¯)
 			Util::WStrToTokenVector(Tokens, LineVec[i], L',');
-			//ÀÛ‚ÉƒXƒLƒƒƒ“ŠJn
 			for (size_t j = 0; j < 1; j++) {
 				switch (Tokens[0] == L"")
 				{
 				case false:
-					//0‚Íƒ^ƒO
+					//Tag
 					if (LoopNum == 0) {
 						m_objectdata.Tag = Tokens[0];
 						LoopNum++;
 						break;
 					}
-					//1‚ÍPos
+					//Pos
 					else if (LoopNum == 1) {
 						m_objectdata.Pos.x = stof(Tokens[0]);
 						m_objectdata.Pos.y = stof(Tokens[1]);
@@ -68,7 +64,7 @@ namespace basecross {
 						LoopNum++;
 						break;
 					}
-					//2‚ÍRot
+					//Rot
 					else if (LoopNum == 2) {
 						m_objectdata.Rotate.x = stof(Tokens[0]);
 						m_objectdata.Rotate.y = stof(Tokens[1]);
@@ -77,7 +73,7 @@ namespace basecross {
 						LoopNum++;
 						break;
 					}
-					//3‚ÍSca
+					//Scale
 					else if (LoopNum == 3) {
 						m_objectdata.Scale.x = stof(Tokens[0]);
 						m_objectdata.Scale.y = stof(Tokens[1]);
@@ -85,15 +81,14 @@ namespace basecross {
 						LoopNum++;
 						break;
 					}
-					//*‚ª‚ ‚Á‚½‚çˆÈ‰ºq‹Ÿ
+					//*‚Íq‹Ÿ
 					else if (Tokens[0].find(L"*") != std::string::npos && LoopNum == 4) {
-						//ƒOƒ‹[ƒvƒiƒ“ƒo[‰ÁZ‚µ‚Ä“o˜^
 						m_objectdata.GroupNum++;
 						m_objectdatas.push_back(m_objectdata);
 						LoopNum = 0;
 						break;
 					}
-					//-‚Ì‚Í‚»‚Ì‚Ü‚ÜŒp‘±“o˜^
+					//-Œp‘±“o˜^
 					else if (Tokens[0].find(L"-") != std::string::npos && LoopNum == 4) {
 						m_objectdatas.push_back(m_objectdata);
 						LoopNum = 0;
@@ -105,6 +100,7 @@ namespace basecross {
 			}
 		}
 	}
+
 	///	----------------------------------------<summary>
 	/// ƒXƒe[ƒW‚ğì¬‚·‚é
 	/// </summary>----------------------------------------
@@ -115,22 +111,18 @@ namespace basecross {
 		{
 			//ƒvƒŒƒCƒ„[ŠJn’n“_
 			if (objdata.Tag == L"PlayerStartPos") {
-				//Stage->AddGameObject<TestBlock>(objdata.Pos,objdata.Scale,objdata.Rotate.toRotVec());
 				auto PlayerObj = Stage->AddGameObject<Player>(objdata.Pos,Vec3(0.1f,0.1f,0.1f));
 				Stage->SetSharedGameObject(L"Player", PlayerObj);
 				PlayerObj->AddTag(L"Player");
 				return PlayerObj;
-			//ƒIƒuƒWƒFƒNƒg‚Ì”»’è
+			//ƒIƒuƒWƒFƒNƒg”»’è
 			}else if (objdata.Tag == L"ObjectCollider") {
 				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
-				//–³‹—p‚Ìƒ^ƒOİ’è
 				//ColliderObj->AddTag(L"WallCollider");
 				//ColliderObj->AddTag(L"Wall");
-				//‰Šúó‘Ô‚Å‚ÍXV‚ğØ‚Á‚Ä‚¨‚­(ƒfƒoƒbƒNê—p)
-				////ColliderObj->SetUpdateActive(false);
-				//ƒGƒŠƒA•ª‚¯
+				//ColliderObj->SetUpdateActive(false);
 				//m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
-			//ƒXƒe[ƒW•Ç
+			//•Ç
 			}else if (objdata.Tag == L"Stage") {
 				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
 			//ƒXƒe[ƒWƒIƒuƒWƒFƒNƒg
@@ -144,7 +136,7 @@ namespace basecross {
 			}else if(objdata.Tag == L"GoalCollider"){
 				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
 				//ColliderObj->AddTag(L"GoalCollider");
-			//‚È‚ñ‚Å‚à‚È‚©‚Á‚½‚ç
+			//‚È‚ñ‚Å‚à‚È‚¢
 			}else {
 				m_colobjs.push_back(vector<shared_ptr<ColliderObjects>>());
 			}
@@ -160,7 +152,7 @@ namespace basecross {
 		{
 			obj->SetUpdateActive(true);
 		}
-		//‘O‚Ì”š‚ª‘¶İ‚·‚é(-1‚Æ‚©‚¶‚á‚È‚¢‚È‚ç)
+		//?$B%=%9(BO?$B%=%9%U(B??$B%=%9(B?$B%=%9(B?$B%=%9(B?$B%=%9(B?$B%=%9(B?$B%=%9(B?$B%=%9(B?$B%=%9%s(B??$B%=%9(B?$B%=%9(B?$B%=%9(B(-1?$B%=%9%K(B??$B%=%9(B?$B%=%9(B?$B%=%9(B?$B%=%9(B?$B%=%9%M(B??$B%=%9(B?$B%=%9%M(B??$B%=%9(B)
 		if ((nextnum - 1) < 0) {
 			for each (auto backobj in m_colobjs[nextnum-1])
 			{
@@ -179,15 +171,11 @@ namespace basecross {
 		m_modelCSV.SetFileName(FileDir);
 		m_modelCSV.ReadCsv();
 
-		//‘S‘Ì”z—ñæ“¾
 		auto& LineVec = m_modelCSV.GetCsvVec();
-		//s‚É•ª‚¯‚é
 		for (size_t i = 0; i < LineVec.size();i++) {
 			vector<wstring> Tokens;
 			m_modelData.clear();
-			//ƒg[ƒNƒ“iƒJƒ‰ƒ€j’PˆÊ‚Å•¶š—ñ‚ğ’Šo(L','‚ğƒfƒŠƒ~ƒ^‚Æ‚µ‚Ä‹æ•ª‚¯)
 			Util::WStrToTokenVector(Tokens, LineVec[i], L',');
-			//ÀÛ‚ÉƒXƒLƒƒƒ“ŠJn
 			for (size_t j = 0; j < Tokens.size();j++) {
 				m_modelData.push_back(Tokens[j]);
 				if (Tokens[j] == L"END") {
@@ -201,9 +189,9 @@ namespace basecross {
 	/// ƒ‚ƒfƒ‹‚Ìƒtƒ@ƒCƒ‹–¼‚ÆƒL[ƒl[ƒ€‚Ì“o˜^
 	/// </summary>----------------------------------------
 	void GameSystems::CreateModelData(vector<wstring> data) {
-		//0ƒ{[ƒ“‚©
+		//0‚Íƒ{[ƒ“
 		if (data[0] == L"TRUE") {
-			//1-2	ƒtƒ@ƒCƒ‹–¼‚ÆƒL[ƒl[ƒ€
+			//1-2	ƒtƒ@ƒCƒ‹‚ÆƒL[ƒl[ƒ€
 			wstring dataDir;
 			App::GetApp()->GetDataDirectory(dataDir);
 			wstring srtmodel = dataDir + L"Models\\";
