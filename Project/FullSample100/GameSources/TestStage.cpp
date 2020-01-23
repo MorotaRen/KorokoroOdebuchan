@@ -53,6 +53,8 @@ namespace basecross {
 		//m_SpGage[5] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(500.0f, 0.0f));
 
 		//AddGameObject<GaugeMax>(L"OnPush", Vec2(275.0f, 30.0f), Vec2(500.0f, -10.0f));
+		//スピードメーター*************************************************************************
+		AddGameObject<SpeedMeter>();
 
 		//ポーズ画面の画像*************************************************************************
 		AddGameObject<StartPause>(L"ResultBG", Vec2(600, 600), Vec2(0, 0));
@@ -117,6 +119,12 @@ namespace basecross {
 		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
 			GameSystems::GetInstans().SetSmashPoint(1);
 		}
+		//仮
+		auto pos = GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
+		if (pos.y < -15.0f) {
+			AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+		}
+
 	}
 	//時を止める処理
 	void TestStage::UpdateStage() {

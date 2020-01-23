@@ -42,7 +42,6 @@ namespace basecross {
 		float m_runX;
 		float m_runY;
 		float m_calory; //カロリー
-		float m_speed;
 		bool m_boundFlagL; //左ハジキのフラグ
 		bool m_boundFlagR; //右ハジキのフラグ
 		float m_boundInputReceptionTime; //ハジキの入力受付時間
@@ -52,9 +51,10 @@ namespace basecross {
 		bool m_GoolFlg;//ゴールしたかフラグ
 		bool m_StageObjHit = false;
 		bool m_isSmash; //スマッシュローリング可否のフラグ
-		bool m_isAccele;
-		int m_vibrationCount;
-		bool m_isZoomOut;
+		bool m_isAccele; //加速中のフラグ
+		int m_vibrationCount; 
+		bool m_isZoomOut; 
+		float m_decelerationTime; //減速時間
 
 		//入力された時
 		void InputController();
@@ -95,8 +95,8 @@ namespace basecross {
 		void SetBoundFlagR(bool f) { m_boundFlagR = f; }
 		bool GetBoundFlagR() { return m_boundFlagR; }
 
-		void SetPlayerSpeed(float s) { m_speed = s; }
-		float GetPlayerSpeed() { return m_speed; }
+		void SetPlayerSpeed(float s) { m_rollingSpeed = s; }
+		float GetPlayerSpeed() { return m_rollingSpeed; }
 
 		void SetPlayerFrontVec(Vec3 f) { m_front = f; }
 		Vec3 GetPlayerFrontVec() { return m_front; }

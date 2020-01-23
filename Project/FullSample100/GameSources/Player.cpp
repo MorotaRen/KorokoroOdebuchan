@@ -29,7 +29,8 @@ namespace basecross {
 		m_smashAccele(7.0f),
 		m_isSmash(false),
 		m_smashTime(1.0f),
-		m_isAccele(false)
+		m_isAccele(false),
+		m_decelerationTime(0.3f)
 	{
 	}
 
@@ -94,6 +95,8 @@ namespace basecross {
 			NetWork::GetInstans().Connection_Sending(GetComponent<Transform>()->GetPosition());
 			//PlayerChengeModel();
 		}
+
+		GameSystems::GetInstans().SetPlayerSeed(m_rollingSpeed);
 	}
 
 	//入力された時
@@ -142,6 +145,8 @@ namespace basecross {
 			default:
 				break;
 			}
+			//auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			//ptrXA->Start(L"WallHit", 0, 1.0f);
 		}
 	}
 
@@ -286,6 +291,18 @@ namespace basecross {
 				}
 			}
 
+			//障害物と衝突
+			if (m_StageObjHit) {
+				if (m_rollingSpeed < 5.0f) {
+					m_rollingSpeed -= 5.0f*elapsedTime;
+					m_decelerationTime -= elapsedTime;
+					if (m_decelerationTime < 0 || m_rollingSpeed < 0) {
+						m_decelerationTime = 0.3f;
+						m_StageObjHit = false;
+					}
+				}
+			}
+
 			//壁と衝突
 			if (m_isWall) {
 				Vec3 crashPos(0, 0, 0);
@@ -382,24 +399,29 @@ namespace basecross {
 			}
 
 			//スマッシュローリング
-			if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
+			//if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
 					//sharedObj->SetActive(true);
 					m_isSmash = true;
 					m_isZoomOut = true;
 					m_smashTime = 1.0f;
-				}
+					
+				//}
 			}
 			if (m_isSmash) {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 				m_smashTime -= elapsedTime;
-				m_rollingSpeed = m_smashAccele;
+				m_rollingSpeed += m_smashAccele * elapsedTime;
 				if (m_smashTime < 0.0f) {
-					m_rollingSpeed = 5.0f;
 					m_isSmash = false;
 					m_isZoomOut = false;
+				}
+			}
+			else {
+				if (m_rollingSpeed > 7.5f) {
+					m_rollingSpeed -= 1.0f * elapsedTime;
 				}
 			}
 
@@ -418,11 +440,11 @@ namespace basecross {
 
 			//最低速度
 			if (m_rollingSpeed < 0.3f) {
-				m_rollingSpeed = 0.3f;
+				m_rollingSpeed += 1.0f * elapsedTime;
 			}
 
 			if (m_rollingSpeed > 8.0f) {
-				m_rollingSpeed = 8.0f;
+				m_rollingSpeed -= 2.0f * elapsedTime;
 			}
 
 			//エフェクトカウンターリセット
@@ -495,7 +517,7 @@ namespace basecross {
 			ptrDrawRoll->SetDrawActive(true);
 			auto ptrCamera = dynamic_pointer_cast<MyCamera>(OnGetDrawCamera());
 			m_front = GetComponent<Transform>()->GetPosition() - ptrCamera->GetEye();
-			m_rollingSpeed = 1.0f;
+			m_rollingSpeed = 0.0f;
 		}
 	}
 
@@ -631,10 +653,7 @@ namespace basecross {
 		wstring strSpeed(L"PlayerSpeed:\t");
 		strSpeed += L"Speed=" + Util::FloatToWStr(m_rollingSpeed, 6, Util::FloatModify::Fixed) + L",\n";
 
-		wstring strEffect(L"PlayerSpeed:\t");
-		strEffect += L"Effect=" + Util::FloatToWStr(m_effectCount, 6, Util::FloatModify::Fixed) + L",\n";
-
-		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed + strEffect;
+		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed;
 		//文字列をつける
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
@@ -708,9 +727,6 @@ namespace basecross {
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
 		if (other->FindTag(L"CourseObject")) {
 			m_StageObjHit = true;
-			if (m_rollingSpeed < 5.0f) {
-				m_rollingSpeed = 0.0f;
-			}
 		}
 
 		if (other->FindTag(L"WallCollider")) {
@@ -732,7 +748,7 @@ namespace basecross {
 			m_isWall = false;
 		}
 		if (other->FindTag(L"CourseObject")) {
-			m_StageObjHit = false;
+			//m_StageObjHit = false;
 		}
 	}
 }
