@@ -1198,7 +1198,7 @@ namespace basecross {
 			//見つからない
 			wstring str = Util::GetWSTypeName<T>();
 			throw BaseException(
-				L"指定のリソースは存在しません。",
+				L"",
 				str,
 				L"App::GetResourceKey()"
 			);

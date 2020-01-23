@@ -157,7 +157,7 @@ namespace basecross {
 
 	}
 
-	
+
 	void MyCamera::SetAt(const bsm::Vec3& At) {
 		Camera::SetAt(At);
 		Vec3 armVec = GetEye() - GetAt();
@@ -272,7 +272,7 @@ namespace basecross {
 		else {
 			if (m_culcEye.z > -1.0f) {
 				m_culcEye.z -= 1.2f * elapsedTime;
-				
+
 			}
 			/*if (m_culcEye.y > -2.0f) {
 				m_culcEye.y -= 0.75f * elapsedTime;
