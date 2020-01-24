@@ -132,15 +132,15 @@ namespace basecross {
 			}
 			else if (m_StageNum == 1) {
 				//âƒ
-				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
 			}
 			else if (m_StageNum == 2) {
 				//èH
-				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
 			}
 			else if (m_StageNum == 3) {
 				//ì~
-				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
 			}
 
 		}

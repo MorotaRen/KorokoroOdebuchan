@@ -21,9 +21,9 @@ namespace basecross {
 
 	void TitleScene::CreateUI() {
 		//ƒ^ƒCƒgƒ‹BG
-		AddGameObject<TitleSceneSprite>(L"TitleLogo", Vec2(512.0f, 512.0f), Vec2(0, 0));
+		AddGameObject<TitleSceneSprite>(L"TitleLogo", Vec2(512.0f, 512.0f), Vec2(0, 0))->ProtType();
 		//pushBottan
-		auto PushPtr = AddGameObject<TitleSceneSprite>(L"PushA", Vec2(720.0f, 120.0f), Vec2(0, -300));
+		auto PushPtr = AddGameObject<TitleSceneSprite>(L"Press A Button", Vec2(512.0f, 128.0f), Vec2(0, -300));
 		SetSharedGameObject(L"A_Button", PushPtr);
 	}
 
