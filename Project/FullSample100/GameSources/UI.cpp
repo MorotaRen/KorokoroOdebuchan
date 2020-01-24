@@ -30,6 +30,17 @@ namespace basecross {
 			ptrDraw->SetDiffuse(Col4(1.0f, 1.0f, 1.0f, 0.0f));
 		}
 	}
+
+	void TitleSceneSprite::ProtType() {
+		auto ptrAction = AddComponent<Action>();
+		ptrAction->AddMoveBy(1.0f, Vec3(25.0f, 0, 0.0f));
+		ptrAction->AddMoveBy(1.0f, Vec3(-25.0f, 0, 0.0f));
+		//ループする
+		ptrAction->SetLooped(true);
+		//アクション開始
+		ptrAction->Run();
+	}
+
 	/***************************************************************************************
 									  セレクトシーンのUI
 	***************************************************************************************/
@@ -135,14 +146,13 @@ namespace basecross {
 		switch (m_Count)
 		{
 		case 1:
-			ptrDraw->SetTextureResource(L"UI_2");
+			ptrDraw->SetTextureResource(L"Countdown_2");
 			break;
 		case 2:
-			ptrDraw->SetTextureResource(L"UI_1");
+			ptrDraw->SetTextureResource(L"Countdown_1");
 			break;
 		case 3:
 			//スタートの表示
-			ptrTrans->SetScale(Vec3(1280.0f, 512.0f, 0));
 			ptrDraw->SetTextureResource(L"START");
 			break;
 		case 4:

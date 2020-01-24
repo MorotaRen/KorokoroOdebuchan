@@ -21,6 +21,7 @@ namespace basecross {
 		virtual void OnCreate()override;
 
 		void SetActive(bool Active);
+		void ProtType();
 	};
 
 	/***************************************************************************************
