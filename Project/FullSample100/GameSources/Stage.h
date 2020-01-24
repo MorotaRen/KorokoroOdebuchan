@@ -16,13 +16,14 @@ namespace basecross {
 			m_scale;
 		//回転
 		Quat m_quat;
-
+		//モデルキー
+		wstring m_modelkey;
 		//描画用メッシュ
 		static shared_ptr<MeshResource> m_ConvexMesh;
 		//物理計算用メッシュ
 		static shared_ptr<PsConvexMeshResource> m_PsConvexMesh;
 	public:
-		StageObject(const shared_ptr<Stage>& ptrstage,Vec3 pos,Vec3 scale,Quat quat);
+		StageObject(const shared_ptr<Stage>& ptrstage,Vec3 pos,Vec3 scale,Quat quat,wstring modelkey);
 		~StageObject();
 		virtual void OnCreate()override;
 

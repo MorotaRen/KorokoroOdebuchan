@@ -9,7 +9,7 @@ namespace basecross {
 	/// ----------------------------------------<summary>
 	/// コンストラクタ
 	/// </summary>----------------------------------------
-	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat) {
+	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat,wstring modelkey) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat),m_modelkey(modelkey) {
 
 	}
 
@@ -27,7 +27,7 @@ namespace basecross {
 		auto TransComp = GetComponent<Transform>();
 		auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
 		//DrawComp->SetMultiMeshResource(L"M_Spring");
-		DrawComp->SetMeshResource(L"MS_Spring");
+		DrawComp->SetMeshResource(m_modelkey);
 		CreateStageCollider();
 
 
@@ -66,7 +66,6 @@ namespace basecross {
 		param.m_MotionType = PsMotionType::MotionTypeFixed;
 		m_quat.rotationY(3.14);
 		param.m_Quat = m_quat;
-		m_pos.y += 0.02f;
 		param.m_Pos = m_pos;
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
 		PsPtr->SetDrawActive(true);

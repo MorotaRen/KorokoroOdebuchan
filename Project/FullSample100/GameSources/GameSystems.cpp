@@ -124,7 +124,7 @@ namespace basecross {
 				//m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
 			//壁
 			}else if (objdata.Tag == L"Stage") {
-				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
+				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate,L"MS_SpringFloor1");
 			//ステージオブジェクト
 			}else if (objdata.Tag == L"StageObject") {
 				auto obj = Stage->AddGameObject<TestBlock>(objdata.Pos,objdata.Scale,objdata.Rotate);

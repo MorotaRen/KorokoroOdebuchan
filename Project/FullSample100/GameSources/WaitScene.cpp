@@ -35,10 +35,20 @@ namespace basecross {
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"OBJ_CourseSpring_Road.bmf",L"MS_Spring"}
+			{L"CourseSpring_Box_floor_1.bmf",L"MS_SpringFloor1"},
+			{L"CourseSpring_Box_floor_2.bmf",L"MS_SpringFloor2"},
+			{L"CourseSpring_Box_floor_3.bmf",L"MS_SpringFloor3"},
+			{L"CourseSpring_Box_floor_4.bmf",L"MS_SpringFloor4"},
+			{L"CourseSpring_Box_floor_5.bmf",L"MS_SpringFloor5"},
+			{L"CourseSpring_Box_floor_6.bmf",L"MS_SpringFloor6"},
+			{L"CourseSpring_Box_floor_7.bmf",L"MS_SpringFloor7"},
+			{L"CourseSpring_Box_floor_8.bmf",L"MS_SpringFloor8"},
+			{L"CourseSpring_Box_floor_9.bmf",L"MS_SpringFloor9"},
+			{L"CourseSpring_Box_floor_10.bmf",L"MS_SpringFloor10"},
+			{L"CourseSpring_Box_floor_11.bmf",L"MS_SpringFloor11"},
 		};
 		for (auto model : models) {
-			wstring srtmodel = dataDir + L"Models\\";
+			wstring srtmodel = dataDir + L"Models\\Spring_BMF\\";
 			auto staticModel = MeshResource::CreateStaticModelMesh(srtmodel, model.m_modelName, true);
 			App::GetApp()->RegisterResource(model.m_modelKey, staticModel);
 		}
