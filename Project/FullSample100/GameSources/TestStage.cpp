@@ -81,11 +81,11 @@ namespace basecross {
 
 			PlayBGM(L"MainBGM", 0.5f);
 
-			wstring dataDir;
-			App::GetApp()->GetDataDirectory(dataDir);
-			wstring srtmodel = dataDir + L"SpriteStudio\\";
+			//wstring dataDir;
+			//App::GetApp()->GetDataDirectory(dataDir);
+			//wstring srtmodel = dataDir + L"SpriteStudio\\";
+			//AddGameObject<SmashGageSS>(srtmodel, L"LoadingAnimation.ssae", L"LoadAnim");
 
-			//AddGameObject<SS5Object>(srtmodel, L"SmashGage.ssae", L"GageAnim");
 
 			auto FadePtr = AddGameObject<FadeSprite>(FadeType::FadeIn, 0.01f);
 			SetSharedGameObject(L"Fade", FadePtr);
