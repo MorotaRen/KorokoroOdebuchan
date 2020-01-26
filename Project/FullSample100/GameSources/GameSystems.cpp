@@ -42,25 +42,21 @@ namespace basecross {
 		FileDir = DataDir + L"CSV\\Collider.csv";
 		m_stageCSV.SetFileName(FileDir);
 		m_stageCSV.ReadCsv();
-		//全体配列取得
 		auto& LineVec = m_stageCSV.GetCsvVec();
-		//行に分ける
 		for (size_t i = 0; i < LineVec.size(); i++) {
 			vector<wstring> Tokens;
-			//トークン（カラム）単位で文字列を抽出(L','をデリミタとして区分け)
 			Util::WStrToTokenVector(Tokens, LineVec[i], L',');
-			//実際にスキャン開始
 			for (size_t j = 0; j < 1; j++) {
 				switch (Tokens[0] == L"")
 				{
 				case false:
-					//0はタグ
+					//Tag
 					if (LoopNum == 0) {
 						m_objectdata.Tag = Tokens[0];
 						LoopNum++;
 						break;
 					}
-					//1はPos
+					//Pos
 					else if (LoopNum == 1) {
 						m_objectdata.Pos.x = stof(Tokens[0]);
 						m_objectdata.Pos.y = stof(Tokens[1]);
@@ -68,7 +64,7 @@ namespace basecross {
 						LoopNum++;
 						break;
 					}
-					//2はRot
+					//Rot
 					else if (LoopNum == 2) {
 						m_objectdata.Rotate.x = stof(Tokens[0]);
 						m_objectdata.Rotate.y = stof(Tokens[1]);
@@ -77,7 +73,7 @@ namespace basecross {
 						LoopNum++;
 						break;
 					}
-					//3はSca
+					//Scale
 					else if (LoopNum == 3) {
 						m_objectdata.Scale.x = stof(Tokens[0]);
 						m_objectdata.Scale.y = stof(Tokens[1]);
@@ -85,15 +81,14 @@ namespace basecross {
 						LoopNum++;
 						break;
 					}
-					//*があったら以下子供
+					//*は子供
 					else if (Tokens[0].find(L"*") != std::string::npos && LoopNum == 4) {
-						//グループナンバー加算して登録
 						m_objectdata.GroupNum++;
 						m_objectdatas.push_back(m_objectdata);
 						LoopNum = 0;
 						break;
 					}
-					//-の時はそのまま継続登録
+					//-継続登録
 					else if (Tokens[0].find(L"-") != std::string::npos && LoopNum == 4) {
 						m_objectdatas.push_back(m_objectdata);
 						LoopNum = 0;
@@ -105,6 +100,7 @@ namespace basecross {
 			}
 		}
 	}
+
 	///	----------------------------------------<summary>
 	/// ステージを作成する
 	/// </summary>----------------------------------------
@@ -115,22 +111,18 @@ namespace basecross {
 		{
 			//プレイヤー開始地点
 			if (objdata.Tag == L"PlayerStartPos") {
-				//Stage->AddGameObject<TestBlock>(objdata.Pos,objdata.Scale,objdata.Rotate.toRotVec());
 				auto PlayerObj = Stage->AddGameObject<Player>(objdata.Pos,Vec3(0.1f,0.1f,0.1f));
 				Stage->SetSharedGameObject(L"Player", PlayerObj);
 				PlayerObj->AddTag(L"Player");
 				return PlayerObj;
-			//オブジェクトの判定
+			//オブジェクト判定
 			}else if (objdata.Tag == L"ObjectCollider") {
 				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
-				//無視用のタグ設定
 				//ColliderObj->AddTag(L"WallCollider");
 				//ColliderObj->AddTag(L"Wall");
-				//初期状態では更新を切っておく(デバック専用)
-				////ColliderObj->SetUpdateActive(false);
-				//エリア分け
+				//ColliderObj->SetUpdateActive(false);
 				//m_colobjs[objdata.GroupNum-1].push_back(ColliderObj);
-			//ステージ壁
+			//壁
 			}else if (objdata.Tag == L"Stage") {
 				Stage->AddGameObject<StageObject>(objdata.Pos, objdata.Scale, objdata.Rotate);
 			//ステージオブジェクト
@@ -144,7 +136,7 @@ namespace basecross {
 			}else if(objdata.Tag == L"GoalCollider"){
 				//auto ColliderObj = Stage->AddGameObject<ColliderObjects>(objdata.Pos,objdata.Scale,objdata.Rotate);
 				//ColliderObj->AddTag(L"GoalCollider");
-			//なんでもなかったら
+			//なんでもない
 			}else {
 				m_colobjs.push_back(vector<shared_ptr<ColliderObjects>>());
 			}
@@ -160,7 +152,6 @@ namespace basecross {
 		{
 			obj->SetUpdateActive(true);
 		}
-		//前の数字が存在する(-1とかじゃないなら)
 		if ((nextnum - 1) < 0) {
 			for each (auto backobj in m_colobjs[nextnum-1])
 			{
@@ -179,15 +170,11 @@ namespace basecross {
 		m_modelCSV.SetFileName(FileDir);
 		m_modelCSV.ReadCsv();
 
-		//全体配列取得
 		auto& LineVec = m_modelCSV.GetCsvVec();
-		//行に分ける
 		for (size_t i = 0; i < LineVec.size();i++) {
 			vector<wstring> Tokens;
 			m_modelData.clear();
-			//トークン（カラム）単位で文字列を抽出(L','をデリミタとして区分け)
 			Util::WStrToTokenVector(Tokens, LineVec[i], L',');
-			//実際にスキャン開始
 			for (size_t j = 0; j < Tokens.size();j++) {
 				m_modelData.push_back(Tokens[j]);
 				if (Tokens[j] == L"END") {
@@ -201,9 +188,9 @@ namespace basecross {
 	/// モデルのファイル名とキーネームの登録
 	/// </summary>----------------------------------------
 	void GameSystems::CreateModelData(vector<wstring> data) {
-		//0ボーンか
+		//0はボーン
 		if (data[0] == L"TRUE") {
-			//1-2	ファイル名とキーネーム
+			//1-2	ファイルとキーネーム
 			wstring dataDir;
 			App::GetApp()->GetDataDirectory(dataDir);
 			wstring srtmodel = dataDir + L"Models\\";
@@ -265,18 +252,18 @@ namespace basecross {
 			int loopnum = 0;
 			char *ptr, *ctx;
 			ptr = strtok_s(pos, ",", &ctx);
-			v_pos.x = atof(ptr);
+			v_pos.x = (float)atof(ptr);
 
 			while (ptr)
 			{
 				if (loopnum == 0) {
 					ptr = strtok_s(nullptr, ",", &ctx);
-					v_pos.y = atof(ptr);
+					v_pos.y = (float)atof(ptr);
 					loopnum++;
 				}
 				else {
 					ptr = strtok_s(nullptr, ",", &ctx);
-					v_pos.z = atof(ptr);
+					v_pos.z = (float)atof(ptr);
 					loopnum++;
 				}
 

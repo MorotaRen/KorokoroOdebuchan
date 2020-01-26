@@ -126,7 +126,7 @@ namespace basecross {
 			{
 				// 画像からシェーダリソースViewの作成
 				hr = ThrowIfFailed(CreateShaderResourceView(pDx11Device, image.GetImages(), image.GetImageCount(), metadata, pResult),
-					L"シェーダーリソースビューを作成できません",
+					L"",
 					L"if( FAILED( CreateShaderResourceView() ) )",
 					L"Texture::Impl::Impl()"
 				);
@@ -1476,13 +1476,13 @@ namespace basecross {
 		IDXGIFactory* pfac = nullptr;
 		ThrowIfFailed(
 			m_D3D11SwapChain->GetParent(__uuidof(IDXGIFactory), (void**)&pfac),
-			L"Alt+Enter機能の削除ファクトリ作成に失敗しました",
+			L"",
 			L"m_D3D11SwapChain->GetParent(__uuidof(IDXGIFactory), (void**)&pfac)",
 			L"DeviceResources::Impl::CreateDeviceResources()"
 		);
 		if (!pfac) {
 			throw BaseException(
-				L"Alt+Enter機能の削除ファクトリがありません",
+				L"",
 				L"if (!pfac)",
 				L"DeviceResources::Impl::CreateDeviceResources()"
 			);
@@ -2302,7 +2302,7 @@ namespace basecross {
 
 			ThrowIfFailed(
 				pD3D11Device->CreateShaderResourceView(pImpl->m_DepthStencil.Get(), &shaderResourceViewDesc, &pImpl->m_ShaderResourceView),
-				L"シェーダーリソースビューの作成に失敗しました。",
+				L"",
 				L"pD3D11Device->CreateShaderResourceView(m_DepthStencil.Get(), &shaderResourceViewDesc, &m_ShaderResourceView)",
 				L"ShadowMapRenderTarget::ShadowMapRenderTarget()"
 			);

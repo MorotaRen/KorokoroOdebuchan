@@ -36,13 +36,15 @@ namespace basecross {
 
 	void TestStage::CreateUI()
 	{
+		AddGameObject<CountDown>(L"Countdown_3", Vec2(1280.0f, 512.0f), Vec2(0.0f, 0.0f));
+
 		//タイマー
-		auto TimerPtr = AddGameObject<Timer>(8, L"UI_Number_5", true, Vec2(160.0f, 40.0f), Vec3(360.0f, 350.0f, 0.0f));
+		auto TimerPtr = AddGameObject<Timer>(8, L"UI_Number_6", true, Vec2(160.0f, 40.0f), Vec3(360.0f, 350.0f, 0.0f));
 		SetSharedGameObject(L"Timer", TimerPtr);
 		///生成されたときは止めておく
 		TimerPtr->SetUpdateActive(false);
 		//timeの画像表示
-		auto TimePtr = AddGameObject<TextTime>(L"UI_Time_2", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
+		auto TimePtr = AddGameObject<TextTime>(L"UI_Time_3", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
 		SetSharedGameObject(L"TextTime", TimePtr);
 
 		//スマッシュゲージ*************************************************************************
@@ -57,7 +59,7 @@ namespace basecross {
 		AddGameObject<SpeedMeter>();
 
 		//ポーズ画面の画像*************************************************************************
-		AddGameObject<StartPause>(L"ResultBG", Vec2(600, 600), Vec2(0, 0));
+		AddGameObject<StartPause>(L"BackBoard", Vec2(600, 600), Vec2(0, 0));
 		AddGameObject<StartPause>(L"Pause", Vec2(256.0f, 64.0f), Vec2(0, 200));
 		auto pause = AddGameObject<StartPause>(L"Gameback", Vec2(368.0f, 65.0f), Vec2(0, 50));
 		pause->Akarusa(true);
@@ -79,10 +81,15 @@ namespace basecross {
 
 			PlayBGM(L"MainBGM", 0.5f);
 
+			//wstring dataDir;
+			//App::GetApp()->GetDataDirectory(dataDir);
+			//wstring srtmodel = dataDir + L"SpriteStudio\\";
+			//AddGameObject<SmashGageSS>(srtmodel, L"LoadingAnimation.ssae", L"LoadAnim");
+
+
 			auto FadePtr = AddGameObject<FadeSprite>(FadeType::FadeIn, 0.01f);
 			SetSharedGameObject(L"Fade", FadePtr);
 
-			AddGameObject<CountDown>(L"UI_3", Vec2(512.0f, 512.0f), Vec2(0.0f, 0.0f));
 		}
 		catch (...) {
 			throw;

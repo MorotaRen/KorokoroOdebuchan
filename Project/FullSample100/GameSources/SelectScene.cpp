@@ -25,8 +25,6 @@ namespace basecross {
 	}
 
 	void SelectScene::CreateUI() {
-		//タイトルロゴ
-		m_Spvec[0] = AddGameObject<SelectSceneSprite>(L"TitleLogo", Vec2(256.0f, 256.0f), Vec2(0, 0));
 		//難易度のスプライトを作成
 		m_Spvec[1] = AddGameObject<SelectSceneSprite>(L"Title_SpringStage", Vec2(640.0f, 400.0f), Vec2(-320, 200));
 		m_Spvec[2] = AddGameObject<SelectSceneSprite>(L"Title_SpringStage", Vec2(640.0f, 400.0f), Vec2(320.0f, 200.0f));
@@ -37,21 +35,33 @@ namespace basecross {
 		m_SpotSprite = AddGameObject<SelectSpotSprite>(L"Title_Mask", Vec2(1921.0f, 1201.0f), Vec2(-320.0f, 200.0f));
 		m_SpotSprite->SetDrawLayer(10);
 
-		//描画処理が有効
-		m_Spvec[0]->SetDrawActive(true);
-		m_Spvec[1]->SetDrawActive(true);
-		m_Spvec[2]->SetDrawActive(true);
-		m_Spvec[3]->SetDrawActive(true);
-		m_Spvec[4]->SetDrawActive(true);
 
-		m_Spvec[0]->SetDrawLayer(9);
 		m_Spvec[1]->SetDrawLayer(1);
 		m_Spvec[2]->SetDrawLayer(1);
 		m_Spvec[3]->SetDrawLayer(1);
 		m_Spvec[4]->SetDrawLayer(1);
 
 	}
-
+	void SelectScene::CreateAnimSp() {
+		wstring dataDir;
+		App::GetApp()->GetDataDirectory(dataDir);
+		//春
+		wstring srtmodel = dataDir + L"SpriteStudio\\TitleSpring\\";
+		auto Spring_SS = AddGameObject<SelectSS>(srtmodel, L"TitleSpring.ssae", L"Clause", Vec2(32.0f, 32.0f), Vec2(-320, 200));
+		SetSharedGameObject(L"Spring", Spring_SS);
+		//秋
+		srtmodel = dataDir + L"SpriteStudio\\TitleAutumn\\";
+		auto Summer_SS = AddGameObject<SelectSS>(srtmodel, L"TitleAutumn.ssae", L"Clause", Vec2(32.0f, 32.0f), Vec2(320.0f, 200.0f));
+		SetSharedGameObject(L"Summer", Summer_SS);
+		//夏
+		srtmodel = dataDir + L"SpriteStudio\\TitleSummer\\";
+		auto Autumn_SS = AddGameObject<SelectSS>(srtmodel, L"TitleSummer.ssae", L"Clause", Vec2(32.0f, 32.0f), Vec2(-320.0f, -200.0f));
+		SetSharedGameObject(L"Autumn", Autumn_SS);
+		//冬
+		srtmodel = dataDir + L"SpriteStudio\\TitleWinter\\";
+		auto Winter_SS = AddGameObject<SelectSS>(srtmodel, L"TitleWinter.ssae", L"Clause", Vec2(32.0f, 32.0f), Vec2(320.0f, -200.0f));
+		SetSharedGameObject(L"Winter", Winter_SS);
+	}
 	void SelectScene::CreateBackground() {
 		//ゲーム画面サイズ
 		Vec2 gamesize = Vec2((float)App::GetApp()->GetGameWidth(), (float)App::GetApp()->GetGameHeight());
@@ -65,10 +75,14 @@ namespace basecross {
 			//UIの作成
 			CreateUI();
 
+			//アニメーションスプライト
+			CreateAnimSp();
+
 			CreateBackground();
 
 			auto XAPtr = App::GetApp()->GetXAudio2Manager();
 			m_BGM = XAPtr->Start(L"TitleBGM", XAUDIO2_LOOP_INFINITE, 0.5f);
+
 
 			AddGameObject<FadeSprite>(FadeType::FadeIn, 0.01f);
 		}
@@ -77,7 +91,7 @@ namespace basecross {
 		}
 	}
 	void SelectScene::OnUpdate() {
-		//
+		//コントローラーの入力
 		bool SelectSpotFlag = m_SpotSprite->GetSelectSpotFlag();
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
 		auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -122,25 +136,60 @@ namespace basecross {
 			}
 		}
 
+		//アニメーションスプライト出すか引っ込めるか
+		//春
+		auto Spring = GetSharedGameObject<SelectSS>(L"Spring");
+		if (m_StageNum == 0) {
+			Spring->ChangeAnimation(L"Open",1);
+		}
+		else {
+			Spring->ChangeAnimation(L"Clause", 1);
+		}
+		//夏
+		auto Summer = GetSharedGameObject<SelectSS>(L"Summer");
+		if (m_StageNum == 1) {
+			Summer->ChangeAnimation(L"Open",1);
+		}
+		else {
+			Summer->ChangeAnimation(L"Clause", 1);
+		}
+		//秋
+		auto Autumn = GetSharedGameObject<SelectSS>(L"Autumn");
+		if (m_StageNum == 2) {
+			Autumn->ChangeAnimation(L"Open",1);
+		}
+		else {
+			Autumn->ChangeAnimation(L"Clause", 1);
+		}
+		//冬
+		auto Winter = GetSharedGameObject<SelectSS>(L"Winter");
+		if (m_StageNum == 3) {
+			Winter->ChangeAnimation(L"Open",1);
+		}
+		else {
+			Winter->ChangeAnimation(L"Clause", 1);
+		}
+
+
 		//シーン遷移
 		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A&&SelectSpotFlag == true || KeyState.m_bPressedKeyTbl[VK_SPACE]) {
 			auto XAPtr = App::GetApp()->GetXAudio2Manager();
 			XAPtr->Stop(m_BGM);
 			if (m_StageNum == 0) {
 				//春
-				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
 			}
 			else if (m_StageNum == 1) {
-				//夏
-				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+				//秋
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
 			}
 			else if (m_StageNum == 2) {
-				//秋
-				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+				//夏
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
 			}
 			else if (m_StageNum == 3) {
 				//冬
-				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
 			}
 
 		}

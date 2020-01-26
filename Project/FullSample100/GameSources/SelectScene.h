@@ -17,6 +17,8 @@ namespace basecross{
 		void CreateViewLight();
 		//UIの作成
 		void CreateUI();
+		//アニメーションスプライト
+		void CreateAnimSp();
 
 		vector<shared_ptr<SelectSceneSprite>> m_Spvec;
 		shared_ptr<SelectSpotSprite> m_SpotSprite;

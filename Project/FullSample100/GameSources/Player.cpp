@@ -603,11 +603,11 @@ namespace basecross {
 
 	//文字列の表示
 	void Player::DrawStrings() {
-		auto Pos = GameSystems::GetInstans().NET_GetVec3();
-		wstring strNETPos(L"NETPosition:\t");
-		strNETPos += L"X=" + Util::FloatToWStr(Pos.x, 6, Util::FloatModify::Fixed) + L",\t";
-		strNETPos += L"Y=" + Util::FloatToWStr(Pos.y, 6, Util::FloatModify::Fixed) + L",\t";
-		strNETPos += L"Z=" + Util::FloatToWStr(Pos.z, 6, Util::FloatModify::Fixed) + L"\n";
+		//auto Pos = GameSystems::GetInstans().NET_GetVec3();
+		//wstring strNETPos(L"NETPosition:\t");
+		//strNETPos += L"X=" + Util::FloatToWStr(Pos.x, 6, Util::FloatModify::Fixed) + L",\t";
+		//strNETPos += L"Y=" + Util::FloatToWStr(Pos.y, 6, Util::FloatModify::Fixed) + L",\t";
+		//strNETPos += L"Z=" + Util::FloatToWStr(Pos.z, 6, Util::FloatModify::Fixed) + L"\n";
 		//文字列表示
 		wstring strMess(L"\n");
 		//オブジェクト数
@@ -660,7 +660,7 @@ namespace basecross {
 		wstring strSpeed(L"PlayerSpeed:\t");
 		strSpeed += L"Speed=" + Util::FloatToWStr(m_rollingSpeed, 6, Util::FloatModify::Fixed) + L",\n";
 
-		wstring str = strMess + strNETPos + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed;
+		wstring str = strMess /*+ strNETPos*/ + strObjCount + strFps + strPos + strRot + strFront + strVelo + strCamera + strSpeed;
 		//文字列をつける
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
