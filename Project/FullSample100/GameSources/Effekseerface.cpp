@@ -143,8 +143,38 @@ namespace basecross {
 	}
 
 
+	EfkSmashAccele::EfkSmashAccele(const shared_ptr<Stage>& ptrStage, const Vec3 pos ,const Vec3 rot) :
+		GameObject(ptrStage),
+		m_pos(pos),
+		m_rot(rot)
+	{
+	}
 
+	void EfkSmashAccele::OnCreate() {
+		//エフェクトの初期化
+		wstring DataDir;
+		App::GetApp()->GetDataDirectory(DataDir);
+		auto ShEfkInterface = GetTypeStage<TestStage>()->GetEfkInterface();
+		//加速エフェクト
+		wstring efkStr = L"Effects\\PlayerSmashAccele.efk";
 
+		auto ptrTransform = GetComponent<Transform>();
+		ptrTransform->SetPosition(m_pos);
+		ptrTransform->SetRotation(m_rot);
+		m_efkEffect = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+	}
+
+	void EfkSmashAccele::OnUpdate() {
+		auto ptrTransform = GetComponent<Transform>();
+
+		if (m_isEffect) {
+			m_efkSmashAccele = ObjectFactory::Create<EfkPlay>(m_efkEffect, ptrTransform->GetPosition());
+			m_isEffect = false;
+		}
+		ptrTransform->SetPosition(m_pos);
+		ptrTransform->SetRotation(m_rot);
+
+	}
 
 
 
