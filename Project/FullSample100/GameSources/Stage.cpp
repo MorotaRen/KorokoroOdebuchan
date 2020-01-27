@@ -28,23 +28,34 @@ namespace basecross {
 		auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
 		//DrawComp->SetMultiMeshResource(L"M_Spring");
 		DrawComp->SetMeshResource(m_modelkey);
-		CreateStageCollider();
 
 
 		//大きいので調整
-		TransComp->SetScale(Vec3(0.1f,0.1f,0.1f));
+		//TransComp->SetScale(Vec3(0.1f,0.1f,0.1f));
 		//Y軸180°回転
 		TransComp->SetQuaternion(m_quat);
 
+
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f)
+		);
+		DrawComp->SetMeshToTransformMatrix(spanMat);
+
+		CreateStageCollider();
 
 	}
 	/// ----------------------------------------<summary>
 	/// ステージの当たり判定の作成
 	/// </summary>----------------------------------------
-	shared_ptr<MeshResource> StageObject::m_ConvexMesh = nullptr;
-	shared_ptr<PsConvexMeshResource> StageObject::m_PsConvexMesh = nullptr;
+
 	void StageObject::CreateStageCollider()
 	{
+
+
 		auto DrawComp = GetComponent<BcPNTStaticModelDraw>();
 		auto Mesh = DrawComp->GetMeshResource();
 
@@ -67,6 +78,7 @@ namespace basecross {
 		m_quat.rotationY(3.14);
 		param.m_Quat = m_quat;
 		param.m_Pos = m_pos;
+
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
 		PsPtr->SetDrawActive(true);
 

@@ -103,7 +103,6 @@ namespace basecross {
 			GameSystems::GetInstans().LoadStageCSV();
 			m_ptrPlayer = GameSystems::GetInstans().CreateStage();
 			m_camera->SetPlayer(m_ptrPlayer);
-			GameSystems::GetInstans().ActiveNextCollision(0);
 			m_IsCreateObject = true;
 		}
 
@@ -127,10 +126,10 @@ namespace basecross {
 			GameSystems::GetInstans().SetSmashPoint(1);
 		}
 		//‰¼
-		auto pos = GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
-		if (pos.y < -15.0f) {
-			AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
-		}
+		//auto pos = GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
+		//if (pos.y < -15.0f) {
+		//	AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+		//}
 
 	}
 	//‚ğ~‚ß‚éˆ—
