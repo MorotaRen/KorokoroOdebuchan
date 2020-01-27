@@ -70,6 +70,29 @@ namespace basecross {
 		pause->GetComponent<PCTSpriteDraw>()->SetDiffuse(Col4(1, 1, 1, 0.5f));
 
 	}
+
+	void TestStage::CreateAnimSp() {
+		wstring dataDir;
+		App::GetApp()->GetDataDirectory(dataDir);
+		wstring srtmodel = dataDir + L"SpriteStudio\\SmashGage\\";
+		//球1
+		auto SmashGage_1 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(320, -230));
+		SetSharedGameObject(L"SmashGage_1",SmashGage_1);
+		//球2																					 
+		auto SmashGage_2 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(350, -190));
+		SetSharedGameObject(L"SmashGage_2", SmashGage_2);
+		//球3																					 
+		auto SmashGage_3 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(380, -150));
+		SetSharedGameObject(L"SmashGage_3", SmashGage_3);
+		//球4																					 
+		auto SmashGage_4 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(410, -120));
+		SetSharedGameObject(L"SmashGage_4", SmashGage_4);
+		//球5																					 
+		auto SmashGage_5 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(450, -100));
+		SetSharedGameObject(L"SmashGage_5", SmashGage_5);
+
+	}
+
 	void TestStage::OnCreate() {
 		try {
 			//ビューとライトの作成
@@ -78,6 +101,8 @@ namespace basecross {
 			CreateUI();
 			//エフェクトの作成
 			CreateEffect();
+			//アニメーションスプライト
+			CreateAnimSp();
 
 			PlayBGM(L"MainBGM", 0.5f);
 
@@ -111,7 +136,7 @@ namespace basecross {
 		auto scene = app->GetScene<Scene>();
 		auto stage = scene->GetActiveStage();
 		auto gameObject = stage->GetGameObjectVec();
-		//Timerを動かす
+		//Startの表示が終わったらTimerを動かす
 		if (m_StartActive == true) {
 			m_cntlrock = true;
 			for (auto v : gameObject) {
@@ -119,6 +144,37 @@ namespace basecross {
 					v->SetUpdateActive(true);
 				}
 			}
+		}
+
+		//壁に当たったらたまる、スマッシュゲージ
+		auto Gage_1 = GetSharedGameObject<SmashGageSS>(L"SmashGage_1");
+		auto Gage_2 = GetSharedGameObject<SmashGageSS>(L"SmashGage_2");
+		auto Gage_3 = GetSharedGameObject<SmashGageSS>(L"SmashGage_3");
+		auto Gage_4 = GetSharedGameObject<SmashGageSS>(L"SmashGage_4");
+		auto Gage_5 = GetSharedGameObject<SmashGageSS>(L"SmashGage_5");
+		auto SmashP = GameSystems::GetInstans().GetSmashPoint();
+		if (SmashP == 1) {
+			Gage_1->ChangeAnimation(L"Charge");
+			Gage_1->SetLooped(false);
+		}
+		if (SmashP == 2) {
+			Gage_2->ChangeAnimation(L"Charge");
+			Gage_2->SetLooped(false);
+		}
+		if (SmashP == 3) {
+			Gage_3->ChangeAnimation(L"Charge");
+			Gage_3->SetLooped(false);
+		}
+		if (SmashP == 4) {
+			Gage_4->ChangeAnimation(L"Charge");
+			Gage_4->SetLooped(false);
+		}
+		if (SmashP == 5) {
+			Gage_1->AllChangAnim(true);
+			Gage_2->AllChangAnim(true);
+			Gage_3->AllChangAnim(true);
+			Gage_4->AllChangAnim(true);
+			Gage_5->AllChangAnim(true);
 		}
 
 		//

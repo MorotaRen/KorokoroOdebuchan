@@ -479,10 +479,6 @@ namespace basecross {
 		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
 		ptrDraw->SetTextureResource(L"SpeedMeterNeedle");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
-		//文字列をつける
-		auto ptrString = AddComponent<StringSprite>();
-		ptrString->SetText(L"");
-		ptrString->SetTextRect(Rect2D<float>(1000.0f, 100.0f, 1200.0f, 480.0f));
 
 	}
 
@@ -494,12 +490,6 @@ namespace basecross {
 		if(angle >= 0) m_rotate = angle * XM_PI / 180;// ラジアン角に変換
 		ptrTrans->SetRotation(0, 0, m_rotate);
 
-		wstringstream ss;
-		ss << L"m_rotate : " << m_rotate << std::endl;
-
-		//文字列コンポーネントの取得
-		auto ptrString = GetComponent<StringSprite>();
-		ptrString->SetText(ss.str());
 
 	}
 	/***************************************************************************************
