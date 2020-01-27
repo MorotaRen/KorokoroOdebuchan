@@ -93,7 +93,7 @@ namespace basecross {
 		//ゲッター、セッター
 		int GetSmashPoint() {return m_SmashPoint;}
 
-		void SetSmashPoint(int i) { if (m_SmashPoint < 5) { m_SmashPoint += i; } }
+		void SetSmashPoint(int i) { if (m_SmashPoint <= 5) { m_SmashPoint += i; } }
 
 		float GetPlayerSpeed() { return m_playerSpeed; }
 

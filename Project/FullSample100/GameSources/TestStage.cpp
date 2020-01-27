@@ -166,6 +166,8 @@ namespace basecross {
 			Gage_4->ChangeAnimation(L"Glow");
 		}
 		if (GameSystems::GetInstans().GetSmashPoint() == 5) {
+			//６にならないとアニメーションならない
+			GameSystems::GetInstans().SetSmashPoint(1);
 			Gage_1->AllChangAnim(true);
 			Gage_2->AllChangAnim(true);
 			Gage_3->AllChangAnim(true);
