@@ -1065,6 +1065,9 @@
 							</key>
 						</attribute>
 						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.600000023841858</value>
+							</key>
 							<key time="1" ipType="linear">
 								<value>0.600000023841858</value>
 							</key>
@@ -1082,6 +1085,9 @@
 							</key>
 						</attribute>
 						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>0.600000023841858</value>
+							</key>
 							<key time="1" ipType="linear">
 								<value>0.600000023841858</value>
 							</key>
@@ -1246,6 +1252,9 @@
 							</key>
 						</attribute>
 						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.600000023841858</value>
+							</key>
 							<key time="3" ipType="linear">
 								<value>0.600000023841858</value>
 							</key>
@@ -1263,6 +1272,9 @@
 							</key>
 						</attribute>
 						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>0.600000023841858</value>
+							</key>
 							<key time="3" ipType="linear">
 								<value>0.600000023841858</value>
 							</key>
@@ -1427,6 +1439,9 @@
 							</key>
 						</attribute>
 						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.600000023841858</value>
+							</key>
 							<key time="5" ipType="linear">
 								<value>0.600000023841858</value>
 							</key>
@@ -1444,6 +1459,9 @@
 							</key>
 						</attribute>
 						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>0.600000023841858</value>
+							</key>
 							<key time="5" ipType="linear">
 								<value>0.600000023841858</value>
 							</key>
