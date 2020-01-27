@@ -23,7 +23,7 @@ namespace basecross {
 	{
 
 	private:
-		shared_ptr<EfkEffect> m_efkEffect[6];
+		shared_ptr<EfkEffect> m_efkEffect[9];
 		shared_ptr<EfkPlay> m_efkPlay[100];
 		shared_ptr<EfkSmashAccele> m_ptrEfk;
 		PlayerState m_state; //プレイヤーのモード

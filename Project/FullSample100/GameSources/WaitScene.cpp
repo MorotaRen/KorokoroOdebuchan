@@ -35,7 +35,8 @@ namespace basecross {
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"OBJ_CourseSpring_Road.bmf",L"MS_Spring"}
+			{L"OBJ_CourseSpring_Road.bmf",L"MS_Spring"},
+			{L"OBJ_CourseSpring_Box_testfloor.bmf",L"MS_SpringCourse"}
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";

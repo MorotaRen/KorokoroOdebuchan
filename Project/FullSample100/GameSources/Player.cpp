@@ -76,6 +76,15 @@ namespace basecross {
 		//加速エフェクト
 		efkStr = L"Effects\\PlayerSmashAccele.efk";
 		m_efkEffect[5] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//砂埃のエフェクト
+		efkStr = L"Effects\\Sanddust.efk";
+		m_efkEffect[6] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//もみじのエフェクト
+		efkStr = L"Effects\\Leave.efk";
+		m_efkEffect[7] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//雪のエフェクト
+		efkStr = L"Effects\\Snow.efk";
+		m_efkEffect[8] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
 
 	}
 
