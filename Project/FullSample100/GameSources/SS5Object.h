@@ -20,7 +20,7 @@ namespace basecross{
 	// セレクトステージ用のSS
 	//--------------------------------------------------------------------------------------
 	class SelectSS : public SS5ssae {
-	protected:
+	private:
 		Vec2 m_Scale;
 		Vec2 m_Position;
 	public:
@@ -43,14 +43,24 @@ namespace basecross{
 	// スマッシュゲージ用のSS
 	//--------------------------------------------------------------------------------------
 	class SmashGageSS :public SS5ssae {
+	private:
+		Vec2 m_Scale;
+		Vec2 m_Position;
 	public:
 		//構築
-		SmashGageSS(const shared_ptr<Stage> stageptr, const wstring& BaseDir, const wstring FileName, const wstring FirstAnim);
+		SmashGageSS(const shared_ptr<Stage> stageptr,
+			const wstring& BaseDir,
+			const wstring FileName,
+			const wstring FirstAnim,
+			const Vec2& startScale,
+			const Vec2& startPos);
 		//破棄
 		~SmashGageSS(){};
 		//初期化
 		virtual void OnCreate() override;
 		//更新
 		virtual void OnUpdate() override;
+		//5個すべてを変える用
+		void AllChangAnim(bool Active);
 	};
 }
