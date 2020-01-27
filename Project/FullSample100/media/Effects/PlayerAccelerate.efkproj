@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EffekseerProject>
+  <Root>
+    <Name>Root</Name>
+    <Children>
+      <Node>
+        <CommonValues>
+          <MaxGeneration>
+            <Value>2</Value>
+          </MaxGeneration>
+          <Life>
+            <Center>10</Center>
+            <Max>10</Max>
+            <Min>10</Min>
+          </Life>
+        </CommonValues>
+        <DrawingValues>
+          <Type>0</Type>
+        </DrawingValues>
+        <Name>ParticleEmit</Name>
+        <Children>
+          <Node>
+            <Name>Node</Name>
+            <Children />
+          </Node>
+        </Children>
+      </Node>
+    </Children>
+  </Root>
+  <ToolVersion>1.43</ToolVersion>
+  <Version>3</Version>
+  <StartFrame>0</StartFrame>
+  <EndFrame>120</EndFrame>
+  <IsLoop>True</IsLoop>
+</EffekseerProject>

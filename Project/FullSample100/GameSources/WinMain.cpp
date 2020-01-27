@@ -22,6 +22,7 @@ const wchar_t* pWndTitle = L"BaseCrossFullSample";
 //--------------------------------------------------------------------------------------
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
+	//D3DXQUATERNION構造
 	WNDCLASSEX wcex;
 	ZeroMemory(&wcex, sizeof(wcex));
 
@@ -61,8 +62,8 @@ HWND InitInstance(HINSTANCE hInstance, int nCmdShow, bool isFullScreen, int iCli
 						// 画面全体の幅と高さを取得
 						//もし画面全体の解像度で処理する場合は以下を有効に
 						//メモリを圧迫するので動作速度注意！
-						//        iClientWidth = GetSystemMetrics(SM_CXSCREEN);
-						//        iClientHeight = GetSystemMetrics(SM_CYSCREEN);
+						        iClientWidth = GetSystemMetrics(SM_CXSCREEN);
+						       iClientHeight = GetSystemMetrics(SM_CYSCREEN);
 		hWnd = CreateWindow(
 			pClassName,			// 登録されているクラス名
 			pWndTitle,			// ウインドウ名
@@ -143,7 +144,7 @@ int MainLoop(HINSTANCE hInstance, HWND hWnd, bool isFullScreen, int iClientWidth
 		MSG msg = { 0 };
 		//キーボード入力用
 		//ここに設定したキーボード入力を得る
-		vector<DWORD> UseKeyVec = {};
+		vector<DWORD> UseKeyVec = {'W','A','S','D',VK_SHIFT,VK_SPACE};
 		while (WM_QUIT != msg.message) {
 			if (!App::GetApp()->ResetInputState(hWnd, UseKeyVec)) {
 				//キー状態が何もなければウインドウメッセージを得る
@@ -155,6 +156,8 @@ int MainLoop(HINSTANCE hInstance, HWND hWnd, bool isFullScreen, int iClientWidth
 			}
 			//更新描画処理
 			App::GetApp()->UpdateDraw(1);
+			//更新振動処理
+			Vibration::Instance()->Update();
 		}
 		//msg.wParamには終了コードが入っている
 		RetCode = (int)msg.wParam;
@@ -248,7 +251,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	{
 		return FALSE;
 	}
-
+	ShowCursor(false);
 	return  MainLoop(hInstance, hWnd, isFullScreen, iClientWidth, iClientHeight);
 
 }

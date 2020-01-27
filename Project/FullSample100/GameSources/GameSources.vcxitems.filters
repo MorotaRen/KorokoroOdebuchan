@@ -1,95 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{bdf173db-a343-4218-b8b0-66ac16f0b63b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Headers">
-      <UniqueIdentifier>{42c6b9c4-9322-41d8-bf1e-2edf43f657b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\Sources">
-      <UniqueIdentifier>{b7b15ca8-8472-4930-a73a-0054a2d2c538}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System">
-      <UniqueIdentifier>{2b0e6dac-367a-4ced-aa8c-eaca9e984698}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Headers">
-      <UniqueIdentifier>{87848ed3-7830-4421-8e8c-8a4c59cb2e54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Sources">
-      <UniqueIdentifier>{156e109e-b3c5-4eec-b2db-7473a1e74e74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="characters">
-      <UniqueIdentifier>{d01ee5e3-d1ea-47dc-95fd-21c3283f6d3d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="characters\Headers">
-      <UniqueIdentifier>{4b0a624a-610d-4bc6-b311-2b02a781cdf9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="characters\Sources">
-      <UniqueIdentifier>{96692d2a-8790-41a9-bfac-6c5662d4ad61}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h">
-      <Filter>Scene\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Project.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Player.h">
-      <Filter>characters\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
-      <Filter>characters\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h">
-      <Filter>Scene\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataLoad_CSV.h">
-      <Filter>System\Headers</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
-      <Filter>characters\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
-      <Filter>characters\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp">
-      <Filter>Scene\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp">
-      <Filter>Scene\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameSystems.cpp">
-      <Filter>System\Sources</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Checkpoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ColliderObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Effekseerface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Fade.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameSystems.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Items.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NetWork.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ResultScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestBlock.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Vibration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WaitScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SelectScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ColliderObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Effekseerface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Fade.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameSystems.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Items.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Network.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Objects.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Project.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ResultScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TitleScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Vibration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SelectScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SS5Object.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WaitScene.h" />
   </ItemGroup>
 </Project>

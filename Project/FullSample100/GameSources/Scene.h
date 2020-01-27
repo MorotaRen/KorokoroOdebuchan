@@ -16,7 +16,7 @@ namespace basecross{
 		weak_ptr<XAudio2Manager> m_audioManager = App::GetApp()->GetXAudio2Manager();
 		weak_ptr<SoundItem> m_numMusic;
 		wstring dataDir;
-
+		float m_RecodeTime = 0.0f;
 
 	public:
 		//--------------------------------------------------------------------------------------
@@ -46,17 +46,52 @@ namespace basecross{
 		//--------------------------------------------------------------------------------------
 		virtual void OnEvent(const shared_ptr<Event>& event) override;
 
+
+		/// ----------------------------------------------------------------------------<summary>
+		/// イメージの読み込み
+		/// </summary>----------------------------------------------------------------------------
 		void LoadImageResources();
+		void LoadImageResources(wstring FileName,wstring KeyName);
+		void LoadImageResources(wstring FolderName);
 
+		/// ----------------------------------------------------------------------------<summary>
+		/// スタティックモデルの読み込み
+		/// </summary>----------------------------------------------------------------------------
 		void LoadStaticModelResources();
+		void LoadStaticModelResources(wstring FileName,wstring KeyName);
 
+		/// ----------------------------------------------------------------------------<summary>
+		/// ボーンモデルの読み込み
+		/// </summary>----------------------------------------------------------------------------
 		void LoadBoneModelResources();
+		void LoadBoneModelResources(wstring FileName,wstring KeyName);
 
+		/// ----------------------------------------------------------------------------<summary>
+		/// マルチメッシュモデルの読み込み
+		/// </summary>----------------------------------------------------------------------------
+		void LoadMultiMeshModelResources();
+
+		/// ----------------------------------------------------------------------------<summary>
+		/// サウンドの読み込み(引数なし)
+		/// </summary>----------------------------------------------------------------------------
 		void LoadSoundResources();
 
+		/// ----------------------------------------------------------------------------<summary>
+		/// サウンドを単発再生
+		/// </summary>----------------------------------------------------------------------------
 		shared_ptr<SoundItem> MusicOnceStart(wstring key,float volume);
 
+		/// ----------------------------------------------------------------------------<summary>
+		/// サウンドをループ再生
+		/// </summary>----------------------------------------------------------------------------
 		shared_ptr<SoundItem> MusicRoopStart(wstring key,float volume);
+
+		void SetRecodeTime(float f) {
+			m_RecodeTime = f;
+		}
+		float GetRecodeTime() {
+			return m_RecodeTime;
+		}
 	};
 
 }

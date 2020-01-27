@@ -13,7 +13,7 @@ namespace basecross {
 
 #define NUM_RIGIDBODIES 500
 #define NUM_JOINTS    500
-#define NUM_CONTACTS  4000
+#define NUM_CONTACTS  5000
 #define NUM_KEEP_SHAPES  (NUM_RIGIDBODIES*4)
 
 	namespace ps {
@@ -1444,7 +1444,7 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	struct BasePhysics::Impl {
 		BasePhysicsImplParam Params[NUM_RIGIDBODIES];
-		Impl() 
+		Impl()
 		{}
 		~Impl() {}
 		void Reset() {
