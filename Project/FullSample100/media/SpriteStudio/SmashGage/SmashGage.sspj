@@ -110,9 +110,8 @@
 		<value>Charge2.ssee</value>
 	</effectFileNames>
 	<lastAnimeFile>SmashGage.ssae</lastAnimeFile>
-	<lastAnimeName>Burning</lastAnimeName>
+	<lastAnimeName>Glow</lastAnimeName>
 	<lastCellMapFile>SmashGage.ssce</lastCellMapFile>
 	<lastEffectFile>Charge2.ssee</lastEffectFile>
-	<lastCell>Flame</lastCell>
-	<lastPart>Flame</lastPart>
+	<lastCell>Smash</lastCell>
 </SpriteStudioProject>
