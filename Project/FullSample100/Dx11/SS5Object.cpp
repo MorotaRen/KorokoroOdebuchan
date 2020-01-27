@@ -82,7 +82,7 @@ namespace basecross {
 	//ê∂ê¨
 	void SmashGageSS::OnCreate() {
 		SS5ssae::OnCreate();
-		SetLooped(false);
+		SetLooped(true);
 
 		auto ptrTrans = GetComponent<Transform>();
 		ptrTrans->SetScale(m_Scale.x, m_Scale.y, 1.0f);
@@ -111,12 +111,10 @@ namespace basecross {
 		if (Active==true) {
 			//Ç∏Ç¡Ç∆îRÇ¶ë±ÇØÇÈ
 			ChangeAnimation(L"Burning");
-			SetLooped(true);
 		}
 		else {
 			//ëSïîè¡îÔÇ∑ÇÈ
 			ChangeAnimation(L"Normal");
-			SetLooped(false);
 		}
 	}
 }

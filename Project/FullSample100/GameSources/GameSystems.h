@@ -51,6 +51,9 @@ namespace basecross {
 		int m_SmashPoint = 0;
 		//プレイヤーのスピード
 		float m_playerSpeed = 0;
+		//スマッシュゲージを使ったかどうか
+		bool m_UseedGage = false;
+
 	public:
 
 		//関数呼ぶときにここから
@@ -90,10 +93,17 @@ namespace basecross {
 		//ゲッター、セッター
 		int GetSmashPoint() {return m_SmashPoint;}
 
-		void SetSmashPoint(int i) {m_SmashPoint += i;}
+		void SetSmashPoint(int i) { if (m_SmashPoint < 5) { m_SmashPoint += i; } }
 
 		float GetPlayerSpeed() { return m_playerSpeed; }
 
 		void SetPlayerSeed(float s) { m_playerSpeed = s; }
+
+		bool GetUseedGage() { return m_UseedGage; }
+
+		void SetUseedGage(bool Active) { m_UseedGage = Active; }
+
+		//値をリセット
+		void ResetSmashPoint() { m_SmashPoint = 0; }
 	};
 }

@@ -28,7 +28,7 @@ namespace basecross {
 		//難易度のスプライトを作成
 		m_Spvec[1] = AddGameObject<SelectSceneSprite>(L"Title_SpringStage", Vec2(640.0f, 400.0f), Vec2(-320, 200));
 		m_Spvec[2] = AddGameObject<SelectSceneSprite>(L"Title_SpringStage", Vec2(640.0f, 400.0f), Vec2(320.0f, 200.0f));
-		m_Spvec[3] = AddGameObject<SelectSceneSprite>(L"Title_SpringStage", Vec2(640.0f, 400.0f), Vec2(-320.0f, -200.0f));
+		m_Spvec[3] = AddGameObject<SelectSceneSprite>(L"Title_SummerStage2", Vec2(640.0f, 400.0f), Vec2(-320.0f, -200.0f));
 		m_Spvec[4] = AddGameObject<SelectSceneSprite>(L"Title_SpringStage", Vec2(640.0f, 400.0f), Vec2(320.0f, -200.0f));
 
 		//マスクスプライト

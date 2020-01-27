@@ -416,11 +416,11 @@ namespace basecross {
 			//スマッシュローリング
 			if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
-					//sharedObj->SetActive(true);
 					m_isSmash = true;
 					m_isZoomOut = true;
 					m_smashTime = 1.0f;
 					m_ptrEfk = GetTypeStage<TestStage>()->AddGameObject<EfkSmashAccele>(ptrTransform->GetPosition(), m_front);
+					GameSystems::GetInstans().SetUseedGage(true);
 				}
 
 			}

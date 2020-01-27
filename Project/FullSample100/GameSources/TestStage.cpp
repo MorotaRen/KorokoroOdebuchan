@@ -152,29 +152,34 @@ namespace basecross {
 		auto Gage_3 = GetSharedGameObject<SmashGageSS>(L"SmashGage_3");
 		auto Gage_4 = GetSharedGameObject<SmashGageSS>(L"SmashGage_4");
 		auto Gage_5 = GetSharedGameObject<SmashGageSS>(L"SmashGage_5");
-		auto SmashP = GameSystems::GetInstans().GetSmashPoint();
-		if (SmashP == 1) {
-			Gage_1->ChangeAnimation(L"Charge");
-			Gage_1->SetLooped(false);
+		float deltatime = App::GetApp()->GetElapsedTime();
+		if (GameSystems::GetInstans().GetSmashPoint() == 1) {
+			Gage_1->ChangeAnimation(L"Glow");
 		}
-		if (SmashP == 2) {
-			Gage_2->ChangeAnimation(L"Charge");
-			Gage_2->SetLooped(false);
+		if (GameSystems::GetInstans().GetSmashPoint() == 2) {
+			Gage_2->ChangeAnimation(L"Glow");
 		}
-		if (SmashP == 3) {
-			Gage_3->ChangeAnimation(L"Charge");
-			Gage_3->SetLooped(false);
+		if (GameSystems::GetInstans().GetSmashPoint() == 3) {
+			Gage_3->ChangeAnimation(L"Glow");
 		}
-		if (SmashP == 4) {
-			Gage_4->ChangeAnimation(L"Charge");
-			Gage_4->SetLooped(false);
+		if (GameSystems::GetInstans().GetSmashPoint() == 4) {
+			Gage_4->ChangeAnimation(L"Glow");
 		}
-		if (SmashP == 5) {
+		if (GameSystems::GetInstans().GetSmashPoint() == 5) {
 			Gage_1->AllChangAnim(true);
 			Gage_2->AllChangAnim(true);
 			Gage_3->AllChangAnim(true);
 			Gage_4->AllChangAnim(true);
 			Gage_5->AllChangAnim(true);
+		}
+		if (GameSystems::GetInstans().GetUseedGage() == true) {
+			Gage_1->AllChangAnim(false);
+			Gage_2->AllChangAnim(false);
+			Gage_3->AllChangAnim(false);
+			Gage_4->AllChangAnim(false);
+			Gage_5->AllChangAnim(false);
+			GameSystems::GetInstans().ResetSmashPoint();
+			GameSystems::GetInstans().SetUseedGage(false);
 		}
 
 		//
