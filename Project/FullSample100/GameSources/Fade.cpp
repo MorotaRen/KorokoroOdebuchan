@@ -37,6 +37,8 @@ namespace basecross {
 		default:
 			break;
 		}
+
+		GameSystems::GetInstans().ResetSmashPoint();
 	}
 	void FadeSprite::OnUpdate() {
 

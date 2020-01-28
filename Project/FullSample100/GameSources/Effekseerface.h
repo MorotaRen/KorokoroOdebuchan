@@ -142,6 +142,26 @@ namespace basecross {
 		virtual void OnDraw()override;
 	};
 
+	// スマッシュローリングのエフェクト
+	class EfkSmashAccele :public GameObject
+	{
+	private:
 
+		shared_ptr<EfkEffect> m_efkEffect;
+		shared_ptr<EfkPlay> m_efkSmashAccele;
+
+		Vec3 m_pos;
+		Vec3 m_rot;
+		bool m_isEffect = true;
+
+	public:
+		EfkSmashAccele(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 rot);
+		~EfkSmashAccele() {};
+
+		virtual void OnCreate()override;
+		virtual void OnUpdate()override;
+
+		void SetPosRot(Vec3 pos, Vec3 rot) { m_pos = pos, m_rot = rot; }
+	};
 
 }

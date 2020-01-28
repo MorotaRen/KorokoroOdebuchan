@@ -73,10 +73,24 @@ namespace basecross {
 		//加速エフェクト
 		efkStr = L"Effects\\PlayerAccelerate.efk";
 		m_efkEffect[4] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//加速エフェクト
+		efkStr = L"Effects\\PlayerSmashAccele.efk";
+		m_efkEffect[5] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//砂埃のエフェクト
+		efkStr = L"Effects\\Sanddust.efk";
+		m_efkEffect[6] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//もみじのエフェクト
+		efkStr = L"Effects\\Leave.efk";
+		m_efkEffect[7] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//雪のエフェクト
+		efkStr = L"Effects\\Snow.efk";
+		m_efkEffect[8] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+
 	}
 
 	//更新
 	void Player::OnUpdate() {
+		//スタートしたらローリングモードに切り替えて操作可能にする
 		if (GetTypeStage<TestStage>()->GetCntLock()) {
 			if (m_state == PlayerState::Running) {
 				m_state = PlayerState::Rolling;
@@ -97,6 +111,7 @@ namespace basecross {
 		}
 
 		GameSystems::GetInstans().SetPlayerSeed(m_rollingSpeed);
+		
 	}
 
 	//入力された時
@@ -399,19 +414,22 @@ namespace basecross {
 			}
 
 			//スマッシュローリング
-			//if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
+			if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
-					//sharedObj->SetActive(true);
 					m_isSmash = true;
 					m_isZoomOut = true;
 					m_smashTime = 1.0f;
-					
-				//}
+					m_ptrEfk = GetTypeStage<TestStage>()->AddGameObject<EfkSmashAccele>(ptrTransform->GetPosition(), m_front);
+					GameSystems::GetInstans().SetUseedGage(true);
+				}
+
 			}
 			if (m_isSmash) {
 				//エフェクト再生
-				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[2], ptrTransform->GetPosition());
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[5], ptrTransform->GetPosition());
+				//m_ptrEfk->SetPosRot(GetComponent<Transform>()->GetPosition(), m_front);
+
 				m_smashTime -= elapsedTime;
 				m_rollingSpeed += m_smashAccele * elapsedTime;
 				if (m_smashTime < 0.0f) {
@@ -448,7 +466,7 @@ namespace basecross {
 			}
 
 			//エフェクトカウンターリセット
-			if (m_effectCount >= 45) {
+			if (m_effectCount >= 99) {
 				m_effectCount = 0;
 			}
 		}
@@ -555,8 +573,6 @@ namespace basecross {
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
-
-
 
 		//受信側
 		NetWork::GetInstans().Connection_Receiving();

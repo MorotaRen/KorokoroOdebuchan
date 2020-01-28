@@ -445,6 +445,7 @@ namespace basecross {
 
 	}
 
+	// スピードメーターの針
 	SpeedMeterNeedle::SpeedMeterNeedle(const shared_ptr<Stage>&stagePtr) :
 		GameObject(stagePtr),
 		m_speed(0),
@@ -478,26 +479,17 @@ namespace basecross {
 		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
 		ptrDraw->SetTextureResource(L"SpeedMeterNeedle");
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
-		//文字列をつける
-		auto ptrString = AddComponent<StringSprite>();
-		ptrString->SetText(L"");
-		ptrString->SetTextRect(Rect2D<float>(1000.0f, 100.0f, 1200.0f, 480.0f));
 
 	}
+
 	void SpeedMeterNeedle::OnUpdate() {
 		auto ptrTrans = GetComponent<Transform>();
-		m_speed = GameSystems::GetInstans().GetPlayerSpeed();
-		float culcSpeed = m_speed *= 11.25f;
-		float angle = 90 - culcSpeed;
-		if(angle >= 0) m_rotate = angle * XM_PI / 180;
+		m_speed = GameSystems::GetInstans().GetPlayerSpeed();// プレイヤーのスピードを取得
+		float culcSpeed = m_speed *= 11.25f;// 最大速度が90になるように倍率をかける
+		float angle = 90 - culcSpeed;// 針の角度
+		if(angle >= 0) m_rotate = angle * XM_PI / 180;// ラジアン角に変換
 		ptrTrans->SetRotation(0, 0, m_rotate);
 
-		wstringstream ss;
-		ss << L"m_rotate : " << m_rotate << std::endl;
-
-		//文字列コンポーネントの取得
-		auto ptrString = GetComponent<StringSprite>();
-		ptrString->SetText(ss.str());
 
 	}
 	/***************************************************************************************

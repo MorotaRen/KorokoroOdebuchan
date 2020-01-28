@@ -20,6 +20,8 @@ namespace basecross {
 		void CreateViewLight();
 		//UI
 		void CreateUI();
+		//アニメーションスプライト
+		void CreateAnimSp();
 
 		bool m_IsCreateObject;
 		bool m_updateFlag = false;
