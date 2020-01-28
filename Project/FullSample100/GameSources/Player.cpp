@@ -419,7 +419,7 @@ namespace basecross {
 					m_isSmash = true;
 					m_isZoomOut = true;
 					m_smashTime = 1.0f;
-					m_ptrEfk = GetTypeStage<TestStage>()->AddGameObject<EfkSmashAccele>(ptrTransform->GetPosition(), m_front);
+					//m_ptrEfk = GetTypeStage<TestStage>()->AddGameObject<EfkAccele>(ptrTransform->GetPosition(), m_front);
 					GameSystems::GetInstans().SetUseedGage(true);
 				}
 
@@ -428,6 +428,7 @@ namespace basecross {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[5], ptrTransform->GetPosition());
+				//m_efkPlay[m_effectCount]->AddLocation(m_front);
 				//m_ptrEfk->SetPosRot(GetComponent<Transform>()->GetPosition(), m_front);
 
 				m_smashTime -= elapsedTime;

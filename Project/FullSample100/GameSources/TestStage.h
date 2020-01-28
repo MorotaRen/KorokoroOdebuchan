@@ -15,7 +15,6 @@ namespace basecross {
 		shared_ptr<MyCamera> m_camera;
 		shared_ptr<SoundItem> m_BGM;
 		vector<weak_ptr<StartPause>>m_SpVec;
-		vector<shared_ptr<SmashGauge>> m_SpGage;
 		//ƒrƒ…[‚Ìì¬
 		void CreateViewLight();
 		//UI
@@ -35,7 +34,7 @@ namespace basecross {
 	public:
 
 		//\’z‚Æ”jŠü
-		TestStage() :Stage(),m_SpVec(2),m_SpGage(9){}
+		TestStage() :Stage(),m_SpVec(2){}
 		virtual ~TestStage();
 		//‰Šú‰»
 		virtual void OnCreate()override;
