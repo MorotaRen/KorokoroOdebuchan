@@ -186,7 +186,27 @@ namespace basecross {
 		//プレイヤーのスピードを取得する
 		void SetSpeed(float s) { m_speed = s; }
 	};
-
+	//--------------------------------------------------------------------------------------
+	//	スピードメーター用の数字
+	//--------------------------------------------------------------------------------------
+	class SpeedMeterNumber :public GameObject {
+		bool m_Trace;
+		Vec2 m_StartScale;
+		Vec3 m_StartPos;
+		wstring m_TextureKey;
+		float m_Speed;
+		//桁数
+		UINT m_NumberOfDigits;
+		//バックアップ頂点データ
+		vector<VertexPositionTexture> m_BackupVertices;
+	public:
+		SpeedMeterNumber(const shared_ptr<Stage>& StagePtr, UINT NumberOfDigits,
+			const wstring& TextureKey, bool Trace,
+			const Vec2& StartScale, const Vec3& StartPos, bool resultFlg = false);
+		virtual ~SpeedMeterNumber() {}
+		virtual void OnCreate() override;
+		virtual void OnUpdate()override;
+	};
 	/***************************************************************************************
 									  リザルトシーンのUI
 	***************************************************************************************/
