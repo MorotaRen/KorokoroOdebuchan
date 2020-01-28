@@ -143,20 +143,20 @@ namespace basecross {
 	};
 
 	// スマッシュローリングのエフェクト
-	class EfkSmashAccele :public GameObject
+	class EfkAccele :public GameObject
 	{
 	private:
 
 		shared_ptr<EfkEffect> m_efkEffect;
-		shared_ptr<EfkPlay> m_efkSmashAccele;
+		shared_ptr<EfkPlay> m_efkAccele;
 
 		Vec3 m_pos;
 		Vec3 m_rot;
 		bool m_isEffect = true;
 
 	public:
-		EfkSmashAccele(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 rot);
-		~EfkSmashAccele() {};
+		EfkAccele(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 rot);
+		~EfkAccele() {};
 
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;

@@ -143,36 +143,47 @@ namespace basecross {
 	}
 
 
-	EfkSmashAccele::EfkSmashAccele(const shared_ptr<Stage>& ptrStage, const Vec3 pos ,const Vec3 rot) :
+	EfkAccele::EfkAccele(const shared_ptr<Stage>& ptrStage, const Vec3 pos ,const Vec3 rot) :
 		GameObject(ptrStage),
 		m_pos(pos),
 		m_rot(rot)
 	{
 	}
 
-	void EfkSmashAccele::OnCreate() {
+	void EfkAccele::OnCreate() {
 		//エフェクトの初期化
 		wstring DataDir;
 		App::GetApp()->GetDataDirectory(DataDir);
 		auto ShEfkInterface = GetTypeStage<TestStage>()->GetEfkInterface();
 		//加速エフェクト
-		wstring efkStr = L"Effects\\PlayerSmashAccele.efk";
+		wstring efkStr = L"Effects\\PlayerAccelerate.efk";
 
 		auto ptrTransform = GetComponent<Transform>();
-		ptrTransform->SetPosition(m_pos);
-		ptrTransform->SetRotation(m_rot);
+		ptrTransform->SetPosition(Vec3(0, 0, 0));
+		ptrTransform->SetRotation(Vec3(0, 0, 0));
 		m_efkEffect = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		m_isEffect = false;
+
+		float helfSize = 0.5f;
+		//頂点配列（縦横５個ずつ表示）
+		vector<VertexPositionColorTexture> vertices = {
+			{ VertexPositionColorTexture(Vec3(-helfSize,  helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(-0.0f, -0.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize,  helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f, -0.0f)) },
+			{ VertexPositionColorTexture(Vec3(-helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(-0.0f,  1.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f,  1.0f)) },
+		};
+		//インデックス配列
+		vector<uint16_t> indices = { 0, 1, 2, 1, 3, 2 };
+
+		//頂点とインデックスを指定してスプライト作成
+		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
+		ptrDraw->SetTextureResource(L"SpeedMeterNeedle");
+		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
+		m_efkAccele = ObjectFactory::Create<EfkPlay>(m_efkEffect, Vec3(0, 0, 0));
 	}
 
-	void EfkSmashAccele::OnUpdate() {
-		auto ptrTransform = GetComponent<Transform>();
-
-		if (m_isEffect) {
-			m_efkSmashAccele = ObjectFactory::Create<EfkPlay>(m_efkEffect, ptrTransform->GetPosition());
-			m_isEffect = false;
-		}
-		ptrTransform->SetPosition(m_pos);
-		ptrTransform->SetRotation(m_rot);
+	void EfkAccele::OnUpdate() {
+		
 
 	}
 
