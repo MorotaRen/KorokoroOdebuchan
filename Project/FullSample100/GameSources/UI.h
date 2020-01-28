@@ -147,22 +147,6 @@ namespace basecross {
 	};
 
 	//--------------------------------------------------------------------------------------
-	//	スマッシュゲージのUI
-	//--------------------------------------------------------------------------------------
-	class SmashGauge :public Sprite {
-	public:
-		SmashGauge(const shared_ptr<Stage>&stagePtr,
-			const wstring& textureKey,
-			const Vec2& startScale,
-			const Vec2& startPos);
-
-		virtual ~SmashGauge() {}
-		virtual void OnCreate() override;
-		virtual void OnUpdate() override;
-
-		void Tentou(bool flg);
-	};
-	//--------------------------------------------------------------------------------------
 	//	スマッシュゲージがたまったことをお知らせ
 	//--------------------------------------------------------------------------------------
 	class GaugeMax :public Sprite {

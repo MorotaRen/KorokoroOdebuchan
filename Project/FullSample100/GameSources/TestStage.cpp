@@ -46,15 +46,8 @@ namespace basecross {
 		//timeの画像表示
 		auto TimePtr = AddGameObject<TextTime>(L"UI_Time_3", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
 		SetSharedGameObject(L"TextTime", TimePtr);
-
-		//スマッシュゲージ*************************************************************************
-		//m_SpGage[1] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(100.0f, 0.0f));
-		//m_SpGage[2] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(200.0f, 0.0f));
-		//m_SpGage[3] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(300.0f, 0.0f));
-		//m_SpGage[4] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(400.0f, 0.0f));
-		//m_SpGage[5] = AddGameObject<SmashGauge>(L"gray", Vec2(64.0f, 64.0f), Vec2(500.0f, 0.0f));
-
-		//AddGameObject<GaugeMax>(L"OnPush", Vec2(275.0f, 30.0f), Vec2(500.0f, -10.0f));
+		//スマッシュゲージがたまったことをお知らせ
+		AddGameObject<GaugeMax>(L"Smash Rolling Icon", Vec2(128.0f, 128.0f), Vec2(520.0f, -30.0f));
 		//スピードメーター*************************************************************************
 		AddGameObject<SpeedMeter>();
 

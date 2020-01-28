@@ -350,46 +350,6 @@ namespace basecross {
 	}
 
 	//--------------------------------------------------------------------------------------
-	//	スマッシュゲージのUI
-	//--------------------------------------------------------------------------------------
-	SmashGauge::SmashGauge(const shared_ptr<Stage>&stagePtr,
-		const wstring& textureKey,
-		const Vec2& startScale,
-		const Vec2& startPos) :
-		Sprite(stagePtr, textureKey, startScale, startPos)
-	{}
-
-	void SmashGauge::OnCreate() {
-		Sprite::OnCreate();
-		AddTag(L"SmashGauge");
-
-		//文字列をつける
-		auto ptrString = AddComponent<StringSprite>();
-		ptrString->SetText(L"");
-		ptrString->SetTextRect(Rect2D<float>(1000.0f, 100.0f, 1200.0f, 480.0f));
-
-	}
-	void SmashGauge::OnUpdate() {
-
-		wstringstream ss;
-		ss << L"m_SmashPoint : " << GameSystems::GetInstans().GetSmashPoint()<< std::endl;
-
-		//文字列コンポーネントの取得
-		auto ptrString = GetComponent<StringSprite>();
-		ptrString->SetText(ss.str());
-
-	}
-	void SmashGauge::Tentou(bool flg)
-	{
-		auto ptrDraw = GetComponent<PCTSpriteDraw>();
-		if (true) {
-			ptrDraw->SetTextureResource(L"Yellou");
-		}
-		else {
-			ptrDraw->SetTextureResource(L"gray");
-		}
-	}
-	//--------------------------------------------------------------------------------------
 	//	スマッシュゲージがたまったことをお知らせ
 	//--------------------------------------------------------------------------------------
 	GaugeMax::GaugeMax(const shared_ptr<Stage>& stagePtr,
@@ -403,6 +363,12 @@ namespace basecross {
 		AddTag(L"GaugeMax");
 	}
 	void GaugeMax::OnUpdate() {
+		if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
+			SetDrawActive(true);
+		}
+		else {
+			SetDrawActive(false);
+		}
 	}
 	//--------------------------------------------------------------------------------------
 	//	スピードメーターのUI
