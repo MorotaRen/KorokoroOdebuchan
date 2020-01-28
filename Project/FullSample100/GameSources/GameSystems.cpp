@@ -219,7 +219,6 @@ namespace basecross {
 	/// 作成したアニメーションデータの読み込み
 	/// </summary>----------------------------------------
 	/// <param name="keyname">取得したいキーネーム</param>
-	/// <returns>キーネームの</returns>
 	int GameSystems::LoadAnimationData(wstring keyname) {
 		for (int i = 0; i < m_animationData.size();i++) {
 			if (m_animationData.at(i).at(0) == keyname) {
