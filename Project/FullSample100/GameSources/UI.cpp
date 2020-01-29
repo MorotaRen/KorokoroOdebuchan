@@ -31,16 +31,6 @@ namespace basecross {
 		}
 	}
 
-	void TitleSceneSprite::ProtType() {
-		auto ptrAction = AddComponent<Action>();
-		ptrAction->AddMoveBy(1.0f, Vec3(25.0f, 0, 0.0f));
-		ptrAction->AddMoveBy(1.0f, Vec3(-25.0f, 0, 0.0f));
-		//ループする
-		ptrAction->SetLooped(true);
-		//アクション開始
-		ptrAction->Run();
-	}
-
 	/***************************************************************************************
 									  セレクトシーンのUI
 	***************************************************************************************/
@@ -171,6 +161,7 @@ namespace basecross {
 		const Vec2& startPos) :
 		Sprite(stagePtr, textureKey, startScale, startPos)
 	{}
+
 	//--------------------------------------------------------------------------------------
 	//	ポーズ用のメニュー
 	//--------------------------------------------------------------------------------------
@@ -197,7 +188,6 @@ namespace basecross {
 	{
 		GetComponent<PCTSpriteDraw>()->SetDiffuse(Col4(1, 1, 1, 1.0f));
 	}
-
 	//--------------------------------------------------------------------------------------
 	//	時間計測
 	//--------------------------------------------------------------------------------------
@@ -361,10 +351,28 @@ namespace basecross {
 	void GaugeMax::OnCreate() {
 		Sprite::OnCreate();
 		AddTag(L"GaugeMax");
+
+		//アクションの登録
+		auto PtrAction = AddComponent<Action>();
+		PtrAction->AddRotateTo(0.5f, Vec3(0, 0, XM_1DIVPI));
+		PtrAction->AddRotateBy(0.5f, Vec3(0, 0, -0.7f));
+		//ループする
+		PtrAction->SetLooped(true);
+		//アクション開始
+		PtrAction->Run();
 	}
 	void GaugeMax::OnUpdate() {
 		if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
 			SetDrawActive(true);
+			auto ptrDraw = GetComponent<PCTSpriteDraw>();
+			m_alphaTime += App::GetApp()->GetElapsedTime();
+			if (m_alphaTime > m_alphaSpan) {
+				if (m_alpha == 0) m_alpha = 1;
+				else m_alpha = 0;
+
+				m_alphaTime = 0;
+			}
+			ptrDraw->SetDiffuse(Col4(1, 1, 1, m_alpha));
 		}
 		else {
 			SetDrawActive(false);
@@ -405,6 +413,7 @@ namespace basecross {
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
 
 		GetTypeStage<TestStage>()->AddGameObject<SpeedMeterNeedle>();
+		GetTypeStage<TestStage>()->AddGameObject<SpeedMeterFrame>();
 	}
 	void SpeedMeter::OnUpdate() {
 
@@ -507,6 +516,7 @@ namespace basecross {
 		}
 
 		SetAlphaActive(m_Trace);
+		SetDrawLayer(2);
 		auto PtrTransform = GetComponent<Transform>();
 		PtrTransform->SetScale(m_StartScale.x, m_StartScale.y, 1.0f);
 		PtrTransform->SetRotation(0, 0, 0);
@@ -567,9 +577,52 @@ namespace basecross {
 		}
 		auto PtrDraw = GetComponent<PTSpriteDraw>();
 		PtrDraw->UpdateVertices(NewVertices);
+		float speed = GameSystems::GetInstans().GetPlayerSpeed() * 0.1f;
+		float colG = 1 - speed * 0.8f;
+		float colB = 1 - speed * 1.25f;
+		PtrDraw->SetDiffuse(Col4(1, colG, colB, 1));
 
 	}
 
+	SpeedMeterFrame::SpeedMeterFrame(const shared_ptr<Stage>&stagePtr) :
+		GameObject(stagePtr)
+	{}
+
+	void SpeedMeterFrame::OnCreate() {
+
+		float helfSize = 0.5f;
+		//頂点配列（縦横５個ずつ表示）
+		vector<VertexPositionColorTexture> vertices = {
+			{ VertexPositionColorTexture(Vec3(-helfSize,  helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(-0.0f, -0.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize,  helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f, -0.0f)) },
+			{ VertexPositionColorTexture(Vec3(-helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(-0.0f,  1.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f,  1.0f)) },
+		};
+		//インデックス配列
+		vector<uint16_t> indices = { 0, 1, 2, 1, 3, 2 };
+		//0  1
+		//2  3
+		//
+		SetAlphaActive(true);
+		SetDrawLayer(1);
+		auto ptrTransform = GetComponent<Transform>();
+		ptrTransform->SetScale(150, 140, 1.0f);
+		ptrTransform->SetRotation(0, 0, 0);
+		ptrTransform->SetPosition(540, -260, 0.0f);
+
+		//頂点とインデックスを指定してスプライト作成
+		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
+		ptrDraw->SetTextureResource(L"SpeedNumFrame");
+		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
+	}
+	void SpeedMeterFrame::OnUpdate() {
+		auto ptrDraw = GetComponent<PCTSpriteDraw>();
+		float speed = GameSystems::GetInstans().GetPlayerSpeed() * 0.1f;
+		float colG = 1 - speed * 0.8f;
+		float colB = 1 - speed * 1.25f;
+		ptrDraw->SetDiffuse(Col4(1, colG, colB, 1));
+
+	}
 
 	/***************************************************************************************
 									  リザルトシーンのUI

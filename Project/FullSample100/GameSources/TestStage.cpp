@@ -39,7 +39,7 @@ namespace basecross {
 		AddGameObject<CountDown>(L"Countdown_3", Vec2(1280.0f, 512.0f), Vec2(0.0f, 0.0f));
 
 		//タイマー
-		auto TimerPtr = AddGameObject<Timer>(8, L"UI_Number_6", true, Vec2(160.0f, 40.0f), Vec3(360.0f, 350.0f, 0.0f));
+		auto TimerPtr = AddGameObject<Timer>(8, L"UI_Number_6", true, Vec2(180.0f, 60.0f), Vec3(360.0f, 350.0f, 0.0f));
 		SetSharedGameObject(L"Timer", TimerPtr);
 		///生成されたときは止めておく
 		TimerPtr->SetUpdateActive(false);
@@ -47,10 +47,10 @@ namespace basecross {
 		auto TimePtr = AddGameObject<TextTime>(L"UI_Time_3", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
 		SetSharedGameObject(L"TextTime", TimePtr);
 		//スマッシュゲージがたまったことをお知らせ
-		AddGameObject<GaugeMax>(L"Smash Rolling Icon", Vec2(128.0f, 128.0f), Vec2(520.0f, -30.0f));
+		AddGameObject<GaugeMax>(L"Smash Rolling Icon", Vec2(128.0f, 128.0f), Vec2(540.0f, -20.0f));
 		//スピードメーター*************************************************************************
 		AddGameObject<SpeedMeter>();
-		AddGameObject<SpeedMeterNumber>(2, L"UI_Number_6", true, Vec2(100.0f, 60.0f), Vec3(520.0f, -280.0f, 0));
+		AddGameObject<SpeedMeterNumber>(2, L"UI_Number_6", true, Vec2(120.0f, 80.0f), Vec3(540.0f, -260.0f, 0));
 		//ポーズ画面の画像*************************************************************************
 		AddGameObject<StartPause>(L"BackBoard", Vec2(600, 600), Vec2(0, 0));
 		AddGameObject<StartPause>(L"Pause", Vec2(256.0f, 64.0f), Vec2(0, 200));
@@ -69,19 +69,19 @@ namespace basecross {
 		App::GetApp()->GetDataDirectory(dataDir);
 		wstring srtmodel = dataDir + L"SpriteStudio\\SmashGage\\";
 		//球1
-		auto SmashGage_1 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(320, -230));
+		auto SmashGage_1 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(350, -255));
 		SetSharedGameObject(L"SmashGage_1",SmashGage_1);
 		//球2																					 
-		auto SmashGage_2 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(350, -190));
+		auto SmashGage_2 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(370, -205));
 		SetSharedGameObject(L"SmashGage_2", SmashGage_2);
 		//球3																					 
-		auto SmashGage_3 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(380, -150));
+		auto SmashGage_3 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(405, -155));
 		SetSharedGameObject(L"SmashGage_3", SmashGage_3);
 		//球4																					 
-		auto SmashGage_4 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(410, -120));
+		auto SmashGage_4 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(455, -120));
 		SetSharedGameObject(L"SmashGage_4", SmashGage_4);
 		//球5																					 
-		auto SmashGage_5 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(450, -100));
+		auto SmashGage_5 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(505, -100));
 		SetSharedGameObject(L"SmashGage_5", SmashGage_5);
 
 	}
@@ -160,13 +160,16 @@ namespace basecross {
 		if (GameSystems::GetInstans().GetSmashPoint() == 5) {
 			//６にならないとアニメーションならない
 			GameSystems::GetInstans().SetSmashPoint(1);
+			//燃え盛る
 			Gage_1->AllChangAnim(true);
 			Gage_2->AllChangAnim(true);
 			Gage_3->AllChangAnim(true);
 			Gage_4->AllChangAnim(true);
 			Gage_5->AllChangAnim(true);
+			App::GetApp()->GetXAudio2Manager()->Start(L"MaXGage", 0, 1.0f);
 		}
 		if (GameSystems::GetInstans().GetUseedGage() == true) {
+			//最初の状態
 			Gage_1->AllChangAnim(false);
 			Gage_2->AllChangAnim(false);
 			Gage_3->AllChangAnim(false);
@@ -230,6 +233,7 @@ namespace basecross {
 			//ゲームに戻る
 		case 0:
 			if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+				App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 				auto vec = GetGameObjectVec();
 				if (m_Pause) {
 					for (auto v : vec) {
@@ -247,6 +251,7 @@ namespace basecross {
 			//タイトルへ
 		case 1:
 			if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+				App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 				auto vec = GetGameObjectVec();
 				if (m_Pause) {
 					for (auto v : vec) {
@@ -265,6 +270,7 @@ namespace basecross {
 		}
 		//ポーズ出す
 		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_START) {
+			App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 			auto vec = GetGameObjectVec();
 			if (m_Pause) {
 				for (auto v : vec) {

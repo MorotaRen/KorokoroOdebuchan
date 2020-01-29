@@ -21,7 +21,7 @@ namespace basecross {
 
 	void TitleScene::CreateUI() {
 		//タイトルBG
-		AddGameObject<TitleSceneSprite>(L"TitleLogo", Vec2(512.0f, 512.0f), Vec2(0, 0))->ProtType();
+		AddGameObject<TitleSceneSprite>(L"TitleLogo", Vec2(512.0f, 512.0f), Vec2(0, 0));
 		//pushBottan
 		auto PushPtr = AddGameObject<TitleSceneSprite>(L"Press A Button", Vec2(512.0f, 128.0f), Vec2(0, -300));
 		SetSharedGameObject(L"A_Button", PushPtr);
@@ -82,7 +82,7 @@ namespace basecross {
 			if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A||KeyState.m_bPressedKeyTbl[VK_SPACE]) {
 				auto XAPtr = App::GetApp()->GetXAudio2Manager();
 				XAPtr->Stop(m_BGM);
-
+				App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 				//点滅スピードを速くする
 				FalseTimeEnd *= FlashingSpeed;
 				TrueTimeEnd *= FlashingSpeed;

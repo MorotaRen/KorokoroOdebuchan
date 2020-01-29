@@ -21,7 +21,6 @@ namespace basecross {
 		virtual void OnCreate()override;
 
 		void SetActive(bool Active);
-		void ProtType();
 	};
 
 	/***************************************************************************************
@@ -150,6 +149,9 @@ namespace basecross {
 	//	スマッシュゲージがたまったことをお知らせ
 	//--------------------------------------------------------------------------------------
 	class GaugeMax :public Sprite {
+		float m_alpha = 1;
+		float m_alphaTime = 0;
+		float m_alphaSpan = 0.3f;
 	public:
 		GaugeMax(const shared_ptr<Stage>&stagePtr,
 			const wstring& textureKey,
@@ -206,6 +208,19 @@ namespace basecross {
 		virtual ~SpeedMeterNumber() {}
 		virtual void OnCreate() override;
 		virtual void OnUpdate()override;
+	};
+	//--------------------------------------------------------------------------------------
+	//	スピードメーターの枠
+	//--------------------------------------------------------------------------------------
+
+	class SpeedMeterFrame :public GameObject {
+	public:
+		SpeedMeterFrame(const shared_ptr<Stage>&stagePtr);
+
+		virtual ~SpeedMeterFrame() {}
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+
 	};
 	/***************************************************************************************
 									  リザルトシーンのUI

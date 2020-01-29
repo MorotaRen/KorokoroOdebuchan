@@ -175,6 +175,7 @@ namespace basecross {
 		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A&&SelectSpotFlag == true || KeyState.m_bPressedKeyTbl[VK_SPACE]) {
 			auto XAPtr = App::GetApp()->GetXAudio2Manager();
 			XAPtr->Stop(m_BGM);
+			App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 			if (m_StageNum == 0) {
 				//èt
 				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");

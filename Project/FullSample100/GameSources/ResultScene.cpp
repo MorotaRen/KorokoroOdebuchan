@@ -63,8 +63,8 @@ namespace basecross {
 			CreateViewLight();
 
 			AddGameObject<ResultTimer>(8, L"UI_Number_6", true, Vec2(380.0f, 120.0f), Vec3(-180.0f, -40.0f, 0.0f));
-			AddGameObject<ResultSceneSprite>(L"ResultBG", Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
-			AddGameObject<ResultSceneSprite>(L"UI_Time_3", Vec2(384.0f, 128.0f), Vec2(0.0f, 150.0f));
+			AddGameObject<ResultSceneSprite>(L"BackBoard", Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
+			AddGameObject<ResultSceneSprite>(L"UI_Time_3", Vec2(220.0f, 150.0f), Vec2(0.0f, 150.0f));
 			AddGameObject<ResultSceneSprite>(L"Result", Vec2(256.0f, 64.0f), Vec2(0.0f, 300.0f));
 			m_SpVec[0] = AddGameObject<ResultSceneSprite>(L"Retry", Vec2(256.0f, 64.0f), Vec2(-150.0f, -250.0f));
 			m_SpVec[1] = AddGameObject<ResultSceneSprite>(L"Titleback", Vec2(427.0f, 59.0f), Vec2(250.0f, -250.0f));
@@ -124,8 +124,10 @@ namespace basecross {
 
 		//ƒV[ƒ“‘JˆÚ
 		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A || KeyState.m_bPushKeyTbl[VK_SPACE]) {
+			App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 			auto XAPtr = App::GetApp()->GetXAudio2Manager();
 			XAPtr->Stop(m_BGM);
+			App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 			if (m_StageNum == 0) {
 				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
