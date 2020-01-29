@@ -365,6 +365,15 @@ namespace basecross {
 	void GaugeMax::OnUpdate() {
 		if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
 			SetDrawActive(true);
+			auto ptrDraw = GetComponent<PCTSpriteDraw>();
+			m_alphaTime += App::GetApp()->GetElapsedTime();
+			if (m_alphaTime > m_alphaSpan) {
+				if (m_alpha == 0) m_alpha = 1;
+				else m_alpha = 0;
+
+				m_alphaTime = 0;
+			}
+			ptrDraw->SetDiffuse(Col4(1, 1, 1, m_alpha));
 		}
 		else {
 			SetDrawActive(false);
@@ -569,6 +578,10 @@ namespace basecross {
 		}
 		auto PtrDraw = GetComponent<PTSpriteDraw>();
 		PtrDraw->UpdateVertices(NewVertices);
+		float speed = GameSystems::GetInstans().GetPlayerSpeed() * 0.1f;
+		float colG = 1 - speed * 0.8f;
+		float colB = 1 - speed * 1.25f;
+		PtrDraw->SetDiffuse(Col4(1, colG, colB, 1));
 
 	}
 
@@ -594,9 +607,9 @@ namespace basecross {
 		SetAlphaActive(true);
 		SetDrawLayer(1);
 		auto ptrTransform = GetComponent<Transform>();
-		ptrTransform->SetScale(120, 120, 1.0f);
+		ptrTransform->SetScale(150, 140, 1.0f);
 		ptrTransform->SetRotation(0, 0, 0);
-		ptrTransform->SetPosition(520, -280, 0.0f);
+		ptrTransform->SetPosition(540, -260, 0.0f);
 
 		//頂点とインデックスを指定してスプライト作成
 		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
@@ -604,7 +617,11 @@ namespace basecross {
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
 	}
 	void SpeedMeterFrame::OnUpdate() {
-
+		auto ptrDraw = GetComponent<PCTSpriteDraw>();
+		float speed = GameSystems::GetInstans().GetPlayerSpeed() * 0.1f;
+		float colG = 1 - speed * 0.8f;
+		float colB = 1 - speed * 1.25f;
+		ptrDraw->SetDiffuse(Col4(1, colG, colB, 1));
 
 	}
 
