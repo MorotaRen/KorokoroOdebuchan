@@ -124,8 +124,10 @@ namespace basecross {
 
 		//ƒV[ƒ“‘JˆÚ
 		if (cntlVec.wPressedButtons&XINPUT_GAMEPAD_A || KeyState.m_bPushKeyTbl[VK_SPACE]) {
+			App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 			auto XAPtr = App::GetApp()->GetXAudio2Manager();
 			XAPtr->Stop(m_BGM);
+			App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 			if (m_StageNum == 0) {
 				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
 			}
