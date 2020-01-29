@@ -53,7 +53,8 @@ namespace basecross {
 		float m_playerSpeed = 0;
 		//スマッシュゲージを使ったかどうか
 		bool m_UseedGage = false;
-
+		//ステージ生成はしてあるか
+		bool m_GenerationStage;
 	public:
 
 		//関数呼ぶときにここから
@@ -82,7 +83,7 @@ namespace basecross {
 		//アニメーションデータのゲッター
 		vector<vector<wstring>> GetAnimationData();
 		//送られてきたナンバーの判定をActiveにして前のやつをFalseに
-		void ActiveNextCollision(unsigned int nextnum);
+		void ReleaseModelData();
 
 		//ネットできた座標のVec3化
 		void NET_CharToVec3(char* pos);

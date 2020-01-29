@@ -145,23 +145,51 @@ namespace basecross {
 		auto PlayerObj = Stage->AddGameObject<Player>(Vec3(0.0f,0.0f,0.0f));
 		Stage->SetSharedGameObject(L"Player", PlayerObj);
 		PlayerObj->AddTag(L"Player");
+		m_GenerationStage = true;
 		return PlayerObj;
 	}
 
 	///	----------------------------------------<summary>
-	/// 送られてきた番号のColliderObjct達を起動する
+	/// モデルリソースの解放
 	/// </summary>---------------------------------------
-	/// <param name="nextnum">起動する番号</param>
-	void GameSystems::ActiveNextCollision(unsigned int nextnum) {
-		for each (auto obj in m_colobjs[nextnum])
-		{
-			obj->SetUpdateActive(true);
-		}
-		if ((nextnum - 1) < 0) {
-			for each (auto backobj in m_colobjs[nextnum-1])
-			{
-				backobj->SetUpdateActive(false);
-			}
+	void GameSystems::ReleaseModelData() {
+		if (m_GenerationStage) {
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor1");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor2");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor3");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor4");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor5");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor6");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor7");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor8");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor9");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor10");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringFloor11");
+
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL1");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL2");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL3");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL4");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL5");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL6");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL7");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL8");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL9");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL10");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallL11");
+
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR1");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR3");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR4");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR5");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR6");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR7");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR8");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR9");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR10");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR11");
+
 		}
 	}
 

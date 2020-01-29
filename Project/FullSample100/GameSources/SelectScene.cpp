@@ -72,6 +72,9 @@ namespace basecross {
 			//ビューとライトの作成
 			CreateViewLight();
 
+			//ステージモデルの解放
+			GameSystems::GetInstans().ReleaseModelData();
+
 			//UIの作成
 			CreateUI();
 
