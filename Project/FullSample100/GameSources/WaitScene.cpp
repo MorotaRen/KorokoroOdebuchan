@@ -58,6 +58,18 @@ namespace basecross {
 			{L"CourseSpring_Box_Wall_L_9.bmf",L"MS_SpringWallL9"},
 			{L"CourseSpring_Box_Wall_L_10.bmf",L"MS_SpringWallL10"},
 			{L"CourseSpring_Box_Wall_L_11.bmf",L"MS_SpringWallL11"},
+
+			{L"CourseSpring_Box_Wall_R_1.bmf",L"MS_SpringWallR1"},
+			{L"CourseSpring_Box_Wall_R_2.bmf",L"MS_SpringWallR2"},
+			{L"CourseSpring_Box_Wall_R_3.bmf",L"MS_SpringWallR3"},
+			{L"CourseSpring_Box_Wall_R_4.bmf",L"MS_SpringWallR4"},
+			{L"CourseSpring_Box_Wall_R_5.bmf",L"MS_SpringWallR5"},
+			{L"CourseSpring_Box_Wall_R_6.bmf",L"MS_SpringWallR6"},
+			{L"CourseSpring_Box_Wall_R_7.bmf",L"MS_SpringWallR7"},
+			{L"CourseSpring_Box_Wall_R_8.bmf",L"MS_SpringWallR8"},
+			{L"CourseSpring_Box_Wall_R_9.bmf",L"MS_SpringWallR9"},
+			{L"CourseSpring_Box_Wall_R_10.bmf",L"MS_SpringWallR10"},
+			{L"CourseSpring_Box_Wall_R_11.bmf",L"MS_SpringWallR11"},
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\Spring_BMF\\";
