@@ -47,7 +47,7 @@ namespace basecross {
 		auto TimePtr = AddGameObject<TextTime>(L"UI_Time_3", Vec2(120.0f, 50.0f), Vec2(200.0f, 350.0f));
 		SetSharedGameObject(L"TextTime", TimePtr);
 		//スマッシュゲージがたまったことをお知らせ
-		AddGameObject<GaugeMax>(L"Smash Rolling Icon", Vec2(128.0f, 128.0f), Vec2(520.0f, -30.0f));
+		AddGameObject<GaugeMax>(L"Smash Rolling Icon", Vec2(128.0f, 128.0f), Vec2(540.0f, -20.0f));
 		//スピードメーター*************************************************************************
 		AddGameObject<SpeedMeter>();
 		AddGameObject<SpeedMeterNumber>(2, L"UI_Number_6", true, Vec2(100.0f, 60.0f), Vec3(520.0f, -280.0f, 0));
@@ -69,19 +69,19 @@ namespace basecross {
 		App::GetApp()->GetDataDirectory(dataDir);
 		wstring srtmodel = dataDir + L"SpriteStudio\\SmashGage\\";
 		//球1
-		auto SmashGage_1 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(320, -230));
+		auto SmashGage_1 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(350, -255));
 		SetSharedGameObject(L"SmashGage_1",SmashGage_1);
 		//球2																					 
-		auto SmashGage_2 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(350, -190));
+		auto SmashGage_2 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(370, -205));
 		SetSharedGameObject(L"SmashGage_2", SmashGage_2);
 		//球3																					 
-		auto SmashGage_3 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(380, -150));
+		auto SmashGage_3 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(405, -155));
 		SetSharedGameObject(L"SmashGage_3", SmashGage_3);
 		//球4																					 
-		auto SmashGage_4 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(410, -120));
+		auto SmashGage_4 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(455, -120));
 		SetSharedGameObject(L"SmashGage_4", SmashGage_4);
 		//球5																					 
-		auto SmashGage_5 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(450, -100));
+		auto SmashGage_5 = AddGameObject<SmashGageSS>(srtmodel, L"SmashGage.ssae", L"Normal", Vec2(6.0f, 6.0f), Vec2(505, -100));
 		SetSharedGameObject(L"SmashGage_5", SmashGage_5);
 
 	}

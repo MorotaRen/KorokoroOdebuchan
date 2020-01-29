@@ -207,6 +207,19 @@ namespace basecross {
 		virtual void OnCreate() override;
 		virtual void OnUpdate()override;
 	};
+	//--------------------------------------------------------------------------------------
+	//	スピードメーターの枠
+	//--------------------------------------------------------------------------------------
+
+	class SpeedMeterFrame :public GameObject {
+	public:
+		SpeedMeterFrame(const shared_ptr<Stage>&stagePtr);
+
+		virtual ~SpeedMeterFrame() {}
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+
+	};
 	/***************************************************************************************
 									  リザルトシーンのUI
 	***************************************************************************************/
