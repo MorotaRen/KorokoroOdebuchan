@@ -31,16 +31,6 @@ namespace basecross {
 		}
 	}
 
-	void TitleSceneSprite::ProtType() {
-		auto ptrAction = AddComponent<Action>();
-		ptrAction->AddMoveBy(1.0f, Vec3(25.0f, 0, 0.0f));
-		ptrAction->AddMoveBy(1.0f, Vec3(-25.0f, 0, 0.0f));
-		//ループする
-		ptrAction->SetLooped(true);
-		//アクション開始
-		ptrAction->Run();
-	}
-
 	/***************************************************************************************
 									  セレクトシーンのUI
 	***************************************************************************************/
@@ -171,6 +161,7 @@ namespace basecross {
 		const Vec2& startPos) :
 		Sprite(stagePtr, textureKey, startScale, startPos)
 	{}
+
 	//--------------------------------------------------------------------------------------
 	//	ポーズ用のメニュー
 	//--------------------------------------------------------------------------------------
@@ -197,7 +188,6 @@ namespace basecross {
 	{
 		GetComponent<PCTSpriteDraw>()->SetDiffuse(Col4(1, 1, 1, 1.0f));
 	}
-
 	//--------------------------------------------------------------------------------------
 	//	時間計測
 	//--------------------------------------------------------------------------------------
@@ -361,6 +351,15 @@ namespace basecross {
 	void GaugeMax::OnCreate() {
 		Sprite::OnCreate();
 		AddTag(L"GaugeMax");
+
+		//アクションの登録
+		auto PtrAction = AddComponent<Action>();
+		PtrAction->AddRotateTo(0.5f, Vec3(0, 0, XM_1DIVPI));
+		PtrAction->AddRotateBy(0.5f, Vec3(0, 0, -0.7f));
+		//ループする
+		PtrAction->SetLooped(true);
+		//アクション開始
+		PtrAction->Run();
 	}
 	void GaugeMax::OnUpdate() {
 		if (GameSystems::GetInstans().GetSmashPoint() >= 5) {

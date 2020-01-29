@@ -161,13 +161,16 @@ namespace basecross {
 		if (GameSystems::GetInstans().GetSmashPoint() == 5) {
 			//６にならないとアニメーションならない
 			GameSystems::GetInstans().SetSmashPoint(1);
+			//燃え盛る
 			Gage_1->AllChangAnim(true);
 			Gage_2->AllChangAnim(true);
 			Gage_3->AllChangAnim(true);
 			Gage_4->AllChangAnim(true);
 			Gage_5->AllChangAnim(true);
+			App::GetApp()->GetXAudio2Manager()->Start(L"MaXGage", 0, 1.0f);
 		}
 		if (GameSystems::GetInstans().GetUseedGage() == true) {
+			//最初の状態
 			Gage_1->AllChangAnim(false);
 			Gage_2->AllChangAnim(false);
 			Gage_3->AllChangAnim(false);
@@ -231,6 +234,7 @@ namespace basecross {
 			//ゲームに戻る
 		case 0:
 			if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+				App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 				auto vec = GetGameObjectVec();
 				if (m_Pause) {
 					for (auto v : vec) {
@@ -248,6 +252,7 @@ namespace basecross {
 			//タイトルへ
 		case 1:
 			if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_A) {
+				App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 				auto vec = GetGameObjectVec();
 				if (m_Pause) {
 					for (auto v : vec) {
@@ -266,6 +271,7 @@ namespace basecross {
 		}
 		//ポーズ出す
 		if (cntlvec.wPressedButtons&XINPUT_GAMEPAD_START) {
+			App::GetApp()->GetXAudio2Manager()->Start(L"pushA", 0, 0.5f);
 			auto vec = GetGameObjectVec();
 			if (m_Pause) {
 				for (auto v : vec) {

@@ -188,7 +188,9 @@ namespace basecross {
 			{L"Title.wav",L"TitleBGM"},
 			{L"Movie.wav",L"MainBGM"},
 			{L"SE_WallHit_01.wav",L"WallHit"},
-			{L"MovieEnd.wav",L"ResultBGM"}
+			{L"MovieEnd.wav",L"ResultBGM"},
+			{L"SE_PushA.wav",L"pushA"},
+			{L"SE_MaxGage.wav",L"MaXGage"}
 
 		};
 		//プロジェクトに登録

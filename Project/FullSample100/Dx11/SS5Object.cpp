@@ -88,21 +88,21 @@ namespace basecross {
 		ptrTrans->SetScale(m_Scale.x, m_Scale.y, 1.0f);
 		ptrTrans->SetPosition(m_Position.x, m_Position.y, 0.0f);
 
-		//文字列をつける
-		auto ptrString = AddComponent<StringSprite>();
-		ptrString->SetText(L"");
-		ptrString->SetTextRect(Rect2D<float>(1000.0f, 100.0f, 1200.0f, 480.0f));
+		////文字列をつける
+		//auto ptrString = AddComponent<StringSprite>();
+		//ptrString->SetText(L"");
+		//ptrString->SetTextRect(Rect2D<float>(1000.0f, 100.0f, 1200.0f, 480.0f));
 	}
 	void SmashGageSS::OnUpdate() {
 		float deltatime = App::GetApp()->GetElapsedTime();
 		UpdateAnimeTime(deltatime);
 
-		wstringstream ss;
-		ss << L"SmshePoint : " << GameSystems::GetInstans().GetSmashPoint() << std::endl;
+		//wstringstream ss;
+		//ss << L"SmshePoint : " << GameSystems::GetInstans().GetSmashPoint() << std::endl;
 
-		//文字列コンポーネントの取得
-		auto ptrString = GetComponent<StringSprite>();
-		ptrString->SetText(ss.str());
+		////文字列コンポーネントの取得
+		//auto ptrString = GetComponent<StringSprite>();
+		//ptrString->SetText(ss.str());
 	}
 	void SmashGageSS::AllChangAnim(bool Active) {
 		wstring dataDir;
