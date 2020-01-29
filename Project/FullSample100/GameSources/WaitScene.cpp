@@ -35,11 +35,44 @@ namespace basecross {
 		};
 		InitializedParam models[] = {
 			//{L"ファイル名",L"呼び出し時のキー"}
-			{L"OBJ_CourseSpring_Road.bmf",L"MS_Spring"},
-			{L"OBJ_CourseSpring_Box_testfloor.bmf",L"MS_SpringCourse"}
+			{L"CourseSpring_Box_floor_1.bmf",L"MS_SpringFloor1"},
+			{L"CourseSpring_Box_floor_2.bmf",L"MS_SpringFloor2"},
+			{L"CourseSpring_Box_floor_3.bmf",L"MS_SpringFloor3"},
+			{L"CourseSpring_Box_floor_4.bmf",L"MS_SpringFloor4"},
+			{L"CourseSpring_Box_floor_5.bmf",L"MS_SpringFloor5"},
+			{L"CourseSpring_Box_floor_6.bmf",L"MS_SpringFloor6"},
+			{L"CourseSpring_Box_floor_7.bmf",L"MS_SpringFloor7"},
+			{L"CourseSpring_Box_floor_8.bmf",L"MS_SpringFloor8"},
+			{L"CourseSpring_Box_floor_9.bmf",L"MS_SpringFloor9"},
+			{L"CourseSpring_Box_floor_10.bmf",L"MS_SpringFloor10"},
+			{L"CourseSpring_Box_floor_11.bmf",L"MS_SpringFloor11"},
+
+			{L"CourseSpring_Box_Wall_L_1.bmf",L"MS_SpringWallL1"},
+			{L"CourseSpring_Box_Wall_L_2.bmf",L"MS_SpringWallL2"},
+			{L"CourseSpring_Box_Wall_L_3.bmf",L"MS_SpringWallL3"},
+			{L"CourseSpring_Box_Wall_L_4.bmf",L"MS_SpringWallL4"},
+			{L"CourseSpring_Box_Wall_L_5.bmf",L"MS_SpringWallL5"},
+			{L"CourseSpring_Box_Wall_L_6.bmf",L"MS_SpringWallL6"},
+			{L"CourseSpring_Box_Wall_L_7.bmf",L"MS_SpringWallL7"},
+			{L"CourseSpring_Box_Wall_L_8.bmf",L"MS_SpringWallL8"},
+			{L"CourseSpring_Box_Wall_L_9.bmf",L"MS_SpringWallL9"},
+			{L"CourseSpring_Box_Wall_L_10.bmf",L"MS_SpringWallL10"},
+			{L"CourseSpring_Box_Wall_L_11.bmf",L"MS_SpringWallL11"},
+
+			{L"CourseSpring_Box_Wall_R_1.bmf",L"MS_SpringWallR1"},
+			{L"CourseSpring_Box_Wall_R_2.bmf",L"MS_SpringWallR2"},
+			{L"CourseSpring_Box_Wall_R_3.bmf",L"MS_SpringWallR3"},
+			{L"CourseSpring_Box_Wall_R_4.bmf",L"MS_SpringWallR4"},
+			{L"CourseSpring_Box_Wall_R_5.bmf",L"MS_SpringWallR5"},
+			{L"CourseSpring_Box_Wall_R_6.bmf",L"MS_SpringWallR6"},
+			{L"CourseSpring_Box_Wall_R_7.bmf",L"MS_SpringWallR7"},
+			{L"CourseSpring_Box_Wall_R_8.bmf",L"MS_SpringWallR8"},
+			{L"CourseSpring_Box_Wall_R_9.bmf",L"MS_SpringWallR9"},
+			{L"CourseSpring_Box_Wall_R_10.bmf",L"MS_SpringWallR10"},
+			{L"CourseSpring_Box_Wall_R_11.bmf",L"MS_SpringWallR11"},
 		};
 		for (auto model : models) {
-			wstring srtmodel = dataDir + L"Models\\";
+			wstring srtmodel = dataDir + L"Models\\Spring_BMF\\";
 			auto staticModel = MeshResource::CreateStaticModelMesh(srtmodel, model.m_modelName, true);
 			App::GetApp()->RegisterResource(model.m_modelKey, staticModel);
 		}

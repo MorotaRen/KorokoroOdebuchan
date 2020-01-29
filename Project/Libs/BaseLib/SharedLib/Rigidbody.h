@@ -717,9 +717,9 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	class RigidbodyConvex : public RigidbodySingle {
 		//物理計算用のオブジェクト
-		shared_ptr<PsConvex> m_PsConvex;
+		shared_ptr<PsConvex> m_PsConvex = nullptr;
 		//ワイアフレーム用メッシュ（各コンポーネントが保持）
-		shared_ptr<MeshResource> m_ConvexMesh;
+		shared_ptr<MeshResource> m_ConvexMesh = nullptr;
 	public:
 		//構築と破棄
 		//--------------------------------------------------------------------------------------

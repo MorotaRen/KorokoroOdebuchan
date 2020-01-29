@@ -16,18 +16,19 @@ namespace basecross {
 			m_scale;
 		//回転
 		Quat m_quat;
-
-		//描画用メッシュ
-		static shared_ptr<MeshResource> m_ConvexMesh;
-		//物理計算用メッシュ
-		static shared_ptr<PsConvexMeshResource> m_PsConvexMesh;
+		//モデルキー
+		wstring m_modelkey;
 	public:
-		StageObject(const shared_ptr<Stage>& ptrstage,Vec3 pos,Vec3 scale,Quat quat);
+		StageObject(const shared_ptr<Stage>& ptrstage,Vec3 pos,Vec3 scale,Quat quat,wstring modelkey);
 		~StageObject();
 		virtual void OnCreate()override;
 
 		//ステージの当たり判定の作成
 		void CreateStageCollider();
+		//描画用メッシュ
+		shared_ptr<MeshResource> m_ConvexMesh = nullptr;
+		//物理計算用メッシュ
+		shared_ptr<PsConvexMeshResource> m_PsConvexMesh = nullptr;
 
 	};
 

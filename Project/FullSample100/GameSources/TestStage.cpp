@@ -50,7 +50,7 @@ namespace basecross {
 		AddGameObject<GaugeMax>(L"Smash Rolling Icon", Vec2(128.0f, 128.0f), Vec2(540.0f, -20.0f));
 		//スピードメーター*************************************************************************
 		AddGameObject<SpeedMeter>();
-		AddGameObject<SpeedMeterNumber>(2, L"UI_Number_6", true, Vec2(120.0f, 80.0f), Vec3(520.0f, -280.0f, 0));
+		AddGameObject<SpeedMeterNumber>(2, L"UI_Number_6", true, Vec2(120.0f, 80.0f), Vec3(540.0f, -260.0f, 0));
 		//ポーズ画面の画像*************************************************************************
 		AddGameObject<StartPause>(L"BackBoard", Vec2(600, 600), Vec2(0, 0));
 		AddGameObject<StartPause>(L"Pause", Vec2(256.0f, 64.0f), Vec2(0, 200));
@@ -121,7 +121,6 @@ namespace basecross {
 			GameSystems::GetInstans().LoadStageCSV();
 			m_ptrPlayer = GameSystems::GetInstans().CreateStage();
 			m_camera->SetPlayer(m_ptrPlayer);
-			GameSystems::GetInstans().ActiveNextCollision(0);
 			m_IsCreateObject = true;
 		}
 
@@ -186,10 +185,10 @@ namespace basecross {
 			GameSystems::GetInstans().SetSmashPoint(1);
 		}
 		//仮
-		auto pos = GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
-		if (pos.y < -15.0f) {
-			AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
-		}
+		//auto pos = GetSharedGameObject<Player>(L"Player")->GetComponent<Transform>()->GetPosition();
+		//if (pos.y < -15.0f) {
+		//	AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToTestStage");
+		//}
 
 	}
 	//時を止める処理
