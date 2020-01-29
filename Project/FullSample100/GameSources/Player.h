@@ -72,7 +72,7 @@ namespace basecross {
 
 	public:
 		//\‘¢‚Æ”jŠü
-		Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale);
+		Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos);
 		~Player() {};
 
 		//‰Šú‰»

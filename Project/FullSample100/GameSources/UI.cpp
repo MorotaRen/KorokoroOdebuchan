@@ -452,7 +452,7 @@ namespace basecross {
 	void SpeedMeterNeedle::OnUpdate() {
 		auto ptrTrans = GetComponent<Transform>();
 		m_speed = GameSystems::GetInstans().GetPlayerSpeed();// プレイヤーのスピードを取得
-		float culcSpeed = m_speed *= 11.25f;// 最大速度が90になるように倍率をかける
+		float culcSpeed = m_speed *= 1.125f;// 最大速度が90になるように倍率をかける
 		float angle = 90 - culcSpeed;// 針の角度
 		if(angle >= 0) m_rotate = angle * XM_PI / 180;// ラジアン角に変換
 		ptrTrans->SetRotation(0, 0, m_rotate);
@@ -569,7 +569,7 @@ namespace basecross {
 		}
 		auto PtrDraw = GetComponent<PTSpriteDraw>();
 		PtrDraw->UpdateVertices(NewVertices);
-		float speed = GameSystems::GetInstans().GetPlayerSpeed() * 0.1f;
+		float speed = GameSystems::GetInstans().GetPlayerSpeed() * 0.01f;
 		float colG = 1 - speed * 0.8f;
 		float colB = 1 - speed * 1.25f;
 		PtrDraw->SetDiffuse(Col4(1, colG, colB, 1));
@@ -609,7 +609,7 @@ namespace basecross {
 	}
 	void SpeedMeterFrame::OnUpdate() {
 		auto ptrDraw = GetComponent<PCTSpriteDraw>();
-		float speed = GameSystems::GetInstans().GetPlayerSpeed() * 0.1f;
+		float speed = GameSystems::GetInstans().GetPlayerSpeed() * 0.01f;
 		float colG = 1 - speed * 0.8f;
 		float colB = 1 - speed * 1.25f;
 		ptrDraw->SetDiffuse(Col4(1, colG, colB, 1));

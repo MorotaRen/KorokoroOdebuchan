@@ -142,7 +142,7 @@ namespace basecross {
 		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR9");
 		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR10");
 		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR11");
-		auto PlayerObj = Stage->AddGameObject<Player>(Vec3(0.0f,0.0f,0.0f), Vec3(0.1f, 0.1f, 0.1f));
+		auto PlayerObj = Stage->AddGameObject<Player>(Vec3(0.0f,0.0f,0.0f));
 		Stage->SetSharedGameObject(L"Player", PlayerObj);
 		PlayerObj->AddTag(L"Player");
 		return PlayerObj;

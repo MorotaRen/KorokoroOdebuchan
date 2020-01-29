@@ -8,25 +8,25 @@
 
 namespace basecross {
 	//ç\ë¢Ç∆îjä¸
-	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos, const Vec3 scale) :
+	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos) :
 		GameObject(ptrStage),
 		m_pos(pos),
-		m_scale(0.05f, 0.05f, 0.05f),
+		m_scale(0.5f, 0.5f, 0.5f),
 		m_calory(1),
-		m_runningSpeed(0.2f),
+		m_runningSpeed(2.0f),
 		m_rollingSpeed(0.0f),
 		m_state(PlayerState::Running),
 		m_effectCount(0),
 		m_inputX(0.0f),
 		m_inputY(0.0f),
-		m_accelerate(0.15f),
+		m_accelerate(2.0f),
 		m_boundFlagL(false),
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
 		m_boundTime(0.2f),
 		m_isWall(false),
 		m_GoolFlg(false),
-		m_smashAccele(7.0f),
+		m_smashAccele(40.0f),
 		m_isSmash(false),
 		m_smashTime(1.0f),
 		m_isAccele(false),
@@ -338,7 +338,7 @@ namespace basecross {
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[0], ptrTransform->GetPosition() + crashPos);
 
 				if (m_rollingSpeed > 1.0f) {
-					m_rollingSpeed -= 3.0f * elapsedTime;
+					m_rollingSpeed -= 10.0f * elapsedTime;
 				}
 				m_boundInputReceptionTime -= elapsedTime;
 				auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
@@ -439,7 +439,7 @@ namespace basecross {
 				}
 			}
 			else {
-				if (m_rollingSpeed > 7.5f) {
+				if (m_rollingSpeed > 75.0f) {
 					m_rollingSpeed -= 1.0f * elapsedTime;
 				}
 			}
@@ -462,7 +462,7 @@ namespace basecross {
 				m_rollingSpeed += 1.0f * elapsedTime;
 			}
 
-			if (m_rollingSpeed > 8.0f) {
+			if (m_rollingSpeed > 80.0f) {
 				m_rollingSpeed -= 2.0f * elapsedTime;
 			}
 

@@ -16,9 +16,9 @@ namespace basecross {
 		m_RadXZ(0),
 		m_CameraUpDownSpeed(0.5f),
 		m_CameraUnderRot(0.1f),
-		m_ArmLen(1.0f),
-		m_MaxArm(1.0f),
-		m_MinArm(0.01f),
+		m_ArmLen(10.0f),
+		m_MaxArm(10.0f),
+		m_MinArm(0.1f),
 		m_RotSpeed(1.0f),
 		m_ZoomSpeed(0.1f),
 		m_LRBaseMode(true),
@@ -26,8 +26,8 @@ namespace basecross {
 		m_boundRotL(false),
 		m_boundRotR(false),
 		m_boundTime(0.3f),
-		m_culcEye(0, 0, -1.0f),
-		m_arm(1.0f)
+		m_culcEye(0, 0.1f, 1.0f),
+		m_arm(10.0f)
 
 	{}
 
@@ -270,10 +270,10 @@ namespace basecross {
 			m_arm += 2.0f * elapsedTime;
 		}
 		else {
-			if (m_culcEye.z > -1.0f) {
+			/*if (m_culcEye.z > -10.0f) {
 				m_culcEye.z -= 1.2f * elapsedTime;
 
-			}
+			}*/
 			/*if (m_culcEye.y > -2.0f) {
 				m_culcEye.y -= 0.75f * elapsedTime;
 			}*/
@@ -286,24 +286,24 @@ namespace basecross {
 			m_culcEye.y = -1.0f;
 		}*/
 
-		if (m_culcEye.z < -1.0f) {
-			m_culcEye.z = -1.0f;
-		}
+		/*if (m_culcEye.z < 10.0f) {
+			m_culcEye.z = 10.0f;
+		}*/
 
 		if (m_arm < 1.0f) {
 			m_arm = 1.0f;
 		}
 
-		//m_ArmLen = 0.01f;
+		m_ArmLen = 2.0f;
 		Vec3 culcArm(m_arm, 1, m_arm);
 		//目指したい場所にアームの値と腕ベクトルでEyeを調整
 		//Vec3 toEye = newAt + armVec * m_ArmLen + m_culcEye;
-		Vec3 toEye = newAt + ((armVec + m_culcEye) * m_ArmLen) + Vec3(0,-2.7f,0);
+		Vec3 toEye = newAt + ((armVec + m_culcEye) * m_ArmLen);
 		//Vec3 toEye = newAt + ((armVec + m_culcEye) * m_arm) + Vec3(0,-2.7f,0);
 		//Vec3 toEye = newAt + ((armVec + m_culcEye) * m_ArmLen) * m_arm + Vec3(0,-2.7f,0);
-		//newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
-		newEye = easing.EaseInOut(EasingType::Exponential, toEye, GetEye(), elapsedTime, 1.0f);
-		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition() + Vec3(0, 0.2f, 0);
+		newEye = Lerp::CalculateLerp(GetEye(), toEye, 0, 1.0f, m_ToTargetLerp, Lerp::Linear);
+		//newEye = easing.EaseInOut(EasingType::Exponential, toEye, GetEye(), elapsedTime, 1.0f);
+		newAt = m_ptrPlayer.lock()->GetComponent<Transform>()->GetPosition() + Vec3(0, 1.0f, 0);
 		SetAt(newAt);
 		SetEye(newEye);
 		UpdateArmLengh();
