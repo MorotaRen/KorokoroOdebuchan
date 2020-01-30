@@ -24,7 +24,8 @@ namespace basecross {
 		m_boundFlagR(false),
 		m_boundInputReceptionTime(0.7f),
 		m_boundTime(0.2f),
-		m_isWall(false),
+		m_isLWall(false),
+		m_isRWall(false),
 		m_GoolFlg(false),
 		m_smashAccele(40.0f),
 		m_isSmash(false),
@@ -85,6 +86,9 @@ namespace basecross {
 		//雪のエフェクト
 		efkStr = L"Effects\\Snow.efk";
 		m_efkEffect[8] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
+		//桜吹雪のエフェクト
+		efkStr = L"Effects\\SpringCourse.efk";
+		m_efkEffect[9] = ObjectFactory::Create<EfkEffect>(ShEfkInterface, DataDir + efkStr);
 
 	}
 
@@ -291,18 +295,18 @@ namespace basecross {
 
 			auto KeyState = App::GetApp()->GetInputDevice().GetKeyState();
 			if (KeyState.m_bPushKeyTbl['A']) { //左
-				m_front.x += elapsedTime * (15.0f - m_rollingSpeed)*0.01f;
+				m_front.x += elapsedTime * (85.0f - m_rollingSpeed)*0.01f;
 			}
 			else if (KeyState.m_bPushKeyTbl['D']) { //右
-				m_front.x -= elapsedTime * (15.0f - m_rollingSpeed)*0.01f;
+				m_front.x -= elapsedTime * (85.0f - m_rollingSpeed)*0.01f;
 			}
 
 			if (m_inputX != 0) {
 				if (m_inputX < 0) {
-					m_front.x += elapsedTime * (15.0f - m_rollingSpeed)*0.01f;
+					m_front.x += elapsedTime * (85.0f - m_rollingSpeed)*0.01f;
 				}
 				else {
-					m_front.x -= elapsedTime * (15.0f - m_rollingSpeed)*0.01f;
+					m_front.x -= elapsedTime * (85.0f - m_rollingSpeed)*0.01f;
 				}
 			}
 
@@ -319,7 +323,7 @@ namespace basecross {
 			}
 
 			//壁と衝突
-			if (m_isWall) {
+			if (m_isLWall || m_isRWall) {
 				Vec3 crashPos(0, 0, 0);
 				if (m_pos.x < m_collisionPos.x) {
 					crashPos.x += 0.01f;
@@ -346,31 +350,35 @@ namespace basecross {
 				if (m_boundInputReceptionTime > 0.0f) {
 					if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER || KeyState.m_bPushKeyTbl['A'] || m_inputX < 0)
 					{
-						//エフェクト再生
-						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
-						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
-						//コントローラーの振動
-						if (cntlVec[0].bConnected) {
-							Vibration::Instance()->SetVibration(0.25f, 0.5f, 0.8f);
+						if (m_isRWall) {
+							//エフェクト再生
+							m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
+							m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+							//コントローラーの振動
+							if (cntlVec[0].bConnected) {
+								Vibration::Instance()->SetVibration(0.25f, 0.5f, 0.8f);
+							}
+							m_boundFlagL = true;
+							m_isAccele = true;
+							m_isRWall = false;
+							GameSystems::GetInstans().SetSmashPoint(1);
 						}
-						m_boundFlagL = true;
-						m_isAccele = true;
-						m_isWall = false;
-						GameSystems::GetInstans().SetSmashPoint(1);
 					}
 					else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER || KeyState.m_bPushKeyTbl['D'] || m_inputX > 0)
 					{
-						//エフェクト再生
-						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
-						m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
-						//コントローラーの振動
-						if (cntlVec[0].bConnected) {
-							Vibration::Instance()->SetVibration(0.25f, 0.8f, 0.5f);
+						if (m_isLWall) {
+							//エフェクト再生
+							m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
+							m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+							//コントローラーの振動
+							if (cntlVec[0].bConnected) {
+								Vibration::Instance()->SetVibration(0.25f, 0.8f, 0.5f);
+							}
+							m_boundFlagR = true;
+							m_isAccele = true;
+							m_isLWall = false;
+							GameSystems::GetInstans().SetSmashPoint(1);
 						}
-						m_boundFlagR = true;
-						m_isAccele = true;
-						m_isWall = false;
-						GameSystems::GetInstans().SetSmashPoint(1);
 					}
 				}
 			}
@@ -413,6 +421,9 @@ namespace basecross {
 				}
 			}
 
+			//if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
+			//	m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+			//}
 			//スマッシュローリング
 			if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
@@ -440,7 +451,7 @@ namespace basecross {
 			}
 			else {
 				if (m_rollingSpeed > 75.0f) {
-					m_rollingSpeed -= 1.0f * elapsedTime;
+					m_rollingSpeed -= 10.0f * elapsedTime;
 				}
 			}
 
@@ -463,7 +474,7 @@ namespace basecross {
 			}
 
 			if (m_rollingSpeed > 80.0f) {
-				m_rollingSpeed -= 2.0f * elapsedTime;
+				m_rollingSpeed -= 20.0f * elapsedTime;
 			}
 
 			//エフェクトカウンターリセット
@@ -496,7 +507,6 @@ namespace basecross {
 
 		if (m_state == PlayerState::Running) {
 			ptrDrawRun->SetMeshResource(L"M_PlayerNomal");
-			auto ptrDrawRun = GetComponent<PNTBoneModelDraw>();
 			ptrDrawRun->ChangeCurrentAnimation(L"Walk");
 
 			auto ptrTrans = GetComponent<Transform>();
@@ -746,8 +756,13 @@ namespace basecross {
 			m_StageObjHit = true;
 		}
 
-		if (other->FindTag(L"WallCollider")) {
-			m_isWall = true;
+		if (other->FindTag(L"WallColliderL")) {
+			m_isLWall = true;
+			m_collisionPos = other->GetComponent<Transform>()->GetPosition();
+			App::GetApp()->GetXAudio2Manager()->Start(L"WallHit", 0, 0.5f);
+		}
+		if (other->FindTag(L"WallColliderR")) {
+			m_isRWall = true;
 			m_collisionPos = other->GetComponent<Transform>()->GetPosition();
 			App::GetApp()->GetXAudio2Manager()->Start(L"WallHit", 0, 0.5f);
 		}
@@ -760,9 +775,13 @@ namespace basecross {
 	}
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
-		if (other->FindTag(L"WallCollider")) {
+		if (other->FindTag(L"WallColliderL")) {
 			m_boundInputReceptionTime = 0.5f;
-			m_isWall = false;
+			m_isLWall = false;
+		}
+		if (other->FindTag(L"WallColliderR")) {
+			m_boundInputReceptionTime = 0.5f;
+			m_isRWall = false;
 		}
 		if (other->FindTag(L"CourseObject")) {
 			//m_StageObjHit = false;

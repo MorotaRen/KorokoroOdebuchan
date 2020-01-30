@@ -23,7 +23,7 @@ namespace basecross {
 	{
 
 	private:
-		shared_ptr<EfkEffect> m_efkEffect[9];
+		shared_ptr<EfkEffect> m_efkEffect[10];
 		shared_ptr<EfkPlay> m_efkPlay[100];
 		shared_ptr<EfkPlay> m_ptrEfk;
 		PlayerState m_state; //プレイヤーのモード
@@ -48,7 +48,8 @@ namespace basecross {
 		float m_boundInputReceptionTime; //ハジキの入力受付時間
 		float m_boundTime; //ハジキ中の時間
 		float m_smashTime; //スマッシュローリングの時間
-		bool m_isWall; //壁との衝突時のフラグ
+		bool m_isLWall; //壁との衝突時のフラグ
+		bool m_isRWall; //壁との衝突時のフラグ
 		bool m_GoolFlg;//ゴールしたかフラグ
 		bool m_StageObjHit = false;
 		bool m_isSmash; //スマッシュローリング可否のフラグ
