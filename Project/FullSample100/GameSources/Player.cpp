@@ -11,7 +11,7 @@ namespace basecross {
 	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos) :
 		GameObject(ptrStage),
 		m_pos(pos),
-		m_scale(0.5f, 0.5f, 0.5f),
+		m_scale(0.4f, 0.4f, 0.4f),
 		m_calory(1),
 		m_runningSpeed(2.0f),
 		m_rollingSpeed(0.0f),
@@ -354,6 +354,9 @@ namespace basecross {
 							//エフェクト再生
 							m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
 							m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+							//SE再生
+							auto ptrXA = App::GetApp()->GetXAudio2Manager();
+							ptrXA->Start(L"Haziki", 0, 1.0f);
 							//コントローラーの振動
 							if (cntlVec[0].bConnected) {
 								Vibration::Instance()->SetVibration(0.25f, 0.5f, 0.8f);
@@ -370,6 +373,9 @@ namespace basecross {
 							//エフェクト再生
 							m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition() + crashPos);
 							m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+							//SE再生
+							auto ptrXA = App::GetApp()->GetXAudio2Manager();
+							ptrXA->Start(L"Haziki", 0, 1.0f);
 							//コントローラーの振動
 							if (cntlVec[0].bConnected) {
 								Vibration::Instance()->SetVibration(0.25f, 0.8f, 0.5f);
@@ -421,9 +427,9 @@ namespace basecross {
 				}
 			}
 
-			//if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
-			//	m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
-			//}
+			if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, -10));
+			}
 			//スマッシュローリング
 			if (GameSystems::GetInstans().GetSmashPoint() >= 5) {
 				if (KeyState.m_bPushKeyTbl[VK_SHIFT] || cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
@@ -432,6 +438,9 @@ namespace basecross {
 					m_smashTime = 1.0f;
 					//m_ptrEfk = GetTypeStage<TestStage>()->AddGameObject<EfkAccele>(ptrTransform->GetPosition(), m_front);
 					GameSystems::GetInstans().SetUseedGage(true);
+					//SE再生
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(L"Accele01", 0, 1.0f);
 				}
 
 			}
@@ -464,6 +473,7 @@ namespace basecross {
 			auto velo = ptrRigid->GetLinearVelocity();
 			//xとzの速度を修正
 			velo.x = m_front.x * m_rollingSpeed * m_calory;
+			//velo.y = -2.0f;
 			velo.z = m_front.z * m_rollingSpeed * m_calory;
 			//速度を設定
 			ptrRigid->SetLinearVelocity(velo);
