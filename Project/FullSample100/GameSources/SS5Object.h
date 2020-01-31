@@ -63,4 +63,18 @@ namespace basecross{
 		//5個すべてを変える用
 		void AllChangAnim(bool Active);
 	};
+
+	//--------------------------------------------------------------------------------------
+	// SpriteStudioライセンス
+	//--------------------------------------------------------------------------------------
+	class SSCopyright : public SS5ssae {
+		Mat4x4 m_ToAnimeMatrix;
+
+	public:
+		SSCopyright(const shared_ptr<Stage> stageptr,const wstring& BaseDir,const wstring FileName,const wstring FirstAnim);
+		~SSCopyright() {};
+		virtual void OnCreate()override;
+		virtual void OnUpdate()override;
+	};
+
 }

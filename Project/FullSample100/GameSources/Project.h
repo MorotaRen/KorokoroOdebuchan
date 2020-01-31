@@ -26,6 +26,7 @@
 #include "Vibration.h"
 
 //---------------ステージ--------------//
+#include "SpriteStudioScene.h"
 #include "GameStage.h"
 #include "TitleScene.h"
 #include "SelectScene.h"

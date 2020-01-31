@@ -20,7 +20,7 @@ namespace basecross {
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"TitleScene");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"SpriteStudioScene");
 
 			LoadImageResources(L"Title");
 			LoadImageResources(L"Font");
@@ -259,6 +259,9 @@ namespace basecross {
 		}
 		else if (event->m_MsgStr == L"ToWaitScene") {
 			ResetActiveStage<WaitScene>();
+		}
+		else if (event->m_MsgStr == L"SpriteStudioScene") {
+			ResetActiveStage<SpriteStudio>();
 		}
 	}
 }

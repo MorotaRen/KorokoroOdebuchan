@@ -32,6 +32,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SelectScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SpriteStudioScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SS5Object.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestBlock.h" />
@@ -58,6 +59,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SelectScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SpriteStudioScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Stage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestBlock.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TitleScene.cpp" />

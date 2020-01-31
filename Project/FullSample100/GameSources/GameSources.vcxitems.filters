@@ -25,6 +25,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Vibration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WaitScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SelectScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SpriteStudioScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Checkpoint.h" />
@@ -53,5 +54,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SelectScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SS5Object.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WaitScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SpriteStudioScene.h" />
   </ItemGroup>
 </Project>
