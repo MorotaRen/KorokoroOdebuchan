@@ -18,6 +18,7 @@ namespace basecross {
 		Quat m_quat;
 		//モデルキー
 		wstring m_modelkey;
+		int m_Type;
 	public:
 		//0 = 床　1 = 壁L　2 = 壁R
 		StageObject(const shared_ptr<Stage>& ptrstage,Vec3 pos,Vec3 scale,Quat quat,wstring modelkey,int Type);

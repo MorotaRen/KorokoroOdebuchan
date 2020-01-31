@@ -11,9 +11,9 @@ namespace basecross {
 	using namespace sce::PhysicsEffects;
 
 
-#define NUM_RIGIDBODIES 500
-#define NUM_JOINTS    500
-#define NUM_CONTACTS  5000
+#define NUM_RIGIDBODIES 50000
+#define NUM_JOINTS    50000
+#define NUM_CONTACTS  50000
 #define NUM_KEEP_SHAPES  (NUM_RIGIDBODIES*4)
 
 	namespace ps {

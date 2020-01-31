@@ -9,7 +9,7 @@ namespace basecross {
 	/// ----------------------------------------<summary>
 	/// コンストラクタ
 	/// </summary>----------------------------------------
-	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat,wstring modelkey, int Type) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat),m_modelkey(modelkey) {
+	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat,wstring modelkey, int Type) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat),m_modelkey(modelkey),m_Type(Type) {
 		switch (Type)
 		{
 		case 0 :
@@ -37,28 +37,50 @@ namespace basecross {
 	/// 生成
 	/// </summary>----------------------------------------
 	void StageObject::OnCreate() {
-		auto TransComp = GetComponent<Transform>();
-		auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
-		//DrawComp->SetMultiMeshResource(L"M_Spring");
-		DrawComp->SetMeshResource(m_modelkey);
+		if (m_Type != 4) {
+			auto TransComp = GetComponent<Transform>();
+			auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
+			DrawComp->SetMeshResource(m_modelkey);
 
 
-		//大きいので調整
-		//TransComp->SetScale(Vec3(0.1f,0.1f,0.1f));
-		//Y軸180°回転
-		TransComp->SetQuaternion(m_quat);
+			//Y軸180°回転
+			TransComp->SetQuaternion(m_quat);
 
 
-		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
-		spanMat.affineTransformation(
-			Vec3(1.0f, 1.0f, 1.0f),
-			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f)
-		);
-		DrawComp->SetMeshToTransformMatrix(spanMat);
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 1.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+			DrawComp->SetMeshToTransformMatrix(spanMat);
+			if (m_Type != 5) {
+				CreateStageCollider();
+			}
+		}
+		else {
+			auto TransComp = GetComponent<Transform>();
+			auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
+			DrawComp->SetMultiMeshResource(m_modelkey);
 
-		CreateStageCollider();
+			//Y軸180°回転
+			m_quat.rotationY(3.14);
+
+			TransComp->SetQuaternion(m_quat);
+
+
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 1.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+			DrawComp->SetMeshToTransformMatrix(spanMat);
+
+		}
+		AddTag(L"Collider");
 
 	}
 	/// ----------------------------------------<summary>
@@ -76,6 +98,7 @@ namespace basecross {
 			vector<VertexPositionNormalTexture> vertices = Mesh->GetBackupVerteces<VertexPositionNormalTexture>();
 			vector<uint16_t> indices = Mesh->GetBackupIndices<VertexPositionNormalTexture>();
 			//MeshUtill::CreateDodecahedron(0.5,vertices,indices);
+
 			m_ConvexMesh = MeshResource::CreateMeshResource(vertices,indices,true);
 			m_PsConvexMesh = PsConvexMeshResource::CreateMeshResource(vertices,indices);
 		}

@@ -135,7 +135,11 @@ namespace basecross {
 			//{L"ファイル名",L"呼び出し時のキー"}
 			{L"OBJ_Corm.bmf",L"M_Corn"},
 			{L"OBJ_Spring.bmf",L"M_Spring"},
-			{L"OBJ_Omikosi.bmf",L"M_Omikosi"}
+			{L"OBJ_Omikosi.bmf",L"M_Omikosi"},
+			{L"CourseSpring_Box_road_gate.bmf",L"MS_SpringGaTe"},
+			{L"CourseSpring_Box_cherry.bmf",L"MS_SpringCherry"},
+			{L"CourseSpring_Box_ground_sky.bmf",L"MS_SpringSky"},
+
 		};
 		for (auto model : models) {
 			wstring srtmodel = dataDir + L"Models\\";

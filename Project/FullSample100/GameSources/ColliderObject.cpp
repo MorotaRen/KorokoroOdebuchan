@@ -31,6 +31,8 @@ namespace basecross {
 
 		PsBoxParam param(TransComp->GetWorldMatrix(), 0.0f, true, PsMotionType::MotionTypeFixed);
 		auto  ptrRigid = AddComponent<RigidbodyBox>(param);
+		ptrRigid->SetDrawActive(true);
+		AddTag(L"Collider");
 		//判定表示
 		//ColliderComp->SetDrawActive(true);
 		//固定衝突オブジェクト化

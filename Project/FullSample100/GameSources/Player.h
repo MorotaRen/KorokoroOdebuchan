@@ -23,6 +23,8 @@ namespace basecross {
 	{
 
 	private:
+		Vec3 max;
+
 		shared_ptr<EfkEffect> m_efkEffect[10];
 		shared_ptr<EfkPlay> m_efkPlay[100];
 		shared_ptr<EfkPlay> m_ptrEfk;
@@ -54,8 +56,8 @@ namespace basecross {
 		bool m_StageObjHit = false;
 		bool m_isSmash; //スマッシュローリング可否のフラグ
 		bool m_isAccele; //加速中のフラグ
-		int m_vibrationCount; 
-		bool m_isZoomOut; 
+		int m_vibrationCount;
+		bool m_isZoomOut;
 		float m_decelerationTime; //減速時間
 
 		//入力された時
