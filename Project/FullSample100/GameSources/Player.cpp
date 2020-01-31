@@ -27,7 +27,7 @@ namespace basecross {
 		m_isLWall(false),
 		m_isRWall(false),
 		m_GoolFlg(false),
-		m_smashAccele(35.0f),
+		m_smashAccele(30.0f),
 		m_isSmash(false),
 		m_smashTime(1.0f),
 		m_isAccele(false),
@@ -523,7 +523,7 @@ namespace basecross {
 			auto velo = ptrRigid->GetLinearVelocity();
 			//xとzの速度を修正
 			velo.x = m_front.x * m_rollingSpeed * m_calory;
-			//velo.y = 0.0f;
+			velo.y = -0.25f * m_rollingSpeed;
 			velo.z = m_front.z * m_rollingSpeed * m_calory;
 			//速度を設定
 			ptrRigid->SetLinearVelocity(velo);
@@ -645,6 +645,10 @@ namespace basecross {
 		GetStage()->SetCollisionPerformanceActive(true);
 		GetStage()->SetUpdatePerformanceActive(true);
 		GetStage()->SetDrawPerformanceActive(true);
+
+		if (m_pos.y < -150) {
+			GetStage()->AddGameObject<FadeSprite>(FadeType::FadeOut, 0.1f, L"ResultScene");
+		}
 
 		//受信側
 		NetWork::GetInstans().Connection_Receiving();
@@ -775,6 +779,7 @@ namespace basecross {
 
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
+		
 
 		//プレイヤーモデルの設定
 		//auto drawcomp = AddComponent<PNTStaticModelDraw>();
