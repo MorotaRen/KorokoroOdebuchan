@@ -10,20 +10,20 @@ namespace basecross {
 	/// コンストラクタ
 	/// </summary>----------------------------------------
 	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat,wstring modelkey, int Type) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat),m_modelkey(modelkey),m_Type(Type) {
-		switch (Type)
-		{
-		case 0 :
-			AddTag(L"Floor");
-			break;
-		case 1 :
-			AddTag(L"WallL");
-			break;
-		case 2 :
-			AddTag(L"WallR");
-			break;
-		default:
-			break;
-		}
+		//switch (Type)
+		//{
+		//case 0 :
+		//	AddTag(L"Floor");
+		//	break;
+		//case 1 :
+		//	AddTag(L"WallL");
+		//	break;
+		//case 2 :
+		//	AddTag(L"WallR");
+		//	break;
+		//default:
+		//	break;
+		//}
 	}
 
 	/// ----------------------------------------<summary>
@@ -117,6 +117,26 @@ namespace basecross {
 
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
 		PsPtr->SetDrawActive(true);
+
+		//auto ptrColl = AddComponent<CollisionObb>();
+
+		//switch (m_Type)
+		//{
+		//case 0:
+		//	ptrColl->AddExcludeCollisionTag(L"Floor");
+		//	break;
+		//case 1:
+		//	ptrColl->AddExcludeCollisionTag(L"WallL");
+		//	break;
+		//case 2:
+		//	ptrColl->AddExcludeCollisionTag(L"WallR");
+		//	break;
+		//case 3:
+		//	ptrColl->AddExcludeCollisionTag(L"GoalCollider");
+		//	break;
+		//default:
+		//	break;
+		//}
 	}
 
 }
