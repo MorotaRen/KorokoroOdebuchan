@@ -27,7 +27,7 @@ namespace basecross {
 		m_isLWall(false),
 		m_isRWall(false),
 		m_GoolFlg(false),
-		m_smashAccele(40.0f),
+		m_smashAccele(35.0f),
 		m_isSmash(false),
 		m_smashTime(1.0f),
 		m_isAccele(false),
@@ -275,6 +275,7 @@ namespace basecross {
 		Vec3 angle(0, 0, 0);
 		auto ptrRigid = GetComponent<RigidbodySphere>();
 		auto ptrTransform = GetComponent<Transform>();
+		Vec3 pos = ptrTransform->GetPosition();
 		m_pos = ptrTransform->GetPosition();
 		//m_rot = ptrTransform->GetRotation();
 		auto ptrCamera = OnGetDrawCamera();
@@ -393,8 +394,44 @@ namespace basecross {
 							GameSystems::GetInstans().SetSmashPoint(1);
 						}
 					}
+					
 				}
 			}
+
+			//緊急用
+			if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition());
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+				//SE再生
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(L"Haziki", 0, 1.0f);
+				//コントローラーの振動
+				if (cntlVec[0].bConnected) {
+					Vibration::Instance()->SetVibration(0.25f, 0.5f, 0.8f);
+				}
+				m_boundFlagL = true;
+				m_isAccele = true;
+				m_isRWall = false;
+				GameSystems::GetInstans().SetSmashPoint(1);
+			}
+			else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition());
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+				//SE再生
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(L"Haziki", 0, 1.0f);
+				//コントローラーの振動
+				if (cntlVec[0].bConnected) {
+					Vibration::Instance()->SetVibration(0.25f, 0.8f, 0.5f);
+				}
+				m_boundFlagR = true;
+				m_isAccele = true;
+				m_isLWall = false;
+				GameSystems::GetInstans().SetSmashPoint(1);
+			}
+
 
 			//ハジキの処理
 			if (m_boundFlagL) {
@@ -404,7 +441,7 @@ namespace basecross {
 				if (m_isAccele) {
 					m_isZoomOut = true;
 					m_rollingSpeed += 2.0f * elapsedTime;
-					m_front.x += 2.2f * elapsedTime;
+					m_front.x += 3.0f * elapsedTime;
 				}
 				if (m_boundTime < 0) {
 					m_isAccele = false;
@@ -422,7 +459,7 @@ namespace basecross {
 				if (m_isAccele) {
 					m_isZoomOut = true;
 					m_rollingSpeed += 2.0f * elapsedTime;
-					m_front.x -= 2.2f * elapsedTime;
+					m_front.x -= 3.0f * elapsedTime;
 				}
 				if (m_boundTime < 0) {
 					m_isAccele = false;
@@ -480,7 +517,7 @@ namespace basecross {
 			auto velo = ptrRigid->GetLinearVelocity();
 			//xとzの速度を修正
 			velo.x = m_front.x * m_rollingSpeed * m_calory;
-			//velo.y = -2.0f;
+			//velo.y = 0.0f;
 			velo.z = m_front.z * m_rollingSpeed * m_calory;
 			//速度を設定
 			ptrRigid->SetLinearVelocity(velo);
@@ -490,7 +527,7 @@ namespace basecross {
 				m_rollingSpeed += 1.0f * elapsedTime;
 			}
 
-			if (m_rollingSpeed > 80.0f) {
+			if (m_rollingSpeed > 75.0f) {
 				m_rollingSpeed -= 20.0f * elapsedTime;
 			}
 
@@ -586,7 +623,8 @@ namespace basecross {
 		auto ptrPs = GetComponent<RigidbodySphere>();
 		auto ptrTrans = GetComponent<Transform>();
 		//位置情報はそのまま設定
-		ptrTrans->SetPosition(ptrPs->GetPosition());
+		m_pos = ptrPs->GetPosition();
+		ptrTrans->SetPosition(m_pos);
 
 		if (GetTypeStage<TestStage>()->GetCntLock()) {
 			if (m_state == PlayerState::Running) {
@@ -729,6 +767,7 @@ namespace basecross {
 		auto  ptrRigid = AddComponent<RigidbodySphere>(param);
 		//自動的にTransformを設定するフラグは無し
 		ptrRigid->SetAutoTransform(false);
+		
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
 
@@ -758,8 +797,11 @@ namespace basecross {
 		//コリジョンをつける
 		auto ptrColl = AddComponent<CollisionSphere>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
+		
 		//重力追加
-		//auto ptrGra = AddComponent<Gravity>();
+		auto ptrGra = AddComponent<Gravity>();
+		//ptrGra->SetGravityVerocity(Vec3(0, 1, 0));
+		
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
 		//影の形（メッシュ）を設定
