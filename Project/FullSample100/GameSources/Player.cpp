@@ -520,7 +520,7 @@ namespace basecross {
 				m_rollingSpeed += 1.0f * elapsedTime;
 			}
 
-			if (m_rollingSpeed > 80.0f) {
+			if (m_rollingSpeed > 75.0f) {
 				m_rollingSpeed -= 20.0f * elapsedTime;
 			}
 
@@ -528,13 +528,6 @@ namespace basecross {
 			if (m_effectCount >= 99) {
 				m_effectCount = 0;
 			}
-
-			//if (ptrTransform->GetPosition().y > pos.y) {
-			//	m_pos = ptrTransform->GetPosition();
-			//	m_pos.y = pos.y;
-			//	ptrTransform->SetPosition(m_pos);
-			//	
-			//}
 		}
 		//ランニングモード
 		if (m_state == PlayerState::Running) {
@@ -623,7 +616,8 @@ namespace basecross {
 		auto ptrPs = GetComponent<RigidbodySphere>();
 		auto ptrTrans = GetComponent<Transform>();
 		//位置情報はそのまま設定
-		ptrTrans->SetPosition(ptrPs->GetPosition());
+		m_pos = ptrPs->GetPosition();
+		ptrTrans->SetPosition(m_pos);
 
 		if (GetTypeStage<TestStage>()->GetCntLock()) {
 			if (m_state == PlayerState::Running) {
@@ -763,6 +757,7 @@ namespace basecross {
 		auto  ptrRigid = AddComponent<RigidbodySphere>(param);
 		//自動的にTransformを設定するフラグは無し
 		ptrRigid->SetAutoTransform(false);
+		
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
 
@@ -792,8 +787,11 @@ namespace basecross {
 		//コリジョンをつける
 		auto ptrColl = AddComponent<CollisionSphere>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
+		
 		//重力追加
-		//auto ptrGra = AddComponent<Gravity>();
+		auto ptrGra = AddComponent<Gravity>();
+		//ptrGra->SetGravityVerocity(Vec3(0, 1, 0));
+		
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
 		//影の形（メッシュ）を設定
@@ -810,12 +808,12 @@ namespace basecross {
 			m_StageObjHit = true;
 		}
 
-		if (other->FindTag(L"WallColliderL")) {
+		if (other->FindTag(L"WallL")) {
 			m_isLWall = true;
 			m_collisionPos = other->GetComponent<Transform>()->GetPosition();
 			App::GetApp()->GetXAudio2Manager()->Start(L"WallHit", 0, 0.5f);
 		}
-		if (other->FindTag(L"WallColliderR")) {
+		if (other->FindTag(L"WallR")) {
 			m_isRWall = true;
 			m_collisionPos = other->GetComponent<Transform>()->GetPosition();
 			App::GetApp()->GetXAudio2Manager()->Start(L"WallHit", 0, 0.5f);
@@ -829,11 +827,11 @@ namespace basecross {
 	}
 
 	void Player::OnCollisionExit(shared_ptr<GameObject>& other) {
-		if (other->FindTag(L"WallColliderL")) {
+		if (other->FindTag(L"WallL")) {
 			m_boundInputReceptionTime = 0.5f;
 			m_isLWall = false;
 		}
-		if (other->FindTag(L"WallColliderR")) {
+		if (other->FindTag(L"WallR")) {
 			m_boundInputReceptionTime = 0.5f;
 			m_isRWall = false;
 		}
