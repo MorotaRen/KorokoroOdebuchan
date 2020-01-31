@@ -47,6 +47,11 @@ namespace basecross {
 
 		Vec3 m_netvec;
 
+
+		//
+		bool m_COLON;
+		//ステージナンバー
+		int m_GameStageNum;
 		//壁に当たった回数を入れておく
 		int m_SmashPoint = 0;
 		//プレイヤーのスピード
@@ -56,7 +61,12 @@ namespace basecross {
 		//ステージ生成はしてあるか
 		bool m_GenerationStage;
 	public:
-
+		void Setcol(bool t) {
+			m_COLON = t;
+		};
+		bool Getcol() {
+			return m_COLON;
+		}
 		//関数呼ぶときにここから
 		static GameSystems& GetInstans() {
 			static GameSystems inst;
@@ -103,6 +113,9 @@ namespace basecross {
 		bool GetUseedGage() { return m_UseedGage; }
 
 		void SetUseedGage(bool Active) { m_UseedGage = Active; }
+
+		int GetGameStageNum() { return m_GameStageNum; };
+		void SetGameStageNum(int num) { m_GameStageNum = num; };
 
 		//値をリセット
 		void ResetSmashPoint() { m_SmashPoint = 0; }

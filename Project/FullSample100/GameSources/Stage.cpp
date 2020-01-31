@@ -80,7 +80,9 @@ namespace basecross {
 			DrawComp->SetMeshToTransformMatrix(spanMat);
 
 		}
-		AddTag(L"Collider");
+
+	}
+	void StageObject::OnUpdate() {
 
 	}
 	/// ----------------------------------------<summary>
@@ -116,7 +118,7 @@ namespace basecross {
 
 
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
-		PsPtr->SetDrawActive(true);
+		//PsPtr->SetDrawActive(true);
 	}
 
 }

@@ -182,6 +182,7 @@ namespace basecross {
 			if (m_StageNum == 0) {
 				//èt
 				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
+				GameSystems::GetInstans().SetGameStageNum(1);
 			}
 			else if (m_StageNum == 1) {
 				//èH
@@ -190,6 +191,8 @@ namespace basecross {
 			else if (m_StageNum == 2) {
 				//âƒ
 				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
+				GameSystems::GetInstans().SetGameStageNum(2);
+
 			}
 			else if (m_StageNum == 3) {
 				//ì~

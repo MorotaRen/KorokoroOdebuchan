@@ -8,7 +8,7 @@
 
 namespace basecross {
 	//構造と破棄
-	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos) :
+	Player::Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos,float limitposz) :
 		GameObject(ptrStage),
 		m_pos(pos),
 		m_scale(0.4f, 0.4f, 0.4f),
@@ -31,7 +31,8 @@ namespace basecross {
 		m_isSmash(false),
 		m_smashTime(1.0f),
 		m_isAccele(false),
-		m_decelerationTime(0.3f)
+		m_decelerationTime(0.3f),
+		m_LimitPosZ(limitposz)
 	{
 	}
 
@@ -94,12 +95,16 @@ namespace basecross {
 
 	//更新
 	void Player::OnUpdate() {
+
+
+
+
 		auto tc = GetComponent<Transform>();
-		auto scale = tc->GetScale();
 		auto pos = tc->GetPosition();
-		max = Vec3(pos.x,pos.y + 1,pos.z);
-		if (pos.y >= max.y) {
-			tc->SetPosition(pos.x,max.y,pos.z);
+		if (pos.z < m_LimitPosZ) {
+			auto time = GetStage()->GetSharedGameObject<Timer>(L"Timer")->GetTimer();
+			App::GetApp()->GetScene <Scene>()->SetRecodeTime(time);
+			GetStage()->AddGameObject<FadeSprite>(FadeType::FadeOut, 0.1f, L"ResultScene");
 		}
 		//スタートしたらローリングモードに切り替えて操作可能にする
 		if (GetTypeStage<TestStage>()->GetCntLock()) {
@@ -122,6 +127,7 @@ namespace basecross {
 		}
 
 		GameSystems::GetInstans().SetPlayerSeed(m_rollingSpeed);
+
 
 	}
 
@@ -394,7 +400,7 @@ namespace basecross {
 							GameSystems::GetInstans().SetSmashPoint(1);
 						}
 					}
-					
+
 				}
 			}
 
@@ -706,9 +712,8 @@ namespace basecross {
 		strPos += L"X=" + Util::FloatToWStr(pos.x, 6, Util::FloatModify::Fixed) + L",\t";
 		strPos += L"Y=" + Util::FloatToWStr(pos.y, 6, Util::FloatModify::Fixed) + L",\t";
 		strPos += L"Z=" + Util::FloatToWStr(pos.z, 6, Util::FloatModify::Fixed) + L"\n";
-		strPos += L"MaxX=" + Util::FloatToWStr(max.x, 6, Util::FloatModify::Fixed) + L",\t";
-		strPos += L"MaxY=" + Util::FloatToWStr(max.y, 6, Util::FloatModify::Fixed) + L",\t";
-		strPos += L"MaxZ=" + Util::FloatToWStr(max.z, 6, Util::FloatModify::Fixed) + L"\n";
+		strPos += L"COLLISION=" + Util::FloatToWStr(GameSystems::GetInstans().Getcol(), 6, Util::FloatModify::Fixed) + L",\t";
+
 
 		auto rot = GetComponent<Transform>()->GetRotation();
 		wstring strRot(L"Rotation:\t");
@@ -767,7 +772,7 @@ namespace basecross {
 		auto  ptrRigid = AddComponent<RigidbodySphere>(param);
 		//自動的にTransformを設定するフラグは無し
 		ptrRigid->SetAutoTransform(false);
-		
+
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
 
@@ -797,11 +802,11 @@ namespace basecross {
 		//コリジョンをつける
 		auto ptrColl = AddComponent<CollisionSphere>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		
+
 		//重力追加
 		auto ptrGra = AddComponent<Gravity>();
 		//ptrGra->SetGravityVerocity(Vec3(0, 1, 0));
-		
+
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
 		//影の形（メッシュ）を設定
