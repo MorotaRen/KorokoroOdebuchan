@@ -27,7 +27,7 @@ namespace basecross {
 		m_isLWall(false),
 		m_isRWall(false),
 		m_GoolFlg(false),
-		m_smashAccele(40.0f),
+		m_smashAccele(35.0f),
 		m_isSmash(false),
 		m_smashTime(1.0f),
 		m_isAccele(false),
@@ -268,6 +268,7 @@ namespace basecross {
 		Vec3 angle(0, 0, 0);
 		auto ptrRigid = GetComponent<RigidbodySphere>();
 		auto ptrTransform = GetComponent<Transform>();
+		Vec3 pos = ptrTransform->GetPosition();
 		m_pos = ptrTransform->GetPosition();
 		//m_rot = ptrTransform->GetRotation();
 		auto ptrCamera = OnGetDrawCamera();
@@ -386,8 +387,44 @@ namespace basecross {
 							GameSystems::GetInstans().SetSmashPoint(1);
 						}
 					}
+					
 				}
 			}
+
+			//緊急用
+			if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition());
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+				//SE再生
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(L"Haziki", 0, 1.0f);
+				//コントローラーの振動
+				if (cntlVec[0].bConnected) {
+					Vibration::Instance()->SetVibration(0.25f, 0.5f, 0.8f);
+				}
+				m_boundFlagL = true;
+				m_isAccele = true;
+				m_isRWall = false;
+				GameSystems::GetInstans().SetSmashPoint(1);
+			}
+			else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+				//エフェクト再生
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition());
+				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+				//SE再生
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(L"Haziki", 0, 1.0f);
+				//コントローラーの振動
+				if (cntlVec[0].bConnected) {
+					Vibration::Instance()->SetVibration(0.25f, 0.8f, 0.5f);
+				}
+				m_boundFlagR = true;
+				m_isAccele = true;
+				m_isLWall = false;
+				GameSystems::GetInstans().SetSmashPoint(1);
+			}
+
 
 			//ハジキの処理
 			if (m_boundFlagL) {
@@ -397,7 +434,7 @@ namespace basecross {
 				if (m_isAccele) {
 					m_isZoomOut = true;
 					m_rollingSpeed += 2.0f * elapsedTime;
-					m_front.x += 2.2f * elapsedTime;
+					m_front.x += 3.0f * elapsedTime;
 				}
 				if (m_boundTime < 0) {
 					m_isAccele = false;
@@ -415,7 +452,7 @@ namespace basecross {
 				if (m_isAccele) {
 					m_isZoomOut = true;
 					m_rollingSpeed += 2.0f * elapsedTime;
-					m_front.x -= 2.2f * elapsedTime;
+					m_front.x -= 3.0f * elapsedTime;
 				}
 				if (m_boundTime < 0) {
 					m_isAccele = false;
@@ -473,7 +510,7 @@ namespace basecross {
 			auto velo = ptrRigid->GetLinearVelocity();
 			//xとzの速度を修正
 			velo.x = m_front.x * m_rollingSpeed * m_calory;
-			//velo.y = -2.0f;
+			//velo.y = 0.0f;
 			velo.z = m_front.z * m_rollingSpeed * m_calory;
 			//速度を設定
 			ptrRigid->SetLinearVelocity(velo);
@@ -491,6 +528,13 @@ namespace basecross {
 			if (m_effectCount >= 99) {
 				m_effectCount = 0;
 			}
+
+			//if (ptrTransform->GetPosition().y > pos.y) {
+			//	m_pos = ptrTransform->GetPosition();
+			//	m_pos.y = pos.y;
+			//	ptrTransform->SetPosition(m_pos);
+			//	
+			//}
 		}
 		//ランニングモード
 		if (m_state == PlayerState::Running) {

@@ -97,7 +97,7 @@ namespace basecross {
 			//アニメーションスプライト
 			CreateAnimSp();
 
-			PlayBGM(L"MainBGM", 0.5f);
+			PlayBGM(L"BGM01", 0.5f);
 
 			//wstring dataDir;
 			//App::GetApp()->GetDataDirectory(dataDir);
