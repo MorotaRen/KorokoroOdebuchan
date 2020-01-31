@@ -9,8 +9,21 @@ namespace basecross {
 	/// ----------------------------------------<summary>
 	/// コンストラクタ
 	/// </summary>----------------------------------------
-	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat,wstring modelkey) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat),m_modelkey(modelkey) {
-
+	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat,wstring modelkey, int Type) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat),m_modelkey(modelkey) {
+		switch (Type)
+		{
+		case 0 :
+			AddTag(L"Floor");
+			break;
+		case 1 :
+			AddTag(L"WallL");
+			break;
+		case 2 :
+			AddTag(L"WallR");
+			break;
+		default:
+			break;
+		}
 	}
 
 	/// ----------------------------------------<summary>
@@ -62,7 +75,6 @@ namespace basecross {
 		if (!m_ConvexMesh || !m_PsConvexMesh) {
 			vector<VertexPositionNormalTexture> vertices = Mesh->GetBackupVerteces<VertexPositionNormalTexture>();
 			vector<uint16_t> indices = Mesh->GetBackupIndices<VertexPositionNormalTexture>();
-
 			//MeshUtill::CreateDodecahedron(0.5,vertices,indices);
 			m_ConvexMesh = MeshResource::CreateMeshResource(vertices,indices,true);
 			m_PsConvexMesh = PsConvexMeshResource::CreateMeshResource(vertices,indices);
@@ -79,9 +91,9 @@ namespace basecross {
 		param.m_Quat = m_quat;
 		param.m_Pos = m_pos;
 
+
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
 		PsPtr->SetDrawActive(true);
-
 	}
 
 }
