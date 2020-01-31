@@ -19,7 +19,8 @@ namespace basecross {
 		//モデルキー
 		wstring m_modelkey;
 	public:
-		StageObject(const shared_ptr<Stage>& ptrstage,Vec3 pos,Vec3 scale,Quat quat,wstring modelkey);
+		//0 = 床　1 = 壁L　2 = 壁R
+		StageObject(const shared_ptr<Stage>& ptrstage,Vec3 pos,Vec3 scale,Quat quat,wstring modelkey,int Type);
 		~StageObject();
 		virtual void OnCreate()override;
 
