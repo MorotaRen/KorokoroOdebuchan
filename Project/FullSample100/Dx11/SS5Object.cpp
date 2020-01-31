@@ -117,4 +117,43 @@ namespace basecross {
 			ChangeAnimation(L"Normal");
 		}
 	}
+
+	//--------------------------------------------------------------------------------------
+	// SpriteStudioライセンス
+	//--------------------------------------------------------------------------------------
+	SSCopyright::SSCopyright(const shared_ptr<Stage> stageptr, const wstring& BaseDir, const wstring FileName, const wstring FirstAnim) :
+		SS5ssae(stageptr, BaseDir, FileName, FirstAnim, true)
+	{
+		//上からスケール、回転(origin)、回転(vec)、ポジション
+		m_ToAnimeMatrix.affineTransformation(
+			Vec3(0.025f, 0.035f, 0.035f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f)
+		);
+	}
+
+	void SSCopyright::OnCreate()
+	{
+		SS5ssae::OnCreate();
+
+		auto PtrTransform = GetComponent<Transform>();
+		PtrTransform->SetPosition(Vec3(0,0,0));
+		PtrTransform->SetScale(Vec3(1300, 800, 0.1f));
+		PtrTransform->SetRotation(Vec3(0, 0, 0));
+		SetToAnimeMatrix(m_ToAnimeMatrix);
+		SetLooped(false);
+		SetFps(30);
+	}
+
+	void SSCopyright::OnUpdate()
+	{
+		auto deltatime = App::GetApp()->GetElapsedTime();
+		UpdateAnimeTime(deltatime);
+
+		if (IsAnimeEnd())
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), L"TitleScene");
+		}
+	}
 }
