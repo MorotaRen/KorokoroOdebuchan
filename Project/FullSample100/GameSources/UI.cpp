@@ -520,7 +520,7 @@ namespace basecross {
 	}
 
 	void SpeedMeterNumber::OnUpdate() {
-		m_Speed = GameSystems::GetInstans().GetPlayerSpeed()*10;
+		m_Speed = GameSystems::GetInstans().GetPlayerSpeed();
 		
 		vector<VertexPositionTexture> NewVertices;
 		UINT Num;
