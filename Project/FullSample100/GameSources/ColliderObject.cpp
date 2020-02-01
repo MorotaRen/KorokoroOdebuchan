@@ -27,19 +27,17 @@ namespace basecross {
 		TransComp->SetQuaternion(m_quat);
 
 		auto ColliderComp = AddComponent<CollisionObb>();
-	//	ColliderComp->SetAfterCollision(AfterCollision::Auto);
+		ColliderComp->SetAfterCollision(AfterCollision::Auto);
 
 		PsBoxParam param(TransComp->GetWorldMatrix(), 0.0f, true, PsMotionType::MotionTypeFixed);
-		auto  ptrRigid = AddComponent<RigidbodyBox>(param);
-		ptrRigid->SetDrawActive(true);
-		AddTag(L"Collider");
+		//auto  ptrRigid = AddComponent<RigidbodyBox>(param);
+		//ptrRigid->SetDrawActive(true);
+
+		AddTag(L"GoalCollider");
 		//判定表示
-		//ColliderComp->SetDrawActive(true);
+		ColliderComp->SetDrawActive(true);
 		//固定衝突オブジェクト化
-		//ColliderComp->SetFixed(true);
-		//無視タグの追加
-		ColliderComp->AddExcludeCollisionTag(L"WallCollider");
-		ColliderComp->AddExcludeCollisionTag(L"Collider");
+		ColliderComp->SetFixed(true);
 	}
 
 	/// ----------------------------------------<summary>

@@ -304,7 +304,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-	case WM_KEYDOWN:                
+	case WM_KEYDOWN:
 		// キーが押された
 		switch (wParam)
 		{
@@ -312,7 +312,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DestroyWindow(hWnd);	//ウインドウを破棄する
 			break;
 		case VK_RETURN:
-			if (GetAsyncKeyState(VK_CONTROL)) 
+			if (GetAsyncKeyState(VK_CONTROL))
 			{
 				//Ctrl+Enterでモード切替
 				if (App::AppCheck()) {

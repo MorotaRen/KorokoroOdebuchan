@@ -720,7 +720,13 @@ namespace basecross {
 		shared_ptr<PsConvex> m_PsConvex = nullptr;
 		//ワイアフレーム用メッシュ（各コンポーネントが保持）
 		shared_ptr<MeshResource> m_ConvexMesh = nullptr;
+		//タグ
+		wstring m_Tag;
 	public:
+		void SetTag(wstring tag) { m_Tag = tag; };
+		wstring Gettag() { return m_Tag; };
+
+
 		//構築と破棄
 		//--------------------------------------------------------------------------------------
 		/*!

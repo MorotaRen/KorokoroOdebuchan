@@ -106,82 +106,96 @@ namespace basecross {
 	/// </summary>----------------------------------------
 	weak_ptr<Player> GameSystems::CreateStage() {
 		auto Stage = App::GetApp()->GetScene<Scene>()->GetActiveStage();
+		Quat quat = Quat(0, 0, 0, 0);
+
+		switch (m_GameStageNum)
+		{
+		case 1:
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor1", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor2", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor3", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor4", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor5", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor6", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor7", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor8", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor9", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor10", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringFloor11", 0);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallL1", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallL2", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallL3", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallL5", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallL7", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallL8", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallL9", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallL10", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallL11", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR1", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_1", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_2", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_3", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_4", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_5", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_6", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_7", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_8", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_9", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_10", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_11", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_12", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_13", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_14", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_15", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_16", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_17", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_18", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_19", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_20", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_21", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_22", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_23", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_24", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_25", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, -0.9f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringGW1", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, -0.9f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringGW2", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, -0.9f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringGW3", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringGF", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR3", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR4", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR5", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR6", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR7", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR9", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR11", 2);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringGaTe", 4);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringCherry", 4);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringSky", 4);
+			break;
+		case 2:
+			quat.rotationY(3.14);
+
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), quat, L"MSS_BackFloor", 5);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), quat, L"MSS_GoalGate", 5);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), quat, L"MSS_Ground", 5);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), quat, L"MSS_Ocean", 5);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), quat, L"MSS_StartGate", 5);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MSS_Tree", 4);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MSS_Umbrellas", 4);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MSS_Wall1", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MSS_Wall2", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MSS_Wall3", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MSS_Wall4", 1);
+			Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MSS_Floor", 0);
+
+			break;
+		default:
+			break;
+		}
 
 
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor1",0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor2",0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor3",0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor4",0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor5",0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor6",0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor7",0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor8", 0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor9", 0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor10", 0);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringFloor11", 0);
 
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL1", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL2", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL3", 1);
-		//Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL4", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL5", 1);
-		//Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL6", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL7", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL8", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL9", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL10", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallL11", 1);
-
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR1", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_1", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_2", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_3", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_4", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_5", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_6", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_7", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_8", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_9", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_10", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_11", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_12", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_13", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_14", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_15", 1);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_16", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_17", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_18", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_19", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_20", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_21", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_22", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_23", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_24", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringWallR2_25", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, -0.9f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringGW1", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, -0.9f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringGW2", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f, -0.9f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringGW3", 2);
-		auto a = Stage->AddGameObject<StageObject>(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f, 0.0f), L"MS_SpringGF", 2);
-		a->AddTag(L"GoalCollider");
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR3", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR4", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR5", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR6", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR7", 2);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR9", 2);
-		//Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR10", 5);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringWallR11", 2);
-
-
-
-
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringGaTe", 4);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringCherry", 4);
-		Stage->AddGameObject<StageObject>(Vec3(0.0f,0.0f,0.0f), Vec3(0.0f, 0.0f, 0.0f), Quat(0.0f, 0.0f, 0.0f,0.0f), L"MS_SpringSky", 4);
-
-
-
-		auto PlayerObj = Stage->AddGameObject<Player>(Vec3(0.0f,0.0f,0.0f));
+		auto PlayerObj = Stage->AddGameObject<Player>(Vec3(0.0f,0.0f,0.0f),-470.0);
 		Stage->SetSharedGameObject(L"Player", PlayerObj);
 		PlayerObj->AddTag(L"Player");
 		m_GenerationStage = true;
@@ -228,6 +242,39 @@ namespace basecross {
 			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR9");
 			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR10");
 			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR11");
+
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_1");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_2");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_3");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_4");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_5");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_6");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_7");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_8");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_9");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_10");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_11");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_12");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_13");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_14");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_15");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_16");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_17");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_18");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_19");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_20");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_21");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_22");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_23");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_24");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringWallR2_25");
+
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringGW1");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringGW2");
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringGW3");
+
+			App::GetApp()->UnRegisterResource<MeshResource>(L"MS_SpringGF");
+
 
 		}
 	}

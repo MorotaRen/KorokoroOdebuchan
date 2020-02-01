@@ -80,7 +80,9 @@ namespace basecross {
 			DrawComp->SetMeshToTransformMatrix(spanMat);
 
 		}
-		AddTag(L"Collider");
+
+	}
+	void StageObject::OnUpdate() {
 
 	}
 	/// ----------------------------------------<summary>
@@ -113,30 +115,11 @@ namespace basecross {
 		m_quat.rotationY(3.14);
 		param.m_Quat = m_quat;
 		param.m_Pos = m_pos;
-
+		//auto ptrColl = AddComponent<CollisionObb>();
+		//ptrColl->SetAfterCollision(AfterCollision::None);
 
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
-		PsPtr->SetDrawActive(true);
-
-		//auto ptrColl = AddComponent<CollisionObb>();
-
-		//switch (m_Type)
-		//{
-		//case 0:
-		//	ptrColl->AddExcludeCollisionTag(L"Floor");
-		//	break;
-		//case 1:
-		//	ptrColl->AddExcludeCollisionTag(L"WallL");
-		//	break;
-		//case 2:
-		//	ptrColl->AddExcludeCollisionTag(L"WallR");
-		//	break;
-		//case 3:
-		//	ptrColl->AddExcludeCollisionTag(L"GoalCollider");
-		//	break;
-		//default:
-		//	break;
-		//}
+		//PsPtr->SetDrawActive(true);
 	}
 
 }

@@ -139,6 +139,9 @@ namespace basecross {
 			{L"CourseSpring_Box_road_gate.bmf",L"MS_SpringGaTe"},
 			{L"CourseSpring_Box_cherry.bmf",L"MS_SpringCherry"},
 			{L"CourseSpring_Box_ground_sky.bmf",L"MS_SpringSky"},
+			{L"Tree.bmf",L"MSS_Tree"},
+			{L"Umbrellas.bmf",L"MSS_Umbrellas"},
+
 
 		};
 		for (auto model : models) {

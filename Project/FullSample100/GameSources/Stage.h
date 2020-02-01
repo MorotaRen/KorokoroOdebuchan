@@ -24,6 +24,7 @@ namespace basecross {
 		StageObject(const shared_ptr<Stage>& ptrstage,Vec3 pos,Vec3 scale,Quat quat,wstring modelkey,int Type);
 		~StageObject();
 		virtual void OnCreate()override;
+		virtual void OnUpdate()override;
 
 		//ステージの当たり判定の作成
 		void CreateStageCollider();
