@@ -27,7 +27,7 @@ namespace basecross {
 		m_isLWall(false),
 		m_isRWall(false),
 		m_GoolFlg(false),
-		m_smashAccele(30.0f),
+		m_smashAccele(18.0f),
 		m_isSmash(false),
 		m_smashTime(1.0f),
 		m_isAccele(false),
@@ -503,7 +503,7 @@ namespace basecross {
 				}
 			}
 			else {
-				if (m_rollingSpeed > 75.0f) {
+				if (m_rollingSpeed > 60.0f) {
 					m_rollingSpeed -= 10.0f * elapsedTime;
 				}
 			}
@@ -527,7 +527,7 @@ namespace basecross {
 				m_rollingSpeed += 1.0f * elapsedTime;
 			}
 
-			if (m_rollingSpeed > 75.0f) {
+			if (m_rollingSpeed > 60.0f) {
 				m_rollingSpeed -= 20.0f * elapsedTime;
 			}
 
@@ -677,7 +677,7 @@ namespace basecross {
 		//auto ptrString = GetComponent<StringSprite>();
 		//ptrString->SetText(str);
 
-		DrawStrings();
+		//DrawStrings();
 	}
 
 	//•¶Žš—ñ‚Ì•\Ž¦
