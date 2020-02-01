@@ -115,7 +115,8 @@ namespace basecross {
 		m_quat.rotationY(3.14);
 		param.m_Quat = m_quat;
 		param.m_Pos = m_pos;
-
+		//auto ptrColl = AddComponent<CollisionObb>();
+		//ptrColl->SetAfterCollision(AfterCollision::None);
 
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
 		//PsPtr->SetDrawActive(true);
