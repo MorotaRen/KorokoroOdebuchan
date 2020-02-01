@@ -10,20 +10,20 @@ namespace basecross {
 	/// コンストラクタ
 	/// </summary>----------------------------------------
 	StageObject::StageObject(const shared_ptr<Stage>& ptrstage, Vec3 pos, Vec3 scale, Quat quat,wstring modelkey, int Type) : GameObject(ptrstage), m_pos(pos), m_scale(scale), m_quat(quat),m_modelkey(modelkey),m_Type(Type) {
-		switch (Type)
-		{
-		case 0 :
-			AddTag(L"Floor");
-			break;
-		case 1 :
-			AddTag(L"WallL");
-			break;
-		case 2 :
-			AddTag(L"WallR");
-			break;
-		default:
-			break;
-		}
+		//switch (Type)
+		//{
+		//case 0 :
+		//	AddTag(L"Floor");
+		//	break;
+		//case 1 :
+		//	AddTag(L"WallL");
+		//	break;
+		//case 2 :
+		//	AddTag(L"WallR");
+		//	break;
+		//default:
+		//	break;
+		//}
 	}
 
 	/// ----------------------------------------<summary>
@@ -80,7 +80,9 @@ namespace basecross {
 			DrawComp->SetMeshToTransformMatrix(spanMat);
 
 		}
-		AddTag(L"Collider");
+
+	}
+	void StageObject::OnUpdate() {
 
 	}
 	/// ----------------------------------------<summary>
@@ -116,7 +118,7 @@ namespace basecross {
 
 
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
-		PsPtr->SetDrawActive(true);
+		//PsPtr->SetDrawActive(true);
 	}
 
 }

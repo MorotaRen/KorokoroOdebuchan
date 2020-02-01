@@ -59,7 +59,7 @@ namespace basecross {
 		int m_vibrationCount;
 		bool m_isZoomOut;
 		float m_decelerationTime; //減速時間
-
+		float m_LimitPosZ;
 		//入力された時
 		void InputController();
 		//プレイヤーの移動
@@ -75,7 +75,7 @@ namespace basecross {
 
 	public:
 		//構造と破棄
-		Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos);
+		Player(const shared_ptr<Stage>& ptrStage, const Vec3 pos,const float limitpos);
 		~Player() {};
 
 		//初期化
