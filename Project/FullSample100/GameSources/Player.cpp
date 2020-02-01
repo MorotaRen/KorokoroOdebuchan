@@ -424,7 +424,7 @@ namespace basecross {
 			else if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
 				//エフェクト再生
 				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[1], ptrTransform->GetPosition());
-				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
+				//m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[9], ptrTransform->GetPosition() + Vec3(0, 2, 3));
 				//SE再生
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(L"Haziki", 0, 1.0f);
@@ -443,7 +443,7 @@ namespace basecross {
 			if (m_boundFlagL) {
 				m_boundTime -= elapsedTime;
 				//エフェクト再生
-				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
+				//m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 				if (m_isAccele) {
 					m_isZoomOut = true;
 					m_rollingSpeed += 2.0f * elapsedTime;
@@ -461,7 +461,7 @@ namespace basecross {
 			else if (m_boundFlagR) {
 				m_boundTime -= elapsedTime;
 				//エフェクト再生
-				m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
+				//m_efkPlay[m_effectCount++] = ObjectFactory::Create<EfkPlay>(m_efkEffect[3], ptrTransform->GetPosition());
 				if (m_isAccele) {
 					m_isZoomOut = true;
 					m_rollingSpeed += 2.0f * elapsedTime;
