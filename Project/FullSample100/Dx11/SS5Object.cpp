@@ -23,7 +23,7 @@ namespace basecross {
 		SetToAnimeMatrix(m_ToAnimeMatrix);
 		auto TransComp = GetComponent<Transform>();
 		TransComp->SetScale(5.0f,5.0f,5.0f);
-		TransComp->SetPosition(0.0f,-10.0f,0.0f);
+		TransComp->SetPosition(0.0f,-100.0f,0.0f);
 
 		SetLooped(true);
 		SS5ssae::OnCreate();
