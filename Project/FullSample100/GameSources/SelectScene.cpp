@@ -27,8 +27,8 @@ namespace basecross {
 	void SelectScene::CreateUI() {
 		//難易度のスプライトを作成
 		m_Spvec[1] = AddGameObject<SelectSceneSprite>(L"Title_SpringStage", Vec2(640.0f, 400.0f), Vec2(-320, 200));
-		m_Spvec[2] = AddGameObject<SelectSceneSprite>(L"Preparation", Vec2(640.0f, 400.0f), Vec2(320.0f, 200.0f));
-		m_Spvec[3] = AddGameObject<SelectSceneSprite>(L"Preparation", Vec2(640.0f, 400.0f), Vec2(-320.0f, -200.0f));
+		m_Spvec[2] = AddGameObject<SelectSceneSprite>(L"Title_AkiStage", Vec2(640.0f, 400.0f), Vec2(320.0f, 200.0f));
+		m_Spvec[3] = AddGameObject<SelectSceneSprite>(L"Title_SummerStage2", Vec2(640.0f, 400.0f), Vec2(-320.0f, -200.0f));
 		m_Spvec[4] = AddGameObject<SelectSceneSprite>(L"Preparation", Vec2(640.0f, 400.0f), Vec2(320.0f, -200.0f));
 
 		//マスクスプライト
@@ -149,29 +149,29 @@ namespace basecross {
 			Spring->ChangeAnimation(L"Clause", 1);
 		}
 		//夏
-		//auto Summer = GetSharedGameObject<SelectSS>(L"Summer");
-		//if (m_StageNum == 1) {
-		//	Summer->ChangeAnimation(L"Open",1);
-		//}
-		//else {
-		//	Summer->ChangeAnimation(L"Clause", 1);
-		//}
-		////秋
-		//auto Autumn = GetSharedGameObject<SelectSS>(L"Autumn");
-		//if (m_StageNum == 2) {
-		//	Autumn->ChangeAnimation(L"Open",1);
-		//}
-		//else {
-		//	Autumn->ChangeAnimation(L"Clause", 1);
-		//}
-		////冬
-		//auto Winter = GetSharedGameObject<SelectSS>(L"Winter");
-		//if (m_StageNum == 3) {
-		//	Winter->ChangeAnimation(L"Open",1);
-		//}
-		//else {
-		//	Winter->ChangeAnimation(L"Clause", 1);
-		//}
+		auto Summer = GetSharedGameObject<SelectSS>(L"Summer");
+		if (m_StageNum == 1) {
+			Summer->ChangeAnimation(L"Open",1);
+		}
+		else {
+			Summer->ChangeAnimation(L"Clause", 1);
+		}
+		//秋
+		auto Autumn = GetSharedGameObject<SelectSS>(L"Autumn");
+		if (m_StageNum == 2) {
+			Autumn->ChangeAnimation(L"Open",1);
+		}
+		else {
+			Autumn->ChangeAnimation(L"Clause", 1);
+		}
+		//冬
+		auto Winter = GetSharedGameObject<SelectSS>(L"Winter");
+		if (m_StageNum == 3) {
+			Winter->ChangeAnimation(L"Open",1);
+		}
+		else {
+			Winter->ChangeAnimation(L"Clause", 1);
+		}
 
 
 		//シーン遷移
