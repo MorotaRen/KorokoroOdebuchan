@@ -10,7 +10,7 @@ LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 
 //定数
 const wchar_t* pClassName = L"BaseCrossFullClass";
-const wchar_t* pWndTitle = L"BaseCrossFullSample";
+const wchar_t* pWndTitle = L"Korodebu!";
 
 //ウィンドウモードの時の幅と高さ
 int g_ClientWidth = 1280;
@@ -38,7 +38,8 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.hInstance = hInstance;
 	wcex.hIcon = LoadIcon(hInstance, (LPCTSTR)IDI_ICON1);
 	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	//wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.hbrBackground = (HBRUSH)(GetStockObject(BLACK_BRUSH));
 	wcex.lpszMenuName = nullptr;
 	wcex.lpszClassName = pClassName;
 	wcex.hIconSm = LoadIcon(wcex.hInstance, (LPCTSTR)IDI_ICON1);

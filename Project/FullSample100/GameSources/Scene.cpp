@@ -139,8 +139,10 @@ namespace basecross {
 			{L"CourseSpring_Box_road_gate.bmf",L"MS_SpringGaTe"},
 			{L"CourseSpring_Box_cherry.bmf",L"MS_SpringCherry"},
 			{L"CourseSpring_Box_ground_sky.bmf",L"MS_SpringSky"},
-			{L"Tree.bmf",L"MSS_Tree"},
-			{L"Umbrellas.bmf",L"MSS_Umbrellas"},
+			{L"OBJ_CourseSummer_Ambient.bmf",L"MSS_CourseSummer_Ambient"},
+			{L"Aki_Grounds.bmf",L"MSS_Grounds"},
+			{L"Aki_Sky.bmf",L"MSA_Skys"},
+			{L"Aki_Trees.bmf",L"MSA_Trees"},
 
 
 		};

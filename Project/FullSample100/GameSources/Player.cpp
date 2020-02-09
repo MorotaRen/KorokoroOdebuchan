@@ -533,7 +533,7 @@ namespace basecross {
 				m_rollingSpeed += 1.0f * elapsedTime;
 			}
 
-			if (m_rollingSpeed > 60.0f) {
+			if (m_rollingSpeed > 25.0f) {
 				m_rollingSpeed -= 20.0f * elapsedTime;
 			}
 
@@ -779,7 +779,7 @@ namespace basecross {
 
 		//自動重力を切る
 		//ptrRigid->SetAutoGravity(false);
-		
+
 
 		//プレイヤーモデルの設定
 		//auto drawcomp = AddComponent<PNTStaticModelDraw>();

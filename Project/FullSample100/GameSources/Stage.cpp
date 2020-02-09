@@ -37,7 +37,7 @@ namespace basecross {
 	/// ê∂ê¨
 	/// </summary>----------------------------------------
 	void StageObject::OnCreate() {
-		if (m_Type != 4) {
+		if (m_Type != 4 && m_Type != 6) {
 			auto TransComp = GetComponent<Transform>();
 			auto DrawComp = AddComponent<BcPNTStaticModelDraw>();
 			DrawComp->SetMeshResource(m_modelkey);
@@ -121,5 +121,4 @@ namespace basecross {
 		auto PsPtr = AddComponent<RigidbodyConvex>(param);
 		//PsPtr->SetDrawActive(true);
 	}
-
 }
