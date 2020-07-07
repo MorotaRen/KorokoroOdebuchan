@@ -26,9 +26,9 @@ namespace basecross{
 	public:
 		//ç\íz
 		SelectSS(const shared_ptr<Stage> stageptr,
-			const wstring& BaseDir, 
-			const wstring FileName, 
-			const wstring FirstAnim, 
+			const wstring& BaseDir,
+			const wstring FileName,
+			const wstring FirstAnim,
 			const Vec2& startScale,
 			const Vec2& startPos);
 		//îjä¸

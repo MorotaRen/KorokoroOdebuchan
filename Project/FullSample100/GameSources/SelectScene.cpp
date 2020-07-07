@@ -187,6 +187,7 @@ namespace basecross {
 			else if (m_StageNum == 1) {
 				//H
 				AddGameObject<FadeSprite>(FadeType::FadeOut, 0.01f, L"ToWaitScene");
+				GameSystems::GetInstans().SetGameStageNum(3);
 			}
 			else if (m_StageNum == 2) {
 				//‰Ä
